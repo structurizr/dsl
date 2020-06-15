@@ -96,10 +96,11 @@ workspace [name] [description] {
             }
         }
 
-        themes <theme url> [theme url(s)]
+        themes <themeUrl> [themeUrl] ... [themeUrl]
 
         branding {
             logo <file>
+            font <name> [url]
         }
 
     }
