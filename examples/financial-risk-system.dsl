@@ -27,6 +27,7 @@ workspace "Financial Risk System" "This is a simple (incomplete) example C4 mode
 
         systemContext financialRiskSystem "Context" "An example System Context diagram for the Financial Risk System architecture kata." {
             include *
+            autoLayout
         }
 
         styles {

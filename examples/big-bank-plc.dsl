@@ -120,6 +120,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
     views {
         systemlandscape "SystemLandscape" {
             include *
+            autoLayout
         }
 
         systemcontext internetBankingSystem "SystemContext" {
@@ -128,6 +129,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             animationStep customer
             animationStep mainframe
             animationStep email
+            autoLayout
         }
 
         container internetBankingSystem "Containers" {
@@ -138,6 +140,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             animationStep mobileApp
             animationStep apiApplication
             animationStep database
+            autoLayout
         }
 
         component apiApplication "Components" {
@@ -146,12 +149,14 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             animationStep signinController securityComponent
             animationStep accountsSummaryController mainframeBankingSystemFacade
             animationStep resetPasswordController emailComponent
+            autoLayout
         }
 
         dynamic apiApplication "SignIn" "Summarises how the sign in feature works in the single-page application." {
             singlePageApplication -> signinController "Submits credentials to"
             signinController -> securityComponent "Calls isAuthenticated() on"
             securityComponent -> database "select * from users where username = ?"
+            autoLayout
         }
 
         deployment internetBankingSystem "Development" "DevelopmentDeployment" {
@@ -159,6 +164,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             animationStep developerSinglePageApplicationInstance
             animationStep developerWebApplicationInstance developerApiApplicationInstance
             animationStep developerDatabaseInstance
+            autoLayout
         }
 
         deployment internetBankingSystem "Live" "LiveDeployment" {
@@ -168,6 +174,7 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
             animationStep liveWebApplicationInstance liveApiApplicationInstance
             animationStep livePrimaryDatabaseInstance
             animationStep liveSecondaryDatabaseInstance
+            autoLayout
         }
 
         styles {

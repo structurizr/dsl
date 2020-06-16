@@ -10,6 +10,7 @@ workspace "Getting Started" "This is a model of my software system." {
     views {
         systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
             include *
+            autoLayout
         }
 
         styles {

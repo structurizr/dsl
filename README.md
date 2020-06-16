@@ -21,6 +21,7 @@ workspace "Getting Started" "This is a model of my software system." {
     views {
         systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
             include *
+            autoLayout
         }
 
         styles {
@@ -43,7 +44,8 @@ The view can then be exported to be visualised using the [Structurizr cloud serv
 
 ## Table of contents
 
-* [Grammar](grammar.txt)
+* [Getting started](docs/getting-started.md)
+* [DSL grammar](grammar.txt)
 * Examples
 	* [Financial Risk System](examples/financial-risk-system.dsl)
 	* [Big Bank plc](examples/big-bank-plc.dsl)
