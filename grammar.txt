@@ -58,6 +58,8 @@ workspace [name] [description] {
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
         }
 
+        filtered <baseKey> <include|exclude> <tags> <key> [description]
+
         dynamic <*|software system identifier|container identifier> <key> [description] {
             <identifier> -> <identifier> [description]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
