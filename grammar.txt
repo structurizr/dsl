@@ -7,6 +7,8 @@ workspace [name] [description] {
     # single line comment
     // single line comment
 
+    !include <file>
+
     model {
 
         enterprise <name> {
