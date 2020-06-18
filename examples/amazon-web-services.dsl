@@ -36,6 +36,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
     views {
         deployment springPetClinic "Default" "AmazonWebServicesDeployment" {
             include *
+            autolayout lr
         }
 
         styles {
