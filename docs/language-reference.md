@@ -1,6 +1,6 @@
 # Language reference
 
-The Structurizr DSL provides a way to define a software architecture model as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams).
+The Structurizr DSL provides a way to define a software architecture model (based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams).
 
 See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
 
@@ -11,7 +11,6 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 - [Identifiers](#identifiers)
 - [Includes](#includes)
 - [Grammar](#grammar)
-- [Keywords](#keywords)
 	- [workspace](#workspace)
 		- [model](#model)
 			- [enterprise](#enterprise)
@@ -25,6 +24,39 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 					- [containerInstance](#containerInstance)
 			- [-> (relationship)](#relationship)
 		- [views](#views)
+			- [systemLandscape](#systemLandscape-view)
+				- [include](#include)
+				- [exclude](#exclude)
+				- [autoLayout](#autoLayout)
+				- [animationStep](#animationStep)
+			- [systemContext](#systemContext-view)
+				- [include](#include)
+				- [exclude](#exclude)
+				- [autoLayout](#autoLayout)
+				- [animationStep](#animationStep)
+			- [container](#container-view)
+				- [include](#include)
+				- [exclude](#exclude)
+				- [autoLayout](#autoLayout)
+				- [animationStep](#animationStep)
+			- [component](#component-view)
+				- [include](#include)
+				- [exclude](#exclude)
+				- [autoLayout](#autoLayout)
+				- [animationStep](#animationStep)
+			- [filtered](#filtered-view)
+			- [dynamic](#dynamic-view)
+				- [autoLayout](#autoLayout)
+			- [deployment](#deployment-view)
+				- [include](#include)
+				- [exclude](#exclude)
+				- [autoLayout](#autoLayout)
+				- [animationStep](#animationStep)
+			- [styles](#styles)
+				- [element](#element-style)
+				- [relationship](#relationship-style)
+			- [themes](#themes)
+			- [branding](#branding)
 
 ## General rules
 
@@ -34,6 +66,7 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 - Opening curly brace symbols (```{```) must be on the same line (i.e. the last token of the statement, not on a line of their own).
 - Closing curly brace symbols (```}```) must be on a line of their own.
 - Use ```""``` as a placeholder for an earlier optional property that you'd like to skip.
+- Each view must have a unique "key".
 - See [Structurizr - Notation](https://structurizr.com/help/notation) for details of how tags and styling works.
 
 ## Comments
@@ -124,6 +157,13 @@ workspace [name] [description] {
             }
         }
 
+		[<identifier> = ]person <name> [description] [tags]
+		[<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+			[<identifier> = ]container <name> [description] [technology] [tags] {
+				[<identifier> = ]component <name> [description] [technology] [tags]
+			}
+		}
+
         <identifier> -> <identifier> [description] [technology] [tags]
 
         deploymentEnvironment <name> {
@@ -140,7 +180,8 @@ workspace [name] [description] {
     views {
 
         systemLandscape <key> [description] {
-            elements <*|identifier(s)>
+        	include <*|identifier> [identifier...]
+            exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
         }
@@ -173,8 +214,9 @@ workspace [name] [description] {
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
         }
 
-        deployment * <environment name> <key> [description] {
+        deployment <*|software system identifier> <environment name> <key> [description] {
             include <*|identifier> [identifier...]
+			exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
         }
@@ -221,13 +263,9 @@ workspace [name] [description] {
 }
 ```
 
-## Keywords
-
-A reference for all keywords is as follows.
-
 ### workspace
 
-```workspace``` is the top level language construct, and the wrapper for everything else defined in your software architecture model. A workspace can optionally be given a name and description.
+```workspace``` is the top level language construct, and the wrapper for the [model](#model) and [views](#views). A workspace can optionally be given a name and description.
 
 ```
 workspace [name] [description] {
@@ -245,11 +283,13 @@ model {
 }
 ```
 
-The ```model``` block can contain the following child elements:
+The ```model``` block can contain the following children:
 
 - [enterprise](#enterprise)
 - [person](#person)
 - [softwareSystem](#softwareSystem)
+- [-> (relationship)](#relationship)
+- [deploymentEnvironment](#deploymentEnvironment)
 
 ## enterprise
 
@@ -260,6 +300,12 @@ enterprise <name> {
 	...
 }
 ```
+
+The ```enterprise``` block can contain the following children:
+
+- [person](#person)
+- [softwareSystem](#softwareSystem)
+- [-> (relationship)](#relationship)
 
 ## person
 
@@ -319,7 +365,7 @@ deploymentEnvironment <name> {
 }
 ```
 
-A deployment environment can contain one or more deployment nodes.
+A deployment environment can contain one or more [deploymentNode](#deploymentNode) elements.
 
 ## deploymentNode
 
@@ -331,7 +377,7 @@ deploymentNode <name> [description] [technology] [tags] {
 }
 ```
 
-Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain infrastructure nodes and container instances.
+Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode) and [containerInstance](#containerInstance) elements.
 
 
 ## infrastructureNode
@@ -367,6 +413,272 @@ Each workspace can also contain one or more views, defined with the ```views``` 
 ```
 views {
 	...
+}
+```
+
+The ```views``` block can contain the following:
+
+- [systemLandscape](#systemLandscape-view)
+- [systemContext](#systemContext-view)
+- [container](#container-view)
+- [component](#component-view)
+- [filtered](#filtered-view)
+- [dynamic](#dynamic-view)
+- [deployment](#deployment-view)
+- [styles](#styles)
+- [themes](#themes)
+- [branding](#branding)
+
+### systemLandscape view
+
+The ```systemLandscape``` keyword is used to define a [System Landscape view](https://c4model.com/#SystemLandscapeDiagram).
+
+```
+systemLandscape <key> [description] {
+	...
+}
+```
+
+The following keywords can be used within the ```systemLandscape``` block:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animationStep](#animationStep)
+
+### systemContext view
+
+The ```systemContext``` keyword is used to define a [System Context view](https://c4model.com/#SystemContextDiagram) for the specified software system.
+
+```
+systemContext <software system identifier> <key> [description] {
+	...
+}
+```
+
+The following keywords can be used within the ```systemContext``` block:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animationStep](#animationStep)
+
+### container view
+
+The ```container``` keyword is used to define a [Container view](https://c4model.com/#ContainerDiagram) for the specified software system.
+
+```
+container <software system identifier> <key> [description] {
+	...
+}
+```
+
+The following keywords can be used within the ```container``` block:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animationStep](#animationStep)
+
+### component view
+
+The ```component``` keyword is used to define a [Component view](https://c4model.com/#ComponentDiagram) for the specified container.
+
+```
+component <container identifier> <key> [description] {
+	...
+}
+```
+
+The following keywords can be used within the ```component``` block:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animationStep](#animationStep)
+
+### filtered view
+
+The ```filtered``` keyword is used to define a [Filtered view](https://structurizr.com/help/filtered-views) on top of the specified view.
+
+```
+filtered <baseKey> <include|exclude> <tags> <key> [description]
+```
+
+The ```baseKey``` specifies the key of the System Landscape, System Context, Container, or Component view on which this filtered view should be based. The mode (```include``` or ```exclude```) defines whether the view should include or exclude elements/relationships based upon the ```tags``` provided.
+
+### dynamic view
+
+The ```dynamic``` keyword defines a [Dynamic view](https://c4model.com/#DynamicDiagram) for the specified scope.
+
+```
+dynamic <*|software system identifier|container identifier> <key> [description] {
+	...
+}
+```
+
+The first property defines the scope of the view, and therefore what can be added to the view, as follows:
+
+- ```*``` scope: People and software systems.
+- Software system scope: People, other software systems, and containers belonging to the software system. 
+- Container scope: People, other software systems, other containers, and components belonging to the container. 
+
+Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the ```dynamic``` block, as follows:
+
+```
+<identifier> -> <identifier> [description]
+```
+
+If a relationship between the two elements does not exist, it will be automatically created.
+
+The following keywords can also be used within the ```dynamic``` block:
+
+- [autoLayout](#autoLayout)
+
+### deployment view
+
+The ```deployment``` keyword defines a [Deployment view](https://c4model.com/#DeploymentDiagram) for the specified scope and deployment environment.
+
+```
+deployment <*|software system identifier> <environment name> <key> [description] {
+	...
+}
+```
+
+The first property defines the scope of the view, and the second property defines the deployment environment. The combination of these two properties determines what can be added to the view, as follows:
+
+- ```*``` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
+- Software system scope: All deployment nodes and infrastructure nodes within the deployment environment. Container instances within the deployment environment that belong to the software system.
+
+The following keywords can be used within the ```deployment``` block:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animationStep](#animationStep)
+
+### include
+
+To include elements on a view, use one or more ```include``` statements inside the block defining the view.
+
+```
+include <*|identifier> [identifier...]
+```
+
+Elements and relationships can either be specified using individual identifiers, or using the wildcard (```*```) identifier, which operates differently depending upon the type of diagram.
+
+- System Landscape view: Include all people and software systems.
+- System Context view: Include all people and software systems that are directly connected to the software system in scope.
+- Container view: Include all containers within the software system in scope plus and all people, software systems, and containers directly connected to them. 
+- Component view: Include all components within the container in scope plus and all people, software systems, containers, and components directly connected to them.
+- Filtered view: (not applicable)
+- Dynamic view: (not applicable)
+- Deployment view: Include all deployment nodes, infrastructure nodes, and container instances deifned within the deployment environment and (optional) software system in scope.
+
+### exclude
+
+To exclude specific elements or relationships, use one or more ```exclude``` statements inside the block defining the view.
+
+```
+exclude <identifier> [identifier...]
+```
+
+### autoLayout
+
+To enable automatic layout mode for the diagram, use the ```autoLayout``` statement inside the block defining the view.
+
+```
+autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
+```
+
+The first property is the rank direction:
+
+- ```tb```: Top to bottom (default)
+- ```bt```: Bottom to top
+- ```lr```: Left to right
+- ```rl```: Right to left
+
+The second property is the separation of ranks in pixels (default: ```300```), while the third property is the separation of nodes in the same rank in pixels (default: ```300```).
+
+### animationStep
+
+The ```animationStep``` keyword defines an animation step consisting of the specified elements.
+
+```
+animationStep <identifier> [identifier...]
+```
+
+### styles
+
+```styles``` is the wrapper for one or more element/relationship styles, which are used when rendering diagrams.
+
+```
+styles {
+	...
+}
+```
+
+The ```styles``` block can contain the following:
+
+- [element](#element-style)
+- [relationship](#relationship-style)
+
+### element style
+
+The ```element``` keyword is used to define an element style. All nested properties (```shape```, ```icon```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for more details.
+
+```
+element <tag> {
+    shape <Box|RoundedBox|Circle|Ellipse|Hexagon|Cylinder|Pipe|Person|Robot|Folder|WebBrowser|MobileDevicePortrait|MobileDeviceLandscape|Component>
+    icon <file>
+    width <integer>
+    height <integer>
+    background <#rrggbb>
+    color <#rrggbb>
+    colour <#rrggbb>
+    stroke <#rrggbb>
+    fontSize <integer>
+    border <solid|dashed|dotted>
+    opacity <integer: 0-100>
+    metadata <true|false>
+    description <true|false>
+}
+```
+            
+### relationship style
+
+The ```relationship``` keyword is used to define a relationship style. All nested properties (```thickness```, ```color```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for more details.
+
+```
+relationship <tag> {
+    thickness <integer>
+    color #777777
+    colour #777777
+    dashed <true|false>
+    routing <Direct|Orthogonal|Curved>
+    fontSize <integer>
+    width <integer>
+    position <integer: 0-100>
+    opacity <integer: 0-100>
+}
+```
+
+### themes
+
+The ```themes``` keyword can be used to specify one or more themes that should be used when rendering diagrams. See [Structurizr - Themes](https://structurizr.com/help/themes) for more details.
+
+```
+themes <themeUrl> [themeUrl] ... [themeUrl]
+```
+
+### branding
+
+The ```branding``` keyword allows you to define some custom branding that should be usedwhen rendering diagrams and documentation. See [Structurizr - Branding](https://structurizr.com/help/branding) for more details.
+
+```
+branding {
+	logo <file>
+	font <name> [url]
 }
 ```
 
