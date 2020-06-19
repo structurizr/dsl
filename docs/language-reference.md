@@ -5,7 +5,9 @@ The Structurizr DSL provides a way to define a software architecture model as te
 ## Table of contents
 
 - [General rules](#general-rules)
+- [Comments](#comments)
 - [Identifiers](#identifiers)
+- [Includes](#includes)
 - [Grammar](#grammar)
 - [Keywords](#keywords)
 	- [workspace](#workspace)
@@ -25,6 +27,25 @@ The Structurizr DSL provides a way to define a software architecture model as te
 - Opening curly brace symbols (```{```) must be on the same line (i.e. the last token of the statement, not on a line on their own).
 - Closing curly brace symbols (```}```) must be on a line on their own.
 - Use ```""``` as a placeholder for an earlier optional property.
+- See [Structurizr - Notation](https://structurizr.com/help/notation) for details of how tags and styling works.
+
+## Comments
+
+Comments can be defined as follows:
+
+```
+/**
+	multi-line comment
+*/
+```
+
+```
+# single line comment
+```
+
+```
+// single line comment
+```
 
 ## Identifiers
 
@@ -35,7 +56,7 @@ person "User" "A user of my software system."
 softwareSystem "Software System" "My software system"
 ```
 
-To create a relationship between the two elements, we need to be able to reference them. We can do this by definining an identifier, in the same way that you'd define a variable in many programming languages.
+To create a relationship between the two elements, we need to be able to reference them. We can do this by defining an identifier, in the same way that you'd define a variable in many programming languages.
 
 ```
 p = person "User" "A user of my software system."
@@ -49,6 +70,23 @@ p -> ss "Uses"
 ```
 
 Identifiers are only needed where you plan to reference the element/relationship.
+
+## Includes
+
+The ```!include``` keyword can be used to include another file, to provide some degree of modularity, and to reuse definition fragments between workspaces.
+
+```
+!include <file>
+```
+
+The file is a relative path, and must be defined within the same directory as the parent file, or a subdirectory of it. For example:
+
+```
+!include child.dsl
+!include directory/child.dsl
+``` 
+
+The content of any included files is simply inlined into the parent document. 
 
 ## Grammar
 
@@ -232,7 +270,7 @@ The ```softwareSystem``` keyword defines a software system.
 softwareSystem <name> [description] [tags]
 ```
 
-The ```softwareSystem``` keyword can either used on its own, or with braces if you would like to define child containers:
+Add braces if you would like to define child containers:
 
 ```
 softwareSystem <name> [description] [tags] {
@@ -248,7 +286,7 @@ The ```container``` keyword defines a container, within a software system.
 container <name> [description] [technology] [tags]
 ```
 
-The ```container``` keyword can either used on its own, or with braces if you would like to define child components:
+Add braces if you would like to define child components:
 
 ```
 container <name> [description] [technology] [tags] {
@@ -263,6 +301,12 @@ The ```component``` keyword defines a component, within a container.
 ```
 component <name> [description] [technology] [tags]
 ```
+
+## ->
+
+```->``` is used to define a uni-directional relationship between two elements.
+
+<identifier> -> <identifier> [description] [technology] [tags]
 
 ### views
 
