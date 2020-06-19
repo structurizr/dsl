@@ -45,7 +45,7 @@ The view can then be exported to be visualised using the [Structurizr cloud serv
 ## Table of contents
 
 * [Getting started](docs/getting-started.md)
-* [DSL grammar](grammar.txt)
+* [Language reference](docs/language-reference.md)
 * Examples
 	* [Financial Risk System](examples/financial-risk-system.dsl)
 	* [Big Bank plc](examples/big-bank-plc.dsl)
