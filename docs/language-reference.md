@@ -2,6 +2,8 @@
 
 The Structurizr DSL provides a way to define a software architecture model as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams).
 
+See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
+
 ## Table of contents
 
 - [General rules](#general-rules)
@@ -17,16 +19,21 @@ The Structurizr DSL provides a way to define a software architecture model as te
 			- [softwareSystem](#softwareSystem)
 				- [container](#container)
 					- [component](#component)
+			- [deploymentEnvironment](#deploymentEnvironment)
+				- [deploymentNode](#deploymentNode)
+					- [infrastructureNode](#infrastructureNode)
+					- [containerInstance](#containerInstance)
+			- [-> (relationship)](#relationship)
 		- [views](#views)
 
 ## General rules
 
 - Line breaks are important, whitespace/indentation isn't.
 - Keywords are case-insensitive (e.g. you can use ```softwareSystem``` or ```softwaresystem```).
-- Double quote characters (```"```) are optional when a property contains no whitespace.
-- Opening curly brace symbols (```{```) must be on the same line (i.e. the last token of the statement, not on a line on their own).
-- Closing curly brace symbols (```}```) must be on a line on their own.
-- Use ```""``` as a placeholder for an earlier optional property.
+- Double quote characters (```"..."```) are optional when a property contains no whitespace.
+- Opening curly brace symbols (```{```) must be on the same line (i.e. the last token of the statement, not on a line of their own).
+- Closing curly brace symbols (```}```) must be on a line of their own.
+- Use ```""``` as a placeholder for an earlier optional property that you'd like to skip.
 - See [Structurizr - Notation](https://structurizr.com/help/notation) for details of how tags and styling works.
 
 ## Comments
@@ -79,11 +86,11 @@ The ```!include``` keyword can be used to include another file, to provide some 
 !include <file>
 ```
 
-The file is a relative path, and must be defined within the same directory as the parent file, or a subdirectory of it. For example:
+The file must be referenced using a relative path, and must be located within the same directory as the parent file, or a subdirectory of it. For example:
 
 ```
 !include child.dsl
-!include directory/child.dsl
+!include subdirectory/child.dsl
 ``` 
 
 The content of any included files is simply inlined into the parent document. 
@@ -238,7 +245,7 @@ model {
 }
 ```
 
-The model can contain the following elements:
+The ```model``` block can contain the following child elements:
 
 - [enterprise](#enterprise)
 - [person](#person)
@@ -302,11 +309,56 @@ The ```component``` keyword defines a component, within a container.
 component <name> [description] [technology] [tags]
 ```
 
-## ->
+## deploymentEnvironment
+
+The ```deploymentEnvironment``` keyword provides a way to define a deployment environment (e.g. development, testing, staging, live, etc).
+
+```
+deploymentEnvironment <name> {
+	...
+}
+```
+
+A deployment environment can contain one or more deployment nodes.
+
+## deploymentNode
+
+The ```deploymentNode``` keyword is used to define a deployment node.
+
+```
+deploymentNode <name> [description] [technology] [tags] {
+	...
+}
+```
+
+Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain infrastructure nodes and container instances.
+
+
+## infrastructureNode
+
+The ```infrastructureNode``` keyword defines an infrastructure node, which is typically something like a load balancer, firewall, DNS service, etc.
+
+```
+infrastructureNode <name> [description] [technology] [tags]
+```
+
+## containerInstance
+
+The ```containerInstance``` keyword defines an instance of the specified container that is deployed on the parent deployment node.
+
+```
+containerInstance <identifier>
+```
+
+The ```identifier``` must represent a container.
+
+## relationship
 
 ```->``` is used to define a uni-directional relationship between two elements.
 
+```
 <identifier> -> <identifier> [description] [technology] [tags]
+```
 
 ### views
 
