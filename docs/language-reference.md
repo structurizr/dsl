@@ -170,7 +170,7 @@ workspace [name] [description] {
             [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
                 [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
                     [<identifier> = ]infrastructureNode <name> [description] [technology] [tags]
-                        [<identifier> = ]containerInstance <identifier>
+                        [<identifier> = ]containerInstance <identifier> [tags]
                 }
             }
         }
@@ -393,7 +393,7 @@ infrastructureNode <name> [description] [technology] [tags]
 The ```containerInstance``` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
 ```
-containerInstance <identifier>
+containerInstance <identifier> [tags]
 ```
 
 The ```identifier``` must represent a container.
