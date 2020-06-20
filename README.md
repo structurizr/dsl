@@ -42,6 +42,27 @@ workspace "Getting Started" "This is a model of my software system." {
 
 The view can then be exported to be visualised using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or other formats including PlantUML and WebSequenceDiagrams via the [Structurizr CLI](https://github.com/structurizr/cli).
 
+## Convention over configuration, useful defaults
+
+The DSL is designed to be as compact as possible. In conjunction with the Structurizr CLI, the following DSL fragment will automatically create the implied relationship between the ```user``` and ```softwareSystem``` elements, create three views with auto-layout enabled (1 x System Landscape, 1 x System Context, 1 x Container), and add some default element styles ([view this example](https://structurizr.com/dsl?src=https://gist.githubusercontent.com/simonbrowndotje/3eefa2b8adcbdef55ce6de4875b39f3a/raw/0c2dd656e091b2b61a70d2280c8a8b2cf0d90db8/workspace.dsl)).
+
+```
+workspace {
+
+    model {
+        user = person "User"
+        softwareSystem = softwareSystem "Software System" {
+            webapp = container "Web Application"
+            database = container "Database"
+         }
+
+        user -> webapp "Uses"
+        webapp -> database "Reads from and writes to"
+    }
+
+}
+```
+
 ## Table of contents
 
 * [Getting started](docs/getting-started.md)
