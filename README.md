@@ -45,6 +45,7 @@ The view can then be exported to be visualised using the [Structurizr cloud serv
 ## Table of contents
 
 * [Getting started](docs/getting-started.md)
+* [Demo](https://structurizr.com/dsl)
 * [Language reference](docs/language-reference.md)
 * Examples
 	* [Financial Risk System](examples/financial-risk-system.dsl)
