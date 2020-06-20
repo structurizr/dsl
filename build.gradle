@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.structurizr:structurizr-client:1.4.3'
+
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+description = 'Structurizr DSL'
+group = 'com.structurizr'
+version = '1.0.0'
+
+test {
+    useJUnitPlatform()
+}
