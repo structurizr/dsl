@@ -5,7 +5,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
             database = container "Database" "Stores information regarding the veterinarians, the clients, and their pets." "Relational database schema" "Database"
         }
 
-        webApplication -> database "Reads from and writes to", "JDBC/SSL"
+        webApplication -> database "Reads from and writes to" "JDBC/SSL"
 
         deploymentEnvironment "Live" {
             deploymentNode "Amazon Web Services" "" "" "Amazon Web Services - Cloud" {
