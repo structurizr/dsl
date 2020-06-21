@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.structurizr:structurizr-client:1.4.4'
+    compile 'com.structurizr:structurizr-client:1.4.5'
 
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }
