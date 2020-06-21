@@ -56,14 +56,14 @@ class ComponentViewParserTests extends AbstractTests {
     void test_parse_CreatesAComponentView() {
         DslContext context = context();
         Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
+        elements.put("container", model.addSoftwareSystem("Name", "Description").addContainer("Container", "Name", "Description"));
         context.setElements(elements);
 
         parser.parse(context, tokens("component", "container"));
         List<ComponentView> views = new ArrayList<>(context.getWorkspace().getViews().getComponentViews());
 
         assertEquals(1, views.size());
-        assertEquals("001-Component", views.get(0).getKey());
+        assertEquals("Name-Container-Component", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertTrue(views.get(0).getExternalContainerBoundariesVisible());
     }

@@ -18,7 +18,7 @@ final class DeploymentViewContentParser extends AbstractParser {
 
         DeploymentView view = context.getView();
         if (tokens.contains(WILDCARD)) {
-             view.addAllDeploymentNodes();
+            view.addDefaultElements();
         } else {
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String identifier = tokens.get(i);

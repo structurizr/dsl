@@ -20,7 +20,7 @@ final class SystemLandscapeViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
+            key = VIEW_TYPE;
         }
         validateViewKey(key);
 

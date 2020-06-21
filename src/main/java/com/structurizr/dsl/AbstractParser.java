@@ -1,8 +1,5 @@
 package com.structurizr.dsl;
 
-import com.structurizr.Workspace;
-
-import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
 abstract class AbstractParser {
@@ -15,9 +12,8 @@ abstract class AbstractParser {
         }
     }
 
-    String generateViewKey(Workspace workspace, String type) {
-        DecimalFormat format = new DecimalFormat("000");
-        return format.format(workspace.getViews().getViews().size() + 1) + "-" + type;
+    String removeNonWordCharacters(String name) {
+        return name.replaceAll("\\W", "");
     }
 
 }

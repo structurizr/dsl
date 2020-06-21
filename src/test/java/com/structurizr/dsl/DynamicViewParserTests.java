@@ -33,7 +33,7 @@ class DynamicViewParserTests extends AbstractTests {
         DslContext context = context();
         DynamicView view = parser.parse(context, tokens("dynamic", "*"));
 
-        assertEquals("001-Dynamic", view.getKey());
+        assertEquals("Dynamic-001", view.getKey());
     }
 
     @Test
@@ -92,6 +92,23 @@ class DynamicViewParserTests extends AbstractTests {
         elements.put("softwaresystem", softwareSystem);
         context.setElements(elements);
 
+        parser.parse(context, tokens("dynamic", "softwareSystem"));
+        List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
+
+        assertEquals(1, views.size());
+        assertEquals("Name-Dynamic-001", views.get(0).getKey());
+        assertEquals("", views.get(0).getDescription());
+        assertSame(softwareSystem, views.get(0).getElement());
+    }
+
+    @Test
+    void test_parse_CreatesADynamicViewWithSoftwareSystemScopeAndKey() {
+        DslContext context = context();
+        Map<String, Element> elements = new HashMap<>();
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
         parser.parse(context, tokens("dynamic", "softwareSystem", "key"));
         List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
 
@@ -102,7 +119,7 @@ class DynamicViewParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_CreatesADynamicViewWithSoftwareSystemScopeAndADescription() {
+    void test_parse_CreatesADynamicViewWithSoftwareSystemScopeAndKeyAndDescription() {
         DslContext context = context();
         Map<String, Element> elements = new HashMap<>();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
@@ -126,6 +143,23 @@ class DynamicViewParserTests extends AbstractTests {
         elements.put("container", container);
         context.setElements(elements);
 
+        parser.parse(context, tokens("dynamic", "container"));
+        List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
+
+        assertEquals(1, views.size());
+        assertEquals("Name-Container-Dynamic-001", views.get(0).getKey());
+        assertEquals("", views.get(0).getDescription());
+        assertSame(container, views.get(0).getElement());
+    }
+
+    @Test
+    void test_parse_CreatesADynamicViewWithContainerScopeAndKey() {
+        DslContext context = context();
+        Map<String, Element> elements = new HashMap<>();
+        Container container = model.addSoftwareSystem("Name", "Description").addContainer("Container", "Description", "Technology");
+        elements.put("container", container);
+        context.setElements(elements);
+
         parser.parse(context, tokens("dynamic", "container", "key"));
         List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
 
@@ -136,7 +170,7 @@ class DynamicViewParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_CreatesADynamicViewWithContainerScopeAndADescription() {
+    void test_parse_CreatesADynamicViewWithContainerScopeAndKeyAndDescription() {
         DslContext context = context();
         Map<String, Element> elements = new HashMap<>();
         Container container = model.addSoftwareSystem("Name", "Description").addContainer("Container", "Description", "Technology");

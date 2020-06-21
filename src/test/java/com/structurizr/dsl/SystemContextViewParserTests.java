@@ -64,7 +64,7 @@ class SystemContextViewParserTests extends AbstractTests {
         List<SystemContextView> views = new ArrayList<>(context.getWorkspace().getViews().getSystemContextViews());
 
         assertEquals(1, views.size());
-        assertEquals("001-SystemContext", views.get(0).getKey());
+        assertEquals("Name-SystemContext", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
     }
 

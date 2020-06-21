@@ -19,15 +19,7 @@ final class StaticViewContentParser extends AbstractParser {
         StaticView view = context.getView();
 
         if (tokens.contains(WILDCARD)) {
-            if (view instanceof SystemLandscapeView) {
-                view.addAllElements();
-            } else if (view instanceof SystemContextView) {
-                view.addNearestNeighbours(view.getSoftwareSystem());
-            } else if (view instanceof ContainerView) {
-                view.getSoftwareSystem().getContainers().forEach(view::addNearestNeighbours);
-            } else if (view instanceof ComponentView) {
-                ((ComponentView)view).getContainer().getComponents().forEach(view::addNearestNeighbours);
-            }
+            view.addDefaultElements();
         } else {
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String identifier = tokens.get(i);

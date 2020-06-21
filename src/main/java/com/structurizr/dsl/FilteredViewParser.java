@@ -6,6 +6,7 @@ import com.structurizr.view.FilterMode;
 import com.structurizr.view.FilteredView;
 import com.structurizr.view.StaticView;
 
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,20 +31,14 @@ final class FilteredViewParser extends AbstractParser {
         }
 
         Workspace workspace = context.getWorkspace();
-        String key = "";
-
-        if (tokens.includes(KEY_INDEX)) {
-            key = tokens.get(KEY_INDEX);
-        } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
-        }
-        validateViewKey(key);
+        String key;
 
         StaticView baseView;
         String baseKey = tokens.get(BASE_KEY_INDEX);
         String mode = tokens.get(MODE_INDEX);
         String tagsAsString = tokens.get(TAGS_INDEX);
         Set<String> tags = new HashSet<>();
+        DecimalFormat format = new DecimalFormat("000");
 
         for (String tag : tagsAsString.split(",")) {
             if (!StringUtils.isNullOrEmpty(tag)) {
@@ -74,6 +69,14 @@ final class FilteredViewParser extends AbstractParser {
         if (baseView == null) {
             throw new RuntimeException("The view \"" + baseKey + "\" must be a System Landscape, System Context, Container, or Component view");
         }
+
+        if (tokens.includes(KEY_INDEX)) {
+            key = tokens.get(KEY_INDEX);
+        } else {
+            key = baseView.getKey() + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+        }
+        validateViewKey(key);
+
 
         return workspace.getViews().createFilteredView(baseView, key, description, filterMode, tags.toArray(new String[0]));
     }

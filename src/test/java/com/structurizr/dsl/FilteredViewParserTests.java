@@ -88,7 +88,7 @@ class FilteredViewParserTests extends AbstractTests {
         List<FilteredView> views = new ArrayList<>(context.getWorkspace().getViews().getFilteredViews());
 
         assertEquals(1, views.size());
-        assertEquals("002-Filtered", views.get(0).getKey());
+        assertEquals("SystemLandscape-Filtered-001", views.get(0).getKey());
         assertEquals(2, views.get(0).getTags().size());
         assertTrue(views.get(0).getTags().contains("Tag 1"));
         assertTrue(views.get(0).getTags().contains("Tag 2"));

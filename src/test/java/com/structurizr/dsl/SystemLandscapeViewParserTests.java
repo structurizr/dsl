@@ -19,7 +19,7 @@ class SystemLandscapeViewParserTests extends AbstractTests {
         List<SystemLandscapeView> views = new ArrayList<>(context.getWorkspace().getViews().getSystemLandscapeViews());
 
         assertEquals(1, views.size());
-        assertEquals("001-SystemLandscape", views.get(0).getKey());
+        assertEquals("SystemLandscape", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
     }
 

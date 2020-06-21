@@ -25,13 +25,6 @@ final class ComponentViewParser extends AbstractParser {
         String key = "";
         String description = "";
 
-        if (tokens.includes(KEY_INDEX)) {
-            key = tokens.get(KEY_INDEX);
-        } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
-        }
-        validateViewKey(key);
-
         String containerIdentifier = tokens.get(CONTAINER_IDENTIFIER_INDEX);
         Element element = context.getElement(containerIdentifier);
         if (element == null) {
@@ -42,6 +35,13 @@ final class ComponentViewParser extends AbstractParser {
         } else {
             throw new RuntimeException("The element \"" + containerIdentifier + "\" is not a container");
         }
+
+        if (tokens.includes(KEY_INDEX)) {
+            key = tokens.get(KEY_INDEX);
+        } else {
+            key = removeNonWordCharacters(container.getSoftwareSystem().getName()) + "-" + removeNonWordCharacters(container.getName()) + "-" + VIEW_TYPE;
+        }
+        validateViewKey(key);
 
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);

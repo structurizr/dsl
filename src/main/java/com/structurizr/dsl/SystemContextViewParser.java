@@ -25,13 +25,6 @@ final class SystemContextViewParser extends AbstractParser {
             throw new RuntimeException("Expected: systemContext <software system identifier> [key] [description] {");
         }
 
-        if (tokens.includes(KEY_INDEX)) {
-            key = tokens.get(KEY_INDEX);
-        } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
-        }
-        validateViewKey(key);
-
         String softwareSystemIdentifier = tokens.get(SOFTWARE_SYSTEM_IDENTIFIER_INDEX);
         Element element = context.getElement(softwareSystemIdentifier);
         if (element == null) {
@@ -42,6 +35,13 @@ final class SystemContextViewParser extends AbstractParser {
         } else {
             throw new RuntimeException("The element \"" + softwareSystemIdentifier + "\" is not a software system");
         }
+
+        if (tokens.includes(KEY_INDEX)) {
+            key = tokens.get(KEY_INDEX);
+        } else {
+            key = removeNonWordCharacters(softwareSystem.getName()) + "-" + VIEW_TYPE;
+        }
+        validateViewKey(key);
 
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);

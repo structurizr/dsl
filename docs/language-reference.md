@@ -60,7 +60,8 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 
 ## General rules
 
-- Line breaks are important, whitespace/indentation isn't.
+- Line breaks are important.
+- Tokens must be separated by whitespace, but the quantity of whitespace/indentation isn't important.
 - Keywords are case-insensitive (e.g. you can use ```softwareSystem``` or ```softwaresystem```).
 - Double quote characters (```"..."```) are optional when a property contains no whitespace.
 - Opening curly brace symbols (```{```) must be on the same line (i.e. the last token of the statement, not on a line of their own).
@@ -568,12 +569,12 @@ include <*|identifier> [identifier...]
 Elements and relationships can either be specified using individual identifiers, or using the wildcard (```*```) identifier, which operates differently depending upon the type of diagram.
 
 - System Landscape view: Include all people and software systems.
-- System Context view: Include all people and software systems that are directly connected to the software system in scope.
-- Container view: Include all containers within the software system in scope plus and all people, software systems, and containers directly connected to them. 
-- Component view: Include all components within the container in scope plus and all people, software systems, containers, and components directly connected to them.
+- System Context view: Include the software system in scope; plus all people and software systems that are directly connected to the software system in scope.
+- Container view: Include all containers within the software system in scope; plus all people and software systems that are directly connected to those containers. 
+- Component view: Include all components within the container in scope; plus all people, software systems and containers (belonging to the software system in scope) directly connected to them.
 - Filtered view: (not applicable)
 - Dynamic view: (not applicable)
-- Deployment view: Include all deployment nodes, infrastructure nodes, and container instances deifned within the deployment environment and (optional) software system in scope.
+- Deployment view: Include all deployment nodes, infrastructure nodes, and container instances defined within the deployment environment and (optional) software system in scope.
 
 ### exclude
 

@@ -70,7 +70,7 @@ class DeploymentViewParserTests extends AbstractTests {
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
 
         assertEquals(1, views.size());
-        assertEquals("001-Deployment", views.get(0).getKey());
+        assertEquals("Live-Deployment", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertNull(views.get(0).getSoftwareSystem());
     }
@@ -105,6 +105,23 @@ class DeploymentViewParserTests extends AbstractTests {
         elements.put("softwaresystem", softwareSystem);
         context.setElements(elements);
 
+        parser.parse(context, tokens("deployment", "softwareSystem", "Live"));
+        List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
+
+        assertEquals(1, views.size());
+        assertEquals("Name-Live-Deployment", views.get(0).getKey());
+        assertEquals("", views.get(0).getDescription());
+        assertSame(softwareSystem, views.get(0).getSoftwareSystem());
+    }
+
+    @Test
+    void test_parse_CreatesADeploymentViewWithSoftwareSystemScopeAndKey() {
+        DslContext context = context();
+        Map<String, Element> elements = new HashMap<>();
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
         parser.parse(context, tokens("deployment", "softwareSystem", "Live", "key"));
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
 
@@ -115,7 +132,7 @@ class DeploymentViewParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_CreatesADeploymentViewWithSoftwareSystemScopeAndDescription() {
+    void test_parse_CreatesADeploymentViewWithSoftwareSystemScopeAndKeyAndDescription() {
         DslContext context = context();
         Map<String, Element> elements = new HashMap<>();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");

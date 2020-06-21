@@ -6,6 +6,8 @@ import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DynamicView;
 
+import java.text.DecimalFormat;
+
 class DynamicViewParser extends AbstractParser {
 
     private static final String VIEW_TYPE = "Dynamic";
@@ -22,17 +24,11 @@ class DynamicViewParser extends AbstractParser {
         Workspace workspace = context.getWorkspace();
         String key = "";
         String description = "";
+        DecimalFormat format = new DecimalFormat("000");
 
         if (!tokens.includes(SCOPE_IDENTIFIER_INDEX)) {
             throw new RuntimeException("Expected: dynamic <*|software system identifier|container identifier> [key] [description] {");
         }
-
-        if (tokens.includes(KEY_INDEX)) {
-            key = tokens.get(KEY_INDEX);
-        } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
-        }
-        validateViewKey(key);
 
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);
@@ -42,6 +38,13 @@ class DynamicViewParser extends AbstractParser {
 
         String scopeIdentifier = tokens.get(SCOPE_IDENTIFIER_INDEX);
         if (WILDCARD.equals(scopeIdentifier)) {
+            if (tokens.includes(KEY_INDEX)) {
+                key = tokens.get(KEY_INDEX);
+            } else {
+                key = VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+            }
+            validateViewKey(key);
+
             view = workspace.getViews().createDynamicView(key, description);
         } else {
             Element element = context.getElement(scopeIdentifier);
@@ -50,8 +53,23 @@ class DynamicViewParser extends AbstractParser {
             }
 
             if (element instanceof SoftwareSystem) {
+                if (tokens.includes(KEY_INDEX)) {
+                    key = tokens.get(KEY_INDEX);
+                } else {
+                    key = removeNonWordCharacters(element.getName()) + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+                }
+                validateViewKey(key);
+
                 view = workspace.getViews().createDynamicView((SoftwareSystem)element, key, description);
             } else if (element instanceof Container) {
+                Container container = (Container)element;
+                if (tokens.includes(KEY_INDEX)) {
+                    key = tokens.get(KEY_INDEX);
+                } else {
+                    key = removeNonWordCharacters(container.getSoftwareSystem().getName()) + "-" + removeNonWordCharacters(container.getName()) + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+                }
+                validateViewKey(key);
+
                 view = workspace.getViews().createDynamicView((Container)element, key, description);
             } else {
                 throw new RuntimeException("The element \"" + scopeIdentifier + "\" is not a software system or container");

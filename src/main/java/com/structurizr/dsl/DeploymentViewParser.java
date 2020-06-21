@@ -23,19 +23,9 @@ final class DeploymentViewParser extends AbstractParser {
 
         Workspace workspace = context.getWorkspace();
         String key = "";
-
-        if (tokens.includes(KEY_INDEX)) {
-            key = tokens.get(KEY_INDEX);
-        } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
-        }
-        validateViewKey(key);
-
         String scopeIdentifier = tokens.get(SCOPE_IDENTIFIER_INDEX);
         String environment = tokens.get(ENVIRONMENT_INDEX);
-
         String description = "";
-
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);
         }
@@ -43,6 +33,13 @@ final class DeploymentViewParser extends AbstractParser {
         DeploymentView view;
 
         if ("*".equals(scopeIdentifier)) {
+            if (tokens.includes(KEY_INDEX)) {
+                key = tokens.get(KEY_INDEX);
+            } else {
+                key = removeNonWordCharacters(environment) + "-" + VIEW_TYPE;
+            }
+            validateViewKey(key);
+
             view = workspace.getViews().createDeploymentView(key, description);
         } else {
             Element element = context.getElement(scopeIdentifier);
@@ -51,6 +48,13 @@ final class DeploymentViewParser extends AbstractParser {
             }
 
             if (element instanceof SoftwareSystem) {
+                if (tokens.includes(KEY_INDEX)) {
+                    key = tokens.get(KEY_INDEX);
+                } else {
+                    key = removeNonWordCharacters(element.getName()) + "-" + removeNonWordCharacters(environment) + "-" + VIEW_TYPE;
+                }
+                validateViewKey(key);
+
                 view = workspace.getViews().createDeploymentView((SoftwareSystem)element, key, description);
             } else {
                 throw new RuntimeException("The element \"" + scopeIdentifier + "\" is not a software system");

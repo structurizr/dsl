@@ -63,7 +63,7 @@ class ContainerViewParserTests extends AbstractTests {
         List<ContainerView> views = new ArrayList<>(context.getWorkspace().getViews().getContainerViews());
 
         assertEquals(1, views.size());
-        assertEquals("001-Container", views.get(0).getKey());
+        assertEquals("Name-Container", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertTrue(views.get(0).getExternalSoftwareSystemBoundariesVisible());
     }
