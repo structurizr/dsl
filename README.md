@@ -40,6 +40,8 @@ workspace "Getting Started" "This is a model of my software system." {
 }
 ```
 
+([view this example](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/getting-started.dsl))
+
 ## Multiple output formats
 
 The view can then be exported to be visualised using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or other formats including PlantUML, Mermaid, and WebSequenceDiagrams via the [Structurizr CLI](https://github.com/structurizr/cli).
@@ -50,7 +52,7 @@ See [Structurizr - Text as an architecture description language](https://structu
 
 ## Convention over configuration, useful defaults
 
-The DSL is designed to be as compact as possible. In conjunction with the Structurizr CLI, the following DSL fragment will automatically create the implied relationship between the ```user``` and ```softwareSystem``` elements, create three views with auto-layout enabled (1 x System Landscape, 1 x System Context, 1 x Container), and add some default element styles ([view this example](https://structurizr.com/dsl?src=https://gist.githubusercontent.com/simonbrowndotje/3eefa2b8adcbdef55ce6de4875b39f3a/raw/0c2dd656e091b2b61a70d2280c8a8b2cf0d90db8/workspace.dsl)).
+The DSL is designed to be as compact as possible. In conjunction with the Structurizr CLI, the following DSL fragment will automatically create the implied relationship between the ```user``` and ```softwareSystem``` elements, create three views with auto-layout enabled (1 x System Landscape, 1 x System Context, 1 x Container), and add some default element styles.
 
 ```
 workspace {
@@ -69,12 +71,14 @@ workspace {
 }
 ```
 
+([view this example](https://structurizr.com/dsl?src=https://gist.githubusercontent.com/simonbrowndotje/3eefa2b8adcbdef55ce6de4875b39f3a/raw/0c2dd656e091b2b61a70d2280c8a8b2cf0d90db8/workspace.dsl))
+
 ## Table of contents
 
 * [Getting started](docs/getting-started.md)
 * [Demo](https://structurizr.com/dsl)
 * [Language reference](docs/language-reference.md)
 * Examples
-	* [Financial Risk System](examples/financial-risk-system.dsl)
-	* [Big Bank plc](examples/big-bank-plc.dsl)
-	* [Amazon Web Services](examples/amazon-web-services.dsl)
+	* [Financial Risk System](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/financial-risk-system.dsl)
+	* [Big Bank plc](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/big-bank-plc.dsl)
+	* [Amazon Web Services](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/amazon-web-services.dsl)
