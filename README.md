@@ -40,7 +40,13 @@ workspace "Getting Started" "This is a model of my software system." {
 }
 ```
 
-The view can then be exported to be visualised using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or other formats including PlantUML and WebSequenceDiagrams via the [Structurizr CLI](https://github.com/structurizr/cli).
+## Multiple output formats
+
+The view can then be exported to be visualised using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or other formats including PlantUML, Mermaid, and WebSequenceDiagrams via the [Structurizr CLI](https://github.com/structurizr/cli).
+
+![Multiple output formats: Structurizr, Mermaid, PlantUML](docs/images/multiple-output-formats.png)
+
+See [Structurizr - Text as an architecture description language](https://structurizr.com/help/text) for more details.
 
 ## Convention over configuration, useful defaults
 
