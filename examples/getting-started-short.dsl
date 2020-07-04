@@ -8,7 +8,7 @@ workspace {
     }
 
     views {
-        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
+        systemContext softwareSystem {
             include *
             autoLayout
         }
