@@ -7,4 +7,11 @@ workspace {
         user -> softwareSystem "Uses"
     }
 
+    views {
+        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
+            include *
+            autoLayout
+        }
+    }
+    
 }
