@@ -49,7 +49,7 @@ This DSL definition:
 - creates a person named "User"
 - creates a software system named "Software System"
 - creates a relationship between the person and the software system
-- create a System Context view for the software system
+- creates a System Context view for the software system
 - creates some element styles that will be applied when rendering the diagram
 
 ## 3. Upload to Structurizr
