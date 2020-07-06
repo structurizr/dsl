@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.model.*;
+import com.structurizr.util.StringUtils;
 import com.structurizr.view.*;
 
 import java.io.File;
@@ -135,6 +136,20 @@ public final class StructurizrDslParser {
         } catch (IOException e) {
             throw new StructurizrDslParserException(e.getMessage());
         }
+    }
+
+    /**
+     * Parses the specified Structurizr DSL fragment, adding the parsed content to the workspace.
+     *
+     * @param dsl       a DSL fragment
+     */
+    public void parse(String dsl) throws StructurizrDslParserException {
+        if (StringUtils.isNullOrEmpty(dsl)) {
+            throw new RuntimeException("A DSL fragment must be specified");
+        }
+
+        List<String> lines = Arrays.asList(dsl.split("\\r?\\n"));
+        parse(lines, new File("."));
     }
 
     void parse(List<String> lines, File file) throws StructurizrDslParserException {
