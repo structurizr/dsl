@@ -1,9 +1,6 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
-import com.structurizr.model.Person;
-import com.structurizr.model.Relationship;
-import com.structurizr.model.SoftwareSystem;
+import com.structurizr.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -99,6 +96,29 @@ class RelationshipParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parse_AddsTheRelationshipWithADescriptionAndTechnology() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        DslContext context = context();
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("source", user);
+        elements.put("destination", softwareSystem);
+        context.setElements(elements);
+
+        assertEquals(0, model.getRelationships().size());
+
+        parser.parse(context, tokens("source", "->", "destination", "Uses", "HTTP"));
+
+        assertEquals(1, model.getRelationships().size());
+        Relationship r = model.getRelationships().iterator().next();
+        assertSame(user, r.getSource());
+        assertSame(softwareSystem, r.getDestination());
+        assertEquals("Uses", r.getDescription());
+        assertEquals("HTTP", r.getTechnology());
+    }
+
+    @Test
     void test_parse_AddsTheRelationshipWithADescriptionAndTechnologyAndTags() {
         Person user = model.addPerson("User", "Description");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
@@ -123,26 +143,35 @@ class RelationshipParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_AddsTheRelationshipWithADescriptionAndTechnology() {
+    void test_parse_AddsTheRelationshipAndImplicitRelationshipsWithADescriptionAndTechnologyAndTags() {
         Person user = model.addPerson("User", "Description");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DslContext context = context();
 
         Map<String, Element> elements = new HashMap<>();
         elements.put("source", user);
-        elements.put("destination", softwareSystem);
+        elements.put("destination", container);
         context.setElements(elements);
 
         assertEquals(0, model.getRelationships().size());
 
-        parser.parse(context, tokens("source", "->", "destination", "Uses", "HTTP"));
+        parser.parse(context, tokens("source", "->", "destination", "Uses", "HTTP", "Tag 1,Tag 2"));
 
-        assertEquals(1, model.getRelationships().size());
-        Relationship r = model.getRelationships().iterator().next();
+        assertEquals(2, model.getRelationships().size());
+        Relationship r = user.getEfferentRelationshipWith(container);
+        assertSame(user, r.getSource());
+        assertSame(container, r.getDestination());
+        assertEquals("Uses", r.getDescription());
+        assertEquals("HTTP", r.getTechnology());
+        assertEquals("Relationship,Tag 1,Tag 2", r.getTags());
+
+        r = user.getEfferentRelationshipWith(softwareSystem);
         assertSame(user, r.getSource());
         assertSame(softwareSystem, r.getDestination());
         assertEquals("Uses", r.getDescription());
         assertEquals("HTTP", r.getTechnology());
+        assertEquals("Relationship,Tag 1,Tag 2", r.getTags());
     }
 
 }

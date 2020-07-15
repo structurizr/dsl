@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
+import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy;
 import com.structurizr.model.Model;
 import com.structurizr.view.ViewSet;
 
@@ -14,6 +15,8 @@ abstract class AbstractTests {
     protected ViewSet views = workspace.getViews();
 
     protected DslContext context() {
+        model.setImpliedRelationshipsStrategy(new CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy());
+
         DslContext context = new WorkspaceDslContext();
         context.setWorkspace(workspace);
 

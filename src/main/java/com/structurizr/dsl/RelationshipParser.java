@@ -39,24 +39,22 @@ final class RelationshipParser extends AbstractParser {
             technology = tokens.get(TECHNOLOGY_INDEX);
         }
 
+        String[] tags = new String[0];
+        if (tokens.includes(TAGS_INDEX)) {
+            tags = tokens.get(TAGS_INDEX).split(",");
+        }
+
         Element sourceElement = context.getElement(sourceId);
         Element destinationElement = context.getElement(destinationId);
 
         if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
-            relationship = ((StaticStructureElement)sourceElement).uses((StaticStructureElement)destinationElement, description, technology, null);
+            relationship = ((StaticStructureElement)sourceElement).uses((StaticStructureElement)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof DeploymentNode && destinationElement instanceof DeploymentNode) {
-            relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null);
+            relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof InfrastructureNode && destinationElement instanceof DeploymentElement) {
-            relationship = ((InfrastructureNode)sourceElement).uses((DeploymentElement)destinationElement, description, technology, null);
+            relationship = ((InfrastructureNode)sourceElement).uses((DeploymentElement)destinationElement, description, technology, null, tags);
         } else {
             throw new RuntimeException("A relationship between \"" + sourceId + "\" and \"" + destinationId + "\" is not permitted");
-        }
-
-        if (relationship != null) {
-            if (tokens.includes(TAGS_INDEX)) {
-                String tags = tokens.get(TAGS_INDEX);
-                relationship.addTags(tags.split(","));
-            }
         }
 
         return relationship;
