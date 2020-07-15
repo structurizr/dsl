@@ -192,7 +192,7 @@ public final class StructurizrDslParser {
                     } else if (inContext(CommentDslContext.class)) {
                         // do nothing
 
-                    } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(DeploymentEnvironmentDslContext.class))) {
+                    } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class))) {
                         Relationship relationship = new RelationshipParser().parse(getContext(), tokens);
 
                         if (identifier != null) {
