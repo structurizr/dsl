@@ -708,7 +708,7 @@ themes <themeUrl> [themeUrl] ... [themeUrl]
 
 ### branding
 
-The ```branding``` keyword allows you to define some custom branding that should be usedwhen rendering diagrams and documentation. See [Structurizr - Branding](https://structurizr.com/help/branding) for more details.
+The ```branding``` keyword allows you to define some custom branding that should be used when rendering diagrams and documentation. See [Structurizr - Branding](https://structurizr.com/help/branding) for more details.
 
 ```
 branding {
