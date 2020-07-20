@@ -316,6 +316,11 @@ The ```person``` keyword defines a person (e.g. a user, actor, role, or persona)
 person <name> [description] [tags]
 ```
 
+The following tags are added by default:
+
+- `Element`
+- `Person`
+
 ## softwareSystem
 
 The ```softwareSystem``` keyword defines a software system.
@@ -331,6 +336,11 @@ softwareSystem <name> [description] [tags] {
 	...
 }
 ```
+
+The following tags are added by default:
+
+- `Element`
+- `Software System`
 
 ## container
 
@@ -348,6 +358,11 @@ container <name> [description] [technology] [tags] {
 }
 ```
 
+The following tags are added by default:
+
+- `Element`
+- `Container`
+
 ## component
 
 The ```component``` keyword defines a component, within a container.
@@ -355,6 +370,11 @@ The ```component``` keyword defines a component, within a container.
 ```
 component <name> [description] [technology] [tags]
 ```
+
+The following tags are added by default:
+
+- `Element`
+- `Component`
 
 ## deploymentEnvironment
 
@@ -378,6 +398,11 @@ deploymentNode <name> [description] [technology] [tags] {
 }
 ```
 
+The following tags are added by default:
+
+- `Element`
+- `Deployment Node`
+
 Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode) and [containerInstance](#containerInstance) elements.
 
 
@@ -388,6 +413,11 @@ The ```infrastructureNode``` keyword defines an infrastructure node, which is ty
 ```
 infrastructureNode <name> [description] [technology] [tags]
 ```
+
+The following tags are added by default:
+
+- `Element`
+- `Infrastructure Node`
 
 ## containerInstance
 
@@ -406,6 +436,10 @@ The ```identifier``` must represent a container.
 ```
 <identifier> -> <identifier> [description] [technology] [tags]
 ```
+
+The following tags are added by default:
+
+- `Relationship`
 
 ### views
 
@@ -626,7 +660,7 @@ The ```styles``` block can contain the following:
 
 ### element style
 
-The ```element``` keyword is used to define an element style. All nested properties (```shape```, ```icon```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for more details.
+The ```element``` keyword is used to define an element style. All nested properties (```shape```, ```icon```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for details about how tags and styles work.
 
 ```
 element <tag> {
@@ -648,7 +682,7 @@ element <tag> {
             
 ### relationship style
 
-The ```relationship``` keyword is used to define a relationship style. All nested properties (```thickness```, ```color```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for more details.
+The ```relationship``` keyword is used to define a relationship style. All nested properties (```thickness```, ```color```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation)  for details about how tags and styles work.
 
 ```
 relationship <tag> {
