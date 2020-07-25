@@ -429,6 +429,10 @@ containerInstance <identifier> [tags]
 
 The ```identifier``` must represent a container.
 
+In addition to the container's tags, the following tags are added by default:
+
+- `Container Instance`
+
 ## relationship
 
 ```->``` is used to define a uni-directional relationship between two elements.
