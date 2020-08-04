@@ -150,7 +150,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(13, workspace.getViews().getComponentViews().iterator().next().getRelationships().size());
 
         assertEquals(4, workspace.getViews().getDynamicViews().iterator().next().getElements().size());
-        assertEquals(3, workspace.getViews().getDynamicViews().iterator().next().getRelationships().size());
+        assertEquals(6, workspace.getViews().getDynamicViews().iterator().next().getRelationships().size());
 
         assertEquals(10, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getElements().size());
         assertEquals(3, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getRelationships().size());

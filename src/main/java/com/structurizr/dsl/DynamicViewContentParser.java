@@ -36,7 +36,7 @@ final class DynamicViewContentParser extends AbstractParser {
             description = tokens.get(DESCRIPTION_INDEX);
         }
 
-        if (!sourceElement.hasEfferentRelationshipWith(destinationElement)) {
+        if (!sourceElement.hasEfferentRelationshipWith(destinationElement) && !destinationElement.hasEfferentRelationshipWith(sourceElement)) {
             new RelationshipParser().parse(context, tokens);
         }
 
