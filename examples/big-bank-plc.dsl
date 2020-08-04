@@ -154,8 +154,11 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         dynamic apiApplication "SignIn" "Summarises how the sign in feature works in the single-page application." {
             singlePageApplication -> signinController "Submits credentials to"
-            signinController -> securityComponent "Calls isAuthenticated() on"
+            signinController -> securityComponent "Validates credentials using"
             securityComponent -> database "select * from users where username = ?"
+            database -> securityComponent "Returns user data to"
+            securityComponent -> signinController "Returns true if the hashed password matches"
+            signinController -> singlePageApplication "Sends back an authentication token to"
             autoLayout
         }
 
