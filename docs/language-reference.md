@@ -21,6 +21,7 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 			- [deploymentEnvironment](#deploymentEnvironment)
 				- [deploymentNode](#deploymentNode)
 					- [infrastructureNode](#infrastructureNode)
+					- [softwareSystemInstance](#softwareSystemInstance)
 					- [containerInstance](#containerInstance)
 			- [-> (relationship)](#relationship)
 		- [views](#views)
@@ -171,7 +172,8 @@ workspace [name] [description] {
             [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
                 [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
                     [<identifier> = ]infrastructureNode <name> [description] [technology] [tags]
-                        [<identifier> = ]containerInstance <identifier> [tags]
+                    [<identifier> = ]softwareSystemInstance <identifier> [tags]
+                    [<identifier> = ]containerInstance <identifier> [tags]
                 }
             }
         }
@@ -403,7 +405,7 @@ The following tags are added by default:
 - `Element`
 - `Deployment Node`
 
-Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode) and [containerInstance](#containerInstance) elements.
+Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode), [softwareSystemInstance](#softwareSystemInstance), and [containerInstance](#containerInstance) elements.
 
 
 ## infrastructureNode
@@ -418,6 +420,20 @@ The following tags are added by default:
 
 - `Element`
 - `Infrastructure Node`
+
+## softwareSystemInstance
+
+The ```softwareSystemInstance``` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
+
+```
+softwareSystemInstance <identifier> [tags]
+```
+
+The ```identifier``` must represent a software system.
+
+In addition to the software system's tags, the following tags are added by default:
+
+- `Software System Instance`
 
 ## containerInstance
 

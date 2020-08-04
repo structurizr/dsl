@@ -118,17 +118,18 @@ class ExampleTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
 
-        assertEquals(46, workspace.getModel().getElements().size());
+        assertEquals(51, workspace.getModel().getElements().size());
         assertEquals(3, workspace.getModel().getPeople().size());
         assertEquals(4, workspace.getModel().getSoftwareSystems().size());
         assertEquals(5, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getContainers().size());
         assertEquals(6, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getContainerWithName("API Application").getComponents().size());
-        assertEquals(4, workspace.getModel().getDeploymentNodes().size());
-        assertEquals(18, workspace.getModel().getElements().stream().filter(e -> e instanceof DeploymentNode).count());
+        assertEquals(5, workspace.getModel().getDeploymentNodes().size());
+        assertEquals(21, workspace.getModel().getElements().stream().filter(e -> e instanceof DeploymentNode).count());
+        assertEquals(2, workspace.getModel().getElements().stream().filter(e -> e instanceof SoftwareSystemInstance).count());
         assertEquals(10, workspace.getModel().getElements().stream().filter(e -> e instanceof ContainerInstance).count());
         assertEquals(0, workspace.getModel().getElements().stream().filter(e -> e instanceof InfrastructureNode).count());
 
-        assertEquals(40, workspace.getModel().getRelationships().size());
+        assertEquals(42, workspace.getModel().getRelationships().size());
 
         assertEquals(1, workspace.getViews().getSystemLandscapeViews().size());
         assertEquals(1, workspace.getViews().getSystemContextViews().size());
@@ -152,11 +153,11 @@ class ExampleTests extends AbstractTests {
         assertEquals(4, workspace.getViews().getDynamicViews().iterator().next().getElements().size());
         assertEquals(6, workspace.getViews().getDynamicViews().iterator().next().getRelationships().size());
 
-        assertEquals(10, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getElements().size());
-        assertEquals(3, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getRelationships().size());
+        assertEquals(13, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getElements().size());
+        assertEquals(4, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getRelationships().size());
 
-        assertEquals(18, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getElements().size());
-        assertEquals(6, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getRelationships().size());
+        assertEquals(20, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getElements().size());
+        assertEquals(7, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getRelationships().size());
 
         assertEquals(10, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());

@@ -40,6 +40,7 @@ public final class StructurizrDslParser {
     private static final String DEPLOYMENT_ENVIRONMENT_TOKEN = "deploymentEnvironment";
     private static final String DEPLOYMENT_NODE_TOKEN = "deploymentNode";
     private static final String INFRASTRUCTURE_NODE_TOKEN = "infrastructureNode";
+    private static final String SOFTWARE_SYSTEM_INSTANCE_TOKEN = "softwareSystemInstance";
     private static final String CONTAINER_INSTANCE_TOKEN = "containerInstance";
     private static final String SYSTEM_LANDSCAPE_VIEW_TOKEN = "systemLandscape";
     private static final String SYSTEM_CONTEXT_VIEW_TOKEN = "systemContext";
@@ -348,6 +349,13 @@ public final class StructurizrDslParser {
 
                         if (identifier != null) {
                             elements.put(identifier, infrastructureNode);
+                        }
+
+                    } else if (SOFTWARE_SYSTEM_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
+                        SoftwareSystemInstance softwareSystemInstance = new SoftwareSystemInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens);
+
+                        if (identifier != null) {
+                            elements.put(identifier, softwareSystemInstance);
                         }
 
                     } else if (CONTAINER_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {

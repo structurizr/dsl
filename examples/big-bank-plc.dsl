@@ -77,6 +77,12 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     }
                 }
             }
+            deploymentNode "Big Bank plc" "" "Big Bank plc data center" "" {
+                deploymentNode "bigbank-dev001" "" "" "" {
+                    softwareSystemInstance mainframe
+                }
+            }
+
         }
 
         deploymentEnvironment "Live" {
@@ -110,6 +116,9 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
                     secondaryDatabaseServer = deploymentNode "Oracle - Secondary" "" "Oracle 12c" "Failover" {
                         liveSecondaryDatabaseInstance = containerInstance database "Failover"
                     }
+                }
+                deploymentNode "bigbank-prod001" "" "" "" {
+                    softwareSystemInstance mainframe
                 }
             }
 
