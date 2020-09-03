@@ -267,7 +267,7 @@ workspace [name] [description] {
     
     configuration {
     	users {
-    		<username> <read|write>
+            <username> <read|write>
     	}
     }
 
