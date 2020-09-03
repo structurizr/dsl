@@ -58,6 +58,8 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 				- [relationship](#relationship-style)
 			- [themes](#themes)
 			- [branding](#branding)
+		- [configuration](#configuration)
+			- [users](#users)
 
 ## General rules
 
@@ -261,6 +263,12 @@ workspace [name] [description] {
             font <name> [url]
         }
 
+    }
+    
+    configuration {
+    	users {
+    		<username> <read|write>
+    	}
     }
 
 }
@@ -737,4 +745,23 @@ branding {
 }
 ```
 
+### configuration
+
+Finally, there are some configuration options that can be specified inside the ```configuration``` block.
+
+```
+configuration {
+	...
+}
+```
+
+### users
+
+The ```users``` block can be used to specify the users who should have read-only or read-write access to a workspace. Each username (e.g. e-mail address) and role pair should be specified on their own line. Valid roles are ```read``` (read-only) and ```write``` (read-write). 
+
+```
+users {
+	<username> <read|write>
+}
+```
 

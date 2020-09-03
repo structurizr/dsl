@@ -82,6 +82,8 @@ public final class StructurizrDslParser {
     private static final String RELATIONSHIP_STYLE_WIDTH_TOKEN = "width";
     private static final String RELATIONSHIP_STYLE_POSITION_TOKEN = "position";
     private static final String THEMES_TOKEN = "themes";
+    private static final String CONFIGURATION_TOKEN = "configuration";
+    private static final String USERS_TOKEN = "users";
 
     private static final String INCLUDE_FILE_TOKEN = "!include";
 
@@ -192,6 +194,9 @@ public final class StructurizrDslParser {
 
                     } else if (inContext(CommentDslContext.class)) {
                         // do nothing
+
+                    } else if (DslContext.CONTEXT_END_TOKEN.equals(tokens.get(0))) {
+                        endContext();
 
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class))) {
                         Relationship relationship = new RelationshipParser().parse(getContext(), tokens);
@@ -425,13 +430,19 @@ public final class StructurizrDslParser {
                     } else if (THEMES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         new ThemesParser().parse(getContext(), tokens);
 
+                    } else if (CONFIGURATION_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        startContext(new ConfigurationDslContext());
+
+                    } else if (USERS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ConfigurationDslContext.class)) {
+                        startContext(new UsersDslContext());
+
+                    } else if (inContext(UsersDslContext.class)) {
+                        new UserRoleParser().parse(getContext(), tokens);
+
                     } else if (INCLUDE_FILE_TOKEN.equalsIgnoreCase(firstToken)) {
                         IncludedDslContext context = new IncludedDslContext(file);
                         new IncludeParser().parse(context, tokens);
                         parse(context.getLines(), context.getFile());
-
-                    } else if (DslContext.CONTEXT_END_TOKEN.equals(tokens.get(0))) {
-                        endContext();
 
                     } else {
                         throw new RuntimeException("Unexpected tokens");
