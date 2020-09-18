@@ -53,6 +53,8 @@ final class RelationshipParser extends AbstractParser {
             relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof InfrastructureNode && destinationElement instanceof DeploymentElement) {
             relationship = ((InfrastructureNode)sourceElement).uses((DeploymentElement)destinationElement, description, technology, null, tags);
+        } else if (sourceElement instanceof StaticStructureElementInstance && destinationElement instanceof InfrastructureNode) {
+            relationship = ((StaticStructureElementInstance)sourceElement).uses((InfrastructureNode)destinationElement, description, technology, null, tags);
         } else {
             throw new RuntimeException("A relationship between \"" + sourceId + "\" and \"" + destinationId + "\" is not permitted");
         }
