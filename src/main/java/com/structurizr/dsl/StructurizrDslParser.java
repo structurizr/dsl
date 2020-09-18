@@ -33,6 +33,9 @@ public final class StructurizrDslParser {
     private static final String RELATIONSHIP_TOKEN = "->";
     private static final String CONTAINER_TOKEN = "container";
     private static final String COMPONENT_TOKEN = "component";
+    private static final String URL_TOKEN = "url";
+    private static final String PROPERTIES_TOKEN = "properties";
+    private static final String PERSPECTIVES_TOKEN = "perspectives";
     private static final String WORKSPACE_TOKEN = "workspace";
     private static final String MODEL_TOKEN = "model";
     private static final String VIEWS_TOKEN = "views";
@@ -199,14 +202,22 @@ public final class StructurizrDslParser {
                         endContext();
 
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class))) {
-                        Relationship relationship = new RelationshipParser().parse(getContext(), tokens);
+                        Relationship relationship = new RelationshipParser().parse(getContext(), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new RelationshipDslContext(relationship));
+                        }
 
                         if (identifier != null) {
                             relationships.put(identifier, relationship);
                         }
 
                     } else if (PERSON_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class))) {
-                        Person person = new PersonParser().parse(getContext(), tokens);
+                        Person person = new PersonParser().parse(getContext(), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new PersonDslContext(person));
+                        }
 
                         if (identifier != null) {
                             elements.put(identifier, person);
@@ -235,11 +246,24 @@ public final class StructurizrDslParser {
                         }
 
                     } else if (COMPONENT_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
-                        Component component = new ComponentParser().parse(getContext(ContainerDslContext.class), tokens);
+                        Component component = new ComponentParser().parse(getContext(ContainerDslContext.class), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new ComponentDslContext(component));
+                        }
 
                         if (identifier != null) {
                             elements.put(identifier, component);
                         }
+
+                    } else if (URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                        new ModelItemParser().parseUrl(getContext(ModelItemDslContext.class), tokens);
+
+                    } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                        startContext(new ModelItemPropertiesDslContext(getContext(ModelItemDslContext.class).getModelItem()));
+
+                    } else if (inContext(ModelItemPropertiesDslContext.class)) {
+                        new ModelItemParser().parseProperty(getContext(ModelItemPropertiesDslContext.class), tokens);
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
                         new WorkspaceParser().parse(workspace, tokens.withoutContextStartToken());
@@ -350,7 +374,11 @@ public final class StructurizrDslParser {
                             elements.put(identifier, deploymentNode);
                         }
                     } else if (INFRASTRUCTURE_NODE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
-                        InfrastructureNode infrastructureNode = new InfrastructureNodeParser().parse(getContext(DeploymentNodeDslContext.class), tokens);
+                        InfrastructureNode infrastructureNode = new InfrastructureNodeParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new InfrastructureNodeDslContext(infrastructureNode));
+                        }
 
                         if (identifier != null) {
                             elements.put(identifier, infrastructureNode);

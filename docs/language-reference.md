@@ -15,15 +15,28 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 		- [model](#model)
 			- [enterprise](#enterprise)
 			- [person](#person)
+				- [url](#url)
+				- [properties](#properties)
 			- [softwareSystem](#softwareSystem)
+				- [url](#url)
+				- [properties](#properties)
 				- [container](#container)
+					- [url](#url)
+					- [properties](#properties)
 					- [component](#component)
+						- [url](#url)
+						- [properties](#properties)
 			- [deploymentEnvironment](#deploymentEnvironment)
 				- [deploymentNode](#deploymentNode)
+					- [url](#url)
+					- [properties](#properties)
 					- [infrastructureNode](#infrastructureNode)
+						- [url](#url)
+						- [properties](#properties)
 					- [softwareSystemInstance](#softwareSystemInstance)
 					- [containerInstance](#containerInstance)
 			- [-> (relationship)](#relationship)
+				- [url](#url)
 		- [views](#views)
 			- [systemLandscape](#systemLandscape-view)
 				- [include](#include)
@@ -161,19 +174,56 @@ workspace [name] [description] {
             }
         }
 
-		[<identifier> = ]person <name> [description] [tags]
+		[<identifier> = ]person <name> [description] [tags] {
+			url <url>
+			properties {
+				<name> <value>
+			}
+		}
 		[<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+			url <url>
+			properties {
+				<name> <value>
+			}
 			[<identifier> = ]container <name> [description] [technology] [tags] {
-				[<identifier> = ]component <name> [description] [technology] [tags]
+				url <url>
+				properties {
+					<name> <value>
+				}
+				[<identifier> = ]component <name> [description] [technology] [tags] {
+					url <url>
+					properties {
+						<name> <value>
+					}
+				}
 			}
 		}
 
-        <identifier> -> <identifier> [description] [technology] [tags]
+        <identifier> -> <identifier> [description] [technology] [tags] {
+     		url <url>
+			properties {
+				<name> <value>
+			}
+        }
 
         deploymentEnvironment <name> {
             [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
+            	url <url>
+				properties {
+					<name> <value>
+				}
+
                 [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
-                    [<identifier> = ]infrastructureNode <name> [description] [technology] [tags]
+                	url <url>
+					properties {
+						<name> <value>
+					}
+                    [<identifier> = ]infrastructureNode <name> [description] [technology] [tags] {
+                    	url <url>
+						properties {
+							<name> <value>
+						}
+                    }
                     [<identifier> = ]softwareSystemInstance <identifier> [tags]
                     [<identifier> = ]containerInstance <identifier> [tags]
                 }
@@ -302,7 +352,7 @@ The ```model``` block can contain the following children:
 - [-> (relationship)](#relationship)
 - [deploymentEnvironment](#deploymentEnvironment)
 
-## enterprise
+### enterprise
 
 The ```enterprise``` keyword provides a way to define a named "enterprise" (e.g. an organisation). Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
 
@@ -318,7 +368,7 @@ The ```enterprise``` block can contain the following children:
 - [softwareSystem](#softwareSystem)
 - [-> (relationship)](#relationship)
 
-## person
+### person
 
 The ```person``` keyword defines a person (e.g. a user, actor, role, or persona).
 
@@ -331,7 +381,7 @@ The following tags are added by default:
 - `Element`
 - `Person`
 
-## softwareSystem
+### softwareSystem
 
 The ```softwareSystem``` keyword defines a software system.
 
@@ -352,7 +402,7 @@ The following tags are added by default:
 - `Element`
 - `Software System`
 
-## container
+### container
 
 The ```container``` keyword defines a container, within a software system.
 
@@ -373,7 +423,7 @@ The following tags are added by default:
 - `Element`
 - `Container`
 
-## component
+### component
 
 The ```component``` keyword defines a component, within a container.
 
@@ -386,7 +436,7 @@ The following tags are added by default:
 - `Element`
 - `Component`
 
-## deploymentEnvironment
+### deploymentEnvironment
 
 The ```deploymentEnvironment``` keyword provides a way to define a deployment environment (e.g. development, testing, staging, live, etc).
 
@@ -398,7 +448,7 @@ deploymentEnvironment <name> {
 
 A deployment environment can contain one or more [deploymentNode](#deploymentNode) elements.
 
-## deploymentNode
+### deploymentNode
 
 The ```deploymentNode``` keyword is used to define a deployment node.
 
@@ -416,7 +466,7 @@ The following tags are added by default:
 Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode), [softwareSystemInstance](#softwareSystemInstance), and [containerInstance](#containerInstance) elements.
 
 
-## infrastructureNode
+### infrastructureNode
 
 The ```infrastructureNode``` keyword defines an infrastructure node, which is typically something like a load balancer, firewall, DNS service, etc.
 
@@ -429,7 +479,7 @@ The following tags are added by default:
 - `Element`
 - `Infrastructure Node`
 
-## softwareSystemInstance
+### softwareSystemInstance
 
 The ```softwareSystemInstance``` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
 
@@ -443,7 +493,7 @@ In addition to the software system's tags, the following tags are added by defau
 
 - `Software System Instance`
 
-## containerInstance
+### containerInstance
 
 The ```containerInstance``` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
@@ -457,7 +507,7 @@ In addition to the container's tags, the following tags are added by default:
 
 - `Container Instance`
 
-## relationship
+### relationship
 
 ```->``` is used to define a uni-directional relationship between two elements.
 
@@ -468,6 +518,25 @@ In addition to the container's tags, the following tags are added by default:
 The following tags are added by default:
 
 - `Relationship`
+
+## url
+
+```url``` is used to set a URL on an element or relationship.
+
+```
+url https://example.com
+```
+
+### properties
+
+The ```properties``` block is used to define one or more name/value properties for an element or relationship.
+
+```
+properties {
+	<name> <value>
+	...
+}
+```
 
 ### views
 

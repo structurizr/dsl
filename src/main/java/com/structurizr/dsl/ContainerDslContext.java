@@ -1,8 +1,9 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Container;
+import com.structurizr.model.ModelItem;
 
-final class ContainerDslContext extends DslContext {
+final class ContainerDslContext extends ModelItemDslContext {
 
     private Container container;
 
@@ -12,6 +13,11 @@ final class ContainerDslContext extends DslContext {
 
     Container getContainer() {
         return container;
+    }
+
+    @Override
+    ModelItem getModelItem() {
+        return getContainer();
     }
 
 }
