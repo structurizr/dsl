@@ -199,7 +199,7 @@ workspace [name] [description] {
 			}
 		}
 
-        <identifier> -> <identifier> [description] [technology] [tags] {
+        [<identifier> = ]<identifier> -> <identifier> [description] [technology] [tags] {
      		url <url>
 			properties {
 				<name> <value>
