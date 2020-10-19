@@ -56,6 +56,7 @@ public final class StructurizrDslParser {
     private static final String EXCLUDE_IN_VIEW_TOKEN = "exclude";
     private static final String ANIMATION_STEP_IN_VIEW_TOKEN = "animationStep";
     private static final String AUTOLAYOUT_VIEW_TOKEN = "autolayout";
+    private static final String VIEW_TITLE_TOKEN = "title";
     private static final String STYLES_TOKEN = "styles";
     private static final String BRANDING_TOKEN = "branding";
     private static final String BRANDING_LOGO_TOKEN = "logo";
@@ -454,6 +455,15 @@ public final class StructurizrDslParser {
 
                     } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
                         new AutoLayoutParser().parse(getContext(DeploymentViewDslContext.class), tokens);
+
+                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
+                        new ViewParser().parseTitle(getContext(StaticViewDslContext.class), tokens);
+
+                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DynamicViewDslContext.class)) {
+                        new ViewParser().parseTitle(getContext(DynamicViewDslContext.class), tokens);
+
+                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
+                        new ViewParser().parseTitle(getContext(DeploymentViewDslContext.class), tokens);
 
                     } else if (THEMES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         new ThemesParser().parse(getContext(), tokens);

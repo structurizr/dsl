@@ -239,6 +239,7 @@ workspace [name] [description] {
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
+            title <title>
         }
 
         systemContext <software system identifier> [key] [description] {
@@ -246,6 +247,7 @@ workspace [name] [description] {
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
+            title <title>
         }
 
         container <software system identifier> [key] [description] {
@@ -253,6 +255,7 @@ workspace [name] [description] {
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
+            title <title>
         }
 
         component <container identifier> [key] [description] {
@@ -260,6 +263,7 @@ workspace [name] [description] {
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
+            title <title>
         }
 
         filtered <baseKey> <include|exclude> <tags> [key] [description]
@@ -267,6 +271,7 @@ workspace [name] [description] {
         dynamic <*|software system identifier|container identifier> [key] [description] {
             <identifier> -> <identifier> [description]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
+            title <title>
         }
 
         deployment <*|software system identifier> <environment name> [key] [description] {
@@ -274,6 +279,7 @@ workspace [name] [description] {
 			exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
+            title <title>
         }
 
         styles {
@@ -577,6 +583,7 @@ The following keywords can be used within the ```systemLandscape``` block:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animationStep](#animationStep)
+- [title](#title)
 
 ### systemContext view
 
@@ -594,6 +601,7 @@ The following keywords can be used within the ```systemContext``` block:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animationStep](#animationStep)
+- [title](#title)
 
 ### container view
 
@@ -611,6 +619,7 @@ The following keywords can be used within the ```container``` block:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animationStep](#animationStep)
+- [title](#title)
 
 ### component view
 
@@ -628,6 +637,7 @@ The following keywords can be used within the ```component``` block:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animationStep](#animationStep)
+- [title](#title)
 
 ### filtered view
 
@@ -666,6 +676,7 @@ If a relationship between the two elements does not exist, it will be automatica
 The following keywords can also be used within the ```dynamic``` block:
 
 - [autoLayout](#autoLayout)
+- [title](#title)
 
 ### deployment view
 
@@ -688,6 +699,7 @@ The following keywords can be used within the ```deployment``` block:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animationStep](#animationStep)
+- [title](#title)
 
 ### include
 
@@ -738,6 +750,14 @@ The ```animationStep``` keyword defines an animation step consisting of the spec
 
 ```
 animationStep <identifier> [identifier...]
+```
+
+### title
+
+Overrides the title of the view.
+
+```
+title <title>
 ```
 
 ### styles
