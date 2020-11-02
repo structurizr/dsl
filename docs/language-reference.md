@@ -213,13 +213,13 @@ workspace [name] [description] {
         }
 
         deploymentEnvironment <name> {
-            [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
+            [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
             	url <url>
 				properties {
 					<name> <value>
 				}
 
-                [<identifier> = ]deploymentNode <name> [description] [technology] [tags] {
+                [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
                 	url <url>
 					properties {
 						<name> <value>
@@ -465,7 +465,7 @@ A deployment environment can contain one or more [deploymentNode](#deploymentNod
 The ```deploymentNode``` keyword is used to define a deployment node.
 
 ```
-deploymentNode <name> [description] [technology] [tags] {
+deploymentNode <name> [description] [technology] [tags] [instances] {
 	...
 }
 ```
