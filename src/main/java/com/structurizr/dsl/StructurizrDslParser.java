@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Main DSL parser class - forms the API for using the parser.
  */
-public final class StructurizrDslParser {
+public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^\\s*");
     private static final Pattern TOKENS_PATTERN = Pattern.compile("\"([^\"]*)\"|(\\S+)");
@@ -26,77 +26,11 @@ public final class StructurizrDslParser {
     private static final String MULTI_LINE_COMMENT_START_TOKEN = "/**";
     private static final String MULTI_LINE_COMMENT_END_TOKEN = "*/";
 
-    private static final String ASSIGNMENT_OPERATOR_TOKEN = "=";
-
-    private static final String PERSON_TOKEN = "person";
-    private static final String SOFTWARE_SYSTEM_TOKEN = "softwareSystem";
-    private static final String RELATIONSHIP_TOKEN = "->";
-    private static final String CONTAINER_TOKEN = "container";
-    private static final String COMPONENT_TOKEN = "component";
-    private static final String URL_TOKEN = "url";
-    private static final String PROPERTIES_TOKEN = "properties";
-    private static final String PERSPECTIVES_TOKEN = "perspectives";
-    private static final String WORKSPACE_TOKEN = "workspace";
-    private static final String MODEL_TOKEN = "model";
-    private static final String VIEWS_TOKEN = "views";
-    private static final String ENTERPRISE_TOKEN = "enterprise";
-    private static final String DEPLOYMENT_ENVIRONMENT_TOKEN = "deploymentEnvironment";
-    private static final String DEPLOYMENT_NODE_TOKEN = "deploymentNode";
-    private static final String INFRASTRUCTURE_NODE_TOKEN = "infrastructureNode";
-    private static final String SOFTWARE_SYSTEM_INSTANCE_TOKEN = "softwareSystemInstance";
-    private static final String CONTAINER_INSTANCE_TOKEN = "containerInstance";
-    private static final String SYSTEM_LANDSCAPE_VIEW_TOKEN = "systemLandscape";
-    private static final String SYSTEM_CONTEXT_VIEW_TOKEN = "systemContext";
-    private static final String CONTAINER_VIEW_TOKEN = "container";
-    private static final String COMPONENT_VIEW_TOKEN = "component";
-    private static final String DYNAMIC_VIEW = "dynamic";
-    private static final String DEPLOYMENT_VIEW_TOKEN = "deployment";
-    private static final String FILTERED_VIEW_TOKEN = "filtered";
-    private static final String INCLUDE_IN_VIEW_TOKEN = "include";
-    private static final String EXCLUDE_IN_VIEW_TOKEN = "exclude";
-    private static final String ANIMATION_STEP_IN_VIEW_TOKEN = "animationStep";
-    private static final String AUTOLAYOUT_VIEW_TOKEN = "autolayout";
-    private static final String VIEW_TITLE_TOKEN = "title";
-    private static final String STYLES_TOKEN = "styles";
-    private static final String BRANDING_TOKEN = "branding";
-    private static final String BRANDING_LOGO_TOKEN = "logo";
-    private static final String BRANDING_FONT_TOKEN = "font";
-    private static final String ELEMENT_STYLE_TOKEN = "element";
-    private static final String ELEMENT_STYLE_SHAPE_TOKEN = "shape";
-    private static final String ELEMENT_STYLE_BACKGROUND_TOKEN = "background";
-    private static final String ELEMENT_STYLE_STROKE_TOKEN = "stroke";
-    private static final String ELEMENT_STYLE_COLOUR_TOKEN = "colour";
-    private static final String ELEMENT_STYLE_COLOR_TOKEN = "color";
-    private static final String ELEMENT_STYLE_ICON_TOKEN = "icon";
-    private static final String ELEMENT_STYLE_OPACITY_TOKEN = "opacity";
-    private static final String ELEMENT_STYLE_BORDER_TOKEN = "border";
-    private static final String ELEMENT_STYLE_FONT_SIZE_TOKEN = "fontSize";
-    private static final String ELEMENT_STYLE_WIDTH_TOKEN = "width";
-    private static final String ELEMENT_STYLE_HEIGHT_TOKEN = "height";
-    private static final String ELEMENT_STYLE_METADATA_TOKEN = "metadata";
-    private static final String ELEMENT_STYLE_DESCRIPTION_TOKEN = "description";
-    private static final String RELATIONSHIP_STYLE_TOKEN = "relationship";
-    private static final String RELATIONSHIP_STYLE_THICKNESS_TOKEN = "thickness";
-    private static final String RELATIONSHIP_STYLE_COLOUR_TOKEN = "colour";
-    private static final String RELATIONSHIP_STYLE_COLOR_TOKEN = "color";
-    private static final String RELATIONSHIP_STYLE_DASHED_TOKEN = "dashed";
-    private static final String RELATIONSHIP_STYLE_OPACITY_TOKEN = "opacity";
-    private static final String RELATIONSHIP_STYLE_ROUTING_TOKEN = "routing";
-    private static final String RELATIONSHIP_STYLE_FONT_SIZE_TOKEN = "fontSize";
-    private static final String RELATIONSHIP_STYLE_WIDTH_TOKEN = "width";
-    private static final String RELATIONSHIP_STYLE_POSITION_TOKEN = "position";
-    private static final String THEMES_TOKEN = "themes";
-    private static final String CONFIGURATION_TOKEN = "configuration";
-    private static final String USERS_TOKEN = "users";
-
-    private static final String INCLUDE_FILE_TOKEN = "!include";
-
     private Stack<DslContext> contextStack;
     private Map<String, Element> elements;
     private Map<String, Relationship> relationships;
 
     private Workspace workspace;
-
 
     /**
      * Creates a new instance of the parser.
