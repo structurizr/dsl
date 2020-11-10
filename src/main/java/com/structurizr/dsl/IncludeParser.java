@@ -10,10 +10,10 @@ final class IncludeParser extends AbstractParser {
     private static final int FILE_INDEX = 1;
 
     void parse(IncludedDslContext context, Tokens tokens) {
-        // include <file>
+        // !include <file>
 
         if (!tokens.includes(FILE_INDEX)) {
-            throw new RuntimeException("Expected: include <file>");
+            throw new RuntimeException("Expected: !include <file>");
         }
 
         String filename = tokens.get(FILE_INDEX);
