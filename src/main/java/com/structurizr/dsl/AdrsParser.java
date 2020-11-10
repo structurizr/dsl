@@ -25,7 +25,7 @@ final class AdrsParser extends AbstractParser {
             throw new RuntimeException("Expected: !adrs <path>");
         }
 
-        if (file.getParentFile() != null) {
+        if (file != null) {
             File path = new File(file.getParentFile(), tokens.get(PATH_INDEX));
 
             if (!path.exists()) {
