@@ -142,7 +142,7 @@ The ```!include``` keyword can be used to include another file, to provide some 
 !include <file>
 ```
 
-The file must be referenced using a relative path, and must be located within the same directory as the parent file, or a subdirectory of it. For example:
+The file must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
 
 ```
 !include child.dsl
