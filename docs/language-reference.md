@@ -152,6 +152,39 @@ The file must be a relative path, located within the same directory as the paren
 
 The content of any included files is simply inlined into the parent document. 
 
+## Documentation
+
+The ```!docs``` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, or a software system).
+
+```
+!docs <path>
+```
+
+The path must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
+
+```
+!docs subdirectory
+``` 
+
+All Markdown and AsciiDoc files in this directory (and sub-directories) will be imported, alphabetically according to the filename. Each file must represent a separate documentation section, and the second level heading (`## Section Title` in Markdown and `== Section Title` in AsciiDoc) will be used as the section name. 
+
+## Architecture decision records (ADRs)
+
+The ```!adrs``` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, or a software system).
+
+```
+!adrs <path>
+```
+
+The path must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
+
+```
+!adrs subdirectory
+``` 
+
+All Markdown and AsciiDoc files in this directory (and sub-directories) will be imported, alphabetically according to the filename.
+The files must have been created by [adr-tools](https://github.com/npryce/adr-tools), or at least follow the same format. 
+
 ## Grammar
 
 The following describes the language grammar, with angle brackets (```<...>```) used to show required properties, and square brackets (```[...]```) used to show optional properties.
@@ -169,6 +202,8 @@ workspace [name] [description] {
     // single line comment
 
     !include <file>
+    !docs <path>
+    !adrs <path>
 
     model {
 
@@ -198,6 +233,7 @@ workspace [name] [description] {
                 }
     			
                 !docs <path>
+                !adrs <path>
             }
         }
 
@@ -239,6 +275,7 @@ workspace [name] [description] {
 			}
 			
             !docs <path>
+            !adrs <path>
 		}
 
         [<identifier> = ]<identifier> -> <identifier> [description] [technology] [tags] {

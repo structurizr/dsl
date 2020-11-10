@@ -425,6 +425,19 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new IncludeParser().parse(context, tokens);
                         parse(context.getLines(), context.getFile());
 
+                    } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        new DocsParser().parse(getContext(WorkspaceDslContext.class), file, tokens);
+
+                    } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
+                        new DocsParser().parse(getContext(SoftwareSystemDslContext.class), file, tokens);
+
+
+                    } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        new AdrsParser().parse(getContext(WorkspaceDslContext.class), file, tokens);
+
+                    } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
+                        new AdrsParser().parse(getContext(SoftwareSystemDslContext.class), file, tokens);
+
                     } else {
                         throw new RuntimeException("Unexpected tokens");
                     }
