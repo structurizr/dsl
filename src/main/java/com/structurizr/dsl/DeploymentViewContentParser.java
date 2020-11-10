@@ -2,6 +2,10 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.view.DeploymentView;
+import com.structurizr.view.RelationshipView;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 final class DeploymentViewContentParser extends AbstractParser {
 
@@ -80,7 +84,14 @@ final class DeploymentViewContentParser extends AbstractParser {
                 }
 
                 if (relationship != null) {
+                    // remove the specified relationship
                     view.remove(relationship);
+
+                    // and also remove any replicated versions of the specified relationship
+                    Collection<Relationship> replicatedRelationshipsInView = view.getRelationships().stream().map(RelationshipView::getRelationship).filter(r -> r.getLinkedRelationshipId() != null && r.getLinkedRelationshipId().equals(relationship.getId())).collect(Collectors.toSet());
+                    for (Relationship r : replicatedRelationshipsInView) {
+                        view.remove(r);
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.view.DeploymentView;
+import com.structurizr.view.RelationshipView;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -202,6 +203,32 @@ class DeploymentViewContentParserTests extends AbstractTests {
 
         assertEquals(1, view.getElements().size());
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(dn)));
+    }
+
+    @Test
+    void test_parseExclude_ExcludesReplicatedVersionsOfTheSpecifiedRelationship() {
+        SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
+        SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
+        Relationship rel = ss1.uses(ss2, "Uses");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        dn.add(ss1);
+        dn.add(ss2);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+        
+        Map<String, Relationship> relationships = new HashMap<>();
+        relationships.put("rel", rel);
+        context.setRelationships(relationships);
+
+        view.addDefaultElements();
+        assertEquals(1, view.getRelationships().stream().map(RelationshipView::getRelationship).filter(r -> r.getLinkedRelationshipId().equals(rel.getId())).count());
+
+        parser.parseExclude(context, tokens("exclude", "rel"));
+        assertEquals(0, view.getRelationships().size());
     }
 
 }
