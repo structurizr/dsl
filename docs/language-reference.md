@@ -175,37 +175,70 @@ workspace [name] [description] {
         impliedRelationships <true|false>
 
         enterprise <name> {
-            [<identifier> = ]person <name> [description] [tags]
+            [<identifier> = ]person <name> [description] [tags] {
+                url <url>
+                properties {
+                    <name> <value>
+                }
+                perspectives {
+                    <name> <description>
+                }
+            }
             [<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+                url <url>
+                properties {
+                    <name> <value>
+                }
+                perspectives {
+                    <name> <description>
+                }
+                
                 [<identifier> = ]container <name> [description] [technology] [tags] {
                     [<identifier> = ]component <name> [description] [technology] [tags]
                 }
+    			
+                !docs <path>
             }
         }
 
-		[<identifier> = ]person <name> [description] [tags] {
+        [<identifier> = ]person <name> [description] [tags] {
 			url <url>
 			properties {
 				<name> <value>
 			}
+            perspectives {
+                <name> <description>
+            }
 		}
 		[<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
 			url <url>
 			properties {
 				<name> <value>
 			}
+            perspectives {
+                <name> <description>
+            }
+			
 			[<identifier> = ]container <name> [description] [technology] [tags] {
 				url <url>
 				properties {
 					<name> <value>
 				}
+                perspectives {
+                    <name> <description>
+                }
 				[<identifier> = ]component <name> [description] [technology] [tags] {
 					url <url>
 					properties {
 						<name> <value>
 					}
+                    perspectives {
+                        <name> <description>
+                    }
 				}
 			}
+			
+            !docs <path>
 		}
 
         [<identifier> = ]<identifier> -> <identifier> [description] [technology] [tags] {
@@ -213,6 +246,9 @@ workspace [name] [description] {
 			properties {
 				<name> <value>
 			}
+            perspectives {
+                <name> <description>
+            }
         }
 
         deploymentEnvironment <name> {
@@ -221,17 +257,26 @@ workspace [name] [description] {
 				properties {
 					<name> <value>
 				}
+                perspectives {
+                    <name> <description>
+                }
 
                 [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
                 	url <url>
 					properties {
 						<name> <value>
 					}
+                    perspectives {
+                        <name> <description>
+                    }
                     [<identifier> = ]infrastructureNode <name> [description] [technology] [tags] {
                     	url <url>
 						properties {
 							<name> <value>
 						}
+                        perspectives {
+                            <name> <description>
+                        }
                     }
                     [<identifier> = ]softwareSystemInstance <identifier> [tags]
                     [<identifier> = ]containerInstance <identifier> [tags]
@@ -559,6 +604,18 @@ The ```properties``` block is used to define one or more name/value properties f
 ```
 properties {
 	<name> <value>
+	...
+}
+```
+
+### perspectives
+
+The ```perspectives``` block is used to define one or more name/description perspectives for an element or relationship.
+See [Help - Perspectives](https://structurizr.com/help/perspectives) for how these are used.
+
+```
+perspectives {
+	<name> <description>
 	...
 }
 ```

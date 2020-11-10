@@ -52,4 +52,25 @@ class ModelItemParserTests extends AbstractTests {
         assertEquals("value", softwareSystem.getProperties().get("name"));
     }
 
+    @Test
+    void test_parsePerspective_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+            ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(softwareSystem);
+            parser.parsePerspective(context, tokens("name"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: <name> <description>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parsePerspective_AddsThePerspective_WhenAValueIsSpecified() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+        ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(softwareSystem);
+        parser.parsePerspective(context, tokens("Security", "Description"));
+
+        assertEquals("Description", softwareSystem.getPerspectives().stream().filter(p -> p.getName().equals("Security")).findFirst().get().getDescription());
+    }
+
 }
