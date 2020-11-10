@@ -13,6 +13,7 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 - [Grammar](#grammar)
 	- [workspace](#workspace)
 		- [model](#model)
+		    - [impliedRelationships](#impliedRelationships)
 			- [enterprise](#enterprise)
 			- [person](#person)
 				- [url](#url)
@@ -170,6 +171,8 @@ workspace [name] [description] {
     !include <file>
 
     model {
+
+        impliedRelationships <true|false>
 
         enterprise <name> {
             [<identifier> = ]person <name> [description] [tags]
@@ -363,6 +366,16 @@ The ```model``` block can contain the following children:
 - [softwareSystem](#softwareSystem)
 - [-> (relationship)](#relationship)
 - [deploymentEnvironment](#deploymentEnvironment)
+
+### impliedRelationships
+
+```
+impliedRelationships <true|false>
+```
+
+The ```impliedRelationships``` keyword provides a way to enable or disable whether implied relationships are created.
+A flag of `false` disables implied relationship creation, while `true` creates implied relationships between all valid combinations of the parent elements, unless any relationship already exists between them
+(see [Structurizr for Java - Implied relationships - CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy](https://github.com/structurizr/java/blob/master/docs/implied-relationships.md#createimpliedrelationshipsunlessanyrelationshipexistsstrategy) for more details).
 
 ### enterprise
 
