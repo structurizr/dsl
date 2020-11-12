@@ -4,6 +4,9 @@
 
 This GitHub repository contains an implementation of the Structurizr DSL - a way to create Structurizr software architecture models based upon the [C4 model](https://c4model.com) using a textual domain specific language (DSL). The Structurizr DSL has appeared on the [ThoughtWorks Tech Radar - Techniques - Diagrams as code](https://www.thoughtworks.com/radar/techniques?blipid=202010027).
 
+* [Getting started](docs/getting-started.md)
+* [Language reference](docs/language-reference.md)
+
 ## A quick example
 
 As an example, the following text can be used to create a software architecture __model__ and an associated __view__ that describes a user using a software system.
@@ -73,12 +76,17 @@ workspace {
 
 ([view this example](https://structurizr.com/dsl?src=https://gist.githubusercontent.com/simonbrowndotje/3eefa2b8adcbdef55ce6de4875b39f3a/raw/0c2dd656e091b2b61a70d2280c8a8b2cf0d90db8/workspace.dsl))
 
-## Table of contents
+## Tooling support
 
-* [Getting started](docs/getting-started.md)
-* [Demo](https://structurizr.com/dsl)
-* [Language reference](docs/language-reference.md)
-* Examples
-	* [Financial Risk System](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/financial-risk-system.dsl)
-	* [Big Bank plc](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/big-bank-plc.dsl)
-	* [Amazon Web Services](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/amazon-web-services.dsl)
+Here are some tools designed to support the Structurizr DSL.
+
+* [Structurizr DSL demo](https://structurizr.com/dsl)
+* [Structurizr CLI](https://github.com/structurizr/cli)
+* [VS Code extension - C4 DSL Extension](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension)
+* [VS Code extension - Structurizr DSL syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
+
+## Examples
+
+* [Financial Risk System](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/financial-risk-system.dsl)
+* [Big Bank plc](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/big-bank-plc.dsl)
+* [Amazon Web Services](https://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/examples/amazon-web-services.dsl)
