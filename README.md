@@ -82,8 +82,8 @@ Here are some tools designed to support the Structurizr DSL.
 
 * [Structurizr DSL demo](https://structurizr.com/dsl)
 * [Structurizr CLI](https://github.com/structurizr/cli)
-* [VS Code extension - C4 DSL Extension](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension)
-* [VS Code extension - Structurizr DSL syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
+* [VS Code extension - syntax highlighting and PlantUML previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension)
+* [VS Code extension - syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
 
 ## Examples
 
