@@ -329,14 +329,22 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         }
 
                     } else if (SOFTWARE_SYSTEM_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
-                        SoftwareSystemInstance softwareSystemInstance = new SoftwareSystemInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens);
+                        SoftwareSystemInstance softwareSystemInstance = new SoftwareSystemInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new SoftwareSystemInstanceDslContext(softwareSystemInstance));
+                        }
 
                         if (identifier != null) {
                             elements.put(identifier, softwareSystemInstance);
                         }
 
                     } else if (CONTAINER_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
-                        ContainerInstance containerInstance = new ContainerInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens);
+                        ContainerInstance containerInstance = new ContainerInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new ContainerInstanceDslContext(containerInstance));
+                        }
 
                         if (identifier != null) {
                             elements.put(identifier, containerInstance);
