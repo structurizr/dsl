@@ -152,6 +152,17 @@ workspace "Name" "Description" {
             logo logo.png
             font "Example" https://example/com/font
         }
+
+        terminology {
+            enterprise "Enterprise"
+            person "Person"
+            softwareSystem "Software System"
+            container "Container"
+            component "Component"
+            deploymentNode "Deployment Node"
+            infrastructureNode "Infrastructure Node"
+            relationship "Relationship"
+        }
     }
 
     /**

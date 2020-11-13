@@ -419,6 +419,33 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (THEMES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         new ThemesParser().parse(getContext(), tokens);
 
+                    } else if (TERMINOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
+                        startContext(new TerminologyDslContext());
+
+                    } else if (ENTERPRISE_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseEnterprise(getContext(), tokens);
+
+                    } else if (PERSON_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parsePerson(getContext(), tokens);
+
+                    } else if (SOFTWARE_SYSTEM_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseSoftwareSystem(getContext(), tokens);
+
+                    } else if (CONTAINER_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseContainer(getContext(), tokens);
+
+                    } else if (COMPONENT_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseComponent(getContext(), tokens);
+
+                    } else if (DEPLOYMENT_NODE_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseDeploymentNode(getContext(), tokens);
+
+                    } else if (INFRASTRUCTURE_NODE_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseInfrastructureNode(getContext(), tokens);
+
+                    } else if (TERMINOLOGY_RELATIONSHIP_TOKEN.equalsIgnoreCase(firstToken) && inContext(TerminologyDslContext.class)) {
+                        new TerminologyParser().parseRelationship(getContext(), tokens);
+
                     } else if (CONFIGURATION_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         startContext(new ConfigurationDslContext());
 
