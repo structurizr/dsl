@@ -2,13 +2,46 @@ workspace "Name" "Description" {
 
     model {
 
-        user = person "User" "Description" "Tag"
+        user = person "User" "Description" "Tag" {
+            url "https://structurizr.com"
+            properties {
+                "Name" "Value"
+            }
+            perspectives {
+                "Security" "A description..."
+            }
+        }
         enterprise "Enterprise" {
             softwareSystem = softwareSystem "Software System" "Description"  "Tag" {
                 webApplication = container "Web Application" "Description" "Technology" "Tag" {
-                    homePageController = component "HomePageController" "Description" "Spring MVC Controller" "Tag"
+                    homePageController = component "HomePageController" "Description" "Spring MVC Controller" "Tag" {
+                        url "https://structurizr.com"
+                        properties {
+                            "Name" "Value"
+                        }
+                        perspectives {
+                            "Security" "A description..."
+                        }
+                    }
+
+                    url "https://structurizr.com"
+                    properties {
+                        "Name" "Value"
+                    }
+                    perspectives {
+                        "Security" "A description..."
+                    }
+                }
+
+                url "https://structurizr.com"
+                properties {
+                    "Name" "Value"
+                }
+                perspectives {
+                    "Security" "A description..."
                 }
             }
+
             softwareSystem "E-mail System" "Description" "Tag"
         }
 
@@ -16,10 +49,37 @@ workspace "Name" "Description" {
 
         deploymentEnvironment "Live" {
             deploymentNode "Amazon Web Services" "Description" "Technology" "Tag" {
-                infrastructureNode "Elastic Load Balancer" "Description" "Technology" "Tag"
-                deploymentNode "Amazon Web Services - EC2" "Description" "Technology" "Tag" {
-                    containerInstance webApplication
+
+                infrastructureNode "Elastic Load Balancer" "Description" "Technology" "Tag" {
+                    url "https://structurizr.com"
+                    properties {
+                        "Name" "Value"
+                    }
+                    perspectives {
+                        "Security" "A description..."
+                    }
                 }
+
+                deploymentNode "Amazon Web Services - EC2" "Description" "Technology" "Tag" {
+                    containerInstance webApplication {
+                        url "https://structurizr.com"
+                        properties {
+                            "Name" "Value"
+                        }
+                        perspectives {
+                            "Security" "A description..."
+                        }
+                    }
+                }
+
+                url "https://structurizr.com"
+                properties {
+                    "Name" "Value"
+                }
+                perspectives {
+                    "Security" "A description..."
+                }
+
             }
         }
     }
