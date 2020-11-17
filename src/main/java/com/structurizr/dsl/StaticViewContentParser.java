@@ -17,6 +17,7 @@ final class StaticViewContentParser extends AbstractParser {
         }
 
         StaticView view = context.getView();
+        boolean autoAddRelations = context.isAutoAddRelations();
 
         if (tokens.contains(WILDCARD)) {
             view.addDefaultElements();
@@ -32,15 +33,15 @@ final class StaticViewContentParser extends AbstractParser {
 
                 if (element != null) {
                     if (element instanceof Person) {
-                        view.add((Person) element);
+                        view.add((Person) element, autoAddRelations);
                     } else if (element instanceof SoftwareSystem) {
-                        view.add((SoftwareSystem) element);
+                        view.add((SoftwareSystem) element, autoAddRelations);
                     } else if (element instanceof Container && (view instanceof ContainerView)) {
-                        ((ContainerView) view).add((Container) element);
+                        ((ContainerView) view).add((Container) element, autoAddRelations);
                     } else if (element instanceof Container && (view instanceof ComponentView)) {
-                        ((ComponentView) view).add((Container) element);
+                        ((ComponentView) view).add((Container) element, autoAddRelations);
                     } else if (element instanceof Component && (view instanceof ComponentView)) {
-                        ((ComponentView) view).add((Component) element);
+                        ((ComponentView) view).add((Component) element, autoAddRelations);
                     } else {
                         throw new RuntimeException("The element \"" + identifier + "\" can not be added to this type of view");
                     }

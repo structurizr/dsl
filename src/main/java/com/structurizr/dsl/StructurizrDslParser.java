@@ -380,6 +380,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && inContext(DynamicViewDslContext.class)) {
                         new DynamicViewContentParser().parseRelationship(getContext(DynamicViewDslContext.class), tokens);
 
+                    } else if (DISABLEAUTOADDRELATIONS_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
+                        getContext(StaticViewDslContext.class).setAutoAddRelations(false);
                     } else if (INCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new StaticViewContentParser().parseInclude(getContext(StaticViewDslContext.class), tokens);
 

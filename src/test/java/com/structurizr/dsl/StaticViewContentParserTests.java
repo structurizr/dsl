@@ -170,6 +170,39 @@ class StaticViewContentParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseInclude_AddsTheSpecifiedPeopleAndSoftwareSystemsToASystemContextView_withoutRelations() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem1 = model.addSoftwareSystem("Software System 1", "Description");
+        SoftwareSystem softwareSystem2 = model.addSoftwareSystem("Software System 2", "Description");
+        Relationship rel1 = user.uses(softwareSystem1, "Uses");
+        Relationship rel2 = user.uses(softwareSystem2, "Uses");
+        softwareSystem1.uses(softwareSystem2, "Uses");
+
+        SystemContextView view = views.createSystemContextView(softwareSystem1, "key", "Description");
+        SystemContextViewDslContext context = new SystemContextViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setAutoAddRelations(false);
+        Map<String, Relationship> relations = new HashMap<>();
+        relations.put("rel1", rel1);
+        context.setRelationships(relations);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem1", softwareSystem1);
+        elements.put("softwaresystem2", softwareSystem2);
+        context.setElements(elements);
+
+        parser.parseInclude(context, tokens("include", "user"));
+        parser.parseInclude(context, tokens("include", "rel1"));
+
+        assertEquals(2, view.getElements().size());
+        assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(user)));
+        assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(softwareSystem1)));
+        assertTrue(view.getElements().stream().noneMatch(ev -> ev.getElement().equals(softwareSystem2)));
+        assertEquals(1, view.getRelationships().size());
+    }
+
+    @Test
     void test_parseInclude_ThrowsAnException_WhenTryingToAddAContainerToASystemContextView() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");

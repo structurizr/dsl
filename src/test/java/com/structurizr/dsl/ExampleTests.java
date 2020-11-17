@@ -78,6 +78,35 @@ class ExampleTests extends AbstractTests {
     }
 
     @Test
+    void test_gettingstartedExplicitRelationsInView() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/getting-started-explicit-relations-in-view.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(3, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system.", softwareSystem.getDescription());
+
+        assertEquals(4, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals(3, view.getElements().size());
+        assertEquals(2, view.getRelationships().size());
+    }
+
+    @Test
     void test_aws() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/amazon-web-services.dsl"));
