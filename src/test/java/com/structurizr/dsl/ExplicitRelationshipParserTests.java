@@ -8,9 +8,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RelationshipParserTests extends AbstractTests {
+class ExplicitRelationshipParserTests extends AbstractTests {
 
-    private RelationshipParser parser = new RelationshipParser();
+    private ExplicitRelationshipParser parser = new ExplicitRelationshipParser();
 
     @Test
     void test_parse_ThrowsAnException_WhenTheDestinationIdentifierIsMissing() {

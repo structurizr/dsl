@@ -626,6 +626,19 @@ The following tags are added by default:
 
 - `Relationship`
 
+The following types of relationships are permitted in the model:
+
+| Source  | Destination |
+| ------------- | ------------- |
+| Person | Person, Software System, Container, Component |
+| Software System | Person, Software System, Container, Component |
+| Container | Person, Software System, Container, Component |
+| Component | Person, Software System, Container, Component |
+| Deployment Node | Deployment Node |
+| Infrastructure Node | Deployment Node, Infrastructure Node, Software System Instance, Container Instance |
+| Software System Instance | Infrastructure Node, Software System Instance, Container Instance |
+| Container Instance | Infrastructure Node, Software System Instance, Container Instance |
+
 ## url
 
 ```url``` is used to set a URL on an element or relationship.

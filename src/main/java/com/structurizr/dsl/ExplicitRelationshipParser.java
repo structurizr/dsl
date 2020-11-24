@@ -2,7 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 
-final class RelationshipParser extends AbstractParser {
+final class ExplicitRelationshipParser extends AbstractRelationshipParser {
 
     private static final int SOURCE_IDENTIFIER_INDEX = 0;
     private static final int DESTINATION_IDENTIFIER_INDEX = 2;
@@ -47,19 +47,7 @@ final class RelationshipParser extends AbstractParser {
         Element sourceElement = context.getElement(sourceId);
         Element destinationElement = context.getElement(destinationId);
 
-        if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
-            relationship = ((StaticStructureElement)sourceElement).uses((StaticStructureElement)destinationElement, description, technology, null, tags);
-        } else if (sourceElement instanceof DeploymentNode && destinationElement instanceof DeploymentNode) {
-            relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null, tags);
-        } else if (sourceElement instanceof InfrastructureNode && destinationElement instanceof DeploymentElement) {
-            relationship = ((InfrastructureNode)sourceElement).uses((DeploymentElement)destinationElement, description, technology, null, tags);
-        } else if (sourceElement instanceof StaticStructureElementInstance && destinationElement instanceof InfrastructureNode) {
-            relationship = ((StaticStructureElementInstance)sourceElement).uses((InfrastructureNode)destinationElement, description, technology, null, tags);
-        } else {
-            throw new RuntimeException("A relationship between \"" + sourceId + "\" and \"" + destinationId + "\" is not permitted");
-        }
-
-        return relationship;
+        return createRelationship(sourceElement, description, technology, tags, destinationElement);
     }
 
 }
