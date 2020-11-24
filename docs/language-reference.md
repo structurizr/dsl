@@ -78,6 +78,7 @@ See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the
 				- [relationship](#relationship-style)
 			- [themes](#themes)
 			- [branding](#branding)
+			- [terminology](#terminology)
 		- [configuration](#configuration)
 			- [users](#users)
 
@@ -409,6 +410,17 @@ workspace [name] [description] {
             logo <file>
             font <name> [url]
         }
+        
+        terminology {
+            enterprise <term>
+            person <term>
+            softwareSystem <term>
+            container <term>
+            component <term>
+            deploymentNode <term>
+            infrastructureNode <term>
+            relationship <term>
+        }
 
     }
     
@@ -714,6 +726,7 @@ The ```views``` block can contain the following:
 - [styles](#styles)
 - [themes](#themes)
 - [branding](#branding)
+- [terminology](#terminology)
 
 ### systemLandscape view
 
@@ -979,6 +992,23 @@ The ```branding``` keyword allows you to define some custom branding that should
 branding {
 	logo <file>
 	font <name> [url]
+}
+```
+
+### terminology
+
+The ```terminology``` keyword allows you to override the terminology used when rendering diagrams (this may not be supported in all rendering tools). See [Structurizr - Terminology](https://structurizr.com/help/terminology) for more details.
+
+```
+terminology {
+    enterprise <term>
+    person <term>
+    softwareSystem <term>
+    container <term>
+    component <term>
+    deploymentNode <term>
+    infrastructureNode <term>
+    relationship <term>
 }
 ```
 
