@@ -618,15 +618,37 @@ In addition to the container's tags, the following tags are added by default:
 
 ```->``` is used to define a uni-directional relationship between two elements.
 
+There are two ways to define relationships. The first is explicitly, where you explicitly use a source identifier: 
+
 ```
 <identifier> -> <identifier> [description] [technology] [tags]
 ```
 
-The following tags are added by default:
+For example:
+
+```
+user -> softwareSystem "Uses"
+```
+
+And the second is implicitly, where the relationship source is the element in scope:
+
+```
+-> <identifier> [description] [technology] [tags]
+```
+
+For example:
+
+```
+person user {
+	-> softwareSystem "Uses"
+}
+```
+
+The following tags are added to relationships by default:
 
 - `Relationship`
 
-The following types of relationships are permitted in the model:
+And only the following types of relationships are permitted in the model:
 
 | Source  | Destination |
 | ------------- | ------------- |
