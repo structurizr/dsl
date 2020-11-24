@@ -20,7 +20,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseInclude(new SystemLandscapeViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier> [identifier...]", iae.getMessage());
+            assertEquals("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
         }
     }
 
@@ -213,6 +213,31 @@ class StaticViewContentParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseInclude_IncludesTheSpecifiedRelationship_WhenARelationshipExpressionIsSpecified() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Relationship relationship = user.uses(softwareSystem, "Uses");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
+        view.add(user);
+        view.add(softwareSystem);
+        view.remove(relationship);
+        assertEquals(2, view.getElements().size());
+        assertEquals(0, view.getRelationships().size());
+
+        parser.parseInclude(context, tokens("include", "user", "->", "softwareSystem"));
+        assertEquals(1, view.getRelationships().size());
+    }
+
+    @Test
     void test_parseExclude_ThrowsAnException_WhenTheNoElementsAreSpecified() {
         SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
@@ -222,7 +247,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseExclude(context, tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: exclude <identifier> [identifier...]", iae.getMessage());
+            assertEquals("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
         }
     }
 
@@ -272,10 +297,10 @@ class StaticViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseExclude_RemovesTheSpecifiedRelationshipsFromAView() {
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExplicitIdentifierIsSpecified() {
         Person user = model.addPerson("User", "Description");
-        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System 1", "Description");
-        Relationship rel1 = user.uses(softwareSystem, "Uses");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Relationship rel = user.uses(softwareSystem, "Uses");
 
         SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
         view.addAllElements();
@@ -283,17 +308,198 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
         Map<String, Relationship> relationships = new HashMap<>();
-        relationships.put("rel1", rel1);
+        relationships.put("rel", rel);
         context.setRelationships(relationships);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "rel1"));
+        parser.parseExclude(context, tokens("exclude", "rel"));
 
         assertEquals(2, view.getElements().size());
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(user)));
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(softwareSystem)));
+        assertEquals(0, view.getRelationships().size());
+    }
+
+    @Test
+    void test_parseExclude_ThrowsAnException_WhenTheRelationshipSourceElementDoesNotExistInTheModel() {
+        try {
+            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+            context.setWorkspace(workspace);
+
+            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+
+            fail();
+        } catch (RuntimeException re) {
+            assertEquals("The element \"user\" does not exist", re.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseExclude_ThrowsAnException_WhenTheRelationshipSourceElementDoesNotExistInTheView() {
+        try {
+            Person user = model.addPerson("User", "Description");
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+            user.uses(softwareSystem, "Uses");
+
+            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+            context.setWorkspace(workspace);
+
+            Map<String, Element> elements = new HashMap<>();
+            elements.put("user", user);
+            elements.put("softwaresystem", softwareSystem);
+            context.setElements(elements);
+
+            parser.parseExclude(context, tokens("exclude", "user", "->", "destination"));
+
+            fail();
+        } catch (RuntimeException re) {
+            assertEquals("The element \"user\" does not exist in the view", re.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseExclude_ThrowsAnException_WhenTheRelationshipDestinationElementDoesNotExistInTheModel() {
+        try {
+            Person user = model.addPerson("User", "Description");
+
+            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+            view.add(user);
+            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+            context.setWorkspace(workspace);
+
+            Map<String, Element> elements = new HashMap<>();
+            elements.put("user", user);
+            context.setElements(elements);
+
+            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+
+            fail();
+        } catch (RuntimeException re) {
+            assertEquals("The element \"softwareSystem\" does not exist", re.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseExclude_ThrowsAnException_WhenTheRelationshipDestinationElementDoesNotExistInTheView() {
+        try {
+            Person user = model.addPerson("User", "Description");
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+            user.uses(softwareSystem, "Uses");
+
+            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+            view.add(user);
+            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+            context.setWorkspace(workspace);
+
+            Map<String, Element> elements = new HashMap<>();
+            elements.put("user", user);
+            elements.put("softwaresystem", softwareSystem);
+            context.setElements(elements);
+
+            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+
+            fail();
+        } catch (RuntimeException re) {
+            assertEquals("The element \"softwareSystem\" does not exist in the view", re.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSourceAndDestination() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        user.uses(softwareSystem, "Uses");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+        assertEquals(0, view.getRelationships().size());
+    }
+
+    @Test
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSourceAndWildcard() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        user.uses(softwareSystem, "Uses");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        parser.parseExclude(context, tokens("exclude", "user", "->", "*"));
+        assertEquals(0, view.getRelationships().size());
+    }
+
+    @Test
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndDestination() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        user.uses(softwareSystem, "Uses");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        parser.parseExclude(context, tokens("exclude", "*", "->", "softwareSystem"));
+        assertEquals(0, view.getRelationships().size());
+    }
+
+    @Test
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndWildcard() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        user.uses(softwareSystem, "Uses");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("user", user);
+        elements.put("softwaresystem", softwareSystem);
+        context.setElements(elements);
+
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        parser.parseExclude(context, tokens("exclude", "*", "->", "*"));
         assertEquals(0, view.getRelationships().size());
     }
 

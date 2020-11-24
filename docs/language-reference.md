@@ -1,8 +1,8 @@
 # Language reference
 
-The Structurizr DSL provides a way to define a software architecture model (based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams).
+The Structurizr DSL provides a way to define a software architecture model (based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams). See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
 
-See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
+__Please note that what you see here may not be available in the Structurizr CLI yet.__
 
 ## Table of contents
 
@@ -864,13 +864,17 @@ The following keywords can be used within the ```deployment``` block:
 
 ### include
 
-To include elements on a view, use one or more ```include``` statements inside the block defining the view.
+The `include` keyword can be used to include elements or relationships.
+
+#### Including elements
+
+To include elements in a view, use one or more ```include``` statements inside the block defining the view.
 
 ```
 include <*|identifier> [identifier...]
 ```
 
-Elements and relationships can either be specified using individual identifiers, or using the wildcard (```*```) identifier, which operates differently depending upon the type of diagram.
+Elements can either be specified using individual identifiers, or using the wildcard (```*```) identifier, which operates differently depending upon the type of diagram.
 
 - System Landscape view: Include all people and software systems.
 - System Context view: Include the software system in scope; plus all people and software systems that are directly connected to the software system in scope.
@@ -880,13 +884,51 @@ Elements and relationships can either be specified using individual identifiers,
 - Dynamic view: (not applicable)
 - Deployment view: Include all deployment nodes, infrastructure nodes, and container instances defined within the deployment environment and (optional) software system in scope.
 
+#### Including relationships
+
+To include a relationship in a view, you can specify an individual relationship identifier, or use the relationship expression syntax as follows:
+
+```
+include <*|identifier> -> <*|identifier> 
+```
+
+The combinations of parameters are:
+
+- `* -> *`: all relationships between all elements
+- `source -> *`: all relationships from `source` to any element
+- `* -> destination`: all relationships from any element  to `destination`
+- `source -> destination`: all relationships from `source` to `destination`
+
+The relationship express syntax only operates on elements that exist in the view.
+
 ### exclude
 
-To exclude specific elements or relationships, use one or more ```exclude``` statements inside the block defining the view.
+The `exclude` keyword can be used to exclude elements or relationships.
+
+#### Excluding elements
+
+To exclude specific elements, use one or more ```exclude``` statements inside the block defining the view.
 
 ```
 exclude <identifier> [identifier...]
 ```
+
+#### Excluding relationships
+
+To exclude a relationship in a view, you can specify an individual relationship identifier, or use the relationship expression syntax as follows:
+
+```
+exclude <*|identifier> -> <*|identifier> 
+```
+
+The combinations of parameters are:
+
+- `* -> *`: all relationships between all elements
+- `source -> *`: all relationships from `source` to any element
+- `* -> destination`: all relationships from any element  to `destination`
+- `source -> destination`: all relationships from `source` to `destination`
+
+The relationship express syntax only operates on elements that exist in the view.
 
 ### autoLayout
 
