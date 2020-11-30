@@ -899,7 +899,7 @@ The combinations of parameters are:
 - `* -> destination`: all relationships from any element  to `destination`
 - `source -> destination`: all relationships from `source` to `destination`
 
-The relationship express syntax only operates on elements that exist in the view.
+The relationship expression syntax only operates on elements that exist in the view.
 
 ### exclude
 
@@ -928,7 +928,7 @@ The combinations of parameters are:
 - `* -> destination`: all relationships from any element  to `destination`
 - `source -> destination`: all relationships from `source` to `destination`
 
-The relationship express syntax only operates on elements that exist in the view.
+The relationship expression syntax only operates on elements that exist in the view.
 
 ### autoLayout
 
