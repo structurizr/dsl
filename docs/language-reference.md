@@ -361,7 +361,7 @@ workspace [name] [description] {
         filtered <baseKey> <include|exclude> <tags> [key] [description]
 
         dynamic <*|software system identifier|container identifier> [key] [description] {
-            <identifier> -> <identifier> [description]
+            <identifier> -> <identifier> [description] [technology]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             title <title>
         }
@@ -829,7 +829,7 @@ The first property defines the scope of the view, and therefore what can be adde
 Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the ```dynamic``` block, as follows:
 
 ```
-<identifier> -> <identifier> [description]
+<identifier> -> <identifier> [description] [technology]
 ```
 
 If a relationship between the two elements does not exist, it will be automatically created.

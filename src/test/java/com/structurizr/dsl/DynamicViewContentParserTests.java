@@ -23,7 +23,7 @@ class DynamicViewContentParserTests extends AbstractTests {
             parser.parseRelationship(new DynamicViewDslContext(null), tokens("source", "->"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: <identifier> -> <identifier> [description]", e.getMessage());
+            assertEquals("Expected: <identifier> -> <identifier> [description] [technology]", e.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class DynamicViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseRelationship_AddsTheRelationshipToTheViewWithAnOverridenDescription_WhenItAlreadyExistsInTheModel() {
+    void test_parseRelationship_AddsTheRelationshipToTheViewWithAnOverriddenDescription_WhenItAlreadyExistsInTheModel() {
         Person user = model.addPerson("User", "Description");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         user.uses(softwareSystem, "Uses");
@@ -97,6 +97,31 @@ class DynamicViewContentParserTests extends AbstractTests {
         assertSame(user, rv.getRelationship().getSource());
         assertSame(softwareSystem, rv.getRelationship().getDestination());
         assertEquals("Does something with", rv.getDescription());
+        assertEquals("1", rv.getOrder());
+    }
+
+    @Test
+    void test_parseRelationship_AddsTheRelationshipWithTheSpecifiedTechnologyToTheView_WhenItAlreadyExistsInTheModel() {
+        Person user = model.addPerson("User", "Description");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Relationship r1 = user.uses(softwareSystem, "Uses 1", "Tech 1");
+        Relationship r2 = user.uses(softwareSystem, "Uses 2", "Tech 2");
+        DynamicView view = views.createDynamicView("key", "Description");
+        DynamicViewDslContext context = new DynamicViewDslContext(view);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("source", user);
+        elements.put("destination", softwareSystem);
+        context.setElements(elements);
+
+        parser.parseRelationship(context, tokens("source", "->", "destination", "Description", "Tech 2"));
+
+        assertEquals(1, view.getRelationships().size());
+        RelationshipView rv = view.getRelationships().iterator().next();
+        assertSame(r2, rv.getRelationship());
+        assertSame(user, rv.getRelationship().getSource());
+        assertSame(softwareSystem, rv.getRelationship().getDestination());
+        assertEquals("Description", rv.getDescription());
         assertEquals("1", rv.getOrder());
     }
 

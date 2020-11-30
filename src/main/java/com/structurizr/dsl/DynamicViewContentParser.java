@@ -8,14 +8,15 @@ final class DynamicViewContentParser extends AbstractParser {
     private static final int SOURCE_IDENTIFIER_INDEX = 0;
     private static final int DESTINATION_IDENTIFIER_INDEX = 2;
     private static final int DESCRIPTION_INDEX = 3;
+    private static final int TECHNOLOGY_INDEX = 4;
 
     void parseRelationship(DynamicViewDslContext context, Tokens tokens) {
-        // <identifier> -> <identifier> [description]
+        // <identifier> -> <identifier> [description] [technology]
 
         DynamicView view = context.getView();
 
         if (!tokens.includes(DESTINATION_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: <identifier> -> <identifier> [description]");
+            throw new RuntimeException("Expected: <identifier> -> <identifier> [description] [technology]");
         }
 
         String sourceId = tokens.get(SOURCE_IDENTIFIER_INDEX);
@@ -36,11 +37,16 @@ final class DynamicViewContentParser extends AbstractParser {
             description = tokens.get(DESCRIPTION_INDEX);
         }
 
+        String technology = "";
+        if (tokens.includes(TECHNOLOGY_INDEX)) {
+            technology = tokens.get(TECHNOLOGY_INDEX);
+        }
+
         if (!sourceElement.hasEfferentRelationshipWith(destinationElement) && !destinationElement.hasEfferentRelationshipWith(sourceElement)) {
             new ExplicitRelationshipParser().parse(context, tokens);
         }
 
-        view.add(sourceElement, description, destinationElement);
+        view.add(sourceElement, description, technology, destinationElement);
     }
 
 }
