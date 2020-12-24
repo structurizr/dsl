@@ -239,14 +239,15 @@ workspace [name] [description] {
         }
 
         [<identifier> = ]person <name> [description] [tags] {
-			url <url>
-			properties {
-				<name> <value>
-			}
+            url <url>
+            properties {
+                <name> <value>
+            }
             perspectives {
                 <name> <description>
             }
 		}
+        
 		[<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
 			url <url>
 			properties {
