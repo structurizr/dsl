@@ -11,76 +11,76 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [Identifiers](#identifiers)
 - [Includes](#includes)
 - [Grammar](#grammar)
-	- [workspace](#workspace)
-		- [model](#model)
-		    - [impliedRelationships](#impliedRelationships)
-			- [enterprise](#enterprise)
-			- [person](#person)
-				- [url](#url)
-				- [properties](#properties)
-			- [softwareSystem](#softwareSystem)
-				- [url](#url)
-				- [properties](#properties)
-				- [container](#container)
-					- [url](#url)
-					- [properties](#properties)
-					- [component](#component)
-						- [url](#url)
-						- [properties](#properties)
-			- [deploymentEnvironment](#deploymentEnvironment)
-				- [deploymentNode](#deploymentNode)
-					- [url](#url)
-					- [properties](#properties)
-					- [infrastructureNode](#infrastructureNode)
-						- [url](#url)
-						- [properties](#properties)
-					- [softwareSystemInstance](#softwareSystemInstance)
-					- [containerInstance](#containerInstance)
-			- [-> (relationship)](#relationship)
-				- [url](#url)
-		- [views](#views)
-			- [systemLandscape](#systemLandscape-view)
-				- [include](#include)
-				- [exclude](#exclude)
-				- [autoLayout](#autoLayout)
-				- [animationStep](#animationStep)
-				- [title](#title)
-			- [systemContext](#systemContext-view)
-				- [include](#include)
-				- [exclude](#exclude)
-				- [autoLayout](#autoLayout)
-				- [animationStep](#animationStep)
-				- [title](#title)
-			- [container](#container-view)
-				- [include](#include)
-				- [exclude](#exclude)
-				- [autoLayout](#autoLayout)
-				- [animationStep](#animationStep)
-				- [title](#title)
-			- [component](#component-view)
-				- [include](#include)
-				- [exclude](#exclude)
-				- [autoLayout](#autoLayout)
-				- [animationStep](#animationStep)
-				- [title](#title)
-			- [filtered](#filtered-view)
-			- [dynamic](#dynamic-view)
-				- [autoLayout](#autoLayout)
-				- [title](#title)
-			- [deployment](#deployment-view)
-				- [include](#include)
-				- [exclude](#exclude)
-				- [autoLayout](#autoLayout)
-				- [animationStep](#animationStep)
-				- [title](#title)
-			- [styles](#styles)
-				- [element](#element-style)
-				- [relationship](#relationship-style)
-			- [themes](#themes)
-			- [branding](#branding)
-			- [terminology](#terminology)
-		- [configuration](#configuration)
-			- [users](#users)
+    - [workspace](#workspace)
+        - [model](#model)
+            - [impliedRelationships](#impliedRelationships)
+            - [enterprise](#enterprise)
+            - [person](#person)
+                - [url](#url)
+                - [properties](#properties)
+            - [softwareSystem](#softwareSystem)
+                - [url](#url)
+                - [properties](#properties)
+                - [container](#container)
+                    - [url](#url)
+                    - [properties](#properties)
+                    - [component](#component)
+                        - [url](#url)
+                        - [properties](#properties)
+            - [deploymentEnvironment](#deploymentEnvironment)
+                - [deploymentNode](#deploymentNode)
+                    - [url](#url)
+                    - [properties](#properties)
+                    - [infrastructureNode](#infrastructureNode)
+                        - [url](#url)
+                        - [properties](#properties)
+                    - [softwareSystemInstance](#softwareSystemInstance)
+                    - [containerInstance](#containerInstance)
+            - [-> (relationship)](#relationship)
+                - [url](#url)
+        - [views](#views)
+            - [systemLandscape](#systemLandscape-view)
+                - [include](#include)
+                - [exclude](#exclude)
+                - [autoLayout](#autoLayout)
+                - [animationStep](#animationStep)
+                - [title](#title)
+            - [systemContext](#systemContext-view)
+                - [include](#include)
+                - [exclude](#exclude)
+                - [autoLayout](#autoLayout)
+                - [animationStep](#animationStep)
+                - [title](#title)
+            - [container](#container-view)
+                - [include](#include)
+                - [exclude](#exclude)
+                - [autoLayout](#autoLayout)
+                - [animationStep](#animationStep)
+                - [title](#title)
+            - [component](#component-view)
+                - [include](#include)
+                - [exclude](#exclude)
+                - [autoLayout](#autoLayout)
+                - [animationStep](#animationStep)
+                - [title](#title)
+            - [filtered](#filtered-view)
+            - [dynamic](#dynamic-view)
+                - [autoLayout](#autoLayout)
+                - [title](#title)
+            - [deployment](#deployment-view)
+                - [include](#include)
+                - [exclude](#exclude)
+                - [autoLayout](#autoLayout)
+                - [animationStep](#animationStep)
+                - [title](#title)
+            - [styles](#styles)
+                - [element](#element-style)
+                - [relationship](#relationship-style)
+            - [themes](#themes)
+            - [branding](#branding)
+            - [terminology](#terminology)
+        - [configuration](#configuration)
+            - [users](#users)
 
 ## General rules
 
@@ -100,7 +100,7 @@ Comments can be defined as follows:
 
 ```
 /**
-	multi-line comment
+    multi-line comment
 */
 ```
 
@@ -220,6 +220,7 @@ workspace [name] [description] {
                     <name> <description>
                 }
             }
+            
             [<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
                 url <url>
                 properties {
@@ -232,7 +233,7 @@ workspace [name] [description] {
                 [<identifier> = ]container <name> [description] [technology] [tags] {
                     [<identifier> = ]component <name> [description] [technology] [tags]
                 }
-    			
+                
                 !docs <path>
                 !adrs <path>
             }
@@ -246,45 +247,45 @@ workspace [name] [description] {
             perspectives {
                 <name> <description>
             }
-		}
+        }
         
-		[<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
-			url <url>
-			properties {
-				<name> <value>
-			}
+        [<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+            url <url>
+            properties {
+                <name> <value>
+            }
             perspectives {
                 <name> <description>
             }
-			
-			[<identifier> = ]container <name> [description] [technology] [tags] {
-				url <url>
-				properties {
-					<name> <value>
-				}
+            
+            [<identifier> = ]container <name> [description] [technology] [tags] {
+                url <url>
+                properties {
+                    <name> <value>
+                }
                 perspectives {
                     <name> <description>
                 }
-				[<identifier> = ]component <name> [description] [technology] [tags] {
-					url <url>
-					properties {
-						<name> <value>
-					}
+                [<identifier> = ]component <name> [description] [technology] [tags] {
+                    url <url>
+                    properties {
+                        <name> <value>
+                    }
                     perspectives {
                         <name> <description>
                     }
-				}
-			}
-			
+                }
+            }
+            
             !docs <path>
             !adrs <path>
-		}
+        }
 
         [<identifier> = ]<identifier> -> <identifier> [description] [technology] [tags] {
-     		url <url>
-			properties {
-				<name> <value>
-			}
+             url <url>
+            properties {
+                <name> <value>
+            }
             perspectives {
                 <name> <description>
             }
@@ -292,27 +293,27 @@ workspace [name] [description] {
 
         deploymentEnvironment <name> {
             [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
-            	url <url>
-				properties {
-					<name> <value>
-				}
+                url <url>
+                properties {
+                    <name> <value>
+                }
                 perspectives {
                     <name> <description>
                 }
 
                 [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
-                	url <url>
-					properties {
-						<name> <value>
-					}
+                    url <url>
+                    properties {
+                        <name> <value>
+                    }
                     perspectives {
                         <name> <description>
                     }
                     [<identifier> = ]infrastructureNode <name> [description] [technology] [tags] {
-                    	url <url>
-						properties {
-							<name> <value>
-						}
+                        url <url>
+                        properties {
+                            <name> <value>
+                        }
                         perspectives {
                             <name> <description>
                         }
@@ -328,7 +329,7 @@ workspace [name] [description] {
     views {
 
         systemLandscape [key] [description] {
-        	include <*|identifier> [identifier...]
+            include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
@@ -369,7 +370,7 @@ workspace [name] [description] {
 
         deployment <*|software system identifier> <environment name> [key] [description] {
             include <*|identifier> [identifier...]
-			exclude <identifier> [identifier...]
+            exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
             animationStep <identifier> [identifier...]
             title <title>
@@ -426,9 +427,9 @@ workspace [name] [description] {
     }
     
     configuration {
-    	users {
+        users {
             <username> <read|write>
-    	}
+        }
     }
 
 }
@@ -440,7 +441,7 @@ workspace [name] [description] {
 
 ```
 workspace [name] [description] {
-	...
+    ...
 }
 ```
 
@@ -450,7 +451,7 @@ Each workspace must contain a ```model``` block, inside which elements and relat
 
 ```
 model {
-	...
+    ...
 }
 ```
 
@@ -478,7 +479,7 @@ The ```enterprise``` keyword provides a way to define a named "enterprise" (e.g.
 
 ```
 enterprise <name> {
-	...
+    ...
 }
 ```
 
@@ -513,7 +514,7 @@ Add braces if you would like to define child containers:
 
 ```
 softwareSystem <name> [description] [tags] {
-	...
+    ...
 }
 ```
 
@@ -534,7 +535,7 @@ Add braces if you would like to define child components:
 
 ```
 container <name> [description] [technology] [tags] {
-	...
+    ...
 }
 ```
 
@@ -562,7 +563,7 @@ The ```deploymentEnvironment``` keyword provides a way to define a deployment en
 
 ```
 deploymentEnvironment <name> {
-	...
+    ...
 }
 ```
 
@@ -574,7 +575,7 @@ The ```deploymentNode``` keyword is used to define a deployment node.
 
 ```
 deploymentNode <name> [description] [technology] [tags] [instances] {
-	...
+    ...
 }
 ```
 
@@ -653,7 +654,7 @@ For example:
 
 ```
 person user {
-	-> softwareSystem "Uses"
+    -> softwareSystem "Uses"
 }
 ```
 
@@ -688,8 +689,8 @@ The ```properties``` block is used to define one or more name/value properties f
 
 ```
 properties {
-	<name> <value>
-	...
+    <name> <value>
+    ...
 }
 ```
 
@@ -700,8 +701,8 @@ See [Help - Perspectives](https://structurizr.com/help/perspectives) for how the
 
 ```
 perspectives {
-	<name> <description>
-	...
+    <name> <description>
+    ...
 }
 ```
 
@@ -711,7 +712,7 @@ Each workspace can also contain one or more views, defined with the ```views``` 
 
 ```
 views {
-	...
+    ...
 }
 ```
 
@@ -735,7 +736,7 @@ The ```systemLandscape``` keyword is used to define a [System Landscape view](ht
 
 ```
 systemLandscape [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -753,7 +754,7 @@ The ```systemContext``` keyword is used to define a [System Context view](https:
 
 ```
 systemContext <software system identifier> [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -771,7 +772,7 @@ The ```container``` keyword is used to define a [Container view](https://c4model
 
 ```
 container <software system identifier> [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -789,7 +790,7 @@ The ```component``` keyword is used to define a [Component view](https://c4model
 
 ```
 component <container identifier> [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -817,7 +818,7 @@ The ```dynamic``` keyword defines a [Dynamic view](https://c4model.com/#DynamicD
 
 ```
 dynamic <*|software system identifier|container identifier> [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -846,7 +847,7 @@ The ```deployment``` keyword defines a [Deployment view](https://c4model.com/#De
 
 ```
 deployment <*|software system identifier> <environment name> [key] [description] {
-	...
+    ...
 }
 ```
 
@@ -970,7 +971,7 @@ title <title>
 
 ```
 styles {
-	...
+    ...
 }
 ```
 
@@ -1033,8 +1034,8 @@ The ```branding``` keyword allows you to define some custom branding that should
 
 ```
 branding {
-	logo <file>
-	font <name> [url]
+    logo <file>
+    font <name> [url]
 }
 ```
 
@@ -1061,7 +1062,7 @@ Finally, there are some configuration options that can be specified inside the `
 
 ```
 configuration {
-	...
+    ...
 }
 ```
 
@@ -1071,7 +1072,6 @@ The ```users``` block can be used to specify the users who should have read-only
 
 ```
 users {
-	<username> <read|write>
+    <username> <read|write>
 }
 ```
-
