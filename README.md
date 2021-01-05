@@ -4,7 +4,7 @@
 
 This GitHub repository contains an implementation of the Structurizr DSL - a way to create Structurizr software architecture models based upon the [C4 model](https://c4model.com) using a textual domain specific language (DSL). The Structurizr DSL has appeared on the [ThoughtWorks Tech Radar - Techniques - Diagrams as code](https://www.thoughtworks.com/radar/techniques?blipid=202010027).
 
-* [Getting started](docs/getting-started.md)
+* [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
 * [Language reference](docs/language-reference.md)
 
 ## A quick example
@@ -47,11 +47,9 @@ workspace "Getting Started" "This is a model of my software system." {
 
 ## Multiple output formats
 
-The view can then be exported to be visualised using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or other formats including PlantUML, Mermaid, and WebSequenceDiagrams via the [Structurizr CLI](https://github.com/structurizr/cli).
+Using the [Structurizr CLI](https://github.com/structurizr/cli), the view can then be uploaded/rendered using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or exported to other diagram formats including PlantUML, Mermaid, and WebSequenceDiagrams.
 
 ![Multiple output formats: Structurizr, Mermaid, PlantUML](docs/images/multiple-output-formats.png)
-
-See [Structurizr - Text as an architecture description language](https://structurizr.com/help/text) for more details.
 
 ## Convention over configuration, useful defaults
 
