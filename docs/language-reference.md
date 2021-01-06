@@ -825,8 +825,8 @@ dynamic <*|software system identifier|container identifier> [key] [description] 
 The first property defines the scope of the view, and therefore what can be added to the view, as follows:
 
 - ```*``` scope: People and software systems.
-- Software system scope: People, other software systems, and containers belonging to the software system. 
-- Container scope: People, other software systems, other containers, and components belonging to the container. 
+- Software system scope: People, other software systems, and containers. 
+- Container scope: People, other software systems, other containers, and components. 
 
 Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the ```dynamic``` block, as follows:
 

@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
+import com.structurizr.model.StaticStructureElement;
 import com.structurizr.view.DynamicView;
 
 final class DynamicViewContentParser extends AbstractParser {
@@ -27,9 +28,17 @@ final class DynamicViewContentParser extends AbstractParser {
             throw new RuntimeException("The source element \"" + sourceId + "\" does not exist");
         }
 
+        if (!(sourceElement instanceof StaticStructureElement)) {
+            throw new RuntimeException("The source element \"" + sourceId + "\" should be a static structure element");
+        }
+
         Element destinationElement = context.getElement(destinationId);
         if (destinationElement == null) {
             throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
+        }
+
+        if (!(destinationElement instanceof StaticStructureElement)) {
+            throw new RuntimeException("The destination element \"" + destinationId + "\" should be a static structure element");
         }
 
         String description = "";
@@ -46,7 +55,7 @@ final class DynamicViewContentParser extends AbstractParser {
             new ExplicitRelationshipParser().parse(context, tokens);
         }
 
-        view.add(sourceElement, description, technology, destinationElement);
+        view.add((StaticStructureElement)sourceElement, description, technology, (StaticStructureElement)destinationElement);
     }
 
 }

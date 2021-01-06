@@ -40,6 +40,21 @@ class DynamicViewContentParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseRelationship_ThrowsAnException_WhenTheSourceElementIsNotAStaticStructureElement() {
+        DynamicViewDslContext context = new DynamicViewDslContext(null);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("source", model.addDeploymentNode("Deployment Node"));
+        context.setElements(elements);
+
+        try {
+            parser.parseRelationship(context, tokens("source", "->", "destination"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("The source element \"source\" should be a static structure element", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
         Map<String, Element> elements = new HashMap<>();
@@ -51,6 +66,22 @@ class DynamicViewContentParserTests extends AbstractTests {
             fail();
         } catch (Exception e) {
             assertEquals("The destination element \"destination\" does not exist", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotAStaticStructureElement() {
+        DynamicViewDslContext context = new DynamicViewDslContext(null);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("source", model.addPerson("User", "Description"));
+        elements.put("destination", model.addDeploymentNode("Deployment Node"));
+        context.setElements(elements);
+
+        try {
+            parser.parseRelationship(context, tokens("source", "->", "destination"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("The destination element \"destination\" should be a static structure element", e.getMessage());
         }
     }
 
