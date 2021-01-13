@@ -9,7 +9,7 @@ final class PersonParser extends AbstractParser {
     private final static int DESCRIPTION_INDEX = 2;
     private final static int TAGS_INDEX = 3;
 
-    Person parse(DslContext context, Tokens tokens) {
+    Person parse(GroupableDslContext context, Tokens tokens) {
         // person <name> [description] [tags]
 
         if (!tokens.includes(NAME_INDEX)) {
@@ -32,6 +32,10 @@ final class PersonParser extends AbstractParser {
 
         if (context instanceof EnterpriseDslContext) {
             person.setLocation(Location.Internal);
+        }
+
+        if (context.hasGroup()) {
+            person.setGroup(context.getGroup());
         }
 
         return person;

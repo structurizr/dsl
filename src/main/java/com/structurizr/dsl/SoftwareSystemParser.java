@@ -9,7 +9,7 @@ final class SoftwareSystemParser extends AbstractParser {
     private final static int DESCRIPTION_INDEX = 2;
     private final static int TAGS_INDEX = 3;
 
-    SoftwareSystem parse(DslContext context, Tokens tokens) {
+    SoftwareSystem parse(GroupableDslContext context, Tokens tokens) {
         // softwareSystem <name> [description] [tags]
 
         if (!tokens.includes(NAME_INDEX)) {
@@ -32,6 +32,10 @@ final class SoftwareSystemParser extends AbstractParser {
 
         if (context instanceof EnterpriseDslContext) {
             softwareSystem.setLocation(Location.Internal);
+        }
+
+        if (context.hasGroup()) {
+            softwareSystem.setGroup(context.getGroup());
         }
 
         return softwareSystem;

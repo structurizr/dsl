@@ -37,6 +37,10 @@ final class ContainerParser extends AbstractParser {
             container.addTags(tags.split(","));
         }
 
+        if (context.hasGroup()) {
+            container.setGroup(context.getGroup());
+        }
+
         return container;
     }
 

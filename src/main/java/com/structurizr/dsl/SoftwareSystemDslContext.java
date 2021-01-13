@@ -8,6 +8,12 @@ final class SoftwareSystemDslContext extends ModelItemDslContext {
     private SoftwareSystem softwareSystem;
 
     SoftwareSystemDslContext(SoftwareSystem softwareSystem) {
+        this(softwareSystem, null);
+    }
+
+    SoftwareSystemDslContext(SoftwareSystem softwareSystem, String group) {
+        super(group);
+
         this.softwareSystem = softwareSystem;
     }
 

@@ -37,6 +37,10 @@ final class ComponentParser extends AbstractParser {
             component.addTags(tags.split(","));
         }
 
+        if (context.hasGroup()) {
+            component.setGroup(context.getGroup());
+        }
+
         return component;
     }
 

@@ -14,10 +14,10 @@ abstract class AbstractTests {
     protected Model model = workspace.getModel();
     protected ViewSet views = workspace.getViews();
 
-    protected DslContext context() {
+    protected ModelDslContext context() {
         model.setImpliedRelationshipsStrategy(new CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy());
 
-        DslContext context = new WorkspaceDslContext();
+        ModelDslContext context = new ModelDslContext();
         context.setWorkspace(workspace);
 
         return context;
