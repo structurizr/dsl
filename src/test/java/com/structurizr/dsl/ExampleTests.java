@@ -217,7 +217,7 @@ class ExampleTests extends AbstractTests {
 
         assertEquals(1, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
+        assertEquals("My software system, code-named \"X\".", softwareSystem.getDescription());
 
         assertEquals(1, workspace.getModel().getRelationships().size());
         Relationship relationship = user.getRelationships().iterator().next();

@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^\\s*");
-    private static final Pattern TOKENS_PATTERN = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+    private static final Pattern TOKENS_PATTERN = Pattern.compile("\"((\\\\.|[^\"])*)\"|(\\S+)");
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^\\s*?(//|#).*$");
@@ -106,9 +106,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     Matcher m = TOKENS_PATTERN.matcher(line.trim());
                     while (m.find()) {
                         if (m.group(1) != null) {
+                            // this is a token specified between double-quotes
                             listOfTokens.add(m.group(1));
                         } else {
-                            listOfTokens.add(m.group(2));
+                            // this is a token specified without double-quotes
+                            listOfTokens.add(m.group(3));
                         }
                     }
 
