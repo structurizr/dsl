@@ -221,7 +221,7 @@ workspace [name] [description] {
                 }
             }
             
-            [<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+            [<identifier> = ]softwareSystem <name> [description] [tags] {
                 url <url>
                 properties {
                     <name> <value>
@@ -249,7 +249,7 @@ workspace [name] [description] {
             }
         }
         
-        [<identifier> = ]softwareSystem = softwareSystem <name> [description] [tags] {
+        [<identifier> = ]softwareSystem <name> [description] [tags] {
             url <url>
             properties {
                 <name> <value>
