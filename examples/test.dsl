@@ -1,5 +1,21 @@
 workspace "Name" "Description" {
 
+    /*
+        multi-line comment
+    */
+
+    /**
+        multi-line comment
+    */
+
+    /* multi-line comment on single line */
+
+    /* multi-line comment
+        on two lines */
+
+    # single line comment
+    // single line comment
+
     model {
 
         user = person "User" "Description" "Tag" {
@@ -164,16 +180,5 @@ workspace "Name" "Description" {
             relationship "Relationship"
         }
     }
-
-    /*
-        multi-line comment
-    */
-
-    /**
-        multi-line comment
-    */
-
-    # single line comment
-    // single line comment
 
 }

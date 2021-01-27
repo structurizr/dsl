@@ -102,8 +102,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                 } else if (COMMENT_PATTERN.matcher(line).matches()) {
                     // do nothing
                 } else {
+                    line = line.trim();
                     List<String> listOfTokens = new ArrayList<>();
-                    Matcher m = TOKENS_PATTERN.matcher(line.trim());
+                    Matcher m = TOKENS_PATTERN.matcher(line);
                     while (m.find()) {
                         if (m.group(1) != null) {
                             // this is a token specified between double-quotes
@@ -126,10 +127,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     String firstToken = tokens.get(0);
 
-                    if (firstToken.startsWith(MULTI_LINE_COMMENT_START_TOKEN)) {
+                    if (line.startsWith(MULTI_LINE_COMMENT_START_TOKEN) && line.endsWith(MULTI_LINE_COMMENT_END_TOKEN)) {
+                        // do nothing
+                    } else if (firstToken.startsWith(MULTI_LINE_COMMENT_START_TOKEN)) {
                         startContext(new CommentDslContext());
 
-                    } else if (MULTI_LINE_COMMENT_END_TOKEN.equals(firstToken)) {
+                    } else if (inContext(CommentDslContext.class) && line.endsWith(MULTI_LINE_COMMENT_END_TOKEN)) {
                         endContext();
 
                     } else if (inContext(CommentDslContext.class)) {

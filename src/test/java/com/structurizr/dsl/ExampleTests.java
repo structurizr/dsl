@@ -18,6 +18,8 @@ class ExampleTests extends AbstractTests {
     void test_test() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/test.dsl"));
+
+        assertFalse(parser.getWorkspace().isEmpty());
     }
 
     @Test
