@@ -23,7 +23,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^\\s*?(//|#).*$");
-    private static final String MULTI_LINE_COMMENT_START_TOKEN = "/**";
+    private static final String MULTI_LINE_COMMENT_START_TOKEN = "/*";
     private static final String MULTI_LINE_COMMENT_END_TOKEN = "*/";
 
     private Stack<DslContext> contextStack;
@@ -126,7 +126,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     String firstToken = tokens.get(0);
 
-                    if (MULTI_LINE_COMMENT_START_TOKEN.equals(firstToken)) {
+                    if (firstToken.startsWith(MULTI_LINE_COMMENT_START_TOKEN)) {
                         startContext(new CommentDslContext());
 
                     } else if (MULTI_LINE_COMMENT_END_TOKEN.equals(firstToken)) {

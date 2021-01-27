@@ -99,7 +99,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 Comments can be defined as follows:
 
 ```
-/**
+/*
     multi-line comment
 */
 ```

@@ -165,6 +165,10 @@ workspace "Name" "Description" {
         }
     }
 
+    /*
+        multi-line comment
+    */
+
     /**
         multi-line comment
     */
