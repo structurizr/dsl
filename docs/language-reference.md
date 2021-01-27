@@ -105,6 +105,10 @@ Comments can be defined as follows:
 ```
 
 ```
+/* single-line comment */
+```
+
+```
 # single line comment
 ```
 
