@@ -245,4 +245,18 @@ class ExampleTests extends AbstractTests {
         assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
+    @Test
+    void test_include_WhenRunningInRestrictedMode() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.setRestricted(true);
+
+        try {
+            // this will fail, because the model include will be ignored
+            parser.parse(new File("examples/include.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("The software system \"softwareSystem\" does not exist at line 8: systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {", e.getMessage());
+        }
+    }
+
 }

@@ -34,8 +34,6 @@ final class IncludeParser extends AbstractParser {
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
-        } else {
-            throw new RuntimeException("The !include feature is unavailable");
         }
     }
 

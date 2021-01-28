@@ -325,17 +325,6 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseIcon_ThrowsAnException_WhenTheIconFeatureIsNotAvailable() {
-        try {
-            ElementStyleDslContext context = new ElementStyleDslContext(null, null);
-            parser.parseIcon(context, tokens("icon", "hello.png"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("The element style icon feature is unavailable", e.getMessage());
-        }
-    }
-
-    @Test
     void test_parseIcon_SetsTheIcon() {
         parser.parseIcon(elementStyleDslContext(), tokens("icon", "examples/logo.png"));
         System.out.println(elementStyle.getIcon());

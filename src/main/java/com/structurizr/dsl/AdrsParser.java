@@ -46,8 +46,6 @@ final class AdrsParser extends AbstractParser {
             } catch (Exception e) {
                 throw new RuntimeException("Error importing ADRs from " + path.getAbsolutePath() + ": " + e.getMessage());
             }
-        } else {
-            throw new RuntimeException("The !adrs feature is unavailable");
         }
     }
 

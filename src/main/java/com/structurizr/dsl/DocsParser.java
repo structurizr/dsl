@@ -49,8 +49,6 @@ final class DocsParser extends AbstractParser {
             } catch (IOException e) {
                 throw new RuntimeException("Error importing documentation from " + path.getAbsolutePath() + ": " + e.getMessage());
             }
-        } else {
-            throw new RuntimeException("The !docs feature is unavailable");
         }
     }
 

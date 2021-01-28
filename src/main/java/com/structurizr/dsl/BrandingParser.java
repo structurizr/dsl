@@ -18,20 +18,16 @@ final class BrandingParser extends AbstractParser {
         if (tokens.includes(LOGO_FILE_INDEX)) {
             String path = tokens.get(1);
 
-            if (context.getFile() != null) {
-                File file = new File(context.getFile().getParent(), path);
-                if (file.exists() && !file.isDirectory()) {
-                    try {
-                        String dataUri = ImageUtils.getImageAsDataUri(file);
-                        context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(dataUri);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    throw new RuntimeException(path + " does not exist");
+            File file = new File(context.getFile().getParent(), path);
+            if (file.exists() && !file.isDirectory()) {
+                try {
+                    String dataUri = ImageUtils.getImageAsDataUri(file);
+                    context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(dataUri);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             } else {
-                throw new RuntimeException("The branding logo feature is unavailable");
+                throw new RuntimeException(path + " does not exist");
             }
         } else {
             throw new RuntimeException("Expected: logo <path>");

@@ -215,19 +215,15 @@ final class ElementStyleParser extends AbstractParser {
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String path = tokens.get(1);
 
-            if (context.getFile() != null) {
-                File file = new File(context.getFile().getParent(), path);
-                if (file.exists() && !file.isDirectory()) {
-                    try {
-                        style.setIcon(ImageUtils.getImageAsDataUri(file));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    throw new RuntimeException(path + " does not exist");
+            File file = new File(context.getFile().getParent(), path);
+            if (file.exists() && !file.isDirectory()) {
+                try {
+                    style.setIcon(ImageUtils.getImageAsDataUri(file));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
-                throw new RuntimeException("The element style icon feature is unavailable");
+                throw new RuntimeException(path + " does not exist");
             }
         } else {
             throw new RuntimeException("Expected: icon <file>");
