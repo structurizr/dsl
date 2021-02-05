@@ -20,6 +20,16 @@ class DeploymentEnvironmentParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(tokens("deploymentEnvironment token1 token2"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: deploymentEnvironment <name> {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse() {
         String environment = parser.parse(tokens("deploymentEnvironment", "Live"));
         assertEquals("Live", environment);
