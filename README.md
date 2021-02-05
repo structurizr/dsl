@@ -6,6 +6,7 @@ This GitHub repository contains an implementation of the Structurizr DSL - a way
 
 * [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
 * [Language reference](docs/language-reference.md)
+* [Structurizr DSL demo](https://structurizr.com/dsl)
 
 ## A quick example
 
@@ -78,10 +79,10 @@ workspace {
 
 Here are some tools designed to support the Structurizr DSL.
 
-* [Structurizr DSL demo](https://structurizr.com/dsl)
-* [Structurizr CLI](https://github.com/structurizr/cli)
+* [Structurizr CLI](https://github.com/structurizr/cli) (recommended)
 * [VS Code extension - syntax highlighting and PlantUML previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension)
 * [VS Code extension - syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
+* [Structurizr online DSL editor](https://structurizr.com/help/dsl)
 
 ## Examples
 
