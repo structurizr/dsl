@@ -7,7 +7,7 @@ final class DeploymentEnvironmentParser extends AbstractParser {
     String parse(Tokens tokens) {
         // deploymentEnvironment <name>
 
-        if (!tokens.includes(DEPLOYMENT_ENVIRONMENT_NAME_INDEX)) {
+        if (tokens.size() != DEPLOYMENT_ENVIRONMENT_NAME_INDEX + 1) {
             throw new RuntimeException("Expected: deploymentEnvironment <name> {");
         } else {
             return tokens.get(DEPLOYMENT_ENVIRONMENT_NAME_INDEX);

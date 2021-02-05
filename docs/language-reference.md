@@ -267,7 +267,7 @@ workspace [name] [description] {
             }
         }
 
-        deploymentEnvironment <name> {
+        [<identifier> = ]deploymentEnvironment <name> {
             [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
                 url <url>
                 properties {
@@ -344,7 +344,7 @@ workspace [name] [description] {
             title <title>
         }
 
-        deployment <*|software system identifier> <environment name> [key] [description] {
+        deployment <*|software system identifier> <environment> [key] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
@@ -843,12 +843,12 @@ The following keywords can also be used within the ```dynamic``` block:
 The ```deployment``` keyword defines a [Deployment view](https://c4model.com/#DeploymentDiagram) for the specified scope and deployment environment.
 
 ```
-deployment <*|software system identifier> <environment name> [key] [description] {
+deployment <*|software system identifier> <environment> [key] [description] {
     ...
 }
 ```
 
-The first property defines the scope of the view, and the second property defines the deployment environment. The combination of these two properties determines what can be added to the view, as follows:
+The first property defines the scope of the view, and the second property defines the deployment environment (which can be an identifier, or a name). The combination of these two properties determines what can be added to the view, as follows:
 
 - ```*``` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
 - Software system scope: All deployment nodes and infrastructure nodes within the deployment environment. Container instances within the deployment environment that belong to the software system.

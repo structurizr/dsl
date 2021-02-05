@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
+import com.structurizr.model.DeploymentNode;
 import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DeploymentView;
@@ -15,16 +16,26 @@ final class DeploymentViewParser extends AbstractParser {
     private static final int DESCRIPTION_INDEX = 4;
 
     DeploymentView parse(DslContext context, Tokens tokens) {
-        // deployment <*|software system identifier> <environment name> [key] [description] {
+        // deployment <*|software system identifier> <environment|environment name> [key] [description] {
 
         if (!tokens.includes(ENVIRONMENT_INDEX)) {
-            throw new RuntimeException("Expected: deployment <*|software system identifier> <environment name> [key] [description] {");
+            throw new RuntimeException("Expected: deployment <*|software system identifier> <environment> [key] [description] {");
         }
 
         Workspace workspace = context.getWorkspace();
         String key = "";
         String scopeIdentifier = tokens.get(SCOPE_IDENTIFIER_INDEX);
         String environment = tokens.get(ENVIRONMENT_INDEX);
+        if (context.getElement(environment) != null && context.getElement(environment) instanceof DeploymentEnvironment) {
+            environment = context.getElement(environment).getName();
+        }
+
+        // check that the deployment environment exists in the model
+        final String env = environment;
+        if (context.getWorkspace().getModel().getDeploymentNodes().stream().noneMatch(dn -> dn.getEnvironment().equals(env))) {
+            throw new RuntimeException("The environment \"" + environment + "\" does not exist");
+        }
+
         String description = "";
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);

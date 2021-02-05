@@ -63,6 +63,11 @@ workspace "Name" "Description" {
 
         user -> HomePageController "Visits" "HTTPS" "Tag"
 
+        developmentEnvironment = deploymentEnvironment "Development" {
+            deploymentNode "Amazon Web Services" "Description" "Technology" "Tag" {
+            }
+        }
+
         deploymentEnvironment "Live" {
             deploymentNode "Amazon Web Services" "Description" "Technology" "Tag" {
 
@@ -124,6 +129,11 @@ workspace "Name" "Description" {
 
         dynamic webApplication "Dynamic" "Description" {
             user -> homePageController "Requests via web browser"
+            autoLayout
+        }
+
+        deployment * developmentEnvironment "Deployment-Development" "Description" {
+            include *
             autoLayout
         }
 
