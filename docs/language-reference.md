@@ -15,6 +15,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
         - [model](#model)
             - [impliedRelationships](#impliedRelationships)
             - [enterprise](#enterprise)
+            - [group](#group)
             - [person](#person)
                 - [url](#url)
                 - [properties](#properties)
@@ -213,35 +214,6 @@ workspace [name] [description] {
     model {
 
         impliedRelationships <true|false>
-
-        enterprise <name> {
-            [<identifier> = ]person <name> [description] [tags] {
-                url <url>
-                properties {
-                    <name> <value>
-                }
-                perspectives {
-                    <name> <description>
-                }
-            }
-            
-            [<identifier> = ]softwareSystem <name> [description] [tags] {
-                url <url>
-                properties {
-                    <name> <value>
-                }
-                perspectives {
-                    <name> <description>
-                }
-                
-                [<identifier> = ]container <name> [description] [technology] [tags] {
-                    [<identifier> = ]component <name> [description] [technology] [tags]
-                }
-                
-                !docs <path>
-                !adrs <path>
-            }
-        }
 
         [<identifier> = ]person <name> [description] [tags] {
             url <url>
@@ -479,7 +451,7 @@ A flag of `false` disables implied relationship creation, while `true` creates i
 
 ### enterprise
 
-The ```enterprise``` keyword provides a way to define a named "enterprise" (e.g. an organisation). Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
+The ```enterprise``` keyword provides a way to define a named "enterprise" (e.g. an organisation) within the top-level model. Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
 
 ```
 enterprise <name> {
@@ -487,11 +459,32 @@ enterprise <name> {
 }
 ```
 
-The ```enterprise``` block can contain the following children:
+The ```enterprise``` block can contain the following:
 
 - [person](#person)
 - [softwareSystem](#softwareSystem)
 - [-> (relationship)](#relationship)
+
+### group
+
+The ```group``` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
+See [../examples/groups.dsl](groups.dsl) for an example.
+
+```
+group <name> {
+    ...
+}
+```
+
+Groups can be defined as follows:
+
+| Location | Permitted elements |
+| ------------- | ------------- |
+| Model | People and software systems |
+| Software System | Containers |
+| Container | Components |
+
+Groups cannot be nested.
 
 ### person
 
