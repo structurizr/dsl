@@ -46,25 +46,25 @@ __Please note that what you see here may not be available in the Structurizr CLI
                 - [include](#include)
                 - [exclude](#exclude)
                 - [autoLayout](#autoLayout)
-                - [animationStep](#animationStep)
+                - [animation](#animation)
                 - [title](#title)
             - [systemContext](#systemContext-view)
                 - [include](#include)
                 - [exclude](#exclude)
                 - [autoLayout](#autoLayout)
-                - [animationStep](#animationStep)
+                - [animation](#animation)
                 - [title](#title)
             - [container](#container-view)
                 - [include](#include)
                 - [exclude](#exclude)
                 - [autoLayout](#autoLayout)
-                - [animationStep](#animationStep)
+                - [animation](#animation)
                 - [title](#title)
             - [component](#component-view)
                 - [include](#include)
                 - [exclude](#exclude)
                 - [autoLayout](#autoLayout)
-                - [animationStep](#animationStep)
+                - [animation](#animation)
                 - [title](#title)
             - [filtered](#filtered-view)
             - [dynamic](#dynamic-view)
@@ -74,7 +74,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
                 - [include](#include)
                 - [exclude](#exclude)
                 - [autoLayout](#autoLayout)
-                - [animationStep](#animationStep)
+                - [animation](#animation)
                 - [title](#title)
             - [styles](#styles)
                 - [element](#element-style)
@@ -343,7 +343,9 @@ workspace [name] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animationStep <identifier> [identifier...]
+            animation {
+                <identifier> [identifier...]
+            }
             title <title>
         }
 
@@ -351,7 +353,9 @@ workspace [name] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animationStep <identifier> [identifier...]
+            animation {
+                <identifier> [identifier...]
+            }
             title <title>
         }
 
@@ -359,7 +363,9 @@ workspace [name] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animationStep <identifier> [identifier...]
+            animation {
+                <identifier> [identifier...]
+            }
             title <title>
         }
 
@@ -367,7 +373,9 @@ workspace [name] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animationStep <identifier> [identifier...]
+            animation {
+                <identifier> [identifier...]
+            }
             title <title>
         }
 
@@ -383,7 +391,9 @@ workspace [name] [description] {
             include <*|identifier> [identifier...]
             exclude <identifier> [identifier...]
             autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animationStep <identifier> [identifier...]
+            animation {
+                <identifier> [identifier...]
+            }
             title <title>
         }
 
@@ -777,7 +787,7 @@ The following keywords can be used within the ```systemLandscape``` block:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
-- [animationStep](#animationStep)
+- [animation](#animation)
 - [title](#title)
 
 ### systemContext view
@@ -795,7 +805,7 @@ The following keywords can be used within the ```systemContext``` block:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
-- [animationStep](#animationStep)
+- [animation](#animation)
 - [title](#title)
 
 ### container view
@@ -813,7 +823,7 @@ The following keywords can be used within the ```container``` block:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
-- [animationStep](#animationStep)
+- [animation](#animation)
 - [title](#title)
 
 ### component view
@@ -831,7 +841,7 @@ The following keywords can be used within the ```component``` block:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
-- [animationStep](#animationStep)
+- [animation](#animation)
 - [title](#title)
 
 ### filtered view
@@ -893,7 +903,7 @@ The following keywords can be used within the ```deployment``` block:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
-- [animationStep](#animationStep)
+- [animation](#animation)
 - [title](#title)
 
 ### include
@@ -981,12 +991,16 @@ The first property is the rank direction:
 
 The second property is the separation of ranks in pixels (default: ```300```), while the third property is the separation of nodes in the same rank in pixels (default: ```300```).
 
-### animationStep
+### animation
 
-The ```animationStep``` keyword defines an animation step consisting of the specified elements.
+The ```animation``` keyword defines the animation for the specified view.
+Each animation step should be defined on a separate line, inside the block, specifying the elements that should be included in that step.
 
 ```
-animationStep <identifier> [identifier...]
+animation {
+    <identifier> [identifier...]
+    <identifier> [identifier...]
+}
 ```
 
 ### title

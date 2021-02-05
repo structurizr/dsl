@@ -35,6 +35,7 @@ class StructurizrDslTokens {
     static final String FILTERED_VIEW_TOKEN = "filtered";
     static final String INCLUDE_IN_VIEW_TOKEN = "include";
     static final String EXCLUDE_IN_VIEW_TOKEN = "exclude";
+    static final String ANIMATION_IN_VIEW_TOKEN = "animation";
     static final String ANIMATION_STEP_IN_VIEW_TOKEN = "animationStep";
     static final String AUTOLAYOUT_VIEW_TOKEN = "autolayout";
     static final String VIEW_TITLE_TOKEN = "title";

@@ -468,6 +468,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (ANIMATION_STEP_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new StaticViewAnimationStepParser().parse(getContext(StaticViewDslContext.class), tokens);
 
+                    } else if (ANIMATION_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
+                        startContext(new StaticViewAnimationDslContext(getContext(StaticViewDslContext.class).getView()));
+
+                    } else if (inContext(StaticViewAnimationDslContext.class)) {
+                        new StaticViewAnimationStepParser().parse(getContext(StaticViewAnimationDslContext.class), tokens);
+
                     } else if (INCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
                         new DeploymentViewContentParser().parseInclude(getContext(DeploymentViewDslContext.class), tokens);
 
@@ -476,6 +482,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (ANIMATION_STEP_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
                         new DeploymentViewAnimationStepParser().parse(getContext(DeploymentViewDslContext.class), tokens);
+
+                    } else if (ANIMATION_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
+                        startContext(new DeploymentViewAnimationDslContext(getContext(DeploymentViewDslContext.class).getView()));
+
+                    } else if (inContext(DeploymentViewAnimationDslContext.class)) {
+                        new DeploymentViewAnimationStepParser().parse(getContext(DeploymentViewAnimationDslContext.class), tokens);
 
                     } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new AutoLayoutParser().parse(getContext(StaticViewDslContext.class), tokens);

@@ -8,19 +8,32 @@ import java.util.List;
 
 final class StaticViewAnimationStepParser extends AbstractParser {
 
-    private static final int FIRST_IDENTIFIER_INDEX = 1;
-
     void parse(StaticViewDslContext context, Tokens tokens) {
         // animationStep <identifier> [identifier...]
 
-        if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
+        if (!tokens.includes(1)) {
             throw new RuntimeException("Expected: animationStep <identifier> [identifier...]");
         }
 
-        StaticView view = context.getView();
+        parse(context, context.getView(), tokens, 1);
+    }
+
+    void parse(StaticViewAnimationDslContext context, Tokens tokens) {
+        // <identifier> [identifier...]
+
+        if (!tokens.includes(0)) {
+            throw new RuntimeException("Expected: <identifier> [identifier...]");
+        }
+
+        parse(context, context.getView(), tokens, 0);
+    }
+
+    void parse(DslContext context, StaticView view, Tokens tokens, int startIndex) {
+        // <identifier> [identifier...]
+
         List<Element> elements = new ArrayList<>();
 
-        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+        for (int i = startIndex; i < tokens.size(); i++) {
             String elementIdentifier = tokens.get(i);
 
             Element element = context.getElement(elementIdentifier);

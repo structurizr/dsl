@@ -10,20 +10,31 @@ import java.util.List;
 
 final class DeploymentViewAnimationStepParser extends AbstractParser {
 
-    private static final int FIRST_IDENTIFIER_INDEX = 1;
-
     void parse(DeploymentViewDslContext context, Tokens tokens) {
         // animationStep <identifier> [identifier...]
 
-        if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
+        if (!tokens.includes(1)) {
             throw new RuntimeException("Expected: animationStep <identifier> [identifier...]");
         }
 
-        DeploymentView view = context.getView();
+        parse(context, context.getView(), tokens, 1);
+    }
+
+    void parse(DeploymentViewAnimationDslContext context, Tokens tokens) {
+        // animationStep <identifier> [identifier...]
+
+        if (!tokens.includes(0)) {
+            throw new RuntimeException("Expected: <identifier> [identifier...]");
+        }
+
+        parse(context, context.getView(), tokens, 0);
+    }
+
+    void parse(DslContext context, DeploymentView view, Tokens tokens, int startIndex) {
         List<ContainerInstance> containerInstances = new ArrayList<>();
         List<InfrastructureNode> infrastructureNodes = new ArrayList<>();
 
-        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+        for (int i = startIndex; i < tokens.size(); i++) {
             String identifier = tokens.get(i);
 
             Element element = context.getElement(identifier);

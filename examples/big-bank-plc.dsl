@@ -134,30 +134,36 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         systemcontext internetBankingSystem "SystemContext" {
             include *
-            animationStep internetBankingSystem
-            animationStep customer
-            animationStep mainframe
-            animationStep email
+            animation {
+                internetBankingSystem
+                customer
+                mainframe
+                email
+            }
             autoLayout
         }
 
         container internetBankingSystem "Containers" {
             include *
-            animationStep customer mainframe email
-            animationStep webApplication
-            animationStep singlePageApplication
-            animationStep mobileApp
-            animationStep apiApplication
-            animationStep database
+            animation {
+                customer mainframe email
+                webApplication
+                singlePageApplication
+                mobileApp
+                apiApplication
+                database
+            }
             autoLayout
         }
 
         component apiApplication "Components" {
             include *
-            animationStep singlePageApplication mobileApp database email mainframe
-            animationStep signinController securityComponent
-            animationStep accountsSummaryController mainframeBankingSystemFacade
-            animationStep resetPasswordController emailComponent
+            animation {
+                singlePageApplication mobileApp database email mainframe
+                signinController securityComponent
+                accountsSummaryController mainframeBankingSystemFacade
+                resetPasswordController emailComponent
+            }
             autoLayout
         }
 
@@ -173,19 +179,23 @@ workspace "Big Bank plc" "This is an example workspace to illustrate the key fea
 
         deployment internetBankingSystem "Development" "DevelopmentDeployment" {
             include *
-            animationStep developerSinglePageApplicationInstance
-            animationStep developerWebApplicationInstance developerApiApplicationInstance
-            animationStep developerDatabaseInstance
+            animation {
+                developerSinglePageApplicationInstance
+                developerWebApplicationInstance developerApiApplicationInstance
+                developerDatabaseInstance
+            }
             autoLayout
         }
 
         deployment internetBankingSystem "Live" "LiveDeployment" {
             include *
-            animationStep liveSinglePageApplicationInstance
-            animationStep liveMobileAppInstance
-            animationStep liveWebApplicationInstance liveApiApplicationInstance
-            animationStep livePrimaryDatabaseInstance
-            animationStep liveSecondaryDatabaseInstance
+            animation {
+                liveSinglePageApplicationInstance
+                liveMobileAppInstance
+                liveWebApplicationInstance liveApiApplicationInstance
+                livePrimaryDatabaseInstance
+                liveSecondaryDatabaseInstance
+            }
             autoLayout
         }
 
