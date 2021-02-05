@@ -26,9 +26,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     private static final String MULTI_LINE_COMMENT_START_TOKEN = "/*";
     private static final String MULTI_LINE_COMMENT_END_TOKEN = "*/";
 
+    private static final Pattern STRING_SUBSTITUTION_PATTERN = Pattern.compile("(\\$\\{[a-zA-Z0-9-_.]+?})");
+
     private Stack<DslContext> contextStack;
     private Map<String, Element> elements;
     private Map<String, Relationship> relationships;
+    private Map<String, Constant> constants;
 
     private List<String> dslSourceLines = new ArrayList<>();
     private Workspace workspace;
@@ -42,6 +45,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         contextStack = new Stack<>();
         elements = new HashMap<>();
         relationships = new HashMap<>();
+        constants = new HashMap<>();
 
         workspace = new Workspace("Name", "Description");
         workspace.getModel().setImpliedRelationshipsStrategy(new CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy());
@@ -132,12 +136,18 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     List<String> listOfTokens = new ArrayList<>();
                     Matcher m = TOKENS_PATTERN.matcher(line.trim());
                     while (m.find()) {
+                        String token = null;
                         if (m.group(1) != null) {
                             // this is a token specified between double-quotes
-                            listOfTokens.add(m.group(1));
+                            token = m.group(1);
                         } else {
                             // this is a token specified without double-quotes
-                            listOfTokens.add(m.group(3));
+                            token = m.group(3);
+                        }
+
+                        if (token != null) {
+                            token = substituteStrings(token);
+                            listOfTokens.add(token);
                         }
                     }
 
@@ -552,6 +562,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             new AdrsParser().parse(getContext(SoftwareSystemDslContext.class), file, tokens);
                         }
 
+                    } else if (CONSTANT_TOKEN.equalsIgnoreCase(firstToken)) {
+                        Constant constant = new ConstantParser().parse(getContext(), tokens);
+                        constants.put(constant.getName(), constant);
+
                     } else {
                         throw new StructurizrDslParserException("Unexpected tokens");
                     }
@@ -566,6 +580,31 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                 throw new StructurizrDslParserException(e.getMessage(), lineNumber, line);
             }
         }
+    }
+
+    private String substituteStrings(String token) {
+        Matcher m = STRING_SUBSTITUTION_PATTERN.matcher(token);
+        while (m.find()) {
+            String before = m.group(0);
+            String after = null;
+            String name = before.substring(2, before.length()-1);
+            if (constants.containsKey(name)) {
+                after = constants.get(name).getValue();
+            } else {
+                if (!restricted) {
+                    String environmentVariable = System.getenv().get(name);
+                    if (environmentVariable != null) {
+                        after = environmentVariable;
+                    }
+                }
+            }
+
+            if (after != null) {
+                token = token.replace(before, after);
+            }
+        }
+
+        return token;
     }
 
     private boolean shouldStartContext(Tokens tokens) {

@@ -20,6 +20,7 @@ class ExampleTests extends AbstractTests {
         parser.parse(new File("examples/test.dsl"));
 
         assertFalse(parser.getWorkspace().isEmpty());
+        assertEquals("Organisation - Group", parser.getWorkspace().getModel().getEnterprise().getName());
     }
 
     @Test

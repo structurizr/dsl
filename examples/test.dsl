@@ -1,3 +1,6 @@
+!constant ORGANISATION_NAME "Organisation"
+!constant GROUP_NAME "Group"
+
 workspace "Name" "Description" {
 
     /*
@@ -27,7 +30,8 @@ workspace "Name" "Description" {
                 "Security" "A description..."
             }
         }
-        enterprise "Enterprise" {
+
+        enterprise "${ORGANISATION_NAME} - ${GROUP_NAME}" {
             softwareSystem = softwareSystem "Software System" "Description"  "Tag" {
                 webApplication = container "Web Application" "Description" "Technology" "Tag" {
                     homePageController = component "HomePageController" "Description" "Spring MVC Controller" "Tag" {
