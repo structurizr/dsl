@@ -468,7 +468,7 @@ The ```enterprise``` block can contain the following:
 ### group
 
 The ```group``` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
-See [../examples/groups.dsl](groups.dsl) for an example.
+See [groups.dsl](../examples/groups.dsl) for an example.
 
 ```
 group <name> {
