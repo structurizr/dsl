@@ -2,7 +2,7 @@
 
 The Structurizr DSL provides a way to define a software architecture model (based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams). See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
 
-__Please note that what you see here may not be available in the Structurizr CLI yet.__
+__Please note that what you see here may not be available in the Structurizr CLI yet, but it will likely be available on the [Structurizr DSL demo page](https://structurizr.com/dsl).__
 
 ## Table of contents
 
@@ -19,66 +19,22 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [enterprise](#enterprise)
             - [group](#group)
             - [person](#person)
-                - [url](#url)
-                - [properties](#properties)
             - [softwareSystem](#softwareSystem)
-                - [url](#url)
-                - [properties](#properties)
-                - [container](#container)
-                    - [url](#url)
-                    - [properties](#properties)
-                    - [component](#component)
-                        - [url](#url)
-                        - [properties](#properties)
             - [deploymentEnvironment](#deploymentEnvironment)
                 - [deploymentNode](#deploymentNode)
-                    - [url](#url)
-                    - [properties](#properties)
                     - [infrastructureNode](#infrastructureNode)
-                        - [url](#url)
-                        - [properties](#properties)
                     - [softwareSystemInstance](#softwareSystemInstance)
                     - [containerInstance](#containerInstance)
             - [-> (relationship)](#relationship)
-                - [url](#url)
         - [views](#views)
             - [systemLandscape](#systemLandscape-view)
-                - [include](#include)
-                - [exclude](#exclude)
-                - [autoLayout](#autoLayout)
-                - [animation](#animation)
-                - [title](#title)
             - [systemContext](#systemContext-view)
-                - [include](#include)
-                - [exclude](#exclude)
-                - [autoLayout](#autoLayout)
-                - [animation](#animation)
-                - [title](#title)
             - [container](#container-view)
-                - [include](#include)
-                - [exclude](#exclude)
-                - [autoLayout](#autoLayout)
-                - [animation](#animation)
-                - [title](#title)
             - [component](#component-view)
-                - [include](#include)
-                - [exclude](#exclude)
-                - [autoLayout](#autoLayout)
-                - [animation](#animation)
-                - [title](#title)
             - [filtered](#filtered-view)
             - [dynamic](#dynamic-view)
-                - [autoLayout](#autoLayout)
-                - [title](#title)
             - [deployment](#deployment-view)
-                - [include](#include)
-                - [exclude](#exclude)
-                - [autoLayout](#autoLayout)
-                - [animation](#animation)
-                - [title](#title)
             - [styles](#styles)
-                - [element](#element-style)
-                - [relationship](#relationship-style)
             - [themes](#themes)
             - [branding](#branding)
             - [terminology](#terminology)
@@ -232,9 +188,6 @@ The following describes the language grammar, with angle brackets (```<...>```) 
 
 Most statements are of the form: ```keyword <required properties> [optional properties]```
 
-```
-workspace [name] [description] {
-
     /**
         multi-line comment
     */
@@ -246,215 +199,7 @@ workspace [name] [description] {
     !docs <path>
     !adrs <path>
 
-    model {
-
-        impliedRelationships <true|false>
-
-        [<identifier> = ]person <name> [description] [tags] {
-            url <url>
-            properties {
-                <name> <value>
-            }
-            perspectives {
-                <name> <description>
-            }
-        }
-        
-        [<identifier> = ]softwareSystem <name> [description] [tags] {
-            url <url>
-            properties {
-                <name> <value>
-            }
-            perspectives {
-                <name> <description>
-            }
-            
-            [<identifier> = ]container <name> [description] [technology] [tags] {
-                url <url>
-                properties {
-                    <name> <value>
-                }
-                perspectives {
-                    <name> <description>
-                }
-                [<identifier> = ]component <name> [description] [technology] [tags] {
-                    url <url>
-                    properties {
-                        <name> <value>
-                    }
-                    perspectives {
-                        <name> <description>
-                    }
-                }
-            }
-            
-            !docs <path>
-            !adrs <path>
-        }
-
-        [<identifier> = ]<identifier> -> <identifier> [description] [technology] [tags] {
-             url <url>
-            properties {
-                <name> <value>
-            }
-            perspectives {
-                <name> <description>
-            }
-        }
-
-        [<identifier> = ]deploymentEnvironment <name> {
-            [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
-                url <url>
-                properties {
-                    <name> <value>
-                }
-                perspectives {
-                    <name> <description>
-                }
-
-                [<identifier> = ]deploymentNode <name> [description] [technology] [tags] [instances] {
-                    url <url>
-                    properties {
-                        <name> <value>
-                    }
-                    perspectives {
-                        <name> <description>
-                    }
-                    [<identifier> = ]infrastructureNode <name> [description] [technology] [tags] {
-                        url <url>
-                        properties {
-                            <name> <value>
-                        }
-                        perspectives {
-                            <name> <description>
-                        }
-                    }
-                    [<identifier> = ]softwareSystemInstance <identifier> [tags]
-                    [<identifier> = ]containerInstance <identifier> [tags]
-                }
-            }
-        }
-
-    }
-         
-    views {
-
-        systemLandscape [key] [description] {
-            include <*|identifier> [identifier...]
-            exclude <identifier> [identifier...]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animation {
-                <identifier> [identifier...]
-            }
-            title <title>
-        }
-
-        systemContext <software system identifier> [key] [description] {
-            include <*|identifier> [identifier...]
-            exclude <identifier> [identifier...]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animation {
-                <identifier> [identifier...]
-            }
-            title <title>
-        }
-
-        container <software system identifier> [key] [description] {
-            include <*|identifier> [identifier...]
-            exclude <identifier> [identifier...]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animation {
-                <identifier> [identifier...]
-            }
-            title <title>
-        }
-
-        component <container identifier> [key] [description] {
-            include <*|identifier> [identifier...]
-            exclude <identifier> [identifier...]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animation {
-                <identifier> [identifier...]
-            }
-            title <title>
-        }
-
-        filtered <baseKey> <include|exclude> <tags> [key] [description]
-
-        dynamic <*|software system identifier|container identifier> [key] [description] {
-            <identifier> -> <identifier> [description] [technology]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            title <title>
-        }
-
-        deployment <*|software system identifier> <environment> [key] [description] {
-            include <*|identifier> [identifier...]
-            exclude <identifier> [identifier...]
-            autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
-            animation {
-                <identifier> [identifier...]
-            }
-            title <title>
-        }
-
-        styles {
-            element <tag> {
-                shape <Box|RoundedBox|Circle|Ellipse|Hexagon|Cylinder|Pipe|Person|Robot|Folder|WebBrowser|MobileDevicePortrait|MobileDeviceLandscape|Component>
-                icon <file>
-                width <integer>
-                height <integer>
-                background <#rrggbb>
-                color <#rrggbb>
-                colour <#rrggbb>
-                stroke <#rrggbb>
-                fontSize <integer>
-                border <solid|dashed|dotted>
-                opacity <integer: 0-100>
-                metadata <true|false>
-                description <true|false>
-            }
-
-            relationship <tag> {
-                thickness <integer>
-                color #777777
-                colour #777777
-                dashed <true|false>
-                routing <Direct|Orthogonal|Curved>
-                fontSize <integer>
-                width <integer>
-                position <integer: 0-100>
-                opacity <integer: 0-100>
-            }
-        }
-
-        themes <themeUrl> [themeUrl] ... [themeUrl]
-
-        branding {
-            logo <file>
-            font <name> [url]
-        }
-        
-        terminology {
-            enterprise <term>
-            person <term>
-            softwareSystem <term>
-            container <term>
-            component <term>
-            deploymentNode <term>
-            infrastructureNode <term>
-            relationship <term>
-        }
-
-    }
-    
-    configuration {
-        users {
-            <username> <read|write>
-        }
-    }
-
 }
-```
 
 ### workspace
 
@@ -466,6 +211,16 @@ workspace [name] [description] {
 }
 ```
 
+Permitted children:
+
+- [properties](#properties)
+- [model](#model)
+- [views](#views)
+- [configuration](#configuration)
+- [!docs](#documentation)
+- [!adrs](#architecture-decision-records-adrs)
+
+
 ### model
 
 Each workspace must contain a ```model``` block, inside which elements and relationships are defined.
@@ -476,13 +231,15 @@ model {
 }
 ```
 
-The ```model``` block can contain the following children:
+Permitted children:
 
+- [impliedRelationships](#impliedrelationships)
 - [enterprise](#enterprise)
+- [group](#group)
 - [person](#person)
 - [softwareSystem](#softwareSystem)
-- [-> (relationship)](#relationship)
 - [deploymentEnvironment](#deploymentEnvironment)
+- [-> (relationship)](#relationship)
 
 ### impliedRelationships
 
@@ -504,8 +261,9 @@ enterprise <name> {
 }
 ```
 
-The ```enterprise``` block can contain the following:
+Permitted children:
 
+- [group](#group)
 - [person](#person)
 - [softwareSystem](#softwareSystem)
 - [-> (relationship)](#relationship)
@@ -536,7 +294,9 @@ Groups cannot be nested.
 The ```person``` keyword defines a person (e.g. a user, actor, role, or persona).
 
 ```
-person <name> [description] [tags]
+person <name> [description] [tags] {
+    ...
+}
 ```
 
 The following tags are added by default:
@@ -544,15 +304,16 @@ The following tags are added by default:
 - `Element`
 - `Person`
 
+Permitted children:
+
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+- [-> (relationship)](#relationship)
+
 ### softwareSystem
 
 The ```softwareSystem``` keyword defines a software system.
-
-```
-softwareSystem <name> [description] [tags]
-```
-
-Add braces if you would like to define child containers:
 
 ```
 softwareSystem <name> [description] [tags] {
@@ -565,15 +326,17 @@ The following tags are added by default:
 - `Element`
 - `Software System`
 
+Permitted children:
+
+- [container](#container)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+- [-> (relationship)](#relationship)
+
 ### container
 
 The ```container``` keyword defines a container, within a software system.
-
-```
-container <name> [description] [technology] [tags]
-```
-
-Add braces if you would like to define child components:
 
 ```
 container <name> [description] [technology] [tags] {
@@ -586,18 +349,35 @@ The following tags are added by default:
 - `Element`
 - `Container`
 
+Permitted children:
+
+- [component](#component)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+- [-> (relationship)](#relationship)
+
 ### component
 
 The ```component``` keyword defines a component, within a container.
 
 ```
-component <name> [description] [technology] [tags]
+component <name> [description] [technology] [tags] {
+    ...
+}
 ```
 
 The following tags are added by default:
 
 - `Element`
 - `Component`
+
+Permitted children:
+
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+- [-> (relationship)](#relationship)
 
 ### deploymentEnvironment
 
@@ -609,7 +389,10 @@ deploymentEnvironment <name> {
 }
 ```
 
-A deployment environment can contain one or more [deploymentNode](#deploymentNode) elements.
+Permitted children:
+
+- [deploymentNode](#deploymentNode)
+- [-> (relationship)](#relationship)
 
 ### deploymentNode
 
@@ -626,15 +409,25 @@ The following tags are added by default:
 - `Element`
 - `Deployment Node`
 
-Deployment nodes can be nested, so a deployment node can contain other deployment nodes. A deployment node can also contain [infrastructureNode](#infrastructureNode), [softwareSystemInstance](#softwareSystemInstance), and [containerInstance](#containerInstance) elements.
+Permitted children:
 
+- [deploymentNode](#deploymentNode) (deployment nodes can be nested)
+- [infrastructureNode](#infrastructureNode)
+- [softwareSystemInstance](#softwareSystemInstance)
+- [containerInstance](#containerInstance)
+- [-> (relationship)](#relationship)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
 
 ### infrastructureNode
 
 The ```infrastructureNode``` keyword defines an infrastructure node, which is typically something like a load balancer, firewall, DNS service, etc.
 
 ```
-infrastructureNode <name> [description] [technology] [tags]
+infrastructureNode <name> [description] [technology] [tags] {
+    ...
+}
 ```
 
 The following tags are added by default:
@@ -642,12 +435,21 @@ The following tags are added by default:
 - `Element`
 - `Infrastructure Node`
 
+Permitted children:
+
+- [-> (relationship)](#relationship)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+
 ### softwareSystemInstance
 
 The ```softwareSystemInstance``` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
 
 ```
-softwareSystemInstance <identifier> [tags]
+softwareSystemInstance <identifier> [tags] {
+    ...
+}
 ```
 
 The ```identifier``` must represent a software system.
@@ -656,12 +458,19 @@ In addition to the software system's tags, the following tags are added by defau
 
 - `Software System Instance`
 
+- [-> (relationship)](#relationship)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+
 ### containerInstance
 
 The ```containerInstance``` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
 ```
-containerInstance <identifier> [tags]
+containerInstance <identifier> [tags] {
+    ...
+}
 ```
 
 The ```identifier``` must represent a container.
@@ -670,6 +479,11 @@ In addition to the container's tags, the following tags are added by default:
 
 - `Container Instance`
 
+- [-> (relationship)](#relationship)
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+
 ### relationship
 
 ```->``` is used to define a uni-directional relationship between two elements.
@@ -677,7 +491,9 @@ In addition to the container's tags, the following tags are added by default:
 There are two ways to define relationships. The first is explicitly, where you explicitly use a source identifier: 
 
 ```
-<identifier> -> <identifier> [description] [technology] [tags]
+<identifier> -> <identifier> [description] [technology] [tags] {
+    ...
+}
 ```
 
 For example:
@@ -716,6 +532,10 @@ And only the following types of relationships are permitted in the model:
 | Infrastructure Node | Deployment Node, Infrastructure Node, Software System Instance, Container Instance |
 | Software System Instance | Infrastructure Node, Software System Instance, Container Instance |
 | Container Instance | Infrastructure Node, Software System Instance, Container Instance |
+
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
 
 ## url
 
@@ -782,7 +602,7 @@ systemLandscape [key] [description] {
 }
 ```
 
-The following keywords can be used within the ```systemLandscape``` block:
+Permitted children:
 
 - [include](#include)
 - [exclude](#exclude)
@@ -800,7 +620,7 @@ systemContext <software system identifier> [key] [description] {
 }
 ```
 
-The following keywords can be used within the ```systemContext``` block:
+Permitted children:
 
 - [include](#include)
 - [exclude](#exclude)
@@ -818,7 +638,7 @@ container <software system identifier> [key] [description] {
 }
 ```
 
-The following keywords can be used within the ```container``` block:
+Permitted children:
 
 - [include](#include)
 - [exclude](#exclude)
@@ -836,7 +656,7 @@ component <container identifier> [key] [description] {
 }
 ```
 
-The following keywords can be used within the ```component``` block:
+Permitted children:
 
 - [include](#include)
 - [exclude](#exclude)
@@ -878,7 +698,7 @@ Unlike the other diagram types, Dynamic views are created by specifying the rela
 
 If a relationship between the two elements does not exist, it will be automatically created.
 
-The following keywords can also be used within the ```dynamic``` block:
+Permitted children:
 
 - [autoLayout](#autoLayout)
 - [title](#title)
@@ -898,7 +718,7 @@ The first property defines the scope of the view, and the second property define
 - ```*``` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
 - Software system scope: All deployment nodes and infrastructure nodes within the deployment environment. Container instances within the deployment environment that belong to the software system.
 
-The following keywords can be used within the ```deployment``` block:
+Permitted children:
 
 - [include](#include)
 - [exclude](#exclude)
@@ -1021,7 +841,7 @@ styles {
 }
 ```
 
-The ```styles``` block can contain the following:
+Permitted children:
 
 - [element](#element-style)
 - [relationship](#relationship-style)
@@ -1111,6 +931,10 @@ configuration {
     ...
 }
 ```
+
+Permitted children:
+
+- [users](#users)
 
 ### users
 
