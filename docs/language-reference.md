@@ -106,15 +106,15 @@ Comments can be defined as follows:
 By default, all elements and relationships are anonymous, in that they can't be referenced from within the DSL. For example, the following statements will create a person and a software system, but neither can be referenced within the DSL. 
 
 ```
-person "User" "A user of my software system."
-softwareSystem "Software System" "My software system"
+person "User"
+softwareSystem "Software System"
 ```
 
 To create a relationship between the two elements, we need to be able to reference them. We can do this by defining an identifier, in the same way that you'd define a variable in many programming languages.
 
 ```
-p = person "User" "A user of my software system."
-ss = softwareSystem "Software System" "My software system"
+p = person "User"
+ss = softwareSystem "Software System"
 ```
 
 Now we can use these identifiers when creating relationships, specifying which elements should be included/excluded from views, etc.
@@ -492,6 +492,8 @@ And only the following types of relationships are permitted in the model:
 | Infrastructure Node | Deployment Node, Infrastructure Node, Software System Instance, Container Instance |
 | Software System Instance | Infrastructure Node, Software System Instance, Container Instance |
 | Container Instance | Infrastructure Node, Software System Instance, Container Instance |
+
+Permitted children:
 
 - [url](#url)
 - [properties](#properties)
