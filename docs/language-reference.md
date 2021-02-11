@@ -175,9 +175,6 @@ Permitted children:
 - [model](#model)
 - [views](#views)
 - [configuration](#configuration)
-- [!docs](#documentation)
-- [!adrs](#architecture-decision-records-adrs)
-
 
 ### model
 
