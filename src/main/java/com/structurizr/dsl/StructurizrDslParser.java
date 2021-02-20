@@ -445,7 +445,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         ComponentView view = new ComponentViewParser().parse(getContext(), tokens.withoutContextStartToken());
                         startContext(new ComponentViewDslContext(view));
 
-                    } else if (DYNAMIC_VIEW.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
+                    } else if (DYNAMIC_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         DynamicView view = new DynamicViewParser().parse(getContext(), tokens.withoutContextStartToken());
                         startContext(new DynamicViewDslContext(view));
 
