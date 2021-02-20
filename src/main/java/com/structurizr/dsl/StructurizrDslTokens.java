@@ -30,7 +30,7 @@ class StructurizrDslTokens {
     static final String SYSTEM_CONTEXT_VIEW_TOKEN = "systemContext";
     static final String CONTAINER_VIEW_TOKEN = "container";
     static final String COMPONENT_VIEW_TOKEN = "component";
-    static final String DYNAMIC_VIEW = "dynamic";
+    static final String DYNAMIC_VIEW_TOKEN = "dynamic";
     static final String DEPLOYMENT_VIEW_TOKEN = "deployment";
     static final String FILTERED_VIEW_TOKEN = "filtered";
     static final String INCLUDE_IN_VIEW_TOKEN = "include";
