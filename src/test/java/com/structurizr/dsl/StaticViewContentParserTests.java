@@ -97,12 +97,14 @@ class StaticViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseInclude_AddsTheSpecifiedPeopleAndSoftwareSystemsToASystemLandscapeView() {
+    void test_parseInclude_AddsTheSpecifiedElementsToASystemLandscapeView() {
         Person user = model.addPerson("User", "Description");
         SoftwareSystem softwareSystem1 = model.addSoftwareSystem("Software System 1", "Description");
         SoftwareSystem softwareSystem2 = model.addSoftwareSystem("Software System 2", "Description");
         user.uses(softwareSystem1, "Uses");
         softwareSystem1.uses(softwareSystem2, "Uses");
+        CustomElement box1 = model.addCustomElement("Box 1");
+        box1.uses(softwareSystem1, "");
 
         SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
@@ -112,15 +114,17 @@ class StaticViewContentParserTests extends AbstractTests {
         elements.put("user", user);
         elements.put("softwaresystem1", softwareSystem1);
         elements.put("softwaresystem2", softwareSystem2);
+        elements.put("box1", box1);
         context.setElements(elements);
 
-        parser.parseInclude(context, tokens("include", "user", "softwareSystem1"));
+        parser.parseInclude(context, tokens("include", "user", "softwareSystem1", "box1"));
 
-        assertEquals(2, view.getElements().size());
+        assertEquals(3, view.getElements().size());
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(user)));
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(softwareSystem1)));
+        assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(box1)));
         assertTrue(view.getElements().stream().noneMatch(ev -> ev.getElement().equals(softwareSystem2)));
-        assertEquals(1, view.getRelationships().size());
+        assertEquals(2, view.getRelationships().size());
     }
 
     @Test

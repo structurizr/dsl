@@ -7,6 +7,7 @@ class StructurizrDslTokens {
 
     static final String ASSIGNMENT_OPERATOR_TOKEN = "=";
 
+    static final String CUSTOM_ELEMENT_TOKEN = "element";
     static final String PERSON_TOKEN = "person";
     static final String SOFTWARE_SYSTEM_TOKEN = "softwareSystem";
     static final String RELATIONSHIP_TOKEN = "->";
@@ -26,6 +27,7 @@ class StructurizrDslTokens {
     static final String INFRASTRUCTURE_NODE_TOKEN = "infrastructureNode";
     static final String SOFTWARE_SYSTEM_INSTANCE_TOKEN = "softwareSystemInstance";
     static final String CONTAINER_INSTANCE_TOKEN = "containerInstance";
+    static final String CUSTOM_VIEW_TOKEN = "custom";
     static final String SYSTEM_LANDSCAPE_VIEW_TOKEN = "systemLandscape";
     static final String SYSTEM_CONTEXT_VIEW_TOKEN = "systemContext";
     static final String CONTAINER_VIEW_TOKEN = "container";

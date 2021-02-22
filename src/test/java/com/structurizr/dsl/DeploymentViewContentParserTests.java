@@ -107,6 +107,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         Container c1 = ss1.addContainer("C1", "Description", "Technology");
         SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
         Container c2 = ss2.addContainer("C2", "Description", "Technology");
+        CustomElement box1 = model.addCustomElement("Box 1");
 
         DeploymentNode dev1 = model.addDeploymentNode("Dev", "Dev 1", "Description", "Technology");
         DeploymentNode dev2 = dev1.addDeploymentNode("Dev 2", "Description", "Technology");
@@ -122,6 +123,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
 
         Map<String, Element> elements = new HashMap<>();
         elements.put("element", live1);
+        elements.put("box1", box1);
 
         DeploymentView view = views.createDeploymentView(ss1, "key", "Description");
         view.setEnvironment("Live");
@@ -129,13 +131,14 @@ class DeploymentViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
         context.setElements(elements);
 
-        parser.parseInclude(context, tokens("include", "element"));
+        parser.parseInclude(context, tokens("include", "element", "box1"));
 
-        assertEquals(4, view.getElements().size());
+        assertEquals(5, view.getElements().size());
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(live1)));
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(live2)));
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(live3)));
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(live4)));
+        assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(box1)));
     }
 
     @Test

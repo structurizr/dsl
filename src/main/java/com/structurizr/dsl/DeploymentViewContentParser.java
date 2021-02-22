@@ -49,7 +49,9 @@ final class DeploymentViewContentParser extends AbstractParser {
                 }
 
                 if (element != null) {
-                    if (element instanceof DeploymentNode) {
+                    if (element instanceof CustomElement) {
+                        view.add((CustomElement)element);
+                    } else if (element instanceof DeploymentNode) {
                         DeploymentNode deploymentNode = (DeploymentNode) element;
                         if (deploymentNode.getEnvironment().equals(view.getEnvironment())) {
                             view.add(deploymentNode);
@@ -94,7 +96,9 @@ final class DeploymentViewContentParser extends AbstractParser {
                 }
 
                 if (element != null) {
-                    if (element instanceof DeploymentNode) {
+                    if (element instanceof CustomElement) {
+                        view.remove((CustomElement) element);
+                    } else if (element instanceof DeploymentNode) {
                         view.remove((DeploymentNode)element);
                     } else if (element instanceof InfrastructureNode) {
                         view.remove((InfrastructureNode)element);

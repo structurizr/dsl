@@ -7,7 +7,11 @@ abstract class AbstractRelationshipParser extends AbstractParser {
     protected Relationship createRelationship(Element sourceElement, String description, String technology, String[] tags, Element destinationElement) {
         Relationship relationship = null;
 
-        if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
+        if (sourceElement instanceof CustomElement) {
+            relationship = ((CustomElement)sourceElement).uses(destinationElement, description, technology, null, tags);
+        } else if (destinationElement instanceof CustomElement) {
+            relationship = sourceElement.uses((CustomElement)destinationElement, description, technology, null, tags);
+        } else if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
             relationship = ((StaticStructureElement)sourceElement).uses((StaticStructureElement)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof DeploymentNode && destinationElement instanceof DeploymentNode) {
             relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null, tags);

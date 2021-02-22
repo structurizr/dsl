@@ -27,6 +27,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
                     - [infrastructureNode](#infrastructureNode)
                     - [softwareSystemInstance](#softwareSystemInstance)
                     - [containerInstance](#containerInstance)
+            - [element](#element)
             - [-> (relationship)](#relationship)
         - [views](#views)
             - [systemLandscape](#systemLandscape-view)
@@ -36,6 +37,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [filtered](#filtered-view)
             - [dynamic](#dynamic-view)
             - [deployment](#deployment-view)
+            - [custom](#custom-view)
             - [styles](#styles)
             - [themes](#themes)
             - [branding](#branding)
@@ -194,6 +196,7 @@ Permitted children:
 - [person](#person)
 - [softwareSystem](#softwareSystem)
 - [deploymentEnvironment](#deploymentEnvironment)
+- [element](#element)
 - [-> (relationship)](#relationship)
 
 ### impliedRelationships
@@ -441,6 +444,27 @@ In addition to the container's tags, the following tags are added by default:
 - [properties](#properties)
 - [perspectives](#perspectives)
 
+### element
+
+The ```element``` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+
+```
+element <name> [metadata] [description] [tags] {
+    ...
+}
+```
+
+The following tags are added by default:
+
+- `Element`
+
+Permitted children:
+
+- [url](#url)
+- [properties](#properties)
+- [perspectives](#perspectives)
+- [-> (relationship)](#relationship)
+
 ### relationship
 
 ```->``` is used to define a uni-directional relationship between two elements.
@@ -546,6 +570,7 @@ The ```views``` block can contain the following:
 - [filtered](#filtered-view)
 - [dynamic](#dynamic-view)
 - [deployment](#deployment-view)
+- [custom](#custom-view)
 - [styles](#styles)
 - [themes](#themes)
 - [branding](#branding)
@@ -684,6 +709,23 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+
+### custom view
+
+The ```custom``` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+
+```
+custom [key] [title] [description] {
+    ...
+}
+```
+
+Permitted children:
+
+- [include](#include)
+- [exclude](#exclude)
+- [autoLayout](#autoLayout)
+- [animation](#animation)
 
 ### include
 

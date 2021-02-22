@@ -177,7 +177,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (DslContext.CONTEXT_END_TOKEN.equals(tokens.get(0))) {
                         endContext();
 
-                    } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
+                    } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(CustomElementDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
                         Relationship relationship = new ExplicitRelationshipParser().parse(getContext(), tokens.withoutContextStartToken());
 
                         if (shouldStartContext(tokens)) {
@@ -188,7 +188,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             relationships.put(identifier, relationship);
                         }
 
-                    } else if (tokens.size() >= 2 && RELATIONSHIP_TOKEN.equals(tokens.get(0)) && (inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
+                    } else if (tokens.size() >= 2 && RELATIONSHIP_TOKEN.equals(tokens.get(0)) && (inContext(CustomElementDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
                         Relationship relationship = new ImplicitRelationshipParser().parse(getContext(ModelItemDslContext.class), tokens.withoutContextStartToken());
 
                         if (shouldStartContext(tokens)) {
@@ -197,6 +197,17 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         if (identifier != null) {
                             relationships.put(identifier, relationship);
+                        }
+
+                    } else if (CUSTOM_ELEMENT_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
+                        CustomElement customElement = new CustomElementParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new CustomElementDslContext(customElement));
+                        }
+
+                        if (identifier != null) {
+                            elements.put(identifier, customElement);
                         }
 
                     } else if (PERSON_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class))) {
@@ -429,6 +440,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             elements.put(identifier, containerInstance);
                         }
 
+                    } else if (CUSTOM_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
+                        CustomView view = new CustomViewParser().parse(getContext(), tokens.withoutContextStartToken());
+                        startContext(new CustomViewDslContext(view));
+
                     } else if (SYSTEM_LANDSCAPE_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         SystemLandscapeView view = new SystemLandscapeViewParser().parse(getContext(), tokens.withoutContextStartToken());
                         startContext(new SystemLandscapeViewDslContext(view));
@@ -458,6 +473,24 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && inContext(DynamicViewDslContext.class)) {
                         new DynamicViewContentParser().parseRelationship(getContext(DynamicViewDslContext.class), tokens);
+
+                    } else if (INCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        new CustomViewContentParser().parseInclude(getContext(CustomViewDslContext.class), tokens);
+
+                    } else if (EXCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        new CustomViewContentParser().parseExclude(getContext(CustomViewDslContext.class), tokens);
+
+                    } else if (ANIMATION_STEP_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        new CustomViewAnimationStepParser().parse(getContext(CustomViewDslContext.class), tokens);
+
+                    } else if (ANIMATION_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        startContext(new CustomViewAnimationDslContext(getContext(CustomViewDslContext.class).getCustomView()));
+
+                    } else if (inContext(CustomViewAnimationDslContext.class)) {
+                        new CustomViewAnimationStepParser().parse(getContext(CustomViewAnimationDslContext.class), tokens);
+
+                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        new AutoLayoutParser().parse(getContext(CustomViewDslContext.class), tokens);
 
                     } else if (INCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new StaticViewContentParser().parseInclude(getContext(StaticViewDslContext.class), tokens);
