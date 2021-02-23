@@ -20,7 +20,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseInclude(new SystemLandscapeViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: include <*|identifier|expression> [identifier|expression...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
         }
     }
 
@@ -251,7 +251,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseExclude(context, tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: exclude <identifier|expression> [identifier|expression...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
         }
     }
 
@@ -505,6 +505,334 @@ class StaticViewContentParserTests extends AbstractTests {
 
         parser.parseExclude(context, tokens("exclude", "*", "->", "*"));
         assertEquals(0, view.getRelationships().size());
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1", "Tag 2");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        softwareSystem.addTags("Tag 1");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1,Tag 2"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithTheSpecifiedTagIgnoringElementsThatAreNotPermitted() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        model.getElements().forEach(e -> e.addTags("Tag 1"));
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+        assertNull(view.getElementView(container)); // containers are not permitted on system landscape views
+        assertNull(view.getElementView(component)); // components are not permitted on system landscape views
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithTheSpecifiedTagsIgnoringElementsThatAreNotPermitted() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        model.getElements().forEach(e -> e.addTags("Tag 1", "Tag 2"));
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1,Tag 2"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+        assertNull(view.getElementView(container)); // containers are not permitted on system landscape views
+        assertNull(view.getElementView(component)); // components are not permitted on system landscape views
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithoutTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag!=Tag 1"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithoutTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1", "Tag 2");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        softwareSystem.addTags("Tag 1");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag!=Tag 1,Tag 2"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllElementsWithoutTheSpecifiedTagIgnoringElementsThatAreNotPermitted() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container 1");
+        Component component = container.addComponent("Component");
+
+        model.getElements().forEach(e -> e.addTags("Tag 1"));
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag!=Tag 2"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+        assertNull(view.getElementView(container)); // containers are not permitted on system landscape views
+        assertNull(view.getElementView(component)); // components are not permitted on system landscape views
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllElementsWithTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addDefaultElements();
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("exclude", "element.tag==Tag 1"));
+
+        assertEquals(1, view.getElements().size());
+        assertNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllElementsWithTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1", "Tag 2");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        softwareSystem.addTags("Tag 1");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addDefaultElements();
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("exclude", "element.tag==Tag 1,Tag 2"));
+
+        assertEquals(1, view.getElements().size());
+        assertNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllElementsWithoutTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addDefaultElements();
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("include", "element.tag!=Tag 1"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllElementsWithoutTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        user.addTags("Tag 1", "Tag 2");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        softwareSystem.addTags("Tag 1");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addDefaultElements();
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNotNull(view.getElementView(softwareSystem));
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("include", "element.tag!=Tag 1,Tag 2"));
+
+        assertEquals(1, view.getElements().size());
+        assertNotNull(view.getElementView(user));
+        assertNull(view.getElementView(softwareSystem));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllRelationshipsWithTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        Relationship relationship1 = user.uses(softwareSystem, "1");
+        relationship1.addTags("Tag 1");
+        Relationship relationship2 = user.uses(softwareSystem, "2");
+        relationship2.addTags("Tag 2");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        view.remove(relationship1);
+        view.remove(relationship2);
+        assertEquals(0, view.getRelationships().size());
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "relationship.tag==Tag 1"));
+
+        assertEquals(1, view.getRelationships().size());
+        assertNotNull(view.getRelationshipView(relationship1));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllRelationshipsWithTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        Relationship relationship1 = user.uses(softwareSystem, "1");
+        relationship1.addTags("Tag 1", "Tag 2");
+        Relationship relationship2 = user.uses(softwareSystem, "2");
+        relationship2.addTags("Tag 2");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        view.remove(relationship1);
+        view.remove(relationship2);
+        assertEquals(0, view.getRelationships().size());
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "relationship.tag==Tag 1,Tag 2"));
+
+        assertEquals(1, view.getRelationships().size());
+        assertNotNull(view.getRelationshipView(relationship1));
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllRelationshipsWithTheSpecifiedTag() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        Relationship relationship1 = user.uses(softwareSystem, "1");
+        relationship1.addTags("Tag 1");
+        Relationship relationship2 = user.uses(softwareSystem, "2");
+        relationship2.addTags("Tag 2");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        assertEquals(2, view.getRelationships().size());
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("exclude", "relationship.tag==Tag 1"));
+
+        assertEquals(1, view.getRelationships().size());
+        assertNull(view.getRelationshipView(relationship1));
+        assertNotNull(view.getRelationshipView(relationship2));
+    }
+
+    @Test
+    void test_parseExclude_RemovesAllRelationshipsWithTheSpecifiedTags() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        Relationship relationship1 = user.uses(softwareSystem, "1");
+        relationship1.addTags("Tag 1", "Tag 2");
+        Relationship relationship2 = user.uses(softwareSystem, "2");
+        relationship2.addTags("Tag 2");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        view.addAllElements();
+        assertEquals(2, view.getRelationships().size());
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseExclude(context, tokens("exclude", "relationship.tag==Tag 1,Tag 2"));
+
+        assertEquals(1, view.getRelationships().size());
+        assertNull(view.getRelationshipView(relationship1));
+        assertNotNull(view.getRelationshipView(relationship2));
     }
 
 }

@@ -733,13 +733,15 @@ The `include` keyword can be used to include elements or relationships.
 
 #### Including elements
 
-To include elements in a view, use one or more ```include``` statements inside the block defining the view.
+To include elements in a view, use one or more `include` statements inside the block defining the view.
 
 ```
-include <*|identifier> [identifier...]
+include <*|identifier|expression> [identifier|expression...]
 ```
 
-Elements can either be specified using individual identifiers, or using the wildcard (```*```) identifier, which operates differently depending upon the type of diagram.
+Elements can either be specified using individual identifiers, the wildcard identifier (`*`), or a property expression.
+
+The wildcard identifier (`*`) operates differently depending upon the type of diagram, as follows:
 
 - System Landscape view: Include all people and software systems.
 - System Context view: Include the software system in scope; plus all people and software systems that are directly connected to the software system in scope.
@@ -749,9 +751,27 @@ Elements can either be specified using individual identifiers, or using the wild
 - Dynamic view: (not applicable)
 - Deployment view: Include all deployment nodes, infrastructure nodes, and container instances defined within the deployment environment and (optional) software system in scope.
 
+Property expressions are currently only supported on system landscape, system context, container, and component views.
+They provide a way to include elements based upon some basic conditional logic, as follows:
+
+- `element.tag==<tag>,[tag]`: include elements that have all of the specified tags
+- `element.tag!=<tag>,[tag]`: include elements that do not have all of the specified tags
+
 #### Including relationships
 
-To include a relationship in a view, you can specify an individual relationship identifier, or use the relationship expression syntax as follows:
+To include a relationship in a view, you can specify an individual relationship identifier, or a property expression: 
+
+```
+include <identifier|expression> [identifier|expression...]
+```
+
+Property expressions are currently only supported on system landscape, system context, container, and component views.
+They provide a way to include relationships based upon some basic conditional logic, as follows:
+
+- `relationship.tag==<tag>,[tag]`: include relationships that have all of the specified tags
+- `relationship.tag!=<tag>,[tag]`: include relationships that do not have all of the specified tags
+
+Alternatively, you can use the relationship expression syntax as follows:
 
 ```
 include <*|identifier> -> <*|identifier> 
@@ -772,15 +792,34 @@ The `exclude` keyword can be used to exclude elements or relationships.
 
 #### Excluding elements
 
-To exclude specific elements, use one or more ```exclude``` statements inside the block defining the view.
+To exclude specific elements, use one or more `exclude` statements inside the block defining the view.
 
 ```
-exclude <identifier> [identifier...]
+exclude <identifier|expression> [identifier|expression...]
 ```
+
+Elements can either be specified using individual identifiers, or a property expression.
+Property expressions are currently only supported on system landscape, system context, container, and component views.
+They provide a way to exclude elements based upon some basic conditional logic, as follows:
+
+- `element.tag==<tag>,[tag]`: exclude elements that have all of the specified tags
+- `element.tag!=<tag>,[tag]`: exclude elements that do not have all of the specified tags
 
 #### Excluding relationships
 
-To exclude a relationship in a view, you can specify an individual relationship identifier, or use the relationship expression syntax as follows:
+To exclude a relationship in a view, you can specify an individual relationship identifier, or use a property expression:
+
+```
+exclude <identifier|expression> [identifier|expression...]
+```
+
+Property expressions are currently only supported on system landscape, system context, container, and component views.
+They provide a way to exclude relationships based upon some basic conditional logic, as follows:
+
+- `relationship.tag==<tag>,[tag]`: exclude relationships that have all of the specified tags
+- `relationship.tag!=<tag>,[tag]`: exclude relationships that do not have all of the specified tags
+
+Alternatively, you can use the relationship expression syntax as follows:
 
 ```
 exclude <*|identifier> -> <*|identifier> 
