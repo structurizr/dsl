@@ -21,6 +21,10 @@ workspace "Name" "Description" {
 
     model {
 
+        box1 = element "Box 1" "Metadata" "Description" "Tag"
+        box2 = element "Box 2" "Metadata" "Description" "Tag"
+        box1 -> box2
+
         user = person "User" "Description" "Tag" {
             url "https://structurizr.com"
             properties {
@@ -110,6 +114,17 @@ workspace "Name" "Description" {
     }
          
     views {
+
+        custom "CustomDiagram" "Title" "Description" {
+            include box1 box2
+
+            animation {
+                box1
+                box2
+            }
+
+            autolayout
+        }
 
         systemLandscape "SystemLandscape" "Description" {
             include *
