@@ -681,7 +681,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private void endContext() {
         if (!contextStack.empty()) {
-            contextStack.pop();
+            DslContext context = contextStack.pop();
+            context.end();
         } else {
             throw new RuntimeException("Unexpected end of context");
         }

@@ -41,4 +41,7 @@ abstract class DslContext {
         this.relationships = relationships;
     }
 
+    void end() {
+    }
+
 }

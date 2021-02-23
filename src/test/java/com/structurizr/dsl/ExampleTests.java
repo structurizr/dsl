@@ -121,6 +121,10 @@ class ExampleTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
 
+        assertEquals(Location.External, workspace.getModel().getPersonWithName("Personal Banking Customer").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Customer Service Staff").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Back Office Staff").getLocation());
+
         assertEquals(51, workspace.getModel().getElements().size());
         assertEquals(3, workspace.getModel().getPeople().size());
         assertEquals(4, workspace.getModel().getSoftwareSystems().size());
