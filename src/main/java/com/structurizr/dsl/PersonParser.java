@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Location;
+import com.structurizr.model.Model;
 import com.structurizr.model.Person;
 
 final class PersonParser extends AbstractParser {
@@ -23,15 +24,17 @@ final class PersonParser extends AbstractParser {
             description = tokens.get(DESCRIPTION_INDEX);
         }
 
-        Person person = context.getWorkspace().getModel().addPerson(name, description);
+        Person person = getModel(context).addPerson(name, description);
 
         if (tokens.includes(TAGS_INDEX)) {
             String tags = tokens.get(TAGS_INDEX);
             person.addTags(tags.split(","));
         }
 
-        if (context instanceof EnterpriseDslContext) {
+        if (isInsideEnterpriseContext(context)) {
             person.setLocation(Location.Internal);
+        } else if (isOutSideOfEnterpriseContext(context)) {
+            person.setLocation(Location.External);
         }
 
         if (context.hasGroup()) {
@@ -39,6 +42,18 @@ final class PersonParser extends AbstractParser {
         }
 
         return person;
+    }
+
+    private boolean isInsideEnterpriseContext(GroupableDslContext context) {
+        return context instanceof EnterpriseDslContext;
+    }
+
+    private boolean isOutSideOfEnterpriseContext(GroupableDslContext context) {
+        return !isInsideEnterpriseContext(context) && getModel(context).getEnterprise() != null;
+    }
+
+    private Model getModel(GroupableDslContext context) {
+        return context.getWorkspace().getModel();
     }
 
 }

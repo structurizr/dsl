@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Enterprise;
 import com.structurizr.model.Location;
 import com.structurizr.model.Person;
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,21 @@ class PersonParserTests extends AbstractTests {
         assertNotNull(user);
         assertEquals("", user.getDescription());
         assertEquals(Location.Internal, user.getLocation());
+        assertEquals("Element,Person", user.getTags());
+    }
+
+    @Test
+    void test_parse_CreatesAnExternalPerson() {
+        ModelDslContext context = context();
+        context.getWorkspace().getModel().setEnterprise(new Enterprise("Example Enterprise"));
+
+        parser.parse(context, tokens("person", "User"));
+
+        assertEquals(1, model.getElements().size());
+        Person user = model.getPersonWithName("User");
+        assertNotNull(user);
+        assertEquals("", user.getDescription());
+        assertEquals(Location.External, user.getLocation());
         assertEquals("Element,Person", user.getTags());
     }
 

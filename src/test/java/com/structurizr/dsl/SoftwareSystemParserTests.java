@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Enterprise;
 import com.structurizr.model.Location;
 import com.structurizr.model.SoftwareSystem;
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,21 @@ class SoftwareSystemParserTests extends AbstractTests {
         assertNotNull(softwareSystem);
         assertEquals("", softwareSystem.getDescription());
         assertEquals(Location.Internal, softwareSystem.getLocation());
+        assertEquals("Element,Software System", softwareSystem.getTags());
+    }
+
+    @Test
+    void test_parse_CreatesAnExternalSoftwareSystem() {
+        ModelDslContext context = context();
+        context.getWorkspace().getModel().setEnterprise(new Enterprise("Example Enterprise"));
+
+        parser.parse(context, tokens("softwareSystem", "Name"));
+
+        assertEquals(1, model.getElements().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Name");
+        assertNotNull(softwareSystem);
+        assertEquals("", softwareSystem.getDescription());
+        assertEquals(Location.External, softwareSystem.getLocation());
         assertEquals("Element,Software System", softwareSystem.getTags());
     }
 

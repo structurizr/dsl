@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Location;
+import com.structurizr.model.Model;
 import com.structurizr.model.SoftwareSystem;
 
 final class SoftwareSystemParser extends AbstractParser {
@@ -30,8 +31,10 @@ final class SoftwareSystemParser extends AbstractParser {
             softwareSystem.addTags(tags.split(","));
         }
 
-        if (context instanceof EnterpriseDslContext) {
+        if (isInsideEnterpriseContext(context)) {
             softwareSystem.setLocation(Location.Internal);
+        } else if (isOutSideOfEnterpriseContext(context)) {
+            softwareSystem.setLocation(Location.External);
         }
 
         if (context.hasGroup()) {
@@ -40,5 +43,18 @@ final class SoftwareSystemParser extends AbstractParser {
 
         return softwareSystem;
     }
+
+    private boolean isInsideEnterpriseContext(GroupableDslContext context) {
+        return context instanceof EnterpriseDslContext;
+    }
+
+    private boolean isOutSideOfEnterpriseContext(GroupableDslContext context) {
+        return !isInsideEnterpriseContext(context) && getModel(context).getEnterprise() != null;
+    }
+
+    private Model getModel(GroupableDslContext context) {
+        return context.getWorkspace().getModel();
+    }
+
 
 }
