@@ -503,7 +503,7 @@ The following tags are added to relationships by default:
 
 - `Relationship`
 
-And only the following types of relationships are permitted in the model:
+The following types of relationships can be created using the DSL:
 
 | Source  | Destination |
 | ------------- | ------------- |
@@ -513,8 +513,8 @@ And only the following types of relationships are permitted in the model:
 | Component | Person, Software System, Container, Component |
 | Deployment Node | Deployment Node |
 | Infrastructure Node | Deployment Node, Infrastructure Node, Software System Instance, Container Instance |
-| Software System Instance | Infrastructure Node, Software System Instance, Container Instance |
-| Container Instance | Infrastructure Node, Software System Instance, Container Instance |
+| Software System Instance | Infrastructure Node |
+| Container Instance | Infrastructure Node |
 
 Permitted children:
 
