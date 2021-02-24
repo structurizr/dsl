@@ -39,6 +39,8 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [deployment](#deployment-view)
             - [custom](#custom-view)
             - [styles](#styles)
+                - [element](#element-style)
+                - [relationship](#relationship-style)
             - [themes](#themes)
             - [branding](#branding)
             - [terminology](#terminology)
