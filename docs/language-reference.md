@@ -158,12 +158,12 @@ Constant names may only contain the following characters: `a-zA-Z0-9-_.`
 
 ## Grammar
 
-The following describes the language grammar, with angle brackets (`<...>`) used to show required properties, and square brackets (```[...]```) used to show optional properties.
+The following describes the language grammar, with angle brackets (`<...>`) used to show required properties, and square brackets (`[...]`) used to show optional properties.
 Most statements are of the form: `keyword <required properties> [optional properties]`
 
 ### workspace
 
-```workspace``` is the top level language construct, and the wrapper for the [model](#model) and [views](#views). A workspace can optionally be given a name and description.
+`workspace` is the top level language construct, and the wrapper for the [model](#model) and [views](#views). A workspace can optionally be given a name and description.
 
 ```
 workspace [name] [description] {
@@ -182,7 +182,7 @@ Permitted children:
 
 ### model
 
-Each workspace must contain a ```model``` block, inside which elements and relationships are defined.
+Each workspace must contain a `model` block, inside which elements and relationships are defined.
 
 ```
 model {
@@ -207,13 +207,13 @@ Permitted children:
 impliedRelationships <true|false>
 ```
 
-The ```impliedRelationships``` keyword provides a way to enable or disable whether implied relationships are created.
+The `impliedRelationships` keyword provides a way to enable or disable whether implied relationships are created.
 A flag of `false` disables implied relationship creation, while `true` creates implied relationships between all valid combinations of the parent elements, unless any relationship already exists between them
 (see [Structurizr for Java - Implied relationships - CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy](https://github.com/structurizr/java/blob/master/docs/implied-relationships.md#createimpliedrelationshipsunlessanyrelationshipexistsstrategy) for more details).
 
 ### enterprise
 
-The ```enterprise``` keyword provides a way to define a named "enterprise" (e.g. an organisation) within the top-level model. Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
+The `enterprise` keyword provides a way to define a named "enterprise" (e.g. an organisation) within the top-level model. Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
 
 ```
 enterprise <name> {
@@ -230,7 +230,7 @@ Permitted children:
 
 ### group
 
-The ```group``` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
+The `group` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
 See [groups.dsl](../examples/groups.dsl) for an example.
 
 ```
@@ -251,7 +251,7 @@ Groups cannot be nested.
 
 ### person
 
-The ```person``` keyword defines a person (e.g. a user, actor, role, or persona).
+The `person` keyword defines a person (e.g. a user, actor, role, or persona).
 
 ```
 person <name> [description] [tags] {
@@ -273,7 +273,7 @@ Permitted children:
 
 ### softwareSystem
 
-The ```softwareSystem``` keyword defines a software system.
+The `softwareSystem` keyword defines a software system.
 
 ```
 softwareSystem <name> [description] [tags] {
@@ -298,7 +298,7 @@ Permitted children:
 
 ### container
 
-The ```container``` keyword defines a container, within a software system.
+The `container` keyword defines a container, within a software system.
 
 ```
 container <name> [description] [technology] [tags] {
@@ -321,7 +321,7 @@ Permitted children:
 
 ### component
 
-The ```component``` keyword defines a component, within a container.
+The `component` keyword defines a component, within a container.
 
 ```
 component <name> [description] [technology] [tags] {
@@ -343,7 +343,7 @@ Permitted children:
 
 ### deploymentEnvironment
 
-The ```deploymentEnvironment``` keyword provides a way to define a deployment environment (e.g. development, testing, staging, live, etc).
+The `deploymentEnvironment` keyword provides a way to define a deployment environment (e.g. development, testing, staging, live, etc).
 
 ```
 deploymentEnvironment <name> {
@@ -358,7 +358,7 @@ Permitted children:
 
 ### deploymentNode
 
-The ```deploymentNode``` keyword is used to define a deployment node.
+The `deploymentNode` keyword is used to define a deployment node.
 
 ```
 deploymentNode <name> [description] [technology] [tags] [instances] {
@@ -384,7 +384,7 @@ Permitted children:
 
 ### infrastructureNode
 
-The ```infrastructureNode``` keyword defines an infrastructure node, which is typically something like a load balancer, firewall, DNS service, etc.
+The `infrastructureNode` keyword defines an infrastructure node, which is typically something like a load balancer, firewall, DNS service, etc.
 
 ```
 infrastructureNode <name> [description] [technology] [tags] {
@@ -406,7 +406,7 @@ Permitted children:
 
 ### softwareSystemInstance
 
-The ```softwareSystemInstance``` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
+The `softwareSystemInstance` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
 
 ```
 softwareSystemInstance <identifier> [tags] {
@@ -414,7 +414,7 @@ softwareSystemInstance <identifier> [tags] {
 }
 ```
 
-The ```identifier``` must represent a software system.
+The `identifier` must represent a software system.
 
 In addition to the software system's tags, the following tags are added by default:
 
@@ -428,7 +428,7 @@ In addition to the software system's tags, the following tags are added by defau
 
 ### containerInstance
 
-The ```containerInstance``` keyword defines an instance of the specified container that is deployed on the parent deployment node.
+The `containerInstance` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
 ```
 containerInstance <identifier> [tags] {
@@ -436,7 +436,7 @@ containerInstance <identifier> [tags] {
 }
 ```
 
-The ```identifier``` must represent a container.
+The `identifier` must represent a container.
 
 In addition to the container's tags, the following tags are added by default:
 
@@ -460,7 +460,7 @@ The interval is a number of seconds, and the timeout is a number of milliseconds
 
 ### element
 
-The ```element``` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+The `element` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
 
 ```
 element <name> [metadata] [description] [tags] {
@@ -481,7 +481,7 @@ Permitted children:
 
 ### relationship
 
-```->``` is used to define a uni-directional relationship between two elements.
+`->` is used to define a uni-directional relationship between two elements.
 
 There are two ways to define relationships. The first is explicitly, where you explicitly use a source identifier: 
 
@@ -536,7 +536,7 @@ Permitted children:
 
 ## url
 
-```url``` is used to set a URL on an element or relationship.
+`url` is used to set a URL on an element or relationship.
 
 ```
 url https://example.com
@@ -544,7 +544,7 @@ url https://example.com
 
 ### properties
 
-The ```properties``` block is used to define one or more name/value properties for an element or relationship.
+The `properties` block is used to define one or more name/value properties for an element or relationship.
 
 ```
 properties {
@@ -555,7 +555,7 @@ properties {
 
 ### perspectives
 
-The ```perspectives``` block is used to define one or more name/description perspectives for an element or relationship.
+The `perspectives` block is used to define one or more name/description perspectives for an element or relationship.
 See [Help - Perspectives](https://structurizr.com/help/perspectives) for how these are used.
 
 ```
@@ -567,7 +567,7 @@ perspectives {
 
 ### views
 
-Each workspace can also contain one or more views, defined with the ```views``` block.
+Each workspace can also contain one or more views, defined with the `views` block.
 
 ```
 views {
@@ -575,7 +575,7 @@ views {
 }
 ```
 
-The ```views``` block can contain the following:
+The `views` block can contain the following:
 
 - [systemLandscape](#systemLandscape-view)
 - [systemContext](#systemContext-view)
@@ -592,7 +592,7 @@ The ```views``` block can contain the following:
 
 ### systemLandscape view
 
-The ```systemLandscape``` keyword is used to define a [System Landscape view](https://c4model.com/#SystemLandscapeDiagram).
+The `systemLandscape` keyword is used to define a [System Landscape view](https://c4model.com/#SystemLandscapeDiagram).
 
 ```
 systemLandscape [key] [description] {
@@ -610,7 +610,7 @@ Permitted children:
 
 ### systemContext view
 
-The ```systemContext``` keyword is used to define a [System Context view](https://c4model.com/#SystemContextDiagram) for the specified software system.
+The `systemContext` keyword is used to define a [System Context view](https://c4model.com/#SystemContextDiagram) for the specified software system.
 
 ```
 systemContext <software system identifier> [key] [description] {
@@ -628,7 +628,7 @@ Permitted children:
 
 ### container view
 
-The ```container``` keyword is used to define a [Container view](https://c4model.com/#ContainerDiagram) for the specified software system.
+The `container` keyword is used to define a [Container view](https://c4model.com/#ContainerDiagram) for the specified software system.
 
 ```
 container <software system identifier> [key] [description] {
@@ -646,7 +646,7 @@ Permitted children:
 
 ### component view
 
-The ```component``` keyword is used to define a [Component view](https://c4model.com/#ComponentDiagram) for the specified container.
+The `component` keyword is used to define a [Component view](https://c4model.com/#ComponentDiagram) for the specified container.
 
 ```
 component <container identifier> [key] [description] {
@@ -664,17 +664,17 @@ Permitted children:
 
 ### filtered view
 
-The ```filtered``` keyword is used to define a [Filtered view](https://structurizr.com/help/filtered-views) on top of the specified view.
+The `filtered` keyword is used to define a [Filtered view](https://structurizr.com/help/filtered-views) on top of the specified view.
 
 ```
 filtered <baseKey> <include|exclude> <tags> [key] [description]
 ```
 
-The ```baseKey``` specifies the key of the System Landscape, System Context, Container, or Component view on which this filtered view should be based. The mode (```include``` or ```exclude```) defines whether the view should include or exclude elements/relationships based upon the ```tags``` provided.
+The `baseKey` specifies the key of the System Landscape, System Context, Container, or Component view on which this filtered view should be based. The mode (`include` or `exclude`) defines whether the view should include or exclude elements/relationships based upon the `tags` provided.
 
 ### dynamic view
 
-The ```dynamic``` keyword defines a [Dynamic view](https://c4model.com/#DynamicDiagram) for the specified scope.
+The `dynamic` keyword defines a [Dynamic view](https://c4model.com/#DynamicDiagram) for the specified scope.
 
 ```
 dynamic <*|software system identifier|container identifier> [key] [description] {
@@ -684,11 +684,11 @@ dynamic <*|software system identifier|container identifier> [key] [description] 
 
 The first property defines the scope of the view, and therefore what can be added to the view, as follows:
 
-- ```*``` scope: People and software systems.
+- `*` scope: People and software systems.
 - Software system scope: People, other software systems, and containers. 
 - Container scope: People, other software systems, other containers, and components. 
 
-Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the ```dynamic``` block, as follows:
+Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the `dynamic` block, as follows:
 
 ```
 <identifier> -> <identifier> [description] [technology]
@@ -703,7 +703,7 @@ Permitted children:
 
 ### deployment view
 
-The ```deployment``` keyword defines a [Deployment view](https://c4model.com/#DeploymentDiagram) for the specified scope and deployment environment.
+The `deployment` keyword defines a [Deployment view](https://c4model.com/#DeploymentDiagram) for the specified scope and deployment environment.
 
 ```
 deployment <*|software system identifier> <environment> [key] [description] {
@@ -713,7 +713,7 @@ deployment <*|software system identifier> <environment> [key] [description] {
 
 The first property defines the scope of the view, and the second property defines the deployment environment (which can be an identifier, or a name). The combination of these two properties determines what can be added to the view, as follows:
 
-- ```*``` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
+- `*` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
 - Software system scope: All deployment nodes and infrastructure nodes within the deployment environment. Container instances within the deployment environment that belong to the software system.
 
 Permitted children:
@@ -726,7 +726,7 @@ Permitted children:
 
 ### custom view
 
-The ```custom``` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+The `custom` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
 
 ```
 custom [key] [title] [description] {
@@ -850,7 +850,7 @@ The relationship expression syntax only operates on elements that exist in the v
 
 ### autoLayout
 
-To enable automatic layout mode for the diagram, use the ```autoLayout``` statement inside the block defining the view.
+To enable automatic layout mode for the diagram, use the `autoLayout` statement inside the block defining the view.
 
 ```
 autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
@@ -858,16 +858,16 @@ autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]
 
 The first property is the rank direction:
 
-- ```tb```: Top to bottom (default)
-- ```bt```: Bottom to top
-- ```lr```: Left to right
-- ```rl```: Right to left
+- `tb`: Top to bottom (default)
+- `bt`: Bottom to top
+- `lr`: Left to right
+- `rl`: Right to left
 
-The second property is the separation of ranks in pixels (default: ```300```), while the third property is the separation of nodes in the same rank in pixels (default: ```300```).
+The second property is the separation of ranks in pixels (default: `300`), while the third property is the separation of nodes in the same rank in pixels (default: `300`).
 
 ### animation
 
-The ```animation``` keyword defines the animation for the specified view.
+The `animation` keyword defines the animation for the specified view.
 Each animation step should be defined on a separate line, inside the block, specifying the elements that should be included in that step.
 
 ```
@@ -887,7 +887,7 @@ title <title>
 
 ### styles
 
-```styles``` is the wrapper for one or more element/relationship styles, which are used when rendering diagrams.
+`styles` is the wrapper for one or more element/relationship styles, which are used when rendering diagrams.
 
 ```
 styles {
@@ -902,7 +902,7 @@ Permitted children:
 
 ### element style
 
-The ```element``` keyword is used to define an element style. All nested properties (```shape```, ```icon```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for details about how tags and styles work.
+The `element` keyword is used to define an element style. All nested properties (`shape`, `icon`, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for details about how tags and styles work.
 
 ```
 element <tag> {
@@ -924,7 +924,7 @@ element <tag> {
             
 ### relationship style
 
-The ```relationship``` keyword is used to define a relationship style. All nested properties (```thickness```, ```color```, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation)  for details about how tags and styles work.
+The `relationship` keyword is used to define a relationship style. All nested properties (`thickness`, `color`, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation)  for details about how tags and styles work.
 
 ```
 relationship <tag> {
@@ -942,7 +942,7 @@ relationship <tag> {
 
 ### themes
 
-The ```themes``` keyword can be used to specify one or more themes that should be used when rendering diagrams. See [Structurizr - Themes](https://structurizr.com/help/themes) for more details.
+The `themes` keyword can be used to specify one or more themes that should be used when rendering diagrams. See [Structurizr - Themes](https://structurizr.com/help/themes) for more details.
 
 ```
 themes <themeUrl> [themeUrl] ... [themeUrl]
@@ -950,7 +950,7 @@ themes <themeUrl> [themeUrl] ... [themeUrl]
 
 ### branding
 
-The ```branding``` keyword allows you to define some custom branding that should be used when rendering diagrams and documentation. See [Structurizr - Branding](https://structurizr.com/help/branding) for more details.
+The `branding` keyword allows you to define some custom branding that should be used when rendering diagrams and documentation. See [Structurizr - Branding](https://structurizr.com/help/branding) for more details.
 
 ```
 branding {
@@ -961,7 +961,7 @@ branding {
 
 ### terminology
 
-The ```terminology``` keyword allows you to override the terminology used when rendering diagrams (this may not be supported in all rendering tools). See [Structurizr - Terminology](https://structurizr.com/help/terminology) for more details.
+The `terminology` keyword allows you to override the terminology used when rendering diagrams (this may not be supported in all rendering tools). See [Structurizr - Terminology](https://structurizr.com/help/terminology) for more details.
 
 ```
 terminology {
@@ -978,7 +978,7 @@ terminology {
 
 ### configuration
 
-Finally, there are some configuration options that can be specified inside the ```configuration``` block.
+Finally, there are some configuration options that can be specified inside the `configuration` block.
 
 ```
 configuration {
@@ -992,7 +992,7 @@ Permitted children:
 
 ### users
 
-The ```users``` block can be used to specify the users who should have read-only or read-write access to a workspace. Each username (e.g. e-mail address) and role pair should be specified on their own line. Valid roles are ```read``` (read-only) and ```write``` (read-write). 
+The `users` block can be used to specify the users who should have read-only or read-write access to a workspace. Each username (e.g. e-mail address) and role pair should be specified on their own line. Valid roles are `read` (read-only) and `write` (read-write). 
 
 ```
 users {
@@ -1002,7 +1002,7 @@ users {
 
 ## Documentation
 
-The ```!docs``` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, or a software system).
+The `!docs` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, or a software system).
 
 ```
 !docs <path>
@@ -1018,7 +1018,7 @@ All Markdown and AsciiDoc files in this directory (and sub-directories) will be 
 
 ## Architecture decision records (ADRs)
 
-The ```!adrs``` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, or a software system).
+The `!adrs` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, or a software system).
 
 ```
 !adrs <path>
