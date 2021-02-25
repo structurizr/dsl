@@ -27,6 +27,7 @@ class StructurizrDslTokens {
     static final String INFRASTRUCTURE_NODE_TOKEN = "infrastructureNode";
     static final String SOFTWARE_SYSTEM_INSTANCE_TOKEN = "softwareSystemInstance";
     static final String CONTAINER_INSTANCE_TOKEN = "containerInstance";
+    static final String HEALTH_CHECK_TOKEN = "healthCheck";
     static final String CUSTOM_VIEW_TOKEN = "custom";
     static final String SYSTEM_LANDSCAPE_VIEW_TOKEN = "systemLandscape";
     static final String SYSTEM_CONTEXT_VIEW_TOKEN = "systemContext";

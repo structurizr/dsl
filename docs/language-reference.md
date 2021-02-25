@@ -424,6 +424,7 @@ In addition to the software system's tags, the following tags are added by defau
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
+- [healthCheck](#healthCheck)
 
 ### containerInstance
 
@@ -445,6 +446,17 @@ In addition to the container's tags, the following tags are added by default:
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
+- [healthCheck](#healthCheck)
+
+### healthCheck
+
+The `healthCheck` keyword defines a HTTP health check for the parent software system/container instance.
+
+```
+healthCheck <name> <url> [interval] [timeout]
+```
+
+The interval is a number of seconds, and the timeout is a number of milliseconds.
 
 ### element
 

@@ -73,6 +73,18 @@ workspace "Name" "Description" {
 
         developmentEnvironment = deploymentEnvironment "Development" {
             deploymentNode "Amazon Web Services" "Description" "Technology" "Tag" {
+                softwareSystemInstance softwareSystem {
+                    url "https://structurizr.com"
+                    properties {
+                        "Name" "Value"
+                    }
+                    perspectives {
+                        "Security" "A description..."
+                    }
+                    healthCheck "Check 1" "https://example.com/health"
+                    healthCheck "Check 2" "https://example.com/health" 60
+                    healthCheck "Check 2" "https://example.com/health" 120 1000
+                }
             }
         }
 
@@ -98,6 +110,9 @@ workspace "Name" "Description" {
                         perspectives {
                             "Security" "A description..."
                         }
+                        healthCheck "Check 1" "https://example.com/health"
+                        healthCheck "Check 2" "https://example.com/health" 60
+                        healthCheck "Check 2" "https://example.com/health" 120 1000
                     }
                 }
 

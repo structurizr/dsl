@@ -2,8 +2,9 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.ContainerInstance;
 import com.structurizr.model.ModelItem;
+import com.structurizr.model.StaticStructureElementInstance;
 
-final class ContainerInstanceDslContext extends ModelItemDslContext {
+final class ContainerInstanceDslContext extends StaticStructureElementInstanceDslContext {
 
     private ContainerInstance containerInstance;
 
@@ -17,6 +18,11 @@ final class ContainerInstanceDslContext extends ModelItemDslContext {
 
     @Override
     ModelItem getModelItem() {
+        return getContainerInstance();
+    }
+
+    @Override
+    StaticStructureElementInstance getElementInstance() {
         return getContainerInstance();
     }
 

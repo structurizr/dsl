@@ -440,6 +440,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             elements.put(identifier, containerInstance);
                         }
 
+                    } else if (HEALTH_CHECK_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticStructureElementInstanceDslContext.class)) {
+                        new HealthCheckParser().parse(getContext(StaticStructureElementInstanceDslContext.class), tokens.withoutContextStartToken());
                     } else if (CUSTOM_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         CustomView view = new CustomViewParser().parse(getContext(), tokens.withoutContextStartToken());
                         startContext(new CustomViewDslContext(view));
