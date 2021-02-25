@@ -456,7 +456,7 @@ The `healthCheck` keyword defines a HTTP health check for the parent software sy
 healthCheck <name> <url> [interval] [timeout]
 ```
 
-The interval is a number of seconds, and the timeout is a number of milliseconds.
+The interval is a number of seconds (default 60s), and the timeout is a number of milliseconds (default 0ms).
 
 ### element
 
