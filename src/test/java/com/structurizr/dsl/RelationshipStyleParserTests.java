@@ -30,6 +30,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseRelationshipStyle_ThrowsAnException_WhenTheTagIsEmpty() {
+        try {
+            parser.parseRelationshipStyle(context(), tokens("relationship", ""));
+            fail();
+        } catch (Exception e) {
+            assertEquals("A tag must be specified", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseRelationshipStyle_CreatesAnRelationshipStyle() {
         parser.parseRelationshipStyle(context(), tokens("relationship", "Relationship"));
 

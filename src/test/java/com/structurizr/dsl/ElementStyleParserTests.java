@@ -33,6 +33,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseElementStyle_ThrowsAnException_WhenTheTagIsEmpty() {
+        try {
+            parser.parseElementStyle(context(), tokens("element", ""));
+            fail();
+        } catch (Exception e) {
+            assertEquals("A tag must be specified", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseElementStyle_CreatesAnElementStyle() {
         parser.parseElementStyle(context(), tokens("element", "Element"));
 

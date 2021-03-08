@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.util.ImageUtils;
+import com.structurizr.util.StringUtils;
 import com.structurizr.view.Border;
 import com.structurizr.view.ElementStyle;
 import com.structurizr.view.Shape;
@@ -18,8 +19,12 @@ final class ElementStyleParser extends AbstractParser {
     ElementStyle parseElementStyle(DslContext context, Tokens tokens) {
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String tag = tokens.get(1);
-            Workspace workspace = context.getWorkspace();
 
+            if (StringUtils.isNullOrEmpty(tag)) {
+                throw new RuntimeException("A tag must be specified");
+            }
+
+            Workspace workspace = context.getWorkspace();
             return workspace.getViews().getConfiguration().getStyles().addElementStyle(tag);
         } else {
             throw new RuntimeException("Expected: element <tag> {");
