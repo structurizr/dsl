@@ -142,7 +142,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseInclude_ThrowsAnException_WhenTheSpecifiedElementIsNotADeploymentNod() {
+    void test_parseInclude_AddsTheElement_WhenTheElementIsAnInfrastructureNode() {
         DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
         InfrastructureNode in = dn.addInfrastructureNode("IN", "Description", "Technology");
 
@@ -155,12 +155,56 @@ class DeploymentViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
         context.setElements(elements);
 
-        try {
-            parser.parseInclude(context, tokens("include", "element"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("The element \"element\" can not be added to this view (it is not a deployment node)", e.getMessage());
-        }
+        parser.parseInclude(context, tokens("include", "element"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(in));
+    }
+
+    @Test
+    void test_parseInclude_AddsTheElement_WhenTheElementIsASoftwareSystemInstance() {
+        DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        SoftwareSystemInstance softwareSystemInstance = dn.add(softwareSystem);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("element", softwareSystemInstance);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setElements(elements);
+
+        parser.parseInclude(context, tokens("include", "element"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(softwareSystemInstance));
+    }
+
+    @Test
+    void test_parseInclude_AddsTheElement_WhenTheElementIsAContainerInstance() {
+        DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+        Container container = softwareSystem.addContainer("Container");
+        ContainerInstance containerInstance = dn.add(container);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("element", containerInstance);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setElements(elements);
+
+        parser.parseInclude(context, tokens("include", "element"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(containerInstance));
     }
 
     @Test
