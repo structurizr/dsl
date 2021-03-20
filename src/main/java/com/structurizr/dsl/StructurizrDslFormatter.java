@@ -224,7 +224,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                     Element source;
                     Element destination;
 
-                    if (relationshipView.isResponse()) {
+                    if (relationshipView.isResponse() != null && relationshipView.isResponse()) {
                         source = relationshipView.getRelationship().getDestination();
                         destination = relationshipView.getRelationship().getSource();
                     } else {
