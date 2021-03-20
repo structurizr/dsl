@@ -18,7 +18,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
             parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: softwareSystemInstance <identifier> [tags]", e.getMessage());
+            assertEquals("Expected: softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_CreatesASoftwareSystemInstance() {
+    void test_parse_CreatesASoftwareSystemInstanceInTheDefaultDeploymentGroup() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
@@ -64,10 +64,11 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
+        assertEquals("Default", softwareSystemInstance.getDeploymentGroup());
     }
 
     @Test
-    void test_parse_CreatesASoftwareSystemInstanceWithTags() {
+    void test_parse_CreatesASoftwareSystemInstanceInTheDefaultDeploymentGroupWithTags() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
@@ -83,6 +84,49 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance,Tag 1,Tag 2", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
+        assertEquals("Default", softwareSystemInstance.getDeploymentGroup());
+    }
+
+    @Test
+    void test_parse_CreatesASoftwareSystemInstanceInTheSpecifiedDeploymentGroup() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("softwaresystem", softwareSystem);
+        elements.put("group", new DeploymentGroup("Group"));
+        context.setElements(elements);
+
+        parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "group"));
+
+        assertEquals(3, model.getElements().size());
+        assertEquals(1, deploymentNode.getSoftwareSystemInstances().size());
+        SoftwareSystemInstance softwareSystemInstance = deploymentNode.getSoftwareSystemInstances().iterator().next();
+        assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
+        assertEquals("Software System Instance", softwareSystemInstance.getTags());
+        assertEquals("Live", softwareSystemInstance.getEnvironment());
+        assertEquals("Group", softwareSystemInstance.getDeploymentGroup());
+    }
+
+    @Test
+    void test_parse_CreatesASoftwareSystemInstanceInTheSpecifiedDeploymentGroupWithTags() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("softwaresystem", softwareSystem);
+        elements.put("group", new DeploymentGroup("Group"));
+        context.setElements(elements);
+
+        parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "group", "Tag 1, Tag 2"));
+
+        assertEquals(3, model.getElements().size());
+        assertEquals(1, deploymentNode.getSoftwareSystemInstances().size());
+        SoftwareSystemInstance softwareSystemInstance = deploymentNode.getSoftwareSystemInstances().iterator().next();
+        assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
+        assertEquals("Software System Instance,Tag 1,Tag 2", softwareSystemInstance.getTags());
+        assertEquals("Live", softwareSystemInstance.getEnvironment());
+        assertEquals("Group", softwareSystemInstance.getDeploymentGroup());
     }
 
 }

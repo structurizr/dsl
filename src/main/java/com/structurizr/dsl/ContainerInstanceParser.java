@@ -1,20 +1,18 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Container;
-import com.structurizr.model.ContainerInstance;
-import com.structurizr.model.DeploymentNode;
-import com.structurizr.model.Element;
+import com.structurizr.model.*;
 
 final class ContainerInstanceParser extends AbstractParser {
 
     private static final int IDENTIFIER_INDEX = 1;
-    private static final int TAGS_INDEX = 2;
+    private static final int SECOND_TOKEN = 2;
+    private static final int THIRD_TOKEN = 3;
 
     ContainerInstance parse(DeploymentNodeDslContext context, Tokens tokens) {
-        // containerInstance <identifier> [tags]
+        // containerInstance <identifier> [tags] [group]
 
         if (!tokens.includes(IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: containerInstance <identifier> [tags]");
+            throw new RuntimeException("Expected: containerInstance <identifier> [deploymentGroup|tags] [tags]");
         }
 
         String containerIdentifier = tokens.get(IDENTIFIER_INDEX);
@@ -26,10 +24,23 @@ final class ContainerInstanceParser extends AbstractParser {
 
         if (element instanceof Container) {
             DeploymentNode deploymentNode = context.getDeploymentNode();
-            ContainerInstance containerInstance = deploymentNode.add((Container)element);
 
-            if (tokens.includes(TAGS_INDEX)) {
-                String tags = tokens.get(TAGS_INDEX);
+            String deploymentGroup = DeploymentElement.DEFAULT_DEPLOYMENT_GROUP;
+            int tagsIndex = SECOND_TOKEN;
+
+            if (tokens.includes(SECOND_TOKEN)) {
+                String token = tokens.get(SECOND_TOKEN);
+
+                if (context.getElement(token) instanceof DeploymentGroup) {
+                    deploymentGroup = context.getElement(token).getName();
+                    tagsIndex = THIRD_TOKEN;
+                }
+            }
+
+            ContainerInstance containerInstance = deploymentNode.add((Container)element, deploymentGroup);
+
+            if (tokens.includes(tagsIndex)) {
+                String tags = tokens.get(tagsIndex);
                 containerInstance.addTags(tags.split(","));
             }
 

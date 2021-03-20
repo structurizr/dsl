@@ -23,6 +23,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [person](#person)
             - [softwareSystem](#softwareSystem)
             - [deploymentEnvironment](#deploymentEnvironment)
+				- [deploymentGroup](#deploymentGroup)
                 - [deploymentNode](#deploymentNode)
                     - [infrastructureNode](#infrastructureNode)
                     - [softwareSystemInstance](#softwareSystemInstance)
@@ -357,6 +358,16 @@ Permitted children:
 - [deploymentNode](#deploymentNode)
 - [-> (relationship)](#relationship)
 
+### deploymentGroup
+
+The `deploymentGroup` keyword provides a way to define a named deployment group.
+
+```
+deploymentGroup <name>
+```
+
+When software system/container instances are added to a deployment environment, all of the relationships between these elements are automatically replicated between *all* instances. Deployment groups provide a way to restrict the scope in which relationships are replicated. See [../examples/deployment-groups.dsl](deployment-groups.dsl) for an example.  
+
 ### deploymentNode
 
 The `deploymentNode` keyword is used to define a deployment node.
@@ -410,7 +421,7 @@ Permitted children:
 The `softwareSystemInstance` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
 
 ```
-softwareSystemInstance <identifier> [tags] {
+softwareSystemInstance <identifier> [deploymentGroup|tags] [tags] {
     ...
 }
 ```
@@ -432,7 +443,7 @@ In addition to the software system's tags, the following tags are added by defau
 The `containerInstance` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
 ```
-containerInstance <identifier> [tags] {
+containerInstance <identifier> [deploymentGroup|tags] [tags] {
     ...
 }
 ```

@@ -18,7 +18,7 @@ class ContainerInstanceParserTests extends AbstractTests {
             parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: containerInstance <identifier> [tags]", e.getMessage());
+            assertEquals("Expected: containerInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ class ContainerInstanceParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_CreatesAContainerInstance() {
+    void test_parse_CreatesAContainerInstanceInTheDefaultDeploymentGroup() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
@@ -65,10 +65,11 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
+        assertEquals("Default", containerInstance.getDeploymentGroup());
     }
 
     @Test
-    void test_parse_CreatesAContainerInstanceWithTags() {
+    void test_parse_CreatesAContainerInstanceInTheDefaultDeploymentGroupWithTags() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
@@ -85,6 +86,51 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance,Tag 1,Tag 2", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
+        assertEquals("Default", containerInstance.getDeploymentGroup());
+    }
+
+    @Test
+    void test_parse_CreatesAContainerInstanceInTheSpecifiedDeploymentGroup() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Container container = softwareSystem.addContainer("Container", "Description", "Technology");
+        DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("container", container);
+        elements.put("group", new DeploymentGroup("Group"));
+        context.setElements(elements);
+
+        parser.parse(context, tokens("containerInstance", "container", "group"));
+
+        assertEquals(4, model.getElements().size());
+        assertEquals(1, deploymentNode.getContainerInstances().size());
+        ContainerInstance containerInstance = deploymentNode.getContainerInstances().iterator().next();
+        assertSame(container, containerInstance.getContainer());
+        assertEquals("Container Instance", containerInstance.getTags());
+        assertEquals("Live", containerInstance.getEnvironment());
+        assertEquals("Group", containerInstance.getDeploymentGroup());
+    }
+
+    @Test
+    void test_parse_CreatesAContainerInstanceInTheSpecifiedDeploymentGroupWithTags() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
+        Container container = softwareSystem.addContainer("Container", "Description", "Technology");
+        DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("container", container);
+        elements.put("group", new DeploymentGroup("Group"));
+        context.setElements(elements);
+
+        parser.parse(context, tokens("containerInstance", "container", "group", "Tag 1, Tag 2"));
+
+        assertEquals(4, model.getElements().size());
+        assertEquals(1, deploymentNode.getContainerInstances().size());
+        ContainerInstance containerInstance = deploymentNode.getContainerInstances().iterator().next();
+        assertSame(container, containerInstance.getContainer());
+        assertEquals("Container Instance,Tag 1,Tag 2", containerInstance.getTags());
+        assertEquals("Live", containerInstance.getEnvironment());
+        assertEquals("Group", containerInstance.getDeploymentGroup());
     }
 
 }
