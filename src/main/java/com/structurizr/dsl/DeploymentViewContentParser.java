@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.view.DeploymentView;
+import com.structurizr.view.ElementNotPermittedInViewException;
 import com.structurizr.view.ElementView;
 import com.structurizr.view.RelationshipView;
 
@@ -40,24 +41,28 @@ final class DeploymentViewContentParser extends AbstractParser {
         } else {
             // include <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String identifier = tokens.get(i);
+                String token = tokens.get(i);
 
-                Element element = context.getElement(identifier);
-                Relationship relationship = context.getRelationship(identifier);
+                // assume the token is an identifier
+                Element element = context.getElement(token);
+                Relationship relationship = context.getRelationship(token);
                 if (element == null && relationship == null) {
-                    throw new RuntimeException("The element/relationship \"" + identifier + "\" does not exist");
+                    throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
                 }
 
                 if (element != null) {
                     if (element instanceof CustomElement) {
-                        view.add((CustomElement)element);
+                        view.add((CustomElement) element);
                     } else if (element instanceof DeploymentNode) {
-                        DeploymentNode deploymentNode = (DeploymentNode) element;
-                        if (deploymentNode.getEnvironment().equals(view.getEnvironment())) {
-                            view.add(deploymentNode);
-                        }
+                        view.add((DeploymentNode) element);
+                    } else if (element instanceof InfrastructureNode) {
+                        view.add((InfrastructureNode) element);
+                    } else if (element instanceof SoftwareSystemInstance) {
+                        view.add((SoftwareSystemInstance) element);
+                    } else if (element instanceof ContainerInstance) {
+                        view.add((ContainerInstance) element);
                     } else {
-                        throw new RuntimeException("The element \"" + identifier + "\" can not be added to this view (it is not a deployment node)");
+                        throw new RuntimeException("The element \"" + token + "\" can not be added to this view");
                     }
                 }
 
@@ -66,6 +71,44 @@ final class DeploymentViewContentParser extends AbstractParser {
                 }
             }
         }
+    }
+
+    private void addElementToView(Element element, DeploymentView view) {
+        try {
+            if (element instanceof DeploymentNode) {
+                view.add((DeploymentNode) element);
+            } else if (element instanceof InfrastructureNode) {
+                view.add((InfrastructureNode) element);
+            } else if (element instanceof SoftwareSystemInstance) {
+                view.add((SoftwareSystemInstance) element);
+            } else if (element instanceof ContainerInstance) {
+                view.add((ContainerInstance) element);
+            }
+        } catch (ElementNotPermittedInViewException e) {
+            // ignore
+        }
+    }
+
+    private void removeElementFromView(Element element, DeploymentView view) {
+        if (element instanceof DeploymentNode) {
+            view.remove((DeploymentNode)element);
+        } else if (element instanceof InfrastructureNode) {
+            view.remove((InfrastructureNode)element);
+        } else if (element instanceof SoftwareSystemInstance) {
+            view.remove((SoftwareSystemInstance)element);
+        } else if (element instanceof ContainerInstance) {
+            view.remove((ContainerInstance)element);
+        }
+    }
+
+    private boolean hasAllTags(ModelItem modelItem, String[] tags) {
+        boolean result = true;
+
+        for (String tag : tags) {
+            result = result && modelItem.hasTag(tag.trim());
+        }
+
+        return result;
     }
 
     void parseExclude(DeploymentViewDslContext context, Tokens tokens) {
@@ -87,25 +130,26 @@ final class DeploymentViewContentParser extends AbstractParser {
         } else {
             // exclude <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String identifier = tokens.get(i);
+                String token = tokens.get(i);
 
-                Element element = context.getElement(identifier);
-                Relationship relationship = context.getRelationship(identifier);
+                // assume the token is an identifier
+                Element element = context.getElement(token);
+                Relationship relationship = context.getRelationship(token);
                 if (element == null && relationship == null) {
-                    throw new RuntimeException("The element/relationship \"" + identifier + "\" does not exist");
+                    throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
                 }
 
                 if (element != null) {
-                    if (element instanceof CustomElement) {
-                        view.remove((CustomElement) element);
-                    } else if (element instanceof DeploymentNode) {
-                        view.remove((DeploymentNode)element);
+                    if (element instanceof DeploymentNode) {
+                        view.remove((DeploymentNode) element);
                     } else if (element instanceof InfrastructureNode) {
-                        view.remove((InfrastructureNode)element);
+                        view.remove((InfrastructureNode) element);
+                    } else if (element instanceof SoftwareSystemInstance) {
+                        view.remove((SoftwareSystemInstance) element);
                     } else if (element instanceof ContainerInstance) {
-                        view.remove((ContainerInstance)element);
+                        view.remove((ContainerInstance) element);
                     } else {
-                        throw new RuntimeException("The element \"" + identifier + "\" can not be added to this view");
+                        throw new RuntimeException("The element \"" + token + "\" can not be added to this view");
                     }
                 }
 
