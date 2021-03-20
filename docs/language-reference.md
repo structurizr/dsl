@@ -366,7 +366,7 @@ The `deploymentGroup` keyword provides a way to define a named deployment group.
 deploymentGroup <name>
 ```
 
-When software system/container instances are added to a deployment environment, all of the relationships between these elements are automatically replicated between *all* instances. Deployment groups provide a way to restrict the scope in which relationships are replicated. See [../examples/deployment-groups.dsl](deployment-groups.dsl) for an example.  
+When software system/container instances are added to a deployment environment, all of the relationships between these elements are automatically replicated between *all* instances. Deployment groups provide a way to restrict the scope in which relationships are replicated. See [deployment-groups.dsl](../examples/deployment-groups.dsl) for an example.  
 
 ### deploymentNode
 
