@@ -42,7 +42,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
         styles {
             element "Element" {
                 shape roundedbox
-                background "#ffffff"
+                background #ffffff
             }
             element "Database" {
                 shape cylinder
