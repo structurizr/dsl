@@ -150,7 +150,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            CustomerServiceStaff = person \"Customer Service Staff\" \"Customer service staff within the bank.\" \"Bank Staff\" \n" +
                 "            BackOfficeStaff = person \"Back Office Staff\" \"Administration and support staff within the bank.\" \"Bank Staff\" \n" +
                 "            MainframeBankingSystem = softwareSystem \"Mainframe Banking System\" \"Stores all of the core banking information about customers, accounts, transactions, etc.\" \"Existing System\" \n" +
-                "            EmailSystem = softwareSystem \"E-mail System\" \"The internal Microsoft Exchange e-mail system\" \"Existing System\" \n" +
+                "            EmailSystem = softwareSystem \"E-mail System\" \"The internal Microsoft Exchange e-mail system.\" \"Existing System\" \n" +
                 "            ATM = softwareSystem \"ATM\" \"Allows customers to withdraw cash.\" \"Existing System\" \n" +
                 "            InternetBankingSystem = softwareSystem \"Internet Banking System\" \"Allows customers to view information about their bank accounts, and make payments.\" \"\" {\n" +
                 "                InternetBankingSystem_WebApplication = container \"Web Application\" \"Delivers the static content and the Internet banking single page application.\" \"Java and Spring MVC\" \"\" \n" +
