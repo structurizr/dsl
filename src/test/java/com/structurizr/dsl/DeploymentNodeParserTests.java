@@ -10,6 +10,16 @@ class DeploymentNodeParserTests extends AbstractTests {
     private DeploymentNodeParser parser = new DeploymentNodeParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("deploymentNode", "name", "description", "technology", "tags", "instances", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: deploymentNode <name> [description] [technology] [tags] [instances] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(context(), tokens("deploymentNode"));

@@ -14,6 +14,16 @@ class UserRoleParserTests extends AbstractTests {
     private UserRoleParser parser = new UserRoleParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("username", "role", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: <username> <read|write>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenNoUsernameIsSpecified() {
         try {
             parser.parse(context(), tokens(""));

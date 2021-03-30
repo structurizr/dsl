@@ -4,6 +4,8 @@ import com.structurizr.model.DeploymentNode;
 
 final class DeploymentNodeParser extends AbstractParser {
 
+    private static final String GRAMMAR = "deploymentNode <name> [description] [technology] [tags] [instances] {";
+
     private static final int NAME_INDEX = 1;
     private static final int DESCRIPTION_INDEX = 2;
     private static final int TECHNOLOGY_INDEX = 3;
@@ -13,8 +15,12 @@ final class DeploymentNodeParser extends AbstractParser {
     DeploymentNode parse(DslContext context, Tokens tokens) {
         // deploymentNode <name> [description] [technology] [tags] [instances]
 
+        if (tokens.hasMoreThan(INSTANCES_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(NAME_INDEX)) {
-            throw new RuntimeException("Expected: deploymentNode <name> [description] [technology] [tags] [instances] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         DeploymentNode deploymentNode = null;

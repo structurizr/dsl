@@ -4,6 +4,8 @@ import com.structurizr.model.*;
 
 final class ImplicitRelationshipParser extends AbstractRelationshipParser {
 
+    private static final String GRAMMAR = "-> <identifier> [description] [technology] [tags]";
+
     private static final int DESTINATION_IDENTIFIER_INDEX = 1;
     private final static int DESCRIPTION_INDEX = 2;
     private final static int TECHNOLOGY_INDEX = 3;
@@ -12,8 +14,12 @@ final class ImplicitRelationshipParser extends AbstractRelationshipParser {
     Relationship parse(ModelItemDslContext context, Tokens tokens) {
         // -> <identifier> [description] [technology] [tags]
 
+        if (tokens.hasMoreThan(TAGS_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(DESTINATION_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: -> <identifier> [description] [technology] [tags]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         Relationship relationship;

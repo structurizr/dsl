@@ -9,6 +9,8 @@ import java.io.IOException;
 
 final class DocsParser extends AbstractParser {
 
+    private static final String GRAMMAR = "!docs <path>";
+
     private static final int PATH_INDEX = 1;
 
     void parse(WorkspaceDslContext context, File file, Tokens tokens) {
@@ -22,8 +24,12 @@ final class DocsParser extends AbstractParser {
     private void parse(Workspace workspace, SoftwareSystem softwareSystem, File file, Tokens tokens) {
         // !docs <path>
 
+        if (tokens.hasMoreThan(PATH_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(PATH_INDEX)) {
-            throw new RuntimeException("Expected: !docs <path>");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         if (file != null) {

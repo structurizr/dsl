@@ -10,19 +10,19 @@ class DeploymentEnvironmentParserTests extends AbstractTests {
     private DeploymentEnvironmentParser parser = new DeploymentEnvironmentParser();
 
     @Test
-    void test_parse_ThrowsAnException_WhenTheNameIsMissing() {
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(tokens("deploymentEnvironment"));
+            parser.parse(tokens("deploymentEnvironment", "name", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: deploymentEnvironment <name> {", e.getMessage());
+            assertEquals("Too many tokens, expected: deploymentEnvironment <name> {", e.getMessage());
         }
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+    void test_parse_ThrowsAnException_WhenTheNameIsMissing() {
         try {
-            parser.parse(tokens("deploymentEnvironment token1 token2"));
+            parser.parse(tokens("deploymentEnvironment"));
             fail();
         } catch (Exception e) {
             assertEquals("Expected: deploymentEnvironment <name> {", e.getMessage());

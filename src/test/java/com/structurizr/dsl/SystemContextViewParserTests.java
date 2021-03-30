@@ -17,6 +17,17 @@ class SystemContextViewParserTests extends AbstractTests {
     private SystemContextViewParser parser = new SystemContextViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("systemContext", "identifier", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: systemContext <software system identifier> [key] [description] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheSoftwareSystemIdentifierIsMissing() {
         DslContext context = context();
         try {

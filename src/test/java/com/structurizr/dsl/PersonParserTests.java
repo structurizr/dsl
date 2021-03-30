@@ -11,6 +11,16 @@ class PersonParserTests extends AbstractTests {
     private PersonParser parser = new PersonParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("person", "name", "description", "tags", "tokens"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: person <name> [description] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(context(), tokens("person"));

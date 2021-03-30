@@ -10,6 +10,8 @@ import java.text.DecimalFormat;
 
 class DynamicViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "dynamic <*|software system identifier|container identifier> [key] [description] {";
+
     private static final String VIEW_TYPE = "Dynamic";
 
     private static final int SCOPE_IDENTIFIER_INDEX = 1;
@@ -26,8 +28,12 @@ class DynamicViewParser extends AbstractParser {
         String description = "";
         DecimalFormat format = new DecimalFormat("000");
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(SCOPE_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: dynamic <*|software system identifier|container identifier> [key] [description] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         if (tokens.includes(DESCRIPTION_INDEX)) {

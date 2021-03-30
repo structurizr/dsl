@@ -11,6 +11,16 @@ class InfrastructureNodeParserTests extends AbstractTests {
     private InfrastructureNodeParser parser = new InfrastructureNodeParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(new DeploymentNodeDslContext(null), tokens("infrastructureNode", "name", "description", "technology", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: infrastructureNode <name> [description] [technology] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(new DeploymentNodeDslContext(null), tokens("infrastructureNode"));

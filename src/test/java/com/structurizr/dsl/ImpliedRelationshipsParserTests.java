@@ -10,6 +10,16 @@ class ImpliedRelationshipsParserTests extends AbstractTests {
     private ImpliedRelationshipsParser parser = new ImpliedRelationshipsParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("impliedRelationships", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: impliedRelationships <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenNoFlagIsSpecified() {
         try {
             parser.parse(context(), tokens("impliedRelationships"));

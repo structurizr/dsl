@@ -16,6 +16,16 @@ class EnterpriseParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("enterprise", "name", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: enterprise <name>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenNoNameIsSpecified() {
         try {
             parser.parse(context(), tokens("enterprise"));

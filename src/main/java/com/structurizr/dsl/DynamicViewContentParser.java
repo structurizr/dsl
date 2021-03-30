@@ -6,6 +6,8 @@ import com.structurizr.view.DynamicView;
 
 final class DynamicViewContentParser extends AbstractParser {
 
+    private static final String GRAMMAR = "<identifier> -> <identifier> [description] [technology]";
+
     private static final int SOURCE_IDENTIFIER_INDEX = 0;
     private static final int DESTINATION_IDENTIFIER_INDEX = 2;
     private static final int DESCRIPTION_INDEX = 3;
@@ -16,8 +18,12 @@ final class DynamicViewContentParser extends AbstractParser {
 
         DynamicView view = context.getView();
 
+        if (tokens.hasMoreThan(TECHNOLOGY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(DESTINATION_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: <identifier> -> <identifier> [description] [technology]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String sourceId = tokens.get(SOURCE_IDENTIFIER_INDEX);

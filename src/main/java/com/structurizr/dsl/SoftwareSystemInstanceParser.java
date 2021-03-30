@@ -4,6 +4,8 @@ import com.structurizr.model.*;
 
 final class SoftwareSystemInstanceParser extends AbstractParser {
 
+    private static final String GRAMMAR = "softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]";
+
     private static final int IDENTIFIER_INDEX = 1;
     private static final int SECOND_TOKEN = 2;
     private static final int THIRD_TOKEN = 3;
@@ -12,8 +14,12 @@ final class SoftwareSystemInstanceParser extends AbstractParser {
         // softwareSystemInstance <identifier> [tags]
         // softwareSystemInstance <identifier> [deploymentGroup] [tags]
 
+        if (tokens.hasMoreThan(THIRD_TOKEN)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String softwareSystemIdentifier = tokens.get(IDENTIFIER_INDEX);

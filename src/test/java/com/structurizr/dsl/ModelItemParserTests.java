@@ -11,6 +11,17 @@ class ModelItemParserTests extends AbstractTests {
     private ModelItemParser parser = new ModelItemParser();
 
     @Test
+    void test_parseUrl_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            ModelItemDslContext context = new SoftwareSystemDslContext(null);
+            parser.parseUrl(context, tokens("url", "url", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: url <url>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseUrl_ThrowsAnException_WhenNoUrlIsSpecified() {
         try {
             SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
@@ -32,6 +43,17 @@ class ModelItemParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseProperty_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            ModelItemPropertiesDslContext context = new ModelItemPropertiesDslContext(null);
+            parser.parseProperty(context, tokens("name", "value", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: <name> <value>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseProperty_ThrowsAnException_WhenNoValueIsSpecified() {
         try {
             SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
@@ -50,6 +72,17 @@ class ModelItemParserTests extends AbstractTests {
         parser.parseProperty(context, tokens("name", "value"));
 
         assertEquals("value", softwareSystem.getProperties().get("name"));
+    }
+
+    @Test
+    void test_parsePerspective_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(null);
+            parser.parsePerspective(context, tokens("name", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: <name> <description>", e.getMessage());
+        }
     }
 
     @Test

@@ -18,6 +18,17 @@ class DynamicViewParserTests extends AbstractTests {
     private DynamicViewParser parser = new DynamicViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("dynamic", "identifier", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: dynamic <*|software system identifier|container identifier> [key] [description] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheElementIdentifierIsMissing() {
         DslContext context = context();
         try {

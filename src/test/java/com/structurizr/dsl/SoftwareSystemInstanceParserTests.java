@@ -13,6 +13,16 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
     private SoftwareSystemInstanceParser parser = new SoftwareSystemInstanceParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance", "identifier", "group", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheIdentifierIsNotSpecified() {
         try {
             parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance"));

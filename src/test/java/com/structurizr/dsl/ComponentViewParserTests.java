@@ -16,6 +16,17 @@ class ComponentViewParserTests extends AbstractTests {
     private ComponentViewParser parser = new ComponentViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("component", "container", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: component <container identifier> [key] [description] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheContainerIdentifierIsMissing() {
         DslContext context = context();
         try {

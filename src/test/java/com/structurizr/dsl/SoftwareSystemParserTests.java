@@ -11,6 +11,16 @@ class SoftwareSystemParserTests extends AbstractTests {
     private SoftwareSystemParser parser = new SoftwareSystemParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("softwareSystem", "name", "description", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: softwareSystem <name> [description] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(context(), tokens("softwareSystem"));

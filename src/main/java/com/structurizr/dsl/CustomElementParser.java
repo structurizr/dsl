@@ -6,6 +6,8 @@ import com.structurizr.model.Person;
 
 final class CustomElementParser extends AbstractParser {
 
+    private static final String GRAMMAR = "element <name> [metadata] [description] [tags]";
+
     private final static int NAME_INDEX = 1;
     private final static int METADATA_INDEX = 2;
     private final static int DESCRIPTION_INDEX = 3;
@@ -14,8 +16,12 @@ final class CustomElementParser extends AbstractParser {
     CustomElement parse(GroupableDslContext context, Tokens tokens) {
         // element <name> [metadata] [description] [tags]
 
+        if (tokens.hasMoreThan(TAGS_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(NAME_INDEX)) {
-            throw new RuntimeException("Expected: element <name> [metadata] [description] [tags]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String name = tokens.get(NAME_INDEX);

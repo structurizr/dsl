@@ -8,6 +8,8 @@ import java.io.File;
 
 final class AdrsParser extends AbstractParser {
 
+    private static final String GRAMMAR = "!adrs <path>";
+
     private static final int PATH_INDEX = 1;
 
     void parse(WorkspaceDslContext context, File file, Tokens tokens) {
@@ -21,8 +23,12 @@ final class AdrsParser extends AbstractParser {
     private void parse(Workspace workspace, SoftwareSystem softwareSystem, File file, Tokens tokens) {
         // !adrs <path>
 
+        if (tokens.hasMoreThan(PATH_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(PATH_INDEX)) {
-            throw new RuntimeException("Expected: !adrs <path>");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         if (file != null) {

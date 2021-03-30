@@ -5,6 +5,8 @@ import com.structurizr.view.CustomView;
 
 final class CustomViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "custom [key] [title] [description] {";
+
     private static final String VIEW_TYPE = "Custom";
 
     private static final int KEY_INDEX = 1;
@@ -13,6 +15,10 @@ final class CustomViewParser extends AbstractParser {
 
     CustomView parse(DslContext context, Tokens tokens) {
         // custom [key] [title] [description]
+
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
 
         Workspace workspace = context.getWorkspace();
         String key = "";

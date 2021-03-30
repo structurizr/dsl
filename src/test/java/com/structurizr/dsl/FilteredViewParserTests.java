@@ -13,6 +13,17 @@ class FilteredViewParserTests extends AbstractTests {
     private FilteredViewParser parser = new FilteredViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("filtered", "baseKey", "key", "mode", "tags", "description", "extra"));
+            fail();
+        } catch (RuntimeException iae) {
+            assertEquals("Too many tokens, expected: filtered <baseKey> <include|exclude> <tags> [key] [description]", iae.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheBaseKeyIsMissing() {
         DslContext context = context();
         try {

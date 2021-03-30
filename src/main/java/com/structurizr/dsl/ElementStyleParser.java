@@ -17,7 +17,9 @@ final class ElementStyleParser extends AbstractParser {
     private static final int FIRST_PROPERTY_INDEX = 1;
 
     ElementStyle parseElementStyle(DslContext context, Tokens tokens) {
-        if (tokens.includes(FIRST_PROPERTY_INDEX)) {
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: element <tag> {");
+        } else if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String tag = tokens.get(1);
 
             if (StringUtils.isNullOrEmpty(tag)) {
@@ -43,6 +45,10 @@ final class ElementStyleParser extends AbstractParser {
 
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: shape <" + shapesAsString + ">");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String shape = tokens.get(1).toLowerCase();
 
@@ -59,6 +65,10 @@ final class ElementStyleParser extends AbstractParser {
     void parseBackground(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: background <#rrggbb>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setBackground(colour);
@@ -70,6 +80,10 @@ final class ElementStyleParser extends AbstractParser {
     void parseStroke(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: stroke <#rrggbb>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setStroke(colour);
@@ -80,6 +94,10 @@ final class ElementStyleParser extends AbstractParser {
 
     void parseColour(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: colour <#rrggbb>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
@@ -97,6 +115,10 @@ final class ElementStyleParser extends AbstractParser {
 
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: border <solid|dashed|dotted>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String border = tokens.get(1).toLowerCase();
 
@@ -112,6 +134,10 @@ final class ElementStyleParser extends AbstractParser {
 
     void parseOpacity(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: opacity <0-100>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String opacityAsString = tokens.get(1);
@@ -130,6 +156,10 @@ final class ElementStyleParser extends AbstractParser {
     void parseWidth(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: width <number>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String widthAsString = tokens.get(1);
 
@@ -146,6 +176,10 @@ final class ElementStyleParser extends AbstractParser {
 
     void parseHeight(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: height <number>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String heightAsString = tokens.get(1);
@@ -164,6 +198,10 @@ final class ElementStyleParser extends AbstractParser {
     void parseFontSize(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: fontSize <number>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String fontSizeAsString = tokens.get(1);
 
@@ -180,6 +218,10 @@ final class ElementStyleParser extends AbstractParser {
 
     void parseMetadata(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: metadata <true|false>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String metadata = tokens.get(1);
@@ -199,6 +241,10 @@ final class ElementStyleParser extends AbstractParser {
     void parseDescription(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: description <true|false>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String description = tokens.get(1);
 
@@ -216,6 +262,10 @@ final class ElementStyleParser extends AbstractParser {
 
     void parseIcon(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: icon <file>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String path = tokens.get(1);

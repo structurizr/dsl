@@ -417,7 +417,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "        FinancialRiskSystem -> ReferenceDataSystemv20 \"Gets counterparty data from\" \"\" \"Future State\" \n" +
                 "        ConfigurationUser -> FinancialRiskSystem \"Configures parameters using\" \"\" \"\" \n" +
                 "        FinancialRiskSystem -> Emailsystem \"Sends a notification that a report is ready to\" \"\" \"\" \n" +
-                "        Emailsystem -> BusinessUser \"Sends a notification that a report is ready to\" \"E-mail message\" \"\" \n" +
+                "        Emailsystem -> BusinessUser \"Sends a notification that a report is ready to\" \"E-mail message\" \"Asynchronous\" \n" +
                 "        FinancialRiskSystem -> CentralMonitoringService \"Sends critical failure alerts to\" \"SNMP\" \"Asynchronous,Alert\" \n" +
                 "        FinancialRiskSystem -> ActiveDirectory \"Uses for user authentication and authorisation\" \"\" \"\" \n" +
                 "    }\n" +

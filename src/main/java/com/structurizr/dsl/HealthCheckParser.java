@@ -4,6 +4,8 @@ import com.structurizr.model.StaticStructureElementInstance;
 
 class HealthCheckParser extends AbstractParser {
 
+    private static final String GRAMMAR = "healthCheck <name> <url> [interval] [timeout]";
+
     private final static int NAME_INDEX = 1;
     private final static int URL_INDEX = 2;
     private final static int INTERVAL_INDEX = 3;
@@ -14,8 +16,13 @@ class HealthCheckParser extends AbstractParser {
 
     void parse(StaticStructureElementInstanceDslContext context, Tokens tokens) {
         // healthCheck <name> <url> [interval] [timeout]
+
+        if (tokens.hasMoreThan(TIMEOUT_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(URL_INDEX)) {
-            throw new RuntimeException("Expected: healthCheck <name> <url> [interval] [timeout]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String name = tokens.get(NAME_INDEX);

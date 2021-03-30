@@ -13,6 +13,16 @@ class ContainerInstanceParserTests extends AbstractTests {
     private ContainerInstanceParser parser = new ContainerInstanceParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance", "identifier", "deploymentGroup", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: containerInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheIdentifierIsNotSpecified() {
         try {
             parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance"));

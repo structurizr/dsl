@@ -7,10 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class SystemLandscapeViewParserTests extends AbstractTests {
 
     private SystemLandscapeViewParser parser = new SystemLandscapeViewParser();
+
+    @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("systemLandscape", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: systemLandscape [key] [description] {", e.getMessage());
+        }
+    }
 
     @Test
     void test_parse_CreatesASystemLandscapeView() {

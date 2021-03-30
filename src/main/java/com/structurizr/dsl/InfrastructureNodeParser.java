@@ -5,6 +5,8 @@ import com.structurizr.model.InfrastructureNode;
 
 final class InfrastructureNodeParser extends AbstractParser {
 
+    private static final String GRAMMAR = "infrastructureNode <name> [description] [technology] [tags]";
+
     private static final int NAME_INDEX = 1;
     private static final int DESCRIPTION_INDEX = 2;
     private static final int TECHNOLOGY_INDEX = 3;
@@ -13,8 +15,12 @@ final class InfrastructureNodeParser extends AbstractParser {
     InfrastructureNode parse(DeploymentNodeDslContext context, Tokens tokens) {
         // infrastructureNode <name> [description] [technology] [tags]
 
+        if (tokens.hasMoreThan(TAGS_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(NAME_INDEX)) {
-            throw new RuntimeException("Expected: infrastructureNode <name> [description] [technology] [tags]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         DeploymentNode deploymentNode = context.getDeploymentNode();

@@ -18,6 +18,16 @@ class DynamicViewContentParserTests extends AbstractTests {
     private DynamicViewContentParser parser = new DynamicViewContentParser();
 
     @Test
+    void test_parseRelationship_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseRelationship(new DynamicViewDslContext(null), tokens("source", "->", "destination", "description", "technology", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: <identifier> -> <identifier> [description] [technology]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationIdentifierIsMissing() {
         try {
             parser.parseRelationship(new DynamicViewDslContext(null), tokens("source", "->"));

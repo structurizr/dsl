@@ -12,6 +12,8 @@ import java.util.Set;
 
 final class FilteredViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "filtered <baseKey> <include|exclude> <tags> [key] [description]";
+
     private static final String VIEW_TYPE = "Filtered";
 
     private static final int BASE_KEY_INDEX = 1;
@@ -26,8 +28,12 @@ final class FilteredViewParser extends AbstractParser {
     FilteredView parse(DslContext context, Tokens tokens) {
         // filtered <baseKey> <include|exclude> <tags> [key} [description]
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(TAGS_INDEX)) {
-            throw new RuntimeException("Expected: filtered <baseKey> <include|exclude> <tags> [key] [description]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         Workspace workspace = context.getWorkspace();

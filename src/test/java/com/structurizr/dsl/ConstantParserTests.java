@@ -10,6 +10,16 @@ class ConstantParserTests extends AbstractTests {
     private ConstantParser parser = new ConstantParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("!constant", "name", "value", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: !constant <name> <value>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenNoNameOrValueIsSpecified() {
         try {
             parser.parse(context(), tokens("!constant"));

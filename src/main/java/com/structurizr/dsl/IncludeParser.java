@@ -7,13 +7,19 @@ import java.nio.file.Files;
 
 final class IncludeParser extends AbstractParser {
 
+    private static final String GRAMMAR = "!include <file>";
+
     private static final int FILE_INDEX = 1;
 
     void parse(IncludedDslContext context, Tokens tokens) {
         // !include <file>
 
+        if (tokens.hasMoreThan(FILE_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(FILE_INDEX)) {
-            throw new RuntimeException("Expected: !include <file>");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String filename = tokens.get(FILE_INDEX);

@@ -18,7 +18,7 @@ workspace "Financial Risk System" "This is a simple (incomplete) example C4 mode
         financialRiskSystem -> referenceDataSystemV2 "Gets counterparty data from" "" "Future State"
         configurationUser -> financialRiskSystem "Configures parameters using"
         financialRiskSystem -> emailSystem "Sends a notification that a report is ready to"
-        emailSystem -> businessUser "Sends a notification that a report is ready to" "E-mail message" "" "Asynchronous"
+        emailSystem -> businessUser "Sends a notification that a report is ready to" "E-mail message" "Asynchronous"
         financialRiskSystem -> centralMonitoringService "Sends critical failure alerts to" "SNMP" "Asynchronous, Alert"
         financialRiskSystem -> activeDirectory "Uses for user authentication and authorisation"
     }

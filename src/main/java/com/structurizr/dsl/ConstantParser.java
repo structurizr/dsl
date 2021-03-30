@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 final class ConstantParser extends AbstractParser {
 
+    private static final String GRAMMAR = "!constant <name> <value>";
+
     private static final int NAME_INDEX = 1;
     private static final int VALUE_INDEX = 2;
 
@@ -10,8 +12,12 @@ final class ConstantParser extends AbstractParser {
     Constant parse(DslContext context, Tokens tokens) {
         // !constant name value
 
+        if (tokens.hasMoreThan(VALUE_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(VALUE_INDEX)) {
-            throw new RuntimeException("Expected: !constant <name> <value>");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String name = tokens.get(NAME_INDEX);

@@ -24,6 +24,17 @@ class HealthCheckParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            SoftwareSystemInstanceDslContext context = new SoftwareSystemInstanceDslContext(softwareSystemInstance);
+            parser.parse(context, tokens("healthCheck", "name", "url", "interval", "timeout", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: healthCheck <name> <url> [interval] [timeout]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenNoNameIsSpecified() {
         try {
             SoftwareSystemInstanceDslContext context = new SoftwareSystemInstanceDslContext(softwareSystemInstance);

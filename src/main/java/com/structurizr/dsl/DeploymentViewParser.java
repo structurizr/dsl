@@ -8,6 +8,8 @@ import com.structurizr.view.DeploymentView;
 
 final class DeploymentViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "deployment <*|software system identifier> <environment> [key] [description] {";
+
     private static final String VIEW_TYPE = "Deployment";
 
     private static final int SCOPE_IDENTIFIER_INDEX = 1;
@@ -18,8 +20,12 @@ final class DeploymentViewParser extends AbstractParser {
     DeploymentView parse(DslContext context, Tokens tokens) {
         // deployment <*|software system identifier> <environment|environment name> [key] [description] {
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(ENVIRONMENT_INDEX)) {
-            throw new RuntimeException("Expected: deployment <*|software system identifier> <environment> [key] [description] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         Workspace workspace = context.getWorkspace();

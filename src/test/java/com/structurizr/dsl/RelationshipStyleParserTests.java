@@ -20,6 +20,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseRelationshipStyle_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseRelationshipStyle(context(), tokens("relationship", "tag", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: relationship <tag> {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseRelationshipStyle_ThrowsAnException_WhenTheTagIsMissing() {
         try {
             parser.parseRelationshipStyle(context(), tokens("relationship"));
@@ -48,6 +58,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseThickness_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseThickness(relationshipStyleDslContext(), tokens("thickness", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: thickness <number>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseThickness_ThrowsAnException_WhenTheThicknessIsMissing() {
         try {
             parser.parseThickness(relationshipStyleDslContext(), tokens("thickness"));
@@ -72,7 +92,17 @@ class RelationshipStyleParserTests extends AbstractTests {
         parser.parseThickness(relationshipStyleDslContext(), tokens("thickness", "75"));
         assertEquals(75, relationshipStyle.getThickness());
     }
-    
+
+    @Test
+    void test_parseColour_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseColour(relationshipStyleDslContext(), tokens("colour", "hex", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: colour <#rrggbb>", e.getMessage());
+        }
+    }
+
     @Test
     void test_parseColour_ThrowsAnException_WhenTheColourIsMissing() {
         try {
@@ -87,6 +117,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     void test_parseColour_SetsTheColour() {
         parser.parseColour(relationshipStyleDslContext(), tokens("colour", "#ff0000"));
         assertEquals("#ff0000", relationshipStyle.getColor());
+    }
+
+    @Test
+    void test_parseOpacity_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseOpacity(relationshipStyleDslContext(), tokens("opacity", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: opacity <0-100>", e.getMessage());
+        }
     }
 
     @Test
@@ -116,6 +156,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseWidth_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseWidth(relationshipStyleDslContext(), tokens("width", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: width <number>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseWidth_ThrowsAnException_WhenTheWidthIsMissing() {
         try {
             parser.parseWidth(relationshipStyleDslContext(), tokens("width"));
@@ -142,6 +192,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseFontSize_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseFontSize(relationshipStyleDslContext(), tokens("fontSize", "number", "extrta"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: fontSize <number>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseFontSize_ThrowsAnException_WhenTheFontSizeIsMissing() {
         try {
             parser.parseFontSize(relationshipStyleDslContext(), tokens("fontSize"));
@@ -165,6 +225,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     void test_parseFontSize_SetsTheFontSize() {
         parser.parseFontSize(relationshipStyleDslContext(), tokens("fontSize", "75"));
         assertEquals(75, relationshipStyle.getFontSize());
+    }
+
+    @Test
+    void test_parseDashed_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseDashed(relationshipStyleDslContext(), tokens("dashed", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: dashed <true|false>", e.getMessage());
+        }
     }
 
     @Test
@@ -198,6 +268,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parsePosition_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parsePosition(relationshipStyleDslContext(), tokens("position", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: position <0-100>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parsePosition_ThrowsAnException_WhenThePositionIsMissing() {
         try {
             parser.parsePosition(relationshipStyleDslContext(), tokens("position"));
@@ -221,6 +301,16 @@ class RelationshipStyleParserTests extends AbstractTests {
     void test_parsePosition_SetsThePosition() {
         parser.parsePosition(relationshipStyleDslContext(), tokens("position", "75"));
         assertEquals(75, relationshipStyle.getPosition());
+    }
+
+    @Test
+    void test_parseRouting_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseRouting(relationshipStyleDslContext(), tokens("routing", "enum", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: routing <direct|orthogonal|curved>", e.getMessage());
+        }
     }
 
     @Test

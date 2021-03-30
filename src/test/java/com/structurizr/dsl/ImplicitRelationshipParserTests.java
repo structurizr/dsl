@@ -21,6 +21,16 @@ class ImplicitRelationshipParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(null), tokens("->", "destination", "description", "technology", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: -> <identifier> [description] [technology] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheDestinationIdentifierIsMissing() {
         try {
             parser.parse(context(null), tokens("->"));

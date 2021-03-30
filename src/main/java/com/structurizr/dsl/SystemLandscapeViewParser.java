@@ -5,6 +5,8 @@ import com.structurizr.view.SystemLandscapeView;
 
 final class SystemLandscapeViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "systemLandscape [key] [description] {";
+
     private static final String VIEW_TYPE = "SystemLandscape";
 
     private static final int KEY_INDEX = 1;
@@ -12,6 +14,10 @@ final class SystemLandscapeViewParser extends AbstractParser {
 
     SystemLandscapeView parse(DslContext context, Tokens tokens) {
         // systemLandscape [key] [description]
+
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
 
         Workspace workspace = context.getWorkspace();
         String key = "";

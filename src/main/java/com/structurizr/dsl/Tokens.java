@@ -34,4 +34,8 @@ final class Tokens {
         return tokens.size() - 1 >= index;
     }
 
+    boolean hasMoreThan(int index) {
+        return includes(index + 1);
+    }
+    
 }

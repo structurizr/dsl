@@ -17,6 +17,17 @@ class DeploymentViewParserTests extends AbstractTests {
     private DeploymentViewParser parser = new DeploymentViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("deployment", "identifier", "environment", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: deployment <*|software system identifier> <environment> [key] [description] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheElementIdentifierIsMissing() {
         DslContext context = context();
         try {

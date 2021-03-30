@@ -12,6 +12,16 @@ class ComponentParserTests extends AbstractTests {
     private ComponentParser parser = new ComponentParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(new ContainerDslContext(null), tokens("container", "name", "description", "technology", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: component <name> [description] [technology] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(new ContainerDslContext(null), tokens("container"));

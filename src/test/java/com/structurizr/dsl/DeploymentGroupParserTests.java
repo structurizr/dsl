@@ -10,19 +10,19 @@ class DeploymentGroupParserTests extends AbstractTests {
     private DeploymentGroupParser parser = new DeploymentGroupParser();
 
     @Test
-    void test_parse_ThrowsAnException_WhenTheNameIsMissing() {
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(tokens("deploymentGroup"));
+            parser.parse(tokens("deploymentGroup", "name", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: deploymentGroup <name>", e.getMessage());
+            assertEquals("Too many tokens, expected: deploymentGroup <name>", e.getMessage());
         }
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+    void test_parse_ThrowsAnException_WhenTheNameIsMissing() {
         try {
-            parser.parse(tokens("deploymentGroup token1 token2"));
+            parser.parse(tokens("deploymentGroup"));
             fail();
         } catch (Exception e) {
             assertEquals("Expected: deploymentGroup <name>", e.getMessage());

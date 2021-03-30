@@ -7,6 +7,8 @@ import com.structurizr.view.SystemContextView;
 
 final class SystemContextViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "systemContext <software system identifier> [key] [description] {";
+
     private static final String VIEW_TYPE = "SystemContext";
 
     private static final int SOFTWARE_SYSTEM_IDENTIFIER_INDEX = 1;
@@ -21,8 +23,12 @@ final class SystemContextViewParser extends AbstractParser {
         String key = "";
         String description = "";
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(SOFTWARE_SYSTEM_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: systemContext <software system identifier> [key] [description] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String softwareSystemIdentifier = tokens.get(SOFTWARE_SYSTEM_IDENTIFIER_INDEX);

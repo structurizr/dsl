@@ -16,6 +16,17 @@ class ContainerViewParserTests extends AbstractTests {
     private ContainerViewParser parser = new ContainerViewParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        DslContext context = context();
+        try {
+            parser.parse(context, tokens("container", "identifier", "key", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: container <software system identifier> [key] [description] {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheSoftwareSystemIdentifierIsMissing() {
         DslContext context = context();
         try {

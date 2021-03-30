@@ -4,10 +4,18 @@ import com.structurizr.Workspace;
 
 final class WorkspaceParser extends AbstractParser {
 
+    private static final String GRAMMAR = "workspace [name] [description]";
+
     private static final int NAME_INDEX = 1;
     private static final int DESCRIPTION_INDEX = 2;
 
     void parse(Workspace workspace, Tokens tokens) {
+        // workspace [name] [description]
+
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(NAME_INDEX)) {
             // there is no metadata to set
             return;

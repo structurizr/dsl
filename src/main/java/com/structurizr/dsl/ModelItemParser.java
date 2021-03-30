@@ -12,6 +12,10 @@ final class ModelItemParser extends AbstractParser {
 
     void parseUrl(ModelItemDslContext context, Tokens tokens) {
         // url <url>
+        if (tokens.hasMoreThan(URL_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: url <url>");
+        }
+
         if (!tokens.includes(URL_INDEX)) {
             throw new RuntimeException("Expected: url <url>");
         }
@@ -22,6 +26,10 @@ final class ModelItemParser extends AbstractParser {
 
     void parseProperty(ModelItemPropertiesDslContext context, Tokens tokens) {
         // <name> <value>
+
+        if (tokens.hasMoreThan(PROPERTY_VALUE_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: <name> <value>");
+        }
 
         if (tokens.size() != 2) {
             throw new RuntimeException("Expected: <name> <value>");
@@ -35,6 +43,10 @@ final class ModelItemParser extends AbstractParser {
 
     void parsePerspective(ModelItemPerspectivesDslContext context, Tokens tokens) {
         // <name> <description>
+
+        if (tokens.hasMoreThan(PERSPECTIVE_DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: <name> <description>");
+        }
 
         if (tokens.size() != 2) {
             throw new RuntimeException("Expected: <name> <description>");

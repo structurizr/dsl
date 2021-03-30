@@ -7,6 +7,8 @@ import com.structurizr.view.ContainerView;
 
 final class ContainerViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "container <software system identifier> [key] [description] {";
+
     private static final String VIEW_TYPE = "Container";
 
     private static final int SOFTWARE_SYSTEM_IDENTIFIER_INDEX = 1;
@@ -16,8 +18,12 @@ final class ContainerViewParser extends AbstractParser {
     ContainerView parse(DslContext context, Tokens tokens) {
         // container <software system identifier> [key] [description] {
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(SOFTWARE_SYSTEM_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: container <software system identifier> [key] [description] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         Workspace workspace = context.getWorkspace();

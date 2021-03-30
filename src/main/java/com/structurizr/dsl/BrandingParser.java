@@ -7,6 +7,9 @@ import java.io.File;
 
 final class BrandingParser extends AbstractParser {
 
+    private static final String LOGO_GRAMMAR = "logo <path>";
+    private static final String FONT_GRAMMAR = "font <name> [url]";
+
     private static final int LOGO_FILE_INDEX = 1;
 
     private static final int FONT_NAME_INDEX = 1;
@@ -15,7 +18,9 @@ final class BrandingParser extends AbstractParser {
     void parseLogo(BrandingDslContext context, Tokens tokens) {
         // logo <path>
 
-        if (tokens.includes(LOGO_FILE_INDEX)) {
+        if (tokens.hasMoreThan(LOGO_FILE_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + LOGO_GRAMMAR);
+        } else if (tokens.includes(LOGO_FILE_INDEX)) {
             String path = tokens.get(1);
 
             File file = new File(context.getFile().getParent(), path);
@@ -30,14 +35,16 @@ final class BrandingParser extends AbstractParser {
                 throw new RuntimeException(path + " does not exist");
             }
         } else {
-            throw new RuntimeException("Expected: logo <path>");
+            throw new RuntimeException("Expected: " + LOGO_GRAMMAR);
         }
     }
 
     void parseFont(BrandingDslContext context, Tokens tokens) {
         // font <name> [url]
 
-        if (tokens.includes(FONT_URL_INDEX)) {
+        if (tokens.hasMoreThan(FONT_URL_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + FONT_GRAMMAR);
+        } else if (tokens.includes(FONT_URL_INDEX)) {
             String name = tokens.get(FONT_NAME_INDEX);
             String url = tokens.get(FONT_URL_INDEX);
 
@@ -47,7 +54,7 @@ final class BrandingParser extends AbstractParser {
 
             context.getWorkspace().getViews().getConfiguration().getBranding().setFont(new Font(name));
         } else {
-            throw new RuntimeException("Expected: font <name> [url]");
+            throw new RuntimeException("Expected: " + FONT_GRAMMAR);
         }
     }
 

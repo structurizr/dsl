@@ -11,6 +11,18 @@ class BrandingParserTests extends AbstractTests {
     private BrandingParser parser = new BrandingParser();
 
     @Test
+    void test_parseLogo_ThrowsAnException_WhenThereAreTooManyTokens() {
+        BrandingDslContext context = new BrandingDslContext(null);
+
+        try {
+            parser.parseLogo(context, tokens("logo", "path", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: logo <path>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseLogo_ThrowsAnException_WhenNoPathIsSpecified() {
         BrandingDslContext context = new BrandingDslContext(null);
 
@@ -54,6 +66,18 @@ class BrandingParserTests extends AbstractTests {
 
         parser.parseLogo(context, tokens("logo", "examples/logo.png"));
         assertTrue(workspace.getViews().getConfiguration().getBranding().getLogo().startsWith("data:image/png;base64,"));
+    }
+
+    @Test
+    void test_parseFont_ThrowsAnException_WhenThereAreTooManyTokens() {
+        BrandingDslContext context = new BrandingDslContext(null);
+
+        try {
+            parser.parseFont(context, tokens("font", "name", "url", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: font <name> [url]", e.getMessage());
+        }
     }
 
     @Test

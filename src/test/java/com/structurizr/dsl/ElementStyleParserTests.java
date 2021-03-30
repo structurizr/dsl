@@ -23,6 +23,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseElementStyle_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseElementStyle(context(), tokens("element", "tag", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: element <tag> {", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseElementStyle_ThrowsAnException_WhenTheTagIsMissing() {
         try {
             parser.parseElementStyle(context(), tokens("element"));
@@ -48,6 +58,16 @@ class ElementStyleParserTests extends AbstractTests {
 
         ElementStyle style = workspace.getViews().getConfiguration().getStyles().getElements().stream().filter(es -> "Element".equals(es.getTag())).findFirst().get();
         assertNotNull(style);
+    }
+
+    @Test
+    void test_parseShape_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseShape(elementStyleDslContext(), tokens("shape", "shape", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: shape <Box|RoundedBox|Circle|Ellipse|Hexagon|Cylinder|Pipe|Person|Robot|Folder|WebBrowser|MobileDevicePortrait|MobileDeviceLandscape|Component>", e.getMessage());
+        }
     }
 
     @Test
@@ -77,6 +97,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseBackground_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseBackground(elementStyleDslContext(), tokens("background", "hex", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: background <#rrggbb>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseBackground_ThrowsAnException_WhenTheBackgroundIsMissing() {
         try {
             parser.parseBackground(elementStyleDslContext(), tokens("background"));
@@ -90,6 +120,16 @@ class ElementStyleParserTests extends AbstractTests {
     void test_parseBackground_SetsTheBackground() {
         parser.parseBackground(elementStyleDslContext(), tokens("background", "#ff0000"));
         assertEquals("#ff0000", elementStyle.getBackground());
+    }
+
+    @Test
+    void test_parseStroke_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseStroke(elementStyleDslContext(), tokens("stroke", "hex", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: stroke <#rrggbb>", e.getMessage());
+        }
     }
 
     @Test
@@ -109,6 +149,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseColour_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseColour(elementStyleDslContext(), tokens("colour", "hex", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: colour <#rrggbb>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseColour_ThrowsAnException_WhenTheColourIsMissing() {
         try {
             parser.parseColour(elementStyleDslContext(), tokens("colour"));
@@ -122,6 +172,16 @@ class ElementStyleParserTests extends AbstractTests {
     void test_parseColour_SetsTheColour() {
         parser.parseColour(elementStyleDslContext(), tokens("colour", "#ff0000"));
         assertEquals("#ff0000", elementStyle.getColor());
+    }
+
+    @Test
+    void test_parseBorder_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseBorder(elementStyleDslContext(), tokens("border", "style", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: border <solid|dashed|dotted>", e.getMessage());
+        }
     }
 
     @Test
@@ -151,6 +211,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseOpacity_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseOpacity(elementStyleDslContext(), tokens("opacity", "percentage", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: opacity <0-100>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseOpacity_ThrowsAnException_WhenTheOpacityIsMissing() {
         try {
             parser.parseOpacity(elementStyleDslContext(), tokens("opacity"));
@@ -174,6 +244,16 @@ class ElementStyleParserTests extends AbstractTests {
     void test_parseOpacity_SetsTheOpacity() {
         parser.parseOpacity(elementStyleDslContext(), tokens("opacity", "75"));
         assertEquals(75, elementStyle.getOpacity());
+    }
+
+    @Test
+    void test_parseWidth_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseWidth(elementStyleDslContext(), tokens("width", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: width <number>", e.getMessage());
+        }
     }
 
     @Test
@@ -203,6 +283,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseHeight_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseHeight(elementStyleDslContext(), tokens("height", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: height <number>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseHeight_ThrowsAnException_WhenTheHeightIsMissing() {
         try {
             parser.parseHeight(elementStyleDslContext(), tokens("height"));
@@ -226,6 +316,16 @@ class ElementStyleParserTests extends AbstractTests {
     void test_parseHeight_SetsTheHeight() {
         parser.parseHeight(elementStyleDslContext(), tokens("height", "75"));
         assertEquals(75, elementStyle.getHeight());
+    }
+
+    @Test
+    void test_parseFontSize_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseFontSize(elementStyleDslContext(), tokens("fontSize", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: fontSize <number>", e.getMessage());
+        }
     }
 
     @Test
@@ -265,6 +365,16 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseMetadata_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseMetadata(elementStyleDslContext(), tokens("metadata", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: metadata <true|false>", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parseMetadata_ThrowsAnException_WhenTheMetadataIsNotValid() {
         try {
             parser.parseMetadata(elementStyleDslContext(), tokens("metadata", "abc"));
@@ -282,6 +392,16 @@ class ElementStyleParserTests extends AbstractTests {
 
         parser.parseMetadata(context, tokens("metadata", "true"));
         assertEquals(true, elementStyle.getMetadata());
+    }
+
+    @Test
+    void test_parseDescription_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseDescription(elementStyleDslContext(), tokens("description", "boolean", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: description <true|false>", e.getMessage());
+        }
     }
 
     @Test
@@ -312,6 +432,16 @@ class ElementStyleParserTests extends AbstractTests {
 
         parser.parseDescription(context, tokens("description", "true"));
         assertEquals(true, elementStyle.getDescription());
+    }
+
+    @Test
+    void test_parseIcon_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseIcon(elementStyleDslContext(), tokens("icon", "file", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: icon <file>", e.getMessage());
+        }
     }
 
     @Test

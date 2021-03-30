@@ -10,6 +10,16 @@ class CustomElementParserTests extends AbstractTests {
     private CustomElementParser parser = new CustomElementParser();
 
     @Test
+    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parse(context(), tokens("element", "name", "metadata", "description", "tags", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: element <name> [metadata] [description] [tags]", e.getMessage());
+        }
+    }
+
+    @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
             parser.parse(context(), tokens("element"));

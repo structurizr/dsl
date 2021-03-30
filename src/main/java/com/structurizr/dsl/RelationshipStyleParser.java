@@ -13,6 +13,10 @@ final class RelationshipStyleParser extends AbstractParser {
     private static final int FIRST_PROPERTY_INDEX = 1;
 
     RelationshipStyle parseRelationshipStyle(DslContext context, Tokens tokens) {
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: relationship <tag> {");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String tag = tokens.get(1);
 
@@ -30,6 +34,10 @@ final class RelationshipStyleParser extends AbstractParser {
     void parseThickness(RelationshipStyleDslContext context, Tokens tokens) {
         // thickness <number>
         RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: thickness <number>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String thicknessAsString = tokens.get(1);
@@ -49,6 +57,10 @@ final class RelationshipStyleParser extends AbstractParser {
         // colour #rrggbb
         RelationshipStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: colour <#rrggbb>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setColor(colour);
@@ -60,6 +72,10 @@ final class RelationshipStyleParser extends AbstractParser {
     void parseDashed(RelationshipStyleDslContext context, Tokens tokens) {
         // dashed true|false
         RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: dashed <true|false>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String dashed = tokens.get(1);
@@ -80,6 +96,10 @@ final class RelationshipStyleParser extends AbstractParser {
         // opacity 0-100
         RelationshipStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: opacity <0-100>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String opacityAsString = tokens.get(1);
 
@@ -96,6 +116,10 @@ final class RelationshipStyleParser extends AbstractParser {
 
     void parseWidth(RelationshipStyleDslContext context, Tokens tokens) {
         RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: width <number>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String widthAsString = tokens.get(1);
@@ -114,6 +138,10 @@ final class RelationshipStyleParser extends AbstractParser {
     void parseFontSize(RelationshipStyleDslContext context, Tokens tokens) {
         RelationshipStyle style = context.getStyle();
 
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: fontSize <number>");
+        }
+
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String fontSizeAsString = tokens.get(1);
 
@@ -131,6 +159,10 @@ final class RelationshipStyleParser extends AbstractParser {
     void parsePosition(RelationshipStyleDslContext context, Tokens tokens) {
         // position 0-100
         RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: position <0-100>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String positionAsString = tokens.get(1);
@@ -154,6 +186,10 @@ final class RelationshipStyleParser extends AbstractParser {
         }
 
         RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: routing <direct|orthogonal|curved>");
+        }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String routing = tokens.get(1).toLowerCase();

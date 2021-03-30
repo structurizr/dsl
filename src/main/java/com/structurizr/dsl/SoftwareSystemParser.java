@@ -5,6 +5,8 @@ import com.structurizr.model.SoftwareSystem;
 
 final class SoftwareSystemParser extends AbstractParser {
 
+    private static final String GRAMMAR = "softwareSystem <name> [description] [tags]";
+
     private final static int NAME_INDEX = 1;
     private final static int DESCRIPTION_INDEX = 2;
     private final static int TAGS_INDEX = 3;
@@ -12,8 +14,12 @@ final class SoftwareSystemParser extends AbstractParser {
     SoftwareSystem parse(GroupableDslContext context, Tokens tokens) {
         // softwareSystem <name> [description] [tags]
 
+        if (tokens.hasMoreThan(TAGS_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(NAME_INDEX)) {
-            throw new RuntimeException("Expected: softwareSystem <name> [description] [tags]");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         String name = tokens.get(NAME_INDEX);

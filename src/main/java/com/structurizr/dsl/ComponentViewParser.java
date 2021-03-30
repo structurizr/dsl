@@ -7,6 +7,8 @@ import com.structurizr.view.ComponentView;
 
 final class ComponentViewParser extends AbstractParser {
 
+    private static final String GRAMMAR = "component <container identifier> [key] [description] {";
+
     private static final String VIEW_TYPE = "Component";
 
     private static final int CONTAINER_IDENTIFIER_INDEX = 1;
@@ -16,8 +18,12 @@ final class ComponentViewParser extends AbstractParser {
     ComponentView parse(DslContext context, Tokens tokens) {
         // component <container identifier> [key] [description] {
 
+        if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
         if (!tokens.includes(CONTAINER_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: component <container identifier> [key] [description] {");
+            throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
         Workspace workspace = context.getWorkspace();
