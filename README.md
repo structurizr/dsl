@@ -78,7 +78,7 @@ workspace {
 Here are some tools designed to support the Structurizr DSL.
 
 * [Structurizr CLI](https://github.com/structurizr/cli)
-* [VS Code extension - syntax highlighting and PlantUML previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
+* [VS Code extension - syntax highlighting and diagram previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
 * [VS Code extension - syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
 * [Structurizr online DSL editor](https://structurizr.com/help/dsl)
 
