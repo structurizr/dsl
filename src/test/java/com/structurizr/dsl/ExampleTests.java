@@ -166,10 +166,104 @@ class ExampleTests extends AbstractTests {
         assertEquals(20, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getElements().size());
         assertEquals(7, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getRelationships().size());
 
-        assertEquals(10, workspace.getViews().getConfiguration().getStyles().getElements().size());
+        assertEquals(11, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
 
         assertNull(workspace.getViews().getConfiguration().getThemes());
+
+        assertEquals(0, workspace.getDocumentation().getSections().size());
+        assertEquals(0, workspace.getDocumentation().getDecisions().size());
+    }
+
+    @Test
+    void test_bigbankplc_systemlandscape() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/big-bank-plc/system-landscape.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+
+        assertEquals(Location.External, workspace.getModel().getPersonWithName("Personal Banking Customer").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Customer Service Staff").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Back Office Staff").getLocation());
+
+        assertEquals(7, workspace.getModel().getElements().size());
+        assertEquals(3, workspace.getModel().getPeople().size());
+        assertEquals(4, workspace.getModel().getSoftwareSystems().size());
+
+        assertEquals(9, workspace.getModel().getRelationships().size());
+
+        assertEquals(1, workspace.getViews().getSystemLandscapeViews().size());
+        assertEquals(0, workspace.getViews().getSystemContextViews().size());
+        assertEquals(0, workspace.getViews().getContainerViews().size());
+        assertEquals(0, workspace.getViews().getComponentViews().size());
+        assertEquals(0, workspace.getViews().getDynamicViews().size());
+        assertEquals(0, workspace.getViews().getDeploymentViews().size());
+
+        assertEquals(7, workspace.getViews().getSystemLandscapeViews().iterator().next().getElements().size());
+        assertEquals(9, workspace.getViews().getSystemLandscapeViews().iterator().next().getRelationships().size());
+
+        assertEquals(4, workspace.getViews().getConfiguration().getStyles().getElements().size());
+        assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
+
+        assertNull(workspace.getViews().getConfiguration().getThemes());
+    }
+
+    @Test
+    void test_bigbankplc_internetbankingsystem() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/big-bank-plc/internet-banking-system.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+
+        assertEquals(Location.External, workspace.getModel().getPersonWithName("Personal Banking Customer").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Customer Service Staff").getLocation());
+        assertEquals(Location.Internal, workspace.getModel().getPersonWithName("Back Office Staff").getLocation());
+
+        assertEquals(51, workspace.getModel().getElements().size());
+        assertEquals(3, workspace.getModel().getPeople().size());
+        assertEquals(4, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(5, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getContainers().size());
+        assertEquals(6, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getContainerWithName("API Application").getComponents().size());
+        assertEquals(5, workspace.getModel().getDeploymentNodes().size());
+        assertEquals(21, workspace.getModel().getElements().stream().filter(e -> e instanceof DeploymentNode).count());
+        assertEquals(2, workspace.getModel().getElements().stream().filter(e -> e instanceof SoftwareSystemInstance).count());
+        assertEquals(10, workspace.getModel().getElements().stream().filter(e -> e instanceof ContainerInstance).count());
+        assertEquals(0, workspace.getModel().getElements().stream().filter(e -> e instanceof InfrastructureNode).count());
+
+        assertEquals(42, workspace.getModel().getRelationships().size());
+
+        assertEquals(0, workspace.getViews().getSystemLandscapeViews().size());
+        assertEquals(1, workspace.getViews().getSystemContextViews().size());
+        assertEquals(1, workspace.getViews().getContainerViews().size());
+        assertEquals(1, workspace.getViews().getComponentViews().size());
+        assertEquals(1, workspace.getViews().getDynamicViews().size());
+        assertEquals(2, workspace.getViews().getDeploymentViews().size());
+
+        assertEquals(4, workspace.getViews().getSystemContextViews().iterator().next().getElements().size());
+        assertEquals(4, workspace.getViews().getSystemContextViews().iterator().next().getRelationships().size());
+
+        assertEquals(8, workspace.getViews().getContainerViews().iterator().next().getElements().size());
+        assertEquals(10, workspace.getViews().getContainerViews().iterator().next().getRelationships().size());
+
+        assertEquals(11, workspace.getViews().getComponentViews().iterator().next().getElements().size());
+        assertEquals(13, workspace.getViews().getComponentViews().iterator().next().getRelationships().size());
+
+        assertEquals(4, workspace.getViews().getDynamicViews().iterator().next().getElements().size());
+        assertEquals(6, workspace.getViews().getDynamicViews().iterator().next().getRelationships().size());
+
+        assertEquals(13, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getElements().size());
+        assertEquals(4, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("DevelopmentDeployment")).findFirst().get().getRelationships().size());
+
+        assertEquals(20, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getElements().size());
+        assertEquals(7, workspace.getViews().getDeploymentViews().stream().filter(v -> v.getKey().equals("LiveDeployment")).findFirst().get().getRelationships().size());
+
+        assertEquals(11, workspace.getViews().getConfiguration().getStyles().getElements().size());
+        assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
+
+        assertNull(workspace.getViews().getConfiguration().getThemes());
+
+        assertEquals(4, workspace.getDocumentation().getSections().size());
+        assertEquals(1, workspace.getDocumentation().getDecisions().size());
     }
 
     @Test

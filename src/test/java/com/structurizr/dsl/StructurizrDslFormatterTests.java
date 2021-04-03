@@ -167,7 +167,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "                InternetBankingSystem_MobileApp = container \"Mobile App\" \"Provides a limited subset of the Internet banking functionality to customers via their mobile device.\" \"Xamarin\" \"Mobile App\" \n" +
                 "            }\n" +
                 "        }\n" +
-                "        PersonalBankingCustomer = person \"Personal Banking Customer\" \"A customer of the bank, with personal bank accounts.\" \"\" \n" +
+                "        PersonalBankingCustomer = person \"Personal Banking Customer\" \"A customer of the bank, with personal bank accounts.\" \"Customer\" \n" +
                 "        PersonalBankingCustomer -> InternetBankingSystem \"Views account balances, and makes payments using\" \"\" \"\" \n" +
                 "        InternetBankingSystem -> MainframeBankingSystem \"Gets account information from, and makes payments using\" \"\" \"\" \n" +
                 "        InternetBankingSystem -> EmailSystem \"Sends e-mail using\" \"\" \"\" \n" +
@@ -347,7 +347,6 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "        styles {\n" +
                 "            element \"Bank Staff\" {\n" +
                 "                background \"#999999\" \n" +
-                "                color \"#ffffff\" \n" +
                 "            }\n" +
                 "            element \"Component\" {\n" +
                 "                background \"#85bbf0\" \n" +
@@ -356,6 +355,9 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            element \"Container\" {\n" +
                 "                background \"#438dd5\" \n" +
                 "                color \"#ffffff\" \n" +
+                "            }\n" +
+                "            element \"Customer\" {\n" +
+                "                background \"#08427b\" \n" +
                 "            }\n" +
                 "            element \"Database\" {\n" +
                 "                shape \"Cylinder\" \n" +
@@ -372,7 +374,6 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            }\n" +
                 "            element \"Person\" {\n" +
                 "                shape \"Person\" \n" +
-                "                background \"#08427b\" \n" +
                 "                color \"#ffffff\" \n" +
                 "                fontSize \"22\" \n" +
                 "            }\n" +
