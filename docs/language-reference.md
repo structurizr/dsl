@@ -290,6 +290,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [group](#group)
 - [container](#container)
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
@@ -315,6 +316,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [group](#group)
 - [component](#component)
 - [url](#url)
 - [properties](#properties)
