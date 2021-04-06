@@ -474,7 +474,7 @@ The interval is a number of seconds (default 60s), and the timeout is a number o
 
 ### element
 
-The `element` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+The `element` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation).
 
 ```
 element <name> [metadata] [description] [tags] {
@@ -740,7 +740,7 @@ Permitted children:
 
 ### custom view
 
-The `custom` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation, with a paid subscription).
+The `custom` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation).
 
 ```
 custom [key] [title] [description] {
