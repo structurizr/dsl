@@ -22,6 +22,8 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [group](#group)
             - [person](#person)
             - [softwareSystem](#softwareSystem)
+                - [container](#container)
+                    - [component](#component)
             - [deploymentEnvironment](#deploymentEnvironment)
 				- [deploymentGroup](#deploymentGroup)
                 - [deploymentNode](#deploymentNode)
