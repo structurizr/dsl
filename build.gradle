@@ -3,6 +3,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+defaultTasks 'clean', 'compileJava', 'test'
+
 repositories {
     mavenCentral()
 }
