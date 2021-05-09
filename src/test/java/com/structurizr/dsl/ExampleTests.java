@@ -2,13 +2,12 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.model.*;
-import com.structurizr.view.ElementStyle;
-import com.structurizr.view.Shape;
-import com.structurizr.view.SystemContextView;
-import com.structurizr.view.ViewSet;
+import com.structurizr.view.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -356,6 +355,21 @@ class ExampleTests extends AbstractTests {
         } catch (StructurizrDslParserException e) {
             assertEquals("The software system \"softwareSystem\" does not exist at line 8: systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {", e.getMessage());
         }
+    }
+
+    @Test
+    void test_parallel() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/parallel.dsl"));
+
+        assertFalse(parser.getWorkspace().isEmpty());
+        DynamicView view = parser.getWorkspace().getViews().getDynamicViews().iterator().next();
+        List<RelationshipView> relationships = new ArrayList<>(view.getRelationships());
+        assertEquals(4, relationships.size());
+        assertEquals("1", relationships.get(0).getOrder());
+        assertEquals("2", relationships.get(1).getOrder());
+        assertEquals("3", relationships.get(2).getOrder());
+        assertEquals("3", relationships.get(3).getOrder());
     }
 
 }

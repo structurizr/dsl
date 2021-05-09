@@ -2,7 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.view.DynamicView;
 
-final class DynamicViewDslContext extends DslContext {
+class DynamicViewDslContext extends DslContext {
 
     private DynamicView view;
 
