@@ -8,14 +8,14 @@ The following DSL shows an example of how to define a System Context view.
 workspace {
 
     model {
-        user = person "User"
-        softwareSystem = softwareSystem "Software System"
+        u = person "User"
+        s = softwareSystem "Software System"
 
-        user -> softwareSystem "Uses"
+        u -> s "Uses"
     }
 
     views {
-        systemContext softwareSystem {
+        systemContext s {
             include *
             autoLayout
         }
@@ -23,6 +23,10 @@ workspace {
     
 }
 ```
+
+This DSL defines a System Context view for the software system `s`, and `include *` includes all model elements that have a direct relationship with it.
+
+![](1.png)
 
 System Context views can be rendered using the Structurizr cloud service/on-premises installation or exported to a number of other formats via the [Structurizr CLI export command](https://github.com/structurizr/cli/blob/master/docs/export.md).
 
