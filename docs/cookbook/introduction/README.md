@@ -56,6 +56,8 @@ workspace {
 }
 ```
 
+[View this example online](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/introduction/example.dsl)
+
 This text defines a model containing: a user, a software system, two containers, and the relationships between everything. It also then defines two views of this model: one System Context view, and one Container view.
 
 The DSL is a way to define software architecture models and views, but we still need a way to visualise that, and ultimately get some diagrams. We can do this with the [Structurizr CLI](https://github.com/structurizr/cli), another open source project that has a number of features.
