@@ -7,3 +7,4 @@ Creating software architecture diagrams from a textual definition is becoming mo
 1. [Introduction](introduction)
 2. [Workspace](workspace)
 3. [System Context view](system-context-view)
+4. [Container view](container-view)
