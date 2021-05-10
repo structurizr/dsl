@@ -6,6 +6,7 @@ This GitHub repository contains an implementation of the Structurizr DSL - a way
 
 * [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
 * [Language reference](docs/language-reference.md)
+* [Structurizr DSL cookbook](docs/cookbook) (this is a work in progress)
 * [Structurizr DSL demo](https://structurizr.com/dsl)
 
 ## A quick example

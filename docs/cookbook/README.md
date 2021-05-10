@@ -4,6 +4,6 @@ Creating software architecture diagrams from a textual definition is becoming mo
 
 ## Table of contents
 
-1. [Introduction](introduction.md)
-2. [Workspace](workspace.md)
-3. [System Context diagram](system-context-diagram.md)
+1. [Introduction](introduction)
+2. [Workspace](workspace)
+3. [System Context view](system-context-view)
