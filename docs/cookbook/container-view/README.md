@@ -35,4 +35,4 @@ Container views can be rendered using the Structurizr cloud service/on-premises 
 ## Links
 
 - [DSL language reference - container](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#container-view)
-- [Example](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/container/example.dsl)
+- [Example](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/container-view/example.dsl)
