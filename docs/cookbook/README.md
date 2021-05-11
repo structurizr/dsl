@@ -4,7 +4,8 @@ Creating software architecture diagrams from a textual definition is becoming mo
 
 ## Table of contents
 
-1. [Introduction](introduction)
-2. [Workspace](workspace)
-3. [System Context view](system-context-view)
-4. [Container view](container-view)
+- [Introduction](introduction)
+- [Workspace](workspace)
+- [System Context view](system-context-view)
+- [Container view](container-view)
+- [Relationship styles](relationship-styles)
