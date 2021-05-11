@@ -72,6 +72,7 @@ class StructurizrDslTokens {
     static final String RELATIONSHIP_STYLE_FONT_SIZE_TOKEN = "fontSize";
     static final String RELATIONSHIP_STYLE_WIDTH_TOKEN = "width";
     static final String RELATIONSHIP_STYLE_POSITION_TOKEN = "position";
+    static final String THEME_TOKEN = "theme";
     static final String THEMES_TOKEN = "themes";
     static final String CONFIGURATION_TOKEN = "configuration";
     static final String TERMINOLOGY_TOKEN = "terminology";
