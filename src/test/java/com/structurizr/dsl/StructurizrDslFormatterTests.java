@@ -32,7 +32,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         Workspace workspace = parser.getWorkspace();
 
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
-        assertEquals("workspace \"Getting Started\" \"This is a model of my software system.\" {\n" +
+        assertEquals("workspace \"Name\" \"Description\" {\n" +
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
@@ -43,7 +43,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "    }\n" +
                 "\n" +
                 "    views {\n" +
-                "        systemContext SoftwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {\n" +
+                "        systemContext SoftwareSystem \"SoftwareSystem-SystemContext\" \"\" {\n" +
                 "            include User \n" +
                 "            include SoftwareSystem \n" +
                 "            autolayout tb 300 300 \n" +

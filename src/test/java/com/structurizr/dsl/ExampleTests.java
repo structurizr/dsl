@@ -44,9 +44,6 @@ class ExampleTests extends AbstractTests {
         Model model = workspace.getModel();
         ViewSet views = workspace.getViews();
 
-        assertEquals("Getting Started", workspace.getName());
-        assertEquals("This is a model of my software system.", workspace.getDescription());
-
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
         assertEquals("A user of my software system.", user.getDescription());
@@ -63,8 +60,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(1, views.getViews().size());
         assertEquals(1, views.getSystemContextViews().size());
         SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals("SoftwareSystem-SystemContext", view.getKey());
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 

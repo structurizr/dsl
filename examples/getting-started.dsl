@@ -1,4 +1,4 @@
-workspace "Getting Started" "This is a model of my software system." {
+workspace {
 
     model {
         user = person "User" "A user of my software system."
@@ -8,7 +8,7 @@ workspace "Getting Started" "This is a model of my software system." {
     }
 
     views {
-        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
+        systemContext softwareSystem {
             include *
             autoLayout
         }
