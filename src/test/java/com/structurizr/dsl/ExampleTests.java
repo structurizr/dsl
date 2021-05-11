@@ -164,7 +164,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(11, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
 
-        assertNull(workspace.getViews().getConfiguration().getThemes());
+        assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
 
         assertEquals(0, workspace.getDocumentation().getSections().size());
         assertEquals(0, workspace.getDocumentation().getDecisions().size());
@@ -200,7 +200,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(4, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
 
-        assertNull(workspace.getViews().getConfiguration().getThemes());
+        assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
     }
 
     @Test
@@ -255,7 +255,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(11, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
 
-        assertNull(workspace.getViews().getConfiguration().getThemes());
+        assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
 
         assertEquals(4, workspace.getDocumentation().getSections().size());
         assertEquals(1, workspace.getDocumentation().getDecisions().size());
@@ -292,7 +292,7 @@ class ExampleTests extends AbstractTests {
         assertEquals(5, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(4, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
 
-        assertNull(workspace.getViews().getConfiguration().getThemes());
+        assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
     }
 
     @Test
