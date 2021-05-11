@@ -2,7 +2,7 @@
 
 By default all relationships are styled as dashed grey lines.
 
-![](1.png)
+[![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/relationship-styles/example-1.dsl)
 
 ## Styling all relationships
 
@@ -37,9 +37,7 @@ workspace {
 }
 ```
 
-![](2.png)
-
-- [View example online](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/relationship-styles/example-1.dsl)
+[![](example-2.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/relationship-styles/example-2.dsl)
 
 ## Styling individual relationships
 
@@ -79,9 +77,7 @@ workspace {
 }
 ```
 
-![](3.png)
-
-- [View example online](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/relationship-styles/example-1.dsl)
+[![](example-3.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/relationship-styles/example-3.dsl)
 
 ## Notes
 
