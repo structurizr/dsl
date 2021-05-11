@@ -3,12 +3,42 @@ package com.structurizr.dsl;
 import com.structurizr.model.SoftwareSystem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ModelItemParserTests extends AbstractTests {
 
     private ModelItemParser parser = new ModelItemParser();
+
+    @Test
+    void test_parseTags_ThrowsAnException_WhenNoTagsAreSpecified() {
+        try {
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+            ModelItemDslContext context = new SoftwareSystemDslContext(softwareSystem);
+            parser.parseTags(context, tokens("tags"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: tags <tags> [tags]", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTags_AddsTheTags_WhenTagsAreSpecified() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+        ModelItemDslContext context = new SoftwareSystemDslContext(softwareSystem);
+        parser.parseTags(context, tokens("tags", "Tag 1"));
+        assertEquals(3, softwareSystem.getTagsAsSet().size());
+        assertTrue(softwareSystem.getTagsAsSet().contains("Tag 1"));
+
+        parser.parseTags(context, tokens("tags", "Tag 1, Tag 2, Tag 3"));
+        assertEquals(5, softwareSystem.getTagsAsSet().size());
+        assertTrue(softwareSystem.getTagsAsSet().contains("Tag 2"));
+        assertTrue(softwareSystem.getTagsAsSet().contains("Tag 3"));
+
+        parser.parseTags(context, tokens("tags", "Tag 3", "Tag 4", "Tag 5"));
+        assertEquals(7, softwareSystem.getTagsAsSet().size());
+        assertTrue(softwareSystem.getTagsAsSet().contains("Tag 4"));
+        assertTrue(softwareSystem.getTagsAsSet().contains("Tag 5"));
+    }
 
     @Test
     void test_parseUrl_ThrowsAnException_WhenThereAreTooManyTokens() {

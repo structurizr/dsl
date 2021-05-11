@@ -272,6 +272,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         Container container = getContext(ContainerDslContext.class).getContainer();
                         startContext(new ContainerDslContext(container, group));
+                    } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                        new ModelItemParser().parseTags(getContext(ModelItemDslContext.class), tokens);
+
                     } else if (URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
                         new ModelItemParser().parseUrl(getContext(ModelItemDslContext.class), tokens);
 

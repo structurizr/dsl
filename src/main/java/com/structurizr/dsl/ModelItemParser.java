@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 final class ModelItemParser extends AbstractParser {
 
+    private final static int TAGS_INDEX = 1;
+
     private final static int URL_INDEX = 1;
 
     private final static int PROPERTY_NAME_INDEX = 0;
@@ -9,6 +11,18 @@ final class ModelItemParser extends AbstractParser {
 
     private final static int PERSPECTIVE_NAME_INDEX = 0;
     private final static int PERSPECTIVE_DESCRIPTION_INDEX = 1;
+
+    void parseTags(ModelItemDslContext context, Tokens tokens) {
+        // tags <tags> [tags]
+        if (!tokens.includes(TAGS_INDEX)) {
+            throw new RuntimeException("Expected: tags <tags> [tags]");
+        }
+
+        for (int i = TAGS_INDEX; i < tokens.size(); i++) {
+            String tags = tokens.get(i);
+            context.getModelItem().addTags(tags.split(","));
+        }
+    }
 
     void parseUrl(ModelItemDslContext context, Tokens tokens) {
         // url <url>

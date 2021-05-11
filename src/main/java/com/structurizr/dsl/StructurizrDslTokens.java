@@ -14,6 +14,7 @@ class StructurizrDslTokens {
     static final String CONTAINER_TOKEN = "container";
     static final String COMPONENT_TOKEN = "component";
     static final String GROUP_TOKEN = "group";
+    static final String TAGS_TOKEN = "tags";
     static final String URL_TOKEN = "url";
     static final String PROPERTIES_TOKEN = "properties";
     static final String PERSPECTIVES_TOKEN = "perspectives";
