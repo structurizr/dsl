@@ -1,11 +1,13 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
-import com.structurizr.view.*;
+import com.structurizr.util.StringUtils;
+import com.structurizr.view.ComponentView;
+import com.structurizr.view.ContainerView;
+import com.structurizr.view.ElementNotPermittedInViewException;
+import com.structurizr.view.StaticView;
 
 import java.util.Set;
-
-import static com.structurizr.dsl.StructurizrDslExpressions.*;
 
 final class StaticViewContentParser extends ViewContentParser {
 
@@ -39,38 +41,10 @@ final class StaticViewContentParser extends ViewContentParser {
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (token.startsWith(ELEMENT_TAG_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(ELEMENT_TAG_EQUALS_EXPRESSION.length()).split(",");
-                    context.getWorkspace().getModel().getElements().stream().filter(e -> e instanceof StaticStructureElement).forEach(element -> {
-                        if (hasAllTags(element, tags)) {
-                            addElementToView(element, context.getView());
-                        }
-                    });
-                } else if (token.startsWith(ELEMENT_TAG_NOT_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(ELEMENT_TAG_NOT_EQUALS_EXPRESSION.length()).split(",");
-                    context.getWorkspace().getModel().getElements().stream().filter(e -> e instanceof StaticStructureElement).forEach(element -> {
-                        if (!hasAllTags(element, tags)) {
-                            addElementToView(element, context.getView());
-                        }
-                    });
-                } else if (token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(RELATIONSHIP_TAG_EQUALS_EXPRESSION.length()).split(",");
-                    context.getWorkspace().getModel().getRelationships().forEach(relationship -> {
-                        if (view.isElementInView(relationship.getSource()) && view.isElementInView(relationship.getDestination())) {
-                            if (hasAllTags(relationship, tags)) {
-                                view.add(relationship);
-                            }
-                        }
-                    });
-                } else if (token.startsWith(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION.length()).split(",");
-                    context.getWorkspace().getModel().getRelationships().forEach(relationship -> {
-                        if (view.isElementInView(relationship.getSource()) && view.isElementInView(relationship.getDestination())) {
-                            if (!hasAllTags(relationship, tags)) {
-                                view.add(relationship);
-                            }
-                        }
-                    });
+                if (isElementExpression(token)) {
+                    new StaticViewExpressionParser().parseElementExpression(token, context).forEach(e -> addElementToView(e, view, null));
+                } else if (isRelationshipExpression(token)) {
+                    new StaticViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> addRelationshipToView(r, view));
                 } else {
                     // assume the token is an identifier
                     Element element = context.getElement(token);
@@ -80,71 +54,15 @@ final class StaticViewContentParser extends ViewContentParser {
                     }
 
                     if (element != null) {
-                        if (element instanceof CustomElement) {
-                            view.add((CustomElement) element);
-                        } else if (element instanceof Person) {
-                            view.add((Person) element);
-                        } else if (element instanceof SoftwareSystem) {
-                            view.add((SoftwareSystem) element);
-                        } else if (element instanceof Container && (view instanceof ContainerView)) {
-                            ((ContainerView) view).add((Container) element);
-                        } else if (element instanceof Container && (view instanceof ComponentView)) {
-                            ((ComponentView) view).add((Container) element);
-                        } else if (element instanceof Component && (view instanceof ComponentView)) {
-                            ((ComponentView) view).add((Component) element);
-                        } else {
-                            throw new RuntimeException("The element \"" + token + "\" can not be added to this type of view");
-                        }
+                        addElementToView(element, view, token);
                     }
 
                     if (relationship != null) {
-                        view.add(relationship);
+                        addRelationshipToView(relationship, view);
                     }
                 }
             }
         }
-    }
-
-    private void addElementToView(Element element, StaticView view) {
-        try {
-            if (element instanceof Person) {
-                view.add((Person) element);
-            } else if (element instanceof SoftwareSystem) {
-                view.add((SoftwareSystem) element);
-            } else if (element instanceof Container && (view instanceof ContainerView)) {
-                ((ContainerView) view).add((Container) element);
-            } else if (element instanceof Container && (view instanceof ComponentView)) {
-                ((ComponentView) view).add((Container) element);
-            } else if (element instanceof Component && (view instanceof ComponentView)) {
-                ((ComponentView) view).add((Component) element);
-            }
-        } catch (ElementNotPermittedInViewException e) {
-            // ignore
-        }
-    }
-
-    private void removeElementFromView(Element element, StaticView view) {
-        if (element instanceof Person) {
-            view.remove((Person) element);
-        } else if (element instanceof SoftwareSystem) {
-            view.remove((SoftwareSystem) element);
-        } else if (element instanceof Container && (view instanceof ContainerView)) {
-            ((ContainerView) view).remove((Container) element);
-        } else if (element instanceof Container && (view instanceof ComponentView)) {
-            ((ComponentView) view).remove((Container) element);
-        } else if (element instanceof Component && (view instanceof ComponentView)) {
-            ((ComponentView) view).remove((Component) element);
-        }
-    }
-
-    private boolean hasAllTags(ModelItem modelItem, String[] tags) {
-        boolean result = true;
-
-        for (String tag : tags) {
-            result = result && modelItem.hasTag(tag.trim());
-        }
-
-        return result;
     }
 
     void parseExclude(StaticViewDslContext context, Tokens tokens) {
@@ -168,34 +86,10 @@ final class StaticViewContentParser extends ViewContentParser {
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (token.startsWith(ELEMENT_TAG_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(ELEMENT_TAG_EQUALS_EXPRESSION.length()).split(",");
-                    view.getElements().stream().map(ElementView::getElement).forEach(element -> {
-                        if (hasAllTags(element, tags)) {
-                            removeElementFromView(element, context.getView());
-                        }
-                    });
-                } else if (token.startsWith(ELEMENT_TAG_NOT_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(ELEMENT_TAG_NOT_EQUALS_EXPRESSION.length()).split(",");
-                    view.getElements().stream().map(ElementView::getElement).forEach(element -> {
-                        if (!hasAllTags(element, tags)) {
-                            removeElementFromView(element, context.getView());
-                        }
-                    });
-                } else if (token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(RELATIONSHIP_TAG_EQUALS_EXPRESSION.length()).split(",");
-                    view.getRelationships().stream().map(RelationshipView::getRelationship).forEach(relationship -> {
-                        if (hasAllTags(relationship, tags)) {
-                            view.remove(relationship);
-                        }
-                    });
-                } else if (token.startsWith(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION)) {
-                    String[] tags = token.substring(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION.length()).split(",");
-                    view.getRelationships().stream().map(RelationshipView::getRelationship).forEach(relationship -> {
-                        if (!hasAllTags(relationship, tags)) {
-                            view.remove(relationship);
-                        }
-                    });
+                if (isElementExpression(token)) {
+                    new StaticViewExpressionParser().parseElementExpression(token, context).forEach(e -> removeElementFromView(e, view));
+                } else if (isRelationshipExpression(token)) {
+                    new StaticViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> removeRelationshipFromView(r, view));
                 } else {
                     // assume the token is an identifier
                     Element element = context.getElement(token);
@@ -205,29 +99,65 @@ final class StaticViewContentParser extends ViewContentParser {
                     }
 
                     if (element != null) {
-                        if (element instanceof CustomElement) {
-                            view.remove((CustomElement) element);
-                        } else if (element instanceof Person) {
-                            view.remove((Person) element);
-                        } else if (element instanceof SoftwareSystem) {
-                            view.remove((SoftwareSystem) element);
-                        } else if (element instanceof Container && (view instanceof ContainerView)) {
-                            ((ContainerView) view).remove((Container) element);
-                        } else if (element instanceof Container && (view instanceof ComponentView)) {
-                            ((ComponentView) view).remove((Container) element);
-                        } else if (element instanceof Component && (view instanceof ComponentView)) {
-                            ((ComponentView) view).remove((Component) element);
-                        } else {
-                            throw new RuntimeException("The element \"" + token + "\" can not be added to this view");
-                        }
+                        removeElementFromView(element, view);
                     }
 
                     if (relationship != null) {
-                        view.remove(relationship);
+                        removeRelationshipFromView(relationship, view);
                     }
                 }
             }
         }
+    }
+
+    private void addElementToView(Element element, StaticView view, String identifier) {
+        try {
+            if (element instanceof CustomElement) {
+                view.add((CustomElement) element);
+            } else if (element instanceof Person) {
+                view.add((Person) element);
+            } else if (element instanceof SoftwareSystem) {
+                view.add((SoftwareSystem) element);
+            } else if (element instanceof Container && (view instanceof ContainerView)) {
+                ((ContainerView) view).add((Container) element);
+            } else if (element instanceof Container && (view instanceof ComponentView)) {
+                ((ComponentView) view).add((Container) element);
+            } else if (element instanceof Component && (view instanceof ComponentView)) {
+                ((ComponentView) view).add((Component) element);
+            } else {
+                if (!StringUtils.isNullOrEmpty(identifier)) {
+                    throw new RuntimeException("The element \"" + identifier + "\" can not be added to this type of view");
+                }
+            }
+        } catch (ElementNotPermittedInViewException e) {
+            // ignore
+        }
+    }
+
+    private void removeElementFromView(Element element, StaticView view) {
+        if (element instanceof CustomElement) {
+            view.remove((CustomElement) element);
+        } else if (element instanceof Person) {
+            view.remove((Person) element);
+        } else if (element instanceof SoftwareSystem) {
+            view.remove((SoftwareSystem) element);
+        } else if (element instanceof Container && (view instanceof ContainerView)) {
+            ((ContainerView) view).remove((Container) element);
+        } else if (element instanceof Container && (view instanceof ComponentView)) {
+            ((ComponentView) view).remove((Container) element);
+        } else if (element instanceof Component && (view instanceof ComponentView)) {
+            ((ComponentView) view).remove((Component) element);
+        }
+    }
+
+    private void addRelationshipToView(Relationship relationship, StaticView view) {
+        if (view.isElementInView(relationship.getSource()) && view.isElementInView(relationship.getDestination())) {
+            view.add(relationship);
+        }
+    }
+
+    private void removeRelationshipFromView(Relationship relationship, StaticView view) {
+        view.remove(relationship);
     }
 
 }

@@ -707,7 +707,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        parser.parseExclude(context, tokens("include", "element.tag!=Tag 1"));
+        parser.parseExclude(context, tokens("exclude", "element.tag!=Tag 1"));
 
         assertEquals(1, view.getElements().size());
         assertNotNull(view.getElementView(user));
@@ -730,7 +730,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        parser.parseExclude(context, tokens("include", "element.tag!=Tag 1,Tag 2"));
+        parser.parseExclude(context, tokens("exclude", "element.tag!=Tag 1,Tag 2"));
 
         assertEquals(1, view.getElements().size());
         assertNotNull(view.getElementView(user));

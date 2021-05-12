@@ -10,9 +10,28 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.structurizr.dsl.StructurizrDslExpressions.*;
+
 abstract class ViewContentParser extends AbstractParser {
 
-    private static final String WILDCARD = "*";
+    protected static final String WILDCARD = "*";
+
+    protected boolean isElementExpression(String token) {
+        token = token.toLowerCase();
+
+        return
+                token.startsWith(ELEMENT_TYPE_EQUALS_EXPRESSION.toLowerCase()) ||
+                token.startsWith(ELEMENT_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
+                token.startsWith(ELEMENT_TAG_NOT_EQUALS_EXPRESSION.toLowerCase());
+    }
+
+    protected boolean isRelationshipExpression(String token) {
+        token = token.toLowerCase();
+
+        return
+                token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
+                token.startsWith(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION.toLowerCase());
+    }
 
     protected Set<Relationship> findRelationships(ViewDslContext context, String sourceElementIdentifier, String destinationElementIdentifier) {
         Set<Element> sourceElements = new HashSet<>();

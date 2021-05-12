@@ -490,4 +490,146 @@ class DeploymentViewContentParserTests extends AbstractTests {
         assertEquals(0, view.getRelationships().size());
     }
 
+    @Test
+    void test_parseInclude_AddsAllDeploymentNodesWithTheSpecifiedTag() {
+        SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
+        SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
+        ss1.uses(ss2, "Uses");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        DeploymentNode dn1 = dn.addDeploymentNode("DN 1");
+        dn1.addTags("Tag 1");
+        SoftwareSystemInstance ss1Instance = dn1.add(ss1);
+        DeploymentNode dn2 = dn.addDeploymentNode("DN 2");
+        SoftwareSystemInstance ss2Instance = dn2.add(ss2);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(3, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(dn1));
+        assertNotNull(view.getElementView(ss1Instance));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllInfrastructureNodesWithTheSpecifiedTag() {
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        InfrastructureNode in1 = dn.addInfrastructureNode("Infrastructure Node 1");
+        in1.addTags("Tag 1");
+        InfrastructureNode in2 = dn.addInfrastructureNode("Infrastructure Node 2");
+        in2.addTags("Tag 2");
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(in1));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllInstancesOfSoftwareSystemsWithTheSpecifiedTag() {
+        SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
+        ss1.addTags("Tag 1");
+        SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
+        ss2.addTags("Tag 2");
+        ss1.uses(ss2, "Uses");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        SoftwareSystemInstance ss1Instance = dn.add(ss1);
+        SoftwareSystemInstance ss2Instance = dn.add(ss2);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(ss1Instance));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllSoftwareSystemInstancesWithTheSpecifiedTag() {
+        SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
+        SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
+        ss1.uses(ss2, "Uses");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        SoftwareSystemInstance ss1Instance = dn.add(ss1);
+        ss1Instance.addTags("Tag 1");
+        SoftwareSystemInstance ss2Instance = dn.add(ss2);
+        ss2Instance.addTags("Tag 2");
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(ss1Instance));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllInstancesOfContainersWithTheSpecifiedTag() {
+        SoftwareSystem ss = model.addSoftwareSystem("SS", "Description");
+        Container c1 = ss.addContainer("Container 1");
+        c1.addTags("Tag 1");
+        Container c2 = ss.addContainer("Container 2");
+        c2.addTags("Tag 2");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        ContainerInstance c1Instance = dn.add(c1);
+        ContainerInstance c2Instance = dn.add(c2);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(c1Instance));
+    }
+
+    @Test
+    void test_parseInclude_AddsAllContainerInstancesWithTheSpecifiedTag() {
+        SoftwareSystem ss = model.addSoftwareSystem("SS", "Description");
+        Container c1 = ss.addContainer("Container 1");
+        Container c2 = ss.addContainer("Container 2");
+
+        DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
+        ContainerInstance c1Instance = dn.add(c1);
+        c1Instance.addTags("Tag 1");
+        ContainerInstance c2Instance = dn.add(c2);
+        c2Instance.addTags("Tag 2");
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        view.setEnvironment("Live");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        parser.parseInclude(context, tokens("include", "element.tag==Tag 1"));
+
+        assertEquals(2, view.getElements().size());
+        assertNotNull(view.getElementView(dn));
+        assertNotNull(view.getElementView(c1Instance));
+    }
+
 }
