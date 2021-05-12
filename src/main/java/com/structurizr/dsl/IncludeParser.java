@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 
 final class IncludeParser extends AbstractParser {
 
-    private static final String GRAMMAR = "!include <file>";
+    private static final String GRAMMAR = "!include <file|url>";
 
     private static final int FILE_INDEX = 1;
 
     void parse(IncludedDslContext context, Tokens tokens) {
-        // !include <file>
+        // !include <file|url>
 
         if (tokens.hasMoreThan(FILE_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
@@ -22,23 +24,31 @@ final class IncludeParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        String filename = tokens.get(FILE_INDEX);
-        if (context.getParentFile() != null) {
-            File file = new File(context.getParentFile().getParent(), filename);
+        String source = tokens.get(FILE_INDEX);
+        if (source.startsWith("https://")) {
+            String dsl = readFromUrl(source);
+            List<String> lines = Arrays.asList(dsl.split("\n"));
+            context.setLines(lines);
+            context.setFile(context.getFile());
+        } else {
+            if (context.getParentFile() != null) {
+                File file = new File(context.getParentFile().getParent(), source);
 
-            try {
-                if (!file.exists()) {
-                    throw new RuntimeException(file.getCanonicalPath() + " could not be found");
+                try {
+                    if (!file.exists()) {
+                        throw new RuntimeException(file.getCanonicalPath() + " could not be found");
+                    }
+
+                    if (file.isDirectory()) {
+                        throw new RuntimeException(file.getCanonicalPath() + " should be a single file");
+                    }
+
+                    List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+                    context.setLines(lines);
+                    context.setFile(file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage());
                 }
-
-                if (file.isDirectory()) {
-                    throw new RuntimeException(file.getCanonicalPath() + " should be a single file");
-                }
-
-                context.setLines(Files.readAllLines(file.toPath(), StandardCharsets.UTF_8));
-                context.setFile(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
             }
         }
     }

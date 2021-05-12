@@ -15,7 +15,7 @@ class IncludeParserTests extends AbstractTests {
             parser.parse(new IncludedDslContext(null), tokens("!include", "file", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: !include <file>", e.getMessage());
+            assertEquals("Too many tokens, expected: !include <file|url>", e.getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ class IncludeParserTests extends AbstractTests {
             parser.parse(new IncludedDslContext(null), tokens("!include"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: !include <file>", e.getMessage());
+            assertEquals("Expected: !include <file|url>", e.getMessage());
         }
     }
 
