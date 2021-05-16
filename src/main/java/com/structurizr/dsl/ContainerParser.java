@@ -23,20 +23,27 @@ final class ContainerParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
+        SoftwareSystem softwareSystem = context.getSoftwareSystem();
+        Container container = null;
         String name = tokens.get(NAME_INDEX);
 
-        String description = "";
+        if (context.isExtendingWorkspace()) {
+            container = softwareSystem.getContainerWithName(name);
+        }
+
+        if (container == null) {
+            container = softwareSystem.addContainer(name);
+        }
+
         if (tokens.includes(DESCRIPTION_INDEX)) {
-            description = tokens.get(DESCRIPTION_INDEX);
+            String description = tokens.get(DESCRIPTION_INDEX);
+            container.setDescription(description);
         }
 
-        String technology = "";
         if (tokens.includes(TECHNOLOGY_INDEX)) {
-            technology = tokens.get(TECHNOLOGY_INDEX);
+            String technology = tokens.get(TECHNOLOGY_INDEX);
+            container.setTechnology(technology);
         }
-
-        SoftwareSystem softwareSystem = context.getSoftwareSystem();
-        Container container = softwareSystem.addContainer(name, description, technology);
 
         if (tokens.includes(TAGS_INDEX)) {
             String tags = tokens.get(TAGS_INDEX);

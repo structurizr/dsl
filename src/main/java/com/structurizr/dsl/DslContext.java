@@ -13,9 +13,10 @@ abstract class DslContext {
     static final String CONTEXT_END_TOKEN = "}";
 
     private Workspace workspace;
+    private boolean extendingWorkspace;
 
-    private Map<String, Element> elements = new HashMap<>();
-    private Map<String, Relationship> relationships = new HashMap<>();
+    protected Map<String, Element> elements = new HashMap<>();
+    protected Map<String, Relationship> relationships = new HashMap<>();
 
     Workspace getWorkspace() {
         return workspace;
@@ -23,6 +24,14 @@ abstract class DslContext {
 
     void setWorkspace(Workspace workspace) {
         this.workspace = workspace;
+    }
+
+    boolean isExtendingWorkspace() {
+        return extendingWorkspace;
+    }
+
+    void setExtendingWorkspace(boolean extendingWorkspace) {
+        this.extendingWorkspace = extendingWorkspace;
     }
 
     Element getElement(String identifier) {

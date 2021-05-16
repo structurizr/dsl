@@ -22,14 +22,22 @@ final class SoftwareSystemParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
+        SoftwareSystem softwareSystem = null;
         String name = tokens.get(NAME_INDEX);
+
+        if (context.isExtendingWorkspace()) {
+            softwareSystem = context.getWorkspace().getModel().getSoftwareSystemWithName(name);
+        }
+
+        if (softwareSystem == null) {
+            softwareSystem = context.getWorkspace().getModel().addSoftwareSystem(name);
+        }
 
         String description = "";
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);
+            softwareSystem.setDescription(description);
         }
-
-        SoftwareSystem softwareSystem = context.getWorkspace().getModel().addSoftwareSystem(name, description);
 
         if (tokens.includes(TAGS_INDEX)) {
             String tags = tokens.get(TAGS_INDEX);

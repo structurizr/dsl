@@ -35,6 +35,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private List<String> dslSourceLines = new ArrayList<>();
     private Workspace workspace;
+    private boolean extendingWorkspace = false;
 
     private boolean restricted = false;
 
@@ -46,9 +47,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         elements = new HashMap<>();
         relationships = new HashMap<>();
         constants = new HashMap<>();
-
-        workspace = new Workspace("Name", "Description");
-        workspace.getModel().setImpliedRelationshipsStrategy(new CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy());
     }
 
     /**
@@ -82,6 +80,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         return buf.toString();
     }
 
+    void parse(DslParserContext context, File path) throws StructurizrDslParserException {
+        parse(path);
+
+        context.copyFrom(elements, relationships);
+    }
+
     /**
      * Parses the specified Structurizr DSL file(s), adding the parsed content to the workspace.
      * If "path" represents a single file, that single file will be parsed.
@@ -106,6 +110,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         } catch (IOException e) {
             throw new StructurizrDslParserException(e.getMessage());
         }
+    }
+
+    void parse(DslParserContext context, String dsl) throws StructurizrDslParserException {
+        parse(dsl);
+
+        context.copyFrom(elements, relationships);
     }
 
     /**
@@ -195,6 +205,31 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         registerIdentifier(identifier, relationship);
 
+                    } else if (REF_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
+                        Element element = new RefParser().parse(getContext(), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            if (element instanceof Person) {
+                                startContext(new PersonDslContext((Person)element));
+                            } else if (element instanceof SoftwareSystem) {
+                                startContext(new SoftwareSystemDslContext((SoftwareSystem)element));
+                            } else if (element instanceof Container) {
+                                startContext(new ContainerDslContext((Container) element));
+                            } else if (element instanceof Component) {
+                                startContext(new ComponentDslContext((Component)element));
+                            } else if (element instanceof DeploymentNode) {
+                                startContext(new DeploymentNodeDslContext((DeploymentNode)element));
+                            } else if (element instanceof InfrastructureNode) {
+                                startContext(new InfrastructureNodeDslContext((InfrastructureNode)element));
+                            } else if (element instanceof SoftwareSystemInstance) {
+                                startContext(new SoftwareSystemInstanceDslContext((SoftwareSystemInstance)element));
+                            } else if (element instanceof ContainerInstance) {
+                                startContext(new ContainerInstanceDslContext((ContainerInstance)element));
+                            }
+                        }
+
+                        registerIdentifier(identifier, element);
+
                     } else if (CUSTOM_ELEMENT_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
                         CustomElement customElement = new CustomElementParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());
 
@@ -281,11 +316,21 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new ModelItemParser().parsePerspective(getContext(ModelItemPerspectivesDslContext.class), tokens);
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
-                        new WorkspaceParser().parse(workspace, tokens.withoutContextStartToken());
-                        startContext(new WorkspaceDslContext());
+                        DslParserContext dslParserContext = new DslParserContext(file, restricted);
+                        dslParserContext.setElements(elements);
+                        dslParserContext.setRelationships(relationships);
 
+                        workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
+                        extendingWorkspace = !workspace.getModel().isEmpty();
+                        startContext(new WorkspaceDslContext());
                     } else if (IMPLIED_RELATIONSHIPS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
                         new ImpliedRelationshipsParser().parse(getContext(), tokens);
+
+                    } else if (NAME_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        new WorkspaceParser().parseName(getContext(), tokens);
+
+                    } else if (DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        new WorkspaceParser().parseDescription(getContext(), tokens);
 
                     } else if (MODEL_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         startContext(new ModelDslContext());
@@ -655,6 +700,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         context.setWorkspace(workspace);
         context.setElements(elements);
         context.setRelationships(relationships);
+        context.setExtendingWorkspace(extendingWorkspace);
         contextStack.push(context);
     }
 

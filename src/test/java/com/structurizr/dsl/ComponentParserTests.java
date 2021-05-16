@@ -42,7 +42,7 @@ class ComponentParserTests extends AbstractTests {
         Component component = container.getComponentWithName("Name");
         assertNotNull(component);
         assertEquals("", component.getDescription());
-        assertEquals("", component.getTechnology());
+        assertEquals(null, component.getTechnology());
         assertEquals("Element,Component", component.getTags());
     }
 
@@ -57,7 +57,7 @@ class ComponentParserTests extends AbstractTests {
         Component component = container.getComponentWithName("Name");
         assertNotNull(component);
         assertEquals("Description", component.getDescription());
-        assertEquals("", component.getTechnology());
+        assertEquals(null, component.getTechnology());
         assertEquals("Element,Component", component.getTags());
     }
 

@@ -23,20 +23,27 @@ final class ComponentParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
+        Container container = context.getContainer();
+        Component component = null;
         String name = tokens.get(NAME_INDEX);
 
-        String description = "";
+        if (context.isExtendingWorkspace()) {
+            component = container.getComponentWithName(name);
+        }
+
+        if (component == null) {
+            component = container.addComponent(name);
+        }
+
         if (tokens.includes(DESCRIPTION_INDEX)) {
-            description = tokens.get(DESCRIPTION_INDEX);
+            String description = tokens.get(DESCRIPTION_INDEX);
+            component.setDescription(description);
         }
 
-        String technology = "";
         if (tokens.includes(TECHNOLOGY_INDEX)) {
-            technology = tokens.get(TECHNOLOGY_INDEX);
+            String technology = tokens.get(TECHNOLOGY_INDEX);
+            component.setTechnology(technology);
         }
-
-        Container container = context.getContainer();
-        Component component = container.addComponent(name, description, technology);
 
         if (tokens.includes(TAGS_INDEX)) {
             String tags = tokens.get(TAGS_INDEX);

@@ -459,6 +459,244 @@ class ExampleTests extends AbstractTests {
     }
 
     @Test
+    void test_extendWorkspaceFromJsonFile() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/extend/extend-workspace-from-json-file.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals("A new name", workspace.getName());
+        assertEquals("A new description", workspace.getDescription());
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system.", softwareSystem.getDescription());
+
+        assertEquals(1, softwareSystem.getContainers().size());
+        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+
+        assertEquals(1, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals("SystemContext", view.getKey());
+        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
+        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
+        assertEquals(Shape.Person, personStyle.getShape());
+        assertEquals("#08427b", personStyle.getBackground());
+        assertEquals("#ffffff", personStyle.getColor());
+
+        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
+        assertEquals("#1168bd", softwareSystemStyle.getBackground());
+        assertEquals("#ffffff", softwareSystemStyle.getColor());
+    }
+
+    @Test
+    void test_extendWorkspaceFromJsonUrl() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/extend/extend-workspace-from-json-url.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals("A new name", workspace.getName());
+        assertEquals("A new description", workspace.getDescription());
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system.", softwareSystem.getDescription());
+
+        assertEquals(1, softwareSystem.getContainers().size());
+        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+
+        assertEquals(1, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals("SystemContext", view.getKey());
+        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
+        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
+        assertEquals(Shape.Person, personStyle.getShape());
+        assertEquals("#08427b", personStyle.getBackground());
+        assertEquals("#ffffff", personStyle.getColor());
+
+        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
+        assertEquals("#1168bd", softwareSystemStyle.getBackground());
+        assertEquals("#ffffff", softwareSystemStyle.getColor());
+    }
+
+    @Test
+    void test_extendWorkspaceFromJsonFile_WhenRunningInRestrictedMode() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.setRestricted(true);
+
+        try {
+            // this will fail, because the model import will be ignored
+            parser.parse(new File("examples/extend/extend-workspace-from-json-file.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Cannot import workspace from a file when running in restricted mode at line 1: workspace extends workspace.json {", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_extendWorkspaceFromDslFile() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/extend/extend-workspace-from-dsl-file.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals("A new name", workspace.getName());
+        assertEquals("A new description", workspace.getDescription());
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system.", softwareSystem.getDescription());
+
+        assertEquals(1, softwareSystem.getContainers().size());
+        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+
+        assertEquals(1, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals("SystemContext", view.getKey());
+        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
+        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
+        assertEquals(Shape.Person, personStyle.getShape());
+        assertEquals("#08427b", personStyle.getBackground());
+        assertEquals("#ffffff", personStyle.getColor());
+
+        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
+        assertEquals("#1168bd", softwareSystemStyle.getBackground());
+        assertEquals("#ffffff", softwareSystemStyle.getColor());
+    }
+
+    @Test
+    void test_extendWorkspaceFromDslUrl() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/extend/extend-workspace-from-dsl-url.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals("A new name", workspace.getName());
+        assertEquals("A new description", workspace.getDescription());
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system.", softwareSystem.getDescription());
+
+        assertEquals(1, softwareSystem.getContainers().size());
+        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+
+        assertEquals(1, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals("SystemContext", view.getKey());
+        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
+        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
+        assertEquals(Shape.Person, personStyle.getShape());
+        assertEquals("#08427b", personStyle.getBackground());
+        assertEquals("#ffffff", personStyle.getColor());
+
+        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
+        assertEquals("#1168bd", softwareSystemStyle.getBackground());
+        assertEquals("#ffffff", softwareSystemStyle.getColor());
+    }
+
+    @Test
+    void test_extendWorkspaceFromDslFile_WhenRunningInRestrictedMode() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.setRestricted(true);
+
+        try {
+            // this will fail, because the model import will be ignored
+            parser.parse(new File("examples/extend/extend-workspace-from-dsl-file.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Cannot import workspace from a file when running in restricted mode at line 1: workspace extends workspace.dsl {", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_extendWorkspaceFromDslFiles() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/extend/4.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals(3, model.getPeople().size());
+        assertEquals(1, views.getViews().size());
+    }
+
+    @Test
+    void test_ref() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/ref.dsl"));
+
+        Element element = parser.getWorkspace().getModel().getElementWithCanonicalName("InfrastructureNode://Live/Amazon Web Services/US-East-1/New deployment node/New infrastructure node");
+        assertEquals("New infrastructure node", element.getName());
+    }
+
+    @Test
     void test_parallel() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/parallel.dsl"));

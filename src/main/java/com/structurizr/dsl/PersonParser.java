@@ -22,14 +22,22 @@ final class PersonParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
+        Person person = null;
         String name = tokens.get(NAME_INDEX);
+
+        if (context.isExtendingWorkspace()) {
+            person = context.getWorkspace().getModel().getPersonWithName(name);
+        }
+
+        if (person == null) {
+            person = context.getWorkspace().getModel().addPerson(name);
+        }
 
         String description = "";
         if (tokens.includes(DESCRIPTION_INDEX)) {
             description = tokens.get(DESCRIPTION_INDEX);
+            person.setDescription(description);
         }
-
-        Person person = context.getWorkspace().getModel().addPerson(name, description);
 
         if (tokens.includes(TAGS_INDEX)) {
             String tags = tokens.get(TAGS_INDEX);
