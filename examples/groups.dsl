@@ -1,51 +1,44 @@
 workspace {
 
     model {
-        group "Consumers - Group 1" {
-            consumerA = softwareSystem "Consumer A"
-            consumerB = softwareSystem "Consumer B"
-        }
-        group "Consumers - Group 2" {
-            consumerC = softwareSystem "Consumer C"
-            consumerD = softwareSystem "Consumer D"
-        }
-
-        softwareSystem = softwareSystem "Software System" "My software system." {
-            group "Service 1" {
-                service1Database = container "Service 1 Database"
+        softwareSystem = softwareSystem "Software System" {
+            service1 = group "Service 1" {
                 service1Api = container "Service 1 API"
+                service1Database = container "Service 1 Database"
+
+                service1Api -> service1Database "Reads from and writes to"
             }
-            group "Service 2" {
-                service2Database = container "Service 2 Database"
+            service2 = group "Service 2" {
                 service2Api = container "Service 2 API"
+                service2Database = container "Service 2 Database"
+
+                service2Api -> service2Database "Reads from and writes to"
             }
         }
 
-        consumerA -> service1Api "Uses"
-        consumerB -> service1Api "Uses"
-        consumerC -> service1Api "Uses"
-        consumerD -> service1Api "Uses"
+        live = deploymentEnvironment "Live" {
+            deploymentNode "Server 1" {
+                containerInstance service1Api
+                containerInstance service1Database
+            }
+            deploymentNode "Server 2" {
+                containerInstance service2Api
+                containerInstance service2Database
+            }
+        }
 
-        service1Api -> service1Database "Reads from and writes to"
-        service2Api -> service2Database "Reads from and writes to"
         service1Api -> service2Api "Uses"
     }
 
     views {
-        systemContext softwareSystem "SystemContext" {
-            include *
-            autoLayout
-        }
-
-        container softwareSystem "Containers" {
-            include *
+        container softwareSystem {
+            include service1 service2
             autolayout
         }
 
-        styles {
-            element "Person" {
-                shape person
-            }
+        deployment softwareSystem live {
+            include service1 service2
+            autolayout
         }
     }
     
