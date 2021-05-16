@@ -44,7 +44,7 @@ final class CustomElementParser extends AbstractParser {
         }
 
         if (context.hasGroup()) {
-            customElement.setGroup(context.getGroup());
+            customElement.setGroup(context.getGroup().getName());
         }
 
         return customElement;

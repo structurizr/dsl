@@ -41,7 +41,8 @@ final class PersonParser extends AbstractParser {
         }
 
         if (context.hasGroup()) {
-            person.setGroup(context.getGroup());
+            person.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(person);
         }
 
         return person;

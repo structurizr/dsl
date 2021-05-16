@@ -41,7 +41,8 @@ final class SoftwareSystemParser extends AbstractParser {
         }
 
         if (context.hasGroup()) {
-            softwareSystem.setGroup(context.getGroup());
+            softwareSystem.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(softwareSystem);
         }
 
         return softwareSystem;

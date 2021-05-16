@@ -2,8 +2,7 @@ package com.structurizr.dsl;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GroupParserTests extends AbstractTests {
 
@@ -31,8 +30,9 @@ class GroupParserTests extends AbstractTests {
 
     @Test
     void test_parse() {
-        String service1 = parser.parse(tokens("group", "Group 1"));
-        assertEquals("Group 1", service1);
+        ElementGroup group = parser.parse(tokens("group", "Group 1"));
+        assertEquals("Group 1", group.getName());
+        assertTrue(group.getElements().isEmpty());
     }
 
 }

@@ -54,7 +54,14 @@ final class StaticViewContentParser extends ViewContentParser {
                     }
 
                     if (element != null) {
-                        addElementToView(element, view, token);
+                        if (element instanceof ElementGroup) {
+                            ElementGroup group = (ElementGroup)element;
+                            for (Element e : group.getElements()) {
+                                addElementToView(e, view, null);
+                            }
+                        } else {
+                            addElementToView(element, view, token);
+                        }
                     }
 
                     if (relationship != null) {

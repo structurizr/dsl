@@ -11,7 +11,7 @@ final class SoftwareSystemDslContext extends ModelItemDslContext {
         this(softwareSystem, null);
     }
 
-    SoftwareSystemDslContext(SoftwareSystem softwareSystem, String group) {
+    SoftwareSystemDslContext(SoftwareSystem softwareSystem, ElementGroup group) {
         super(group);
 
         this.softwareSystem = softwareSystem;

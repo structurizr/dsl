@@ -11,7 +11,7 @@ final class ContainerDslContext extends ModelItemDslContext {
         this(container, null);
     }
 
-    ContainerDslContext(Container container, String group) {
+    ContainerDslContext(Container container, ElementGroup group) {
         super(group);
 
         this.container = container;

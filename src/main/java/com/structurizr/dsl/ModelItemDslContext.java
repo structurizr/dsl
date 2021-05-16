@@ -8,7 +8,7 @@ abstract class ModelItemDslContext extends GroupableDslContext {
         super();
     }
 
-    ModelItemDslContext(String group) {
+    ModelItemDslContext(ElementGroup group) {
         super(group);
     }
 

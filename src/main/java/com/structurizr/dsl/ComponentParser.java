@@ -44,7 +44,8 @@ final class ComponentParser extends AbstractParser {
         }
 
         if (context.hasGroup()) {
-            component.setGroup(context.getGroup());
+            component.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(component);
         }
 
         return component;

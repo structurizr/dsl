@@ -6,7 +6,7 @@ class GroupParser {
 
     private final static int NAME_INDEX = 1;
 
-    String parse(Tokens tokens) {
+    ElementGroup parse(Tokens tokens) {
         // group <name>
 
         if (tokens.hasMoreThan(NAME_INDEX)) {
@@ -17,7 +17,7 @@ class GroupParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        return tokens.get(NAME_INDEX);
+        return new ElementGroup(tokens.get(NAME_INDEX));
     }
 
 }

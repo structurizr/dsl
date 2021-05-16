@@ -6,7 +6,7 @@ final class EnterpriseDslContext extends GroupableDslContext {
         super();
     }
 
-    EnterpriseDslContext(String group) {
+    EnterpriseDslContext(ElementGroup group) {
         super(group);
     }
 

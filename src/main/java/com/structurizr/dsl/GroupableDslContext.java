@@ -1,24 +1,22 @@
 package com.structurizr.dsl;
 
-import com.structurizr.util.StringUtils;
-
 abstract class GroupableDslContext extends DslContext {
 
-    private String group;
+    private ElementGroup group;
 
     GroupableDslContext() {
         this(null);
     }
 
-    GroupableDslContext(String group) {
+    GroupableDslContext(ElementGroup group) {
         this.group = group;
     }
 
     boolean hasGroup() {
-        return !StringUtils.isNullOrEmpty(group);
+        return group != null;
     }
 
-    String getGroup() {
+    ElementGroup getGroup() {
         return group;
     }
 

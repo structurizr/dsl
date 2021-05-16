@@ -473,4 +473,16 @@ class ExampleTests extends AbstractTests {
         assertEquals("3", relationships.get(3).getOrder());
     }
 
+    @Test
+    void test_groups() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/groups.dsl"));
+
+        ContainerView containerView = parser.getWorkspace().getViews().getContainerViews().iterator().next();
+        assertEquals(4, containerView.getElements().size());
+
+        DeploymentView deploymentView = parser.getWorkspace().getViews().getDeploymentViews().iterator().next();
+        assertEquals(6, deploymentView.getElements().size());
+    }
+
 }

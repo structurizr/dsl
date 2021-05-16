@@ -8,7 +8,7 @@ final class ModelDslContext extends GroupableDslContext {
         super(null);
     }
 
-    ModelDslContext(String group) {
+    ModelDslContext(ElementGroup group) {
         super(group);
     }
 

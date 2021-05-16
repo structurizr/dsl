@@ -156,7 +156,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     String identifier = null;
                     if (tokens.size() > 3 && ASSIGNMENT_OPERATOR_TOKEN.equals(tokens.get(1))) {
                         identifier = tokens.get(0).toLowerCase();
-                        validateIdentifier(identifier);
+                        validateIdentifierName(identifier);
 
                         tokens = new Tokens(listOfTokens.subList(2, listOfTokens.size()));
                     }
@@ -184,9 +184,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new RelationshipDslContext(relationship));
                         }
 
-                        if (identifier != null) {
-                            relationships.put(identifier, relationship);
-                        }
+                        registerIdentifier(identifier, relationship);
 
                     } else if (tokens.size() >= 2 && RELATIONSHIP_TOKEN.equals(tokens.get(0)) && (inContext(CustomElementDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
                         Relationship relationship = new ImplicitRelationshipParser().parse(getContext(ModelItemDslContext.class), tokens.withoutContextStartToken());
@@ -195,9 +193,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new RelationshipDslContext(relationship));
                         }
 
-                        if (identifier != null) {
-                            relationships.put(identifier, relationship);
-                        }
+                        registerIdentifier(identifier, relationship);
 
                     } else if (CUSTOM_ELEMENT_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
                         CustomElement customElement = new CustomElementParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());
@@ -206,9 +202,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new CustomElementDslContext(customElement));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, customElement);
-                        }
+                        registerIdentifier(identifier, customElement);
 
                     } else if (PERSON_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class))) {
                         Person person = new PersonParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());
@@ -217,9 +211,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new PersonDslContext(person));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, person);
-                        }
+                        registerIdentifier(identifier, person);
 
                     } else if (SOFTWARE_SYSTEM_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class))) {
                         SoftwareSystem softwareSystem = new SoftwareSystemParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());
@@ -228,9 +220,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new SoftwareSystemDslContext(softwareSystem));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, softwareSystem);
-                        }
+                        registerIdentifier(identifier, softwareSystem);
 
                     } else if (CONTAINER_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
                         Container container = new ContainerParser().parse(getContext(SoftwareSystemDslContext.class), tokens.withoutContextStartToken());
@@ -239,9 +229,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new ContainerDslContext(container));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, container);
-                        }
+                        registerIdentifier(identifier, container);
 
                     } else if (COMPONENT_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
                         Component component = new ComponentParser().parse(getContext(ContainerDslContext.class), tokens.withoutContextStartToken());
@@ -250,28 +238,30 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new ComponentDslContext(component));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, component);
-                        }
+                        registerIdentifier(identifier, component);
 
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class) && !getContext(ModelDslContext.class).hasGroup()) {
-                        String group = new GroupParser().parse(tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         startContext(new ModelDslContext(group));
+                        registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(EnterpriseDslContext.class) && !getContext(EnterpriseDslContext.class).hasGroup()) {
-                        String group = new GroupParser().parse(tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         startContext(new EnterpriseDslContext(group));
+                        registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class) && !getContext(SoftwareSystemDslContext.class).hasGroup()) {
-                        String group = new GroupParser().parse(tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         SoftwareSystem softwareSystem = getContext(SoftwareSystemDslContext.class).getSoftwareSystem();
                         startContext(new SoftwareSystemDslContext(softwareSystem, group));
+                        registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class) && !getContext(ContainerDslContext.class).hasGroup()) {
-                        String group = new GroupParser().parse(tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         Container container = getContext(ContainerDslContext.class).getContainer();
                         startContext(new ContainerDslContext(container, group));
+                        registerIdentifier(identifier, group);
                     } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
                         new ModelItemParser().parseTags(getContext(ModelItemDslContext.class), tokens);
 
@@ -395,18 +385,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         String environment = new DeploymentEnvironmentParser().parse(tokens.withoutContextStartToken());
                         startContext(new DeploymentEnvironmentDslContext(environment));
 
-                        if (identifier != null) {
-                            DeploymentEnvironment deploymentEnvironment = new DeploymentEnvironment(environment);
-                            elements.put(identifier, deploymentEnvironment);
-                        }
+                        registerIdentifier(identifier, new DeploymentEnvironment(environment));
 
                     } else if (DEPLOYMENT_GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentEnvironmentDslContext.class)) {
                         String group = new DeploymentGroupParser().parse(tokens.withoutContextStartToken());
 
-                        if (identifier != null) {
-                            DeploymentGroup deploymentGroup = new DeploymentGroup(group);
-                            elements.put(identifier, deploymentGroup);
-                        }
+                        registerIdentifier(identifier, new DeploymentGroup(group));
 
                     } else if (DEPLOYMENT_NODE_TOKEN.equalsIgnoreCase(firstToken) && (inContext(DeploymentEnvironmentDslContext.class) || inContext(DeploymentNodeDslContext.class))) {
                         DeploymentNode deploymentNode = new DeploymentNodeParser().parse(getContext(), tokens.withoutContextStartToken());
@@ -415,9 +399,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new DeploymentNodeDslContext(deploymentNode));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, deploymentNode);
-                        }
+                        registerIdentifier(identifier, deploymentNode);
                     } else if (INFRASTRUCTURE_NODE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
                         InfrastructureNode infrastructureNode = new InfrastructureNodeParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
 
@@ -425,9 +407,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new InfrastructureNodeDslContext(infrastructureNode));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, infrastructureNode);
-                        }
+                        registerIdentifier(identifier, infrastructureNode);
 
                     } else if (SOFTWARE_SYSTEM_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
                         SoftwareSystemInstance softwareSystemInstance = new SoftwareSystemInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
@@ -436,9 +416,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new SoftwareSystemInstanceDslContext(softwareSystemInstance));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, softwareSystemInstance);
-                        }
+                        registerIdentifier(identifier, softwareSystemInstance);
 
                     } else if (CONTAINER_INSTANCE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
                         ContainerInstance containerInstance = new ContainerInstanceParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
@@ -447,9 +425,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             startContext(new ContainerInstanceDslContext(containerInstance));
                         }
 
-                        if (identifier != null) {
-                            elements.put(identifier, containerInstance);
-                        }
+                        registerIdentifier(identifier, containerInstance);
 
                     } else if (HEALTH_CHECK_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticStructureElementInstanceDslContext.class)) {
                         new HealthCheckParser().parse(getContext(StaticStructureElementInstanceDslContext.class), tokens.withoutContextStartToken());
@@ -707,13 +683,35 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         }
     }
 
-    private void validateIdentifier(String identifier) {
-        if (elements.containsKey(identifier) || relationships.containsKey(identifier)) {
-            throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
-        }
-
+    private void validateIdentifierName(String identifier) {
         if (!IDENTIFIER_PATTERN.matcher(identifier).matches()) {
             throw new RuntimeException("Identifiers can only contain the following characters: a-zA-Z_0-9");
+        }
+    }
+
+    private void registerIdentifier(String identifier, Element element) {
+        if (!StringUtils.isNullOrEmpty(identifier)) {
+            Element e = elements.get(identifier);
+            Relationship r = relationships.get(identifier);
+
+            if ((e == null && r == null) || (e == element)) {
+                elements.put(identifier, element);
+            } else {
+                throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
+            }
+        }
+    }
+
+    private void registerIdentifier(String identifier, Relationship relationship) {
+        if (!StringUtils.isNullOrEmpty(identifier)) {
+            Element e = elements.get(identifier);
+            Relationship r = relationships.get(identifier);
+
+            if ((e == null && r == null) || (r == relationship)) {
+                relationships.put(identifier, relationship);
+            } else {
+                throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
+            }
         }
     }
 
