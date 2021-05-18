@@ -20,7 +20,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
                     }
 
                     deploymentNode "Amazon RDS" "" "" "Amazon Web Services - RDS" {
-                        deploymentNode "MySQL" "" "" "Amazon Web Services - RDS_MySQL_instance" {
+                        deploymentNode "MySQL" "" "" "Amazon Web Services - RDS MySQL instance" {
                             containerInstance database
                         }
                     }
