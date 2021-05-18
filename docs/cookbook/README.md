@@ -9,4 +9,5 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [System Context view](system-context-view)
 - [Container view](container-view)
 - [Component view](component-view)
+- [Element styles](element-styles)
 - [Relationship styles](relationship-styles)
