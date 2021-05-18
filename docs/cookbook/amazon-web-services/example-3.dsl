@@ -55,6 +55,14 @@ workspace {
             autoLayout lr
         }
 
+        styles {
+            element "Element" {
+                shape RoundedBox
+                background #ffffff
+                color #000000
+            }
+        }
+
         theme https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json
     }
     
