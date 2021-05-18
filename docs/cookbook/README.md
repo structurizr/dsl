@@ -9,6 +9,7 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [System Context view](system-context-view)
 - [Container view](container-view)
 - [Component view](component-view)
+- [Dynamic view](dynamic-view)
 - [Deployment view](deployment-view)
 - [Amazon Web Services](amazon-web-services)
 - [Element styles](element-styles)
