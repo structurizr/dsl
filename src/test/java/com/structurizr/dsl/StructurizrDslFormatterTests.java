@@ -90,7 +90,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "                    Live_AmazonWebServices_USEast1_Route53 = infrastructureNode \"Route 53\" \"\" \"\" \"Amazon Web Services - Route 53\" \n" +
                 "                    Live_AmazonWebServices_USEast1_ElasticLoadBalancer = infrastructureNode \"Elastic Load Balancer\" \"\" \"\" \"Amazon Web Services - Elastic Load Balancing\" \n" +
                 "                    Live_AmazonWebServices_USEast1_AmazonRDS = deploymentNode \"Amazon RDS\" \"\" \"\" \"Amazon Web Services - RDS\" {\n" +
-                "                        Live_AmazonWebServices_USEast1_AmazonRDS_MySQL = deploymentNode \"MySQL\" \"\" \"\" \"Amazon Web Services - RDS_MySQL_instance\" {\n" +
+                "                        Live_AmazonWebServices_USEast1_AmazonRDS_MySQL = deploymentNode \"MySQL\" \"\" \"\" \"Amazon Web Services - RDS MySQL instance\" {\n" +
                 "                            Live_AmazonWebServices_USEast1_AmazonRDS_MySQL_Database_1 = containerInstance SpringPetClinic_Database \"\" \n" +
                 "                        }\n" +
                 "                    }\n" +
