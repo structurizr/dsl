@@ -10,5 +10,6 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [Container view](container-view)
 - [Component view](component-view)
 - [Deployment view](deployment-view)
+- [Amazon Web Services](amazon-web-services)
 - [Element styles](element-styles)
 - [Relationship styles](relationship-styles)
