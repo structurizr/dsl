@@ -18,7 +18,7 @@ workspace {
     views {
         component webapp {
             include *
-            autoLayout
+            autoLayout lr
         }
     }
     

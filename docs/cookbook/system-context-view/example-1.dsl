@@ -10,7 +10,7 @@ workspace {
     views {
         systemContext s {
             include *
-            autoLayout
+            autoLayout lr
         }
     }
     

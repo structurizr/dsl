@@ -14,7 +14,7 @@ workspace {
     views {
         container s {
             include *
-            autoLayout
+            autoLayout lr
         }
     }
     

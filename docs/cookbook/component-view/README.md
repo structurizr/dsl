@@ -23,7 +23,7 @@ workspace {
     views {
         component webapp {
             include *
-            autoLayout
+            autoLayout lr
         }
     }
     
@@ -32,7 +32,7 @@ workspace {
 
 This DSL defines a component view for the container `webapp`, and `include *` includes the default set of model elements for the view.
 
-[![](1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/component-view/1.dsl)
+[![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/component-view/example-1.dsl)
 
 Component views can be rendered using the Structurizr cloud service/on-premises installation or exported to a number of other formats via the [Structurizr CLI export command](https://github.com/structurizr/cli/blob/master/docs/export.md).
 

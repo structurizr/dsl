@@ -19,4 +19,4 @@ A workspace can be given a name and description, although these are only used by
 ## Links
 
 - [DSL language reference - workspace](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#workspace)
-- [Example](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace/example.dsl)
+- [Example](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace/example-1.dsl)
