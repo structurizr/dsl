@@ -101,8 +101,10 @@ class ExampleTests extends AbstractTests {
         assertEquals(0, workspace.getViews().getDynamicViews().size());
         assertEquals(1, workspace.getViews().getDeploymentViews().size());
 
-        assertEquals(10, workspace.getViews().getDeploymentViews().iterator().next().getElements().size());
-        assertEquals(3, workspace.getViews().getDeploymentViews().iterator().next().getRelationships().size());
+        DeploymentView deploymentView = workspace.getViews().getDeploymentViews().iterator().next();
+        assertEquals(10, deploymentView.getElements().size());
+        assertEquals(3, deploymentView.getRelationships().size());
+        assertEquals(4, deploymentView.getAnimations().size());
 
         assertEquals(3, workspace.getViews().getConfiguration().getStyles().getElements().size());
         assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());

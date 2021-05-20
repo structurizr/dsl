@@ -21,7 +21,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
 
                     deploymentNode "Amazon RDS" "" "" "Amazon Web Services - RDS" {
                         deploymentNode "MySQL" "" "" "Amazon Web Services - RDS MySQL instance" {
-                            containerInstance database
+                            databaseInstance = containerInstance database
                         }
                     }
 
@@ -37,6 +37,13 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
         deployment springPetClinic "Live" "AmazonWebServicesDeployment" {
             include *
             autolayout lr
+
+            animation {
+                route53
+                elb
+                webApplicationInstance
+                databaseInstance
+            }
         }
 
         styles {

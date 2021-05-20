@@ -3,6 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.model.ContainerInstance;
 import com.structurizr.model.Element;
 import com.structurizr.model.InfrastructureNode;
+import com.structurizr.model.StaticStructureElementInstance;
 import com.structurizr.view.DeploymentView;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ final class DeploymentViewAnimationStepParser extends AbstractParser {
     }
 
     void parse(DslContext context, DeploymentView view, Tokens tokens, int startIndex) {
-        List<ContainerInstance> containerInstances = new ArrayList<>();
+        List<StaticStructureElementInstance> staticStructureElementInstances = new ArrayList<>();
         List<InfrastructureNode> infrastructureNodes = new ArrayList<>();
 
         for (int i = startIndex; i < tokens.size(); i++) {
@@ -42,8 +43,8 @@ final class DeploymentViewAnimationStepParser extends AbstractParser {
                 throw new RuntimeException("The element \"" + identifier + "\" does not exist");
             }
 
-            if (element instanceof ContainerInstance) {
-                containerInstances.add((ContainerInstance)element);
+            if (element instanceof StaticStructureElementInstance) {
+                staticStructureElementInstances.add((StaticStructureElementInstance)element);
             }
 
             if (element instanceof InfrastructureNode) {
@@ -51,8 +52,8 @@ final class DeploymentViewAnimationStepParser extends AbstractParser {
             }
         }
 
-        if (!containerInstances.isEmpty()) {
-            view.addAnimation(containerInstances.toArray(new ContainerInstance[0]), infrastructureNodes.toArray(new InfrastructureNode[0]));
+        if (!(staticStructureElementInstances.isEmpty() && infrastructureNodes.isEmpty())) {
+            view.addAnimation(staticStructureElementInstances.toArray(new StaticStructureElementInstance[0]), infrastructureNodes.toArray(new InfrastructureNode[0]));
         }
     }
 
