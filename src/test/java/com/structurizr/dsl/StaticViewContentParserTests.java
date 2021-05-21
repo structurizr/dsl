@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
+import com.structurizr.view.ContainerView;
 import com.structurizr.view.SystemContextView;
 import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseInclude(new SystemLandscapeViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier|expression> [identifier|expression...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: include <*|identifier|expression> [identifier|expression...]", iae.getMessage());
         }
     }
 
@@ -217,31 +218,6 @@ class StaticViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseInclude_IncludesTheSpecifiedRelationship_WhenARelationshipExpressionIsSpecified() {
-        Person user = model.addPerson("User", "Description");
-        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
-        Relationship relationship = user.uses(softwareSystem, "Uses");
-
-        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
-        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
-        context.setWorkspace(workspace);
-
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
-
-        view.add(user);
-        view.add(softwareSystem);
-        view.remove(relationship);
-        assertEquals(2, view.getElements().size());
-        assertEquals(0, view.getRelationships().size());
-
-        parser.parseInclude(context, tokens("include", "user", "->", "softwareSystem"));
-        assertEquals(1, view.getRelationships().size());
-    }
-
-    @Test
     void test_parseExclude_ThrowsAnException_WhenTheNoElementsAreSpecified() {
         SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
@@ -251,7 +227,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseExclude(context, tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: exclude <identifier|expression> [identifier|expression...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: exclude <identifier|expression> [identifier|expression...]", iae.getMessage());
         }
     }
 
@@ -333,35 +309,11 @@ class StaticViewContentParserTests extends AbstractTests {
             SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
             context.setWorkspace(workspace);
 
-            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==user && relationship.destination==softwareSystem"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"user\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipSourceElementDoesNotExistInTheView() {
-        try {
-            Person user = model.addPerson("User", "Description");
-            SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
-            user.uses(softwareSystem, "Uses");
-
-            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
-            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("user", user);
-            elements.put("softwaresystem", softwareSystem);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "user", "->", "destination"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"user\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -379,36 +331,11 @@ class StaticViewContentParserTests extends AbstractTests {
             elements.put("user", user);
             context.setElements(elements);
 
-            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==user && relationship.destination==softwareSystem"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"softwareSystem\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipDestinationElementDoesNotExistInTheView() {
-        try {
-            Person user = model.addPerson("User", "Description");
-            SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
-            user.uses(softwareSystem, "Uses");
-
-            SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
-            view.add(user);
-            SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("user", user);
-            elements.put("softwaresystem", softwareSystem);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"softwareSystem\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -431,7 +358,7 @@ class StaticViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "user", "->", "softwareSystem"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==user && relationship.destination==softwareSystem"));
         assertEquals(0, view.getRelationships().size());
     }
 
@@ -455,7 +382,7 @@ class StaticViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "user", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==user"));
         assertEquals(0, view.getRelationships().size());
     }
 
@@ -479,7 +406,7 @@ class StaticViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "softwareSystem"));
+        parser.parseExclude(context, tokens("exclude", "relationship.destination==softwareSystem"));
         assertEquals(0, view.getRelationships().size());
     }
 
@@ -503,7 +430,7 @@ class StaticViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship==*"));
         assertEquals(0, view.getRelationships().size());
     }
 

@@ -2,70 +2,38 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
-import com.structurizr.view.*;
+import com.structurizr.view.DeploymentView;
+import com.structurizr.view.ElementNotPermittedInViewException;
+import com.structurizr.view.RelationshipView;
+import com.structurizr.view.View;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 final class DeploymentViewContentParser extends ViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
-    private static final int RELATIONSHIP_IDENTIFIER_INDEX = 2;
-
-    private static final String RELATIONSHIP = "->";
 
     void parseInclude(DeploymentViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: include <*|identifier> [identifier...]");
         }
 
         DeploymentView view = context.getView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // include <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                view.add(relationship);
-            }
-        } else if (tokens.contains(WILDCARD)) {
-            // include *
+        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
+            // include * or include element==*
             view.addDefaultElements();
         } else {
             // include <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (isElementExpression(token)) {
-                    new DeploymentViewExpressionParser().parseElementExpression(token, context).forEach(e -> addElementToView(e, view, null));
-                } else if (isRelationshipExpression(token)) {
-                    new DeploymentViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> addRelationshipToView(r, view));
+                if (isExpression(token)) {
+                    new DeploymentViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
                 } else {
-                    // assume the token is an identifier
-                    Element element = context.getElement(token);
-                    Relationship relationship = context.getRelationship(token);
-                    if (element == null && relationship == null) {
-                        throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
-                    }
-
-                    if (element != null) {
-                        if (element instanceof ElementGroup) {
-                            ElementGroup group = (ElementGroup)element;
-                            for (Element e : group.getElements()) {
-                                addElementToView(e, view, null);
-                            }
-                        } else {
-                            addElementToView(element, view, token);
-                        }
-                    }
-
-                    if (relationship != null) {
-                        addRelationshipToView(relationship, view);
-                    }
+                    new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
                 }
             }
         }
@@ -73,46 +41,34 @@ final class DeploymentViewContentParser extends ViewContentParser {
 
     void parseExclude(DeploymentViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: exclude <identifier> [identifier...]");
         }
 
         DeploymentView view = context.getView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // exclude <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                view.remove(relationship);
+        if (tokens.contains(RELATIONSHIP_WILDCARD)) {
+            for (RelationshipView relationshipView : view.getRelationships()) {
+                removeRelationshipFromView(relationshipView.getRelationship(), view);
             }
         } else {
             // exclude <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (isElementExpression(token)) {
-                    new DeploymentViewExpressionParser().parseElementExpression(token, context).forEach(e -> removeElementFromView(e, view));
-                } else if (isRelationshipExpression(token)) {
-                    new DeploymentViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> removeRelationshipFromView(r, view));
+                if (isExpression(token)) {
+                    new DeploymentViewExpressionParser().parseExpression(token, context).forEach(e -> removeModelItemFromView(e, view));
                 } else {
-                    // assume the token is an identifier
-                    Element element = context.getElement(token);
-                    Relationship relationship = context.getRelationship(token);
-                    if (element == null && relationship == null) {
-                        throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
-                    }
-
-                    if (element != null) {
-                        removeElementFromView(element, view);
-                    }
-
-                    if (relationship != null) {
-                        removeRelationshipFromView(relationship, view);
-                    }
+                    new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
                 }
             }
+        }
+    }
+
+    private void addModelItemToView(ModelItem modelItem, DeploymentView view, String identifier) {
+        if (modelItem instanceof Element) {
+            addElementToView((Element)modelItem, view, identifier);
+        } else {
+            addRelationshipToView((Relationship)modelItem, view);
         }
     }
 
@@ -141,6 +97,14 @@ final class DeploymentViewContentParser extends ViewContentParser {
             }
         } catch (ElementNotPermittedInViewException e) {
             // ignore
+        }
+    }
+
+    private void removeModelItemFromView(ModelItem modelItem, DeploymentView view) {
+        if (modelItem instanceof Element) {
+            removeElementFromView((Element)modelItem, view);
+        } else {
+            removeRelationshipFromView((Relationship)modelItem, view);
         }
     }
 
@@ -186,7 +150,8 @@ final class DeploymentViewContentParser extends ViewContentParser {
         }
     }
 
-    private void removeRelationshipFromView(Relationship relationship, DeploymentView view) {
+    @Override
+    protected void removeRelationshipFromView(Relationship relationship, View view) {
         // remove the specified relationship
         view.remove(relationship);
 
@@ -195,67 +160,6 @@ final class DeploymentViewContentParser extends ViewContentParser {
         for (Relationship r : replicatedRelationshipsInView) {
             view.remove(r);
         }
-    }
-
-    private Set<Relationship> findRelationships(DeploymentViewDslContext context, String sourceElementIdentifier, String destinationElementIdentifier) {
-        DeploymentView view = context.getView();
-        Set<Element> sourceElements = new HashSet<>();
-        Set<Element> destinationElements = new HashSet<>();
-        Set<Relationship> relationships = new HashSet<>();
-
-        if (sourceElementIdentifier.equals(WILDCARD)) {
-            sourceElements.addAll(view.getElements().stream().map(ElementView::getElement).collect(Collectors.toSet()));
-        } else {
-            Element sourceElement = context.getElement(sourceElementIdentifier);
-            if (sourceElement == null) {
-                throw new RuntimeException("The element \"" + sourceElementIdentifier + "\" does not exist");
-            }
-
-            if (view.isElementInView(sourceElement)) {
-                sourceElements.add(sourceElement);
-            } else {
-                // the element itself might not be in the view, but perhaps an "instance" is
-                if (sourceElement instanceof SoftwareSystem || sourceElement instanceof Container) {
-                    sourceElements.addAll(view.getElements().stream().map(ElementView::getElement).filter(e -> e instanceof StaticStructureElementInstance).map(e -> (StaticStructureElementInstance)e).filter(e -> e.getElement() == sourceElement).collect(Collectors.toSet()));
-                }
-            }
-
-            if (sourceElements.isEmpty()) {
-                throw new RuntimeException("The element \"" + sourceElementIdentifier + "\" does not exist in the view");
-            }
-        }
-
-        if (destinationElementIdentifier.equals(WILDCARD)) {
-            destinationElements.addAll(view.getElements().stream().map(ElementView::getElement).collect(Collectors.toSet()));
-        } else {
-            Element destinationElement = context.getElement(destinationElementIdentifier);
-            if (destinationElement == null) {
-                throw new RuntimeException("The element \"" + destinationElementIdentifier + "\" does not exist");
-            }
-
-            if (view.isElementInView(destinationElement)) {
-                destinationElements.add(destinationElement);
-            } else {
-                // the element itself might not be in the view, but perhaps an "instance" is
-                if (destinationElement instanceof SoftwareSystem || destinationElement instanceof Container) {
-                    destinationElements.addAll(view.getElements().stream().map(ElementView::getElement).filter(e -> e instanceof StaticStructureElementInstance).map(e -> (StaticStructureElementInstance)e).filter(e -> e.getElement() == destinationElement).collect(Collectors.toSet()));
-                }
-            }
-
-            if (destinationElements.isEmpty()) {
-                throw new RuntimeException("The element \"" + destinationElementIdentifier + "\" does not exist in the view");
-            }
-        }
-
-        for (Element sourceElement : sourceElements) {
-            for (Relationship relationship : sourceElement.getRelationships()) {
-                if (destinationElements.contains(relationship.getDestination())) {
-                    relationships.add(relationship);
-                }
-            }
-        }
-
-        return relationships;
     }
 
 }

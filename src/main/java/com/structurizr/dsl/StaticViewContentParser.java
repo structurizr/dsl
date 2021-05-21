@@ -2,71 +2,33 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
-import com.structurizr.view.ComponentView;
-import com.structurizr.view.ContainerView;
-import com.structurizr.view.ElementNotPermittedInViewException;
-import com.structurizr.view.StaticView;
+import com.structurizr.view.*;
 
 import java.util.Set;
 
 final class StaticViewContentParser extends ViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
-    private static final int RELATIONSHIP_IDENTIFIER_INDEX = 2;
-
-    private static final String WILDCARD = "*";
-    private static final String RELATIONSHIP = "->";
 
     void parseInclude(StaticViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier|expression> [identifier|expression...] or include <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: include <*|identifier|expression> [identifier|expression...]");
         }
 
         StaticView view = context.getView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // include <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                context.getView().add(relationship);
-            }
-        } else if (tokens.contains(WILDCARD)) {
-            // include *
+        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
+            // include * or include element==*
             view.addDefaultElements();
         } else {
             // include <identifier|expression> [identifier|expression...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (isElementExpression(token)) {
-                    new StaticViewExpressionParser().parseElementExpression(token, context).forEach(e -> addElementToView(e, view, null));
-                } else if (isRelationshipExpression(token)) {
-                    new StaticViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> addRelationshipToView(r, view));
+                if (isExpression(token)) {
+                    new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
                 } else {
-                    // assume the token is an identifier
-                    Element element = context.getElement(token);
-                    Relationship relationship = context.getRelationship(token);
-                    if (element == null && relationship == null) {
-                        throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
-                    }
-
-                    if (element != null) {
-                        if (element instanceof ElementGroup) {
-                            ElementGroup group = (ElementGroup)element;
-                            for (Element e : group.getElements()) {
-                                addElementToView(e, view, null);
-                            }
-                        } else {
-                            addElementToView(element, view, token);
-                        }
-                    }
-
-                    if (relationship != null) {
-                        addRelationshipToView(relationship, view);
-                    }
+                    new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
                 }
             }
         }
@@ -74,46 +36,34 @@ final class StaticViewContentParser extends ViewContentParser {
 
     void parseExclude(StaticViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: exclude <identifier|expression> [identifier|expression...] or exclude <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: exclude <identifier|expression> [identifier|expression...]");
         }
 
         StaticView view = context.getView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // exclude <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                context.getView().remove(relationship);
+        if (tokens.contains(RELATIONSHIP_WILDCARD)) {
+            for (RelationshipView relationshipView : view.getRelationships()) {
+                removeRelationshipFromView(relationshipView.getRelationship(), view);
             }
         } else {
             // exclude <identifier|expression> [identifier|expression...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
                 String token = tokens.get(i);
 
-                if (isElementExpression(token)) {
-                    new StaticViewExpressionParser().parseElementExpression(token, context).forEach(e -> removeElementFromView(e, view));
-                } else if (isRelationshipExpression(token)) {
-                    new StaticViewExpressionParser().parseRelationshipExpression(token, context).forEach(r -> removeRelationshipFromView(r, view));
+                if (isExpression(token)) {
+                    new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
                 } else {
-                    // assume the token is an identifier
-                    Element element = context.getElement(token);
-                    Relationship relationship = context.getRelationship(token);
-                    if (element == null && relationship == null) {
-                        throw new RuntimeException("The element/relationship \"" + token + "\" does not exist");
-                    }
-
-                    if (element != null) {
-                        removeElementFromView(element, view);
-                    }
-
-                    if (relationship != null) {
-                        removeRelationshipFromView(relationship, view);
-                    }
+                    new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
                 }
             }
+        }
+    }
+
+    private void addModelItemToView(ModelItem modelItem, StaticView view, String identifier) {
+        if (modelItem instanceof Element) {
+            addElementToView((Element)modelItem, view, identifier);
+        } else {
+            addRelationshipToView((Relationship)modelItem, view);
         }
     }
 
@@ -141,6 +91,14 @@ final class StaticViewContentParser extends ViewContentParser {
         }
     }
 
+    private void removeModelItemFromView(ModelItem modelItem, StaticView view) {
+        if (modelItem instanceof Element) {
+            removeElementFromView((Element)modelItem, view);
+        } else {
+            removeRelationshipFromView((Relationship)modelItem, view);
+        }
+    }
+
     private void removeElementFromView(Element element, StaticView view) {
         if (element instanceof CustomElement) {
             view.remove((CustomElement) element);
@@ -161,10 +119,6 @@ final class StaticViewContentParser extends ViewContentParser {
         if (view.isElementInView(relationship.getSource()) && view.isElementInView(relationship.getDestination())) {
             view.add(relationship);
         }
-    }
-
-    private void removeRelationshipFromView(Relationship relationship, StaticView view) {
-        view.remove(relationship);
     }
 
 }

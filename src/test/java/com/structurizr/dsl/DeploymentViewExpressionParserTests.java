@@ -12,19 +12,9 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
     private DeploymentViewExpressionParser parser = new DeploymentViewExpressionParser();
 
     @Test
-    void test_parseElementExpression_ThrowsAnException_WhenAnUnsupportedExpressionIsSpecified() {
+    void test_parseExpression_ThrowsAnException_WhenElementTypeIsNotSupported() {
         try {
-            parser.parseElementExpression("element.name==Name", null);
-            fail();
-        } catch (RuntimeException iae) {
-            assertEquals("Unsupported expression \"element.name==Name\"", iae.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseElementExpression_ThrowsAnException_WhenElementTypeIsNotSupported() {
-        try {
-            parser.parseElementExpression("element.type==Component", null);
+            parser.parseExpression("element.type==Component", null);
             fail();
         } catch (RuntimeException iae) {
             assertEquals("The element type of \"Component\" is not valid for this view", iae.getMessage());
@@ -32,7 +22,7 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsDeploymentNode() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsDeploymentNode() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -46,13 +36,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==DeploymentNode", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==DeploymentNode", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(deploymentNode));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsInfrastructureNode() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsInfrastructureNode() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -66,13 +56,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==InfrastructureNode", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==InfrastructureNode", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(infrastructureNode));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsSoftwareSystem() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsSoftwareSystem() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -86,13 +76,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==SoftwareSystem", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==SoftwareSystem", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(softwareSystem));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsSoftwareSystemInstance() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsSoftwareSystemInstance() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -106,13 +96,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==SoftwareSystemInstance", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==SoftwareSystemInstance", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(softwareSystemInstance));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsContainer() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsContainer() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -126,13 +116,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==Container", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==Container", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(container));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementTypeEqualsContainerInstance() {
+    void test_parseExpression_ReturnsElements_WhenElementTypeEqualsContainerInstance() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -146,13 +136,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.type==ContainerInstance", context);
+        Set<ModelItem> elements = parser.parseExpression("element.type==ContainerInstance", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(containerInstance));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementHasTag() {
+    void test_parseExpression_ReturnsElements_WhenElementHasTag() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -166,13 +156,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.tag==Infrastructure Node", context);
+        Set<ModelItem> elements = parser.parseExpression("element.tag==Infrastructure Node", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(infrastructureNode));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenElementDoesNotHaveTag() {
+    void test_parseExpression_ReturnsElements_WhenElementDoesNotHaveTag() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -186,13 +176,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.tag!=Infrastructure Node", context);
+        Set<ModelItem> elements = parser.parseExpression("element.tag!=Infrastructure Node", context);
         assertEquals(7, elements.size());
         assertFalse(elements.contains(infrastructureNode));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenBooleanAndUsed() {
+    void test_parseExpression_ReturnsElements_WhenBooleanAndUsed() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -201,13 +191,13 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.tag==Element && element.type==Container", context);
+        Set<ModelItem> elements = parser.parseExpression("element.tag==Element && element.type==Container", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(container));
     }
 
     @Test
-    void test_parseElementExpression_ReturnsElements_WhenBooleanOrUsed() {
+    void test_parseExpression_ReturnsElements_WhenBooleanOrUsed() {
         Person user = model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         Container container = softwareSystem.addContainer("Container");
@@ -221,7 +211,7 @@ class DeploymentViewExpressionParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Set<Element> elements = parser.parseElementExpression("element.tag==Software System Instance || element.type==ContainerInstance", context);
+        Set<ModelItem> elements = parser.parseExpression("element.tag==Software System Instance || element.type==ContainerInstance", context);
         assertEquals(2, elements.size());
         assertTrue(elements.contains(softwareSystemInstance));
         assertTrue(elements.contains(containerInstance));

@@ -1,107 +1,107 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.*;
-import com.structurizr.view.*;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.structurizr.model.CustomElement;
+import com.structurizr.model.Element;
+import com.structurizr.model.ModelItem;
+import com.structurizr.model.Relationship;
+import com.structurizr.util.StringUtils;
+import com.structurizr.view.CustomView;
+import com.structurizr.view.ElementNotPermittedInViewException;
+import com.structurizr.view.RelationshipView;
 
 final class CustomViewContentParser extends ViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
-    private static final int RELATIONSHIP_IDENTIFIER_INDEX = 2;
-
-    private static final String WILDCARD = "*";
-    private static final String RELATIONSHIP = "->";
 
     void parseInclude(CustomViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: include <*|identifier> [identifier...]");
         }
 
         CustomView view = context.getCustomView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // include <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                view.add(relationship);
-            }
-        } else if (tokens.contains(WILDCARD)) {
-            // include *
+        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
+            // include * or include element==*
             for (CustomElement element : context.getWorkspace().getModel().getCustomElements()) {
                 view.add(element);
             }
         } else {
             // include <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String identifier = tokens.get(i);
+                String token = tokens.get(i);
 
-                Element element = context.getElement(identifier);
-                Relationship relationship = context.getRelationship(identifier);
-                if (element == null && relationship == null) {
-                    throw new RuntimeException("The element/relationship \"" + identifier + "\" does not exist");
-                }
-
-                if (element != null) {
-                    if (element instanceof CustomElement) {
-                        view.add((CustomElement) element);
-                    } else {
-                        throw new RuntimeException("The element \"" + identifier + "\" can not be added to this type of view");
-                    }
-                }
-
-                if (relationship != null) {
-                    view.add(relationship);
+                if (isExpression(token)) {
+                    new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
+                } else {
+                    new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
                 }
             }
         }
-
     }
 
     void parseExclude(CustomViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>");
+            throw new RuntimeException("Expected: exclude <identifier> [identifier...]");
         }
 
         CustomView view = context.getCustomView();
 
-        if (tokens.size() == 4 && tokens.get(RELATIONSHIP_IDENTIFIER_INDEX).equals(RELATIONSHIP)) {
-            // exclude <*|identifier> -> <*|identifier>
-            String sourceElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX - 1);
-            String destinationElementIdentifier = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX + 1);
-
-            Set<Relationship> relationships = findRelationships(context, sourceElementIdentifier, destinationElementIdentifier);
-            for (Relationship relationship : relationships) {
-                view.remove(relationship);
+        if (tokens.contains(RELATIONSHIP_WILDCARD)) {
+            for (RelationshipView relationshipView : view.getRelationships()) {
+                removeRelationshipFromView(relationshipView.getRelationship(), view);
             }
         } else {
             // exclude <identifier> [identifier...]
             for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String identifier = tokens.get(i);
-
-                Element element = context.getElement(identifier);
-                Relationship relationship = context.getRelationship(identifier);
-                if (element == null && relationship == null) {
-                    throw new RuntimeException("The element/relationship \"" + identifier + "\" does not exist");
-                }
-
-                if (element != null) {
-                    if (element instanceof CustomElement) {
-                        view.remove((CustomElement) element);
-                    } else {
-                        throw new RuntimeException("The element \"" + identifier + "\" can not be added to this view");
-                    }
-                }
-
-                if (relationship != null) {
-                    view.remove(relationship);
+                String token = tokens.get(i);
+                if (isExpression(token)) {
+                    new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                } else {
+                    new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
                 }
             }
+        }
+    }
+
+    private void addModelItemToView(ModelItem modelItem, CustomView view, String identifier) {
+        if (modelItem instanceof Element) {
+            addElementToView((Element)modelItem, view, identifier);
+        } else {
+            addRelationshipToView((Relationship)modelItem, view);
+        }
+    }
+
+    private void addElementToView(Element element, CustomView view, String identifier) {
+        try {
+            if (element instanceof CustomElement) {
+                view.add((CustomElement) element);
+            } else {
+                if (!StringUtils.isNullOrEmpty(identifier)) {
+                    throw new RuntimeException("The element \"" + identifier + "\" can not be added to this type of view");
+                }
+            }
+        } catch (ElementNotPermittedInViewException e) {
+            // ignore
+        }
+    }
+
+    private void removeModelItemFromView(ModelItem modelItem, CustomView view) {
+        if (modelItem instanceof Element) {
+            removeElementFromView((Element)modelItem, view);
+        } else {
+            removeRelationshipFromView((Relationship)modelItem, view);
+        }
+    }
+
+    private void removeElementFromView(Element element, CustomView view) {
+        if (element instanceof CustomElement) {
+            view.remove((CustomElement) element);
+        }
+    }
+
+    private void addRelationshipToView(Relationship relationship, CustomView view) {
+        if (view.isElementInView(relationship.getSource()) && view.isElementInView(relationship.getDestination())) {
+            view.add(relationship);
         }
     }
 

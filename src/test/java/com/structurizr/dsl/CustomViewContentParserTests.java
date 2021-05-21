@@ -19,7 +19,7 @@ class CustomViewContentParserTests extends AbstractTests {
             parser.parseInclude(new CustomViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: include <*|identifier> [identifier...]", iae.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ class CustomViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(0, view.getRelationships().size());
 
-        parser.parseInclude(context, tokens("include", "box1", "->", "box2"));
+        parser.parseInclude(context, tokens("include", "relationship.source==box1 && relationship.destination==box2"));
         assertEquals(1, view.getRelationships().size());
     }
 
@@ -150,7 +150,7 @@ class CustomViewContentParserTests extends AbstractTests {
             parser.parseExclude(context, tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: exclude <identifier> [identifier...]", iae.getMessage());
         }
     }
 
@@ -227,32 +227,11 @@ class CustomViewContentParserTests extends AbstractTests {
             CustomViewDslContext context = new CustomViewDslContext(view);
             context.setWorkspace(workspace);
 
-            parser.parseExclude(context, tokens("exclude", "box1", "->", "box2"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==box1 && relationship.destination==box2"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"box1\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipSourceElementDoesNotExistInTheView() {
-        try {
-            CustomElement box1 = model.addCustomElement("Box 1");
-
-            CustomView view = views.createCustomView("key", "Title", "Description");
-            CustomViewDslContext context = new CustomViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("box1", box1);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "box1", "->", "box2"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"box1\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -270,35 +249,11 @@ class CustomViewContentParserTests extends AbstractTests {
             elements.put("box1", box1);
             context.setElements(elements);
 
-            parser.parseExclude(context, tokens("exclude", "box1", "->", "box2"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==box1 && relationship.source==box2"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"box2\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipDestinationElementDoesNotExistInTheView() {
-        try {
-            CustomElement box1 = model.addCustomElement("Box 1");
-            CustomElement box2 = model.addCustomElement("Box 2");
-
-            CustomView view = views.createCustomView("key", "Title", "Description");
-            view.add(box1);
-            CustomViewDslContext context = new CustomViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("box1", box1);
-            elements.put("box2", box2);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "box1", "->", "box2"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"box2\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -322,13 +277,13 @@ class CustomViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "box1", "->", "box2"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==box1 && relationship.destination==box2"));
 
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSourceAndWildcard() {
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSource() {
         CustomElement box1 = model.addCustomElement("Box 1");
         CustomElement box2 = model.addCustomElement("Box 2");
         box1.uses(box2, "");
@@ -347,13 +302,13 @@ class CustomViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "box1", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==box1"));
 
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndDestination() {
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithADestination() {
         CustomElement box1 = model.addCustomElement("Box 1");
         CustomElement box2 = model.addCustomElement("Box 2");
         box1.uses(box2, "");
@@ -372,13 +327,13 @@ class CustomViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "box2"));
+        parser.parseExclude(context, tokens("exclude", "relationship.destination==box2"));
 
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndWildcard() {
+    void test_parseExclude_RemovesAllRelationshipsFromAView_WhenAnExpressionIsSpecifiedWithAWildcard() {
         CustomElement box1 = model.addCustomElement("Box 1");
         CustomElement box2 = model.addCustomElement("Box 2");
         box1.uses(box2, "");
@@ -397,7 +352,7 @@ class CustomViewContentParserTests extends AbstractTests {
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship==*"));
 
         assertEquals(0, view.getRelationships().size());
     }

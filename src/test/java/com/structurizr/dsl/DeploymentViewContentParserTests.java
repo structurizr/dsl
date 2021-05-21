@@ -20,7 +20,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
             parser.parseInclude(new DeploymentViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier> [identifier...] or include <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: include <*|identifier> [identifier...]", iae.getMessage());
         }
     }
 
@@ -213,7 +213,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
             parser.parseExclude(new DeploymentViewDslContext(null), tokens("exclude"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: exclude <identifier> [identifier...] or exclude <*|identifier> -> <*|identifier>", iae.getMessage());
+            assertEquals("Expected: exclude <identifier> [identifier...]", iae.getMessage());
         }
     }
 
@@ -298,38 +298,11 @@ class DeploymentViewContentParserTests extends AbstractTests {
             elements.put("ss2", ss2);
             context.setElements(elements);
 
-            parser.parseExclude(context, tokens("exclude", "ss1", "->", "ss2"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"ss1\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipSourceElementDoesNotExistInTheView() {
-        try {
-            SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
-            SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
-            Relationship rel = ss1.uses(ss2, "Uses");
-
-            DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
-
-            DeploymentView view = views.createDeploymentView("key", "Description");
-            view.setEnvironment("Live");
-            DeploymentViewDslContext context = new DeploymentViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("ss1", ss1);
-            elements.put("ss2", ss2);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "ss1", "->", "ss2"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"ss1\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -353,40 +326,11 @@ class DeploymentViewContentParserTests extends AbstractTests {
             elements.put("ss1", ss1);
             context.setElements(elements);
 
-            parser.parseExclude(context, tokens("exclude", "ss1", "->", "ss2"));
+            parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
 
             fail();
         } catch (RuntimeException re) {
             assertEquals("The element \"ss2\" does not exist", re.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseExclude_ThrowsAnException_WhenTheRelationshipDestinationElementDoesNotExistInTheView() {
-        try {
-            SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
-            SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
-            Relationship rel = ss1.uses(ss2, "Uses");
-
-            DeploymentNode dn = model.addDeploymentNode("Live", "Live", "Description", "Technology");
-            dn.add(ss1);
-
-            DeploymentView view = views.createDeploymentView("key", "Description");
-            view.setEnvironment("Live");
-            view.add(dn);
-            DeploymentViewDslContext context = new DeploymentViewDslContext(view);
-            context.setWorkspace(workspace);
-
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("ss1", ss1);
-            elements.put("ss2", ss2);
-            context.setElements(elements);
-
-            parser.parseExclude(context, tokens("exclude", "ss1", "->", "ss2"));
-
-            fail();
-        } catch (RuntimeException re) {
-            assertEquals("The element \"ss2\" does not exist in the view", re.getMessage());
         }
     }
 
@@ -411,12 +355,12 @@ class DeploymentViewContentParserTests extends AbstractTests {
         elements.put("ss2", ss2);
         context.setElements(elements);
 
-        parser.parseExclude(context, tokens("exclude", "ss1", "->", "ss2"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSourceAndWildcard() {
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithSource() {
         SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
         SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
         Relationship rel = ss1.uses(ss2, "Uses");
@@ -436,12 +380,12 @@ class DeploymentViewContentParserTests extends AbstractTests {
         elements.put("ss2", ss2);
         context.setElements(elements);
 
-        parser.parseExclude(context, tokens("exclude", "ss1", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship.source==ss1"));
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndDestination() {
+    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithADestination() {
         SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
         SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
         Relationship rel = ss1.uses(ss2, "Uses");
@@ -461,12 +405,12 @@ class DeploymentViewContentParserTests extends AbstractTests {
         elements.put("ss2", ss2);
         context.setElements(elements);
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "ss2"));
+        parser.parseExclude(context, tokens("exclude", "relationship.destination==ss2"));
         assertEquals(0, view.getRelationships().size());
     }
 
     @Test
-    void test_parseExclude_RemovesTheRelationshipFromAView_WhenAnExpressionIsSpecifiedWithWildcardAndWildcard() {
+    void test_parseExclude_RemovesAllRelationshipsFromAView_WhenAnExpressionIsSpecifiedWithAWildcard() {
         SoftwareSystem ss1 = model.addSoftwareSystem("SS1", "Description");
         SoftwareSystem ss2 = model.addSoftwareSystem("SS2", "Description");
         Relationship rel = ss1.uses(ss2, "Uses");
@@ -486,7 +430,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         elements.put("ss2", ss2);
         context.setElements(elements);
 
-        parser.parseExclude(context, tokens("exclude", "*", "->", "*"));
+        parser.parseExclude(context, tokens("exclude", "relationship==*"));
         assertEquals(0, view.getRelationships().size());
     }
 
