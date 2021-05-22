@@ -108,6 +108,10 @@ class AbstractExpressionParserTests extends AbstractTests {
         Set<ModelItem> relationships = parser.parseExpression("relationship==a->*", context);
         assertEquals(1, relationships.size());
         assertTrue(relationships.contains(aToB));
+
+        relationships = parser.parseExpression("a -> *", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(aToB));
     }
 
     @Test
@@ -150,6 +154,10 @@ class AbstractExpressionParserTests extends AbstractTests {
         context.setElements(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship==*->b", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(aToB));
+
+        relationships = parser.parseExpression("* -> b", context);
         assertEquals(1, relationships.size());
         assertTrue(relationships.contains(aToB));
     }
@@ -284,4 +292,31 @@ class AbstractExpressionParserTests extends AbstractTests {
         assertTrue(elements.contains(c));
     }
 
+    @Test
+    void test_parseExpression_ReturnsAllRelationships_WhenUsingTheWildcardRelationshipExpression() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        SoftwareSystem c = model.addSoftwareSystem("C");
+        Relationship aToB = a.uses(b, "Uses");
+        Relationship bToC = b.uses(c, "Uses");
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
+        context.setWorkspace(workspace);
+
+        Map<String, Element> map = new HashMap<>();
+        map.put("a", a);
+        map.put("b", b);
+        map.put("c", c);
+        context.setElements(map);
+
+        Set<ModelItem> relationships = parser.parseExpression("relationship==*->*", context);
+        assertEquals(2, relationships.size());
+        assertTrue(relationships.contains(aToB));
+        assertTrue(relationships.contains(bToC));
+
+        relationships = parser.parseExpression("* -> *", context);
+        assertEquals(2, relationships.size());
+        assertTrue(relationships.contains(aToB));
+        assertTrue(relationships.contains(bToC));
+    }
 }

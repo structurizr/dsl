@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
+import com.structurizr.view.ComponentView;
 import com.structurizr.view.ContainerView;
 import com.structurizr.view.SystemContextView;
 import com.structurizr.view.SystemLandscapeView;
@@ -760,6 +761,34 @@ class StaticViewContentParserTests extends AbstractTests {
         assertEquals(1, view.getRelationships().size());
         assertNull(view.getRelationshipView(relationship1));
         assertNotNull(view.getRelationshipView(relationship2));
+    }
+
+    @Test
+    void test_parseInclude_IncludesTheMostAbstractElementWhenEfferentCouplingExpressionUsed() {
+        SoftwareSystem ss1 = model.addSoftwareSystem("Software System 1");
+        Container c1 = ss1.addContainer("Container 1");
+        Component cc1 = c1.addComponent("Component 1");
+
+        SoftwareSystem ss2 = model.addSoftwareSystem("Software System 2");
+        Container c2 = ss2.addContainer("Container 2");
+        Component cc2 = c2.addComponent("Component 2");
+
+        model.setImpliedRelationshipsStrategy(new CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy());
+        cc1.uses(cc2, "Uses");
+
+        ComponentView view = views.createComponentView(c1, "key", "Description");
+        ComponentViewDslContext context = new ComponentViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        Map<String, Element> elements = new HashMap<>();
+        elements.put("cc1", cc1);
+        context.setElements(elements);
+
+        parser.parseInclude(context, tokens("include", "cc1->"));
+
+        assertEquals(2, view.getElements().size());
+        assertTrue(view.isElementInView(cc1));
+        assertTrue(view.isElementInView(ss2)); // this is the software system, not the component
     }
 
 }

@@ -111,26 +111,13 @@ abstract class AbstractExpressionParser {
                     modelItems.add(relationship);
                 }
             });
-        } else if (expr.startsWith(RELATIONSHIP_EQUALS_EXPRESSION)) {
-            expr = expr.substring(RELATIONSHIP_EQUALS_EXPRESSION.length());
-            String sourceIdentifier = expr.split("->")[0].trim();
-            String destinationIdentifier = expr.split("->")[1].trim();
-
-            String sourceExpression = RELATIONSHIP_SOURCE_EQUALS_EXPRESSION + sourceIdentifier;
-            String destinationExpression = RELATIONSHIP_DESTINATION_EQUALS_EXPRESSION + destinationIdentifier;
-
-            if (WILDCARD.equals(sourceIdentifier) && WILDCARD.equals(destinationIdentifier)) {
-                modelItems.addAll(context.getWorkspace().getModel().getRelationships());
-            } else if (WILDCARD.equals(destinationIdentifier)) {
-                modelItems.addAll(parseExpression(sourceExpression, context));
-            } else if (WILDCARD.equals(sourceIdentifier)) {
-                modelItems.addAll(parseExpression(destinationExpression, context));
-            } else {
-                modelItems.addAll(parseExpression(sourceExpression + " && " + destinationExpression, context));
-            }
         } else {
             if (expr.startsWith(ELEMENT_EQUALS_EXPRESSION)) {
                 expr = expr.substring(ELEMENT_EQUALS_EXPRESSION.length());
+            }
+
+            if (expr.startsWith(RELATIONSHIP_EQUALS_EXPRESSION)) {
+                expr = expr.substring(RELATIONSHIP_EQUALS_EXPRESSION.length());
             }
 
             modelItems.addAll(parseIdentifierExpression(expr, context));
@@ -154,7 +141,7 @@ abstract class AbstractExpressionParser {
     protected abstract Set<Element> findAfferentCouplings(Element element);
 
     protected <T extends Element> Set<Element> findAfferentCouplings(Element element, Class<T> typeOfElement) {
-        Set<Element> elements = new HashSet<>();
+        Set<Element> elements = new LinkedHashSet<>();
 
         Set<Relationship> relationships = element.getModel().getRelationships();
         relationships.stream().filter(r -> r.getDestination().equals(element) && typeOfElement.isInstance(r.getSource()))
@@ -167,7 +154,7 @@ abstract class AbstractExpressionParser {
     protected abstract Set<Element> findEfferentCouplings(Element element);
 
     protected <T extends Element> Set<Element> findEfferentCouplings(Element element, Class<T> typeOfElement) {
-        Set<Element> elements = new HashSet<>();
+        Set<Element> elements = new LinkedHashSet<>();
 
         Set<Relationship> relationships = element.getModel().getRelationships();
         relationships.stream().filter(r -> r.getSource().equals(element) && typeOfElement.isInstance(r.getDestination()))
@@ -178,62 +165,94 @@ abstract class AbstractExpressionParser {
     }
 
     protected Set<ModelItem> parseIdentifierExpression(String expr, DslContext context) {
-        Set<ModelItem> modelItems = new HashSet<>();
+        Set<ModelItem> modelItems = new LinkedHashSet<>();
 
-        // see if this a relationship first
-        Relationship relationship = context.getRelationship(expr);
-        if (relationship != null) {
-            modelItems.add(relationship);
-            return modelItems;
-        }
+        // simplest case: this is an element or relationship identifier
+        if (!expr.contains(RELATIONSHIP)) {
+            Element element = context.getElement(expr);
+            if (element != null) {
+                modelItems.addAll(getElements(expr, context));
+            }
 
-        String identifier = expr;
-        boolean includeAfferentCouplings = false;
-        boolean includeEfferentCouplings = false;
+            Relationship relationship = context.getRelationship(expr);
+            if (relationship != null) {
+                modelItems.add(relationship);
+            }
 
+            if (modelItems.isEmpty()) {
+                throw new RuntimeException("The element/relationship \"" + expr + "\" does not exist");
+            } else {
+                return modelItems;
+            }
+        } else if (expr.startsWith(RELATIONSHIP) || expr.endsWith(RELATIONSHIP)) {
+            // this is an element expression: ->identifier identifier-> ->identifier->
+            boolean includeAfferentCouplings = false;
+            boolean includeEfferentCouplings = false;
 
-        if (identifier.startsWith(ELEMENT_COUPLINGS_EXPRESSION)) {
-            includeAfferentCouplings = true;
-            identifier = identifier.substring(ELEMENT_COUPLINGS_EXPRESSION.length());
-        }
-        if (identifier.endsWith(ELEMENT_COUPLINGS_EXPRESSION)) {
-            includeEfferentCouplings = true;
-            identifier = identifier.substring(0, identifier.length() - ELEMENT_COUPLINGS_EXPRESSION.length());
-        }
+            String identifier = expr;
 
-        identifier = identifier.trim();
+            if (identifier.startsWith(RELATIONSHIP)) {
+                includeAfferentCouplings = true;
+                identifier = identifier.substring(RELATIONSHIP.length());
+            }
+            if (identifier.endsWith(RELATIONSHIP)) {
+                includeEfferentCouplings = true;
+                identifier = identifier.substring(0, identifier.length() - RELATIONSHIP.length());
+            }
 
-        Element element = context.getElement(identifier);
-        if (element == null) {
-            throw new RuntimeException("The element/relationship \"" + expr + "\" does not exist");
-        }
+            identifier = identifier.trim();
+            Set<Element> elements = getElements(identifier, context);
 
-        if (element instanceof ElementGroup) {
-            ElementGroup group = (ElementGroup)element;
-            for (Element e : group.getElements()) {
-                modelItems.add(e);
+            if (elements.isEmpty()) {
+                throw new RuntimeException("The element \"" + identifier + "\" does not exist");
+            }
+
+            for (Element element : elements) {
+                modelItems.add(element);
 
                 if (includeAfferentCouplings) {
-                    modelItems.addAll(findAfferentCouplings(e));
+                    modelItems.addAll(findAfferentCouplings(element));
                 }
 
                 if (includeEfferentCouplings) {
-                    modelItems.addAll(findEfferentCouplings(e));
+                    modelItems.addAll(findEfferentCouplings(element));
                 }
             }
-        } else {
-            modelItems.add(element);
+        } else if (expr.contains(RELATIONSHIP)) {
+            String[] identifiers = expr.split(RELATIONSHIP);
+            String sourceIdentifier = identifiers[0].trim();
+            String destinationIdentifier = identifiers[1].trim();
 
-            if (includeAfferentCouplings) {
-                modelItems.addAll(findAfferentCouplings(element));
-            }
+            String sourceExpression = RELATIONSHIP_SOURCE_EQUALS_EXPRESSION + sourceIdentifier;
+            String destinationExpression = RELATIONSHIP_DESTINATION_EQUALS_EXPRESSION + destinationIdentifier;
 
-            if (includeEfferentCouplings) {
-                modelItems.addAll(findEfferentCouplings(element));
+            if (WILDCARD.equals(sourceIdentifier) && WILDCARD.equals(destinationIdentifier)) {
+                modelItems.addAll(context.getWorkspace().getModel().getRelationships());
+            } else if (WILDCARD.equals(destinationIdentifier)) {
+                modelItems.addAll(parseExpression(sourceExpression, context));
+            } else if (WILDCARD.equals(sourceIdentifier)) {
+                modelItems.addAll(parseExpression(destinationExpression, context));
+            } else {
+                modelItems.addAll(parseExpression(sourceExpression + " && " + destinationExpression, context));
             }
         }
 
+
         return modelItems;
+    }
+
+    private Set<Element> getElements(String identifier, DslContext context) {
+        Set<Element> elements = new HashSet<>();
+
+        Element element = context.getElement(identifier);
+        if (element instanceof ElementGroup) {
+            ElementGroup group = (ElementGroup)element;
+            elements.addAll(group.getElements());
+        } else {
+            elements.add(element);
+        }
+
+        return elements;
     }
 
 }

@@ -18,8 +18,7 @@ abstract class ViewContentParser extends AbstractParser {
                 token.startsWith(ELEMENT_TYPE_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(ELEMENT_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(ELEMENT_TAG_NOT_EQUALS_EXPRESSION.toLowerCase()) ||
-                token.startsWith(ELEMENT_COUPLINGS_EXPRESSION) ||
-                token.endsWith(ELEMENT_COUPLINGS_EXPRESSION) ||
+                token.startsWith(RELATIONSHIP) || token.endsWith(RELATIONSHIP) || token.contains(RELATIONSHIP) ||
                 token.endsWith(ELEMENT_EQUALS_EXPRESSION) ||
                 token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
                 token.startsWith(RELATIONSHIP_TAG_NOT_EQUALS_EXPRESSION.toLowerCase()) ||
