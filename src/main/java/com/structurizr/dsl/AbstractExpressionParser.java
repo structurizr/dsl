@@ -121,6 +121,8 @@ abstract class AbstractExpressionParser {
             }
 
             modelItems.addAll(parseIdentifierExpression(expr, context));
+
+            modelItems.forEach(mi -> System.out.println(mi.getCanonicalName()));
         }
 
         return modelItems;
