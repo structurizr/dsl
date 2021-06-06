@@ -120,7 +120,11 @@ abstract class AbstractExpressionParser {
                 expr = expr.substring(RELATIONSHIP_EQUALS_EXPRESSION.length());
             }
 
-            modelItems.addAll(parseIdentifierExpression(expr, context));
+            if (RELATIONSHIP.equals(expr)) {
+                throw new RuntimeException("Unexpected identifier \"->\"");
+            } else {
+                modelItems.addAll(parseIdentifierExpression(expr, context));
+            }
         }
 
         return modelItems;

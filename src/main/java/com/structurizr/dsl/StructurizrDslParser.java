@@ -662,6 +662,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                 lineNumber++;
             } catch (Exception e) {
+                e.printStackTrace();
+
                 if (e.getMessage() != null) {
                     throw new StructurizrDslParserException(e.getMessage(), lineNumber, line);
                 } else {
