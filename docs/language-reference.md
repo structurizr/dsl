@@ -12,6 +12,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [Identifiers](#identifiers)
 - [!include](#includes)
 - [!constant](#constants)
+- [!expressions](#expressions)
 - [Grammar](#grammar)
     - [workspace](#workspace)
         - [!docs](#documentation)
@@ -44,6 +45,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [styles](#styles)
                 - [element](#element-style)
                 - [relationship](#relationship-style)
+            - [theme](#theme)
             - [themes](#themes)
             - [branding](#branding)
             - [terminology](#terminology)
@@ -138,7 +140,7 @@ Identifiers are only needed where you plan to reference the element/relationship
 The `!include` keyword can be used to include another file, to provide some degree of modularity, and to reuse definition fragments between workspaces.
 
 ```
-!include <file>
+!include <file|url>
 ```
 
 The file must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
@@ -147,6 +149,8 @@ The file must be a relative path, located within the same directory as the paren
 !include child.dsl
 !include subdirectory/child.dsl
 ``` 
+
+Alternatively, a HTTPS URL pointing to a single DSL file can be used.
 
 The content of any included files is simply inlined into the parent document. 
 
@@ -159,6 +163,35 @@ The `!constant` keyword can be used to define a constant, which can be used with
 ```
 
 Constant names may only contain the following characters: `a-zA-Z0-9-_.` 
+
+## Expressions
+
+The Structurizr DSL supports a number of expressions for use when including or excluding elements/relationships on views.
+
+- `-><identifier>`: the specified element plus afferent couplings
+- `<identifier>->`: the specified element plus efferent couplings
+- `-><identifier>->`: the specified element plus afferentand efferent couplings
+- `element.type==<type>`: elements of the specified type (Person|SoftwareSystem|Container|Component|DeploymentNode|InfrastructureNode|SoftwareSystemInstance|ContainerInstance)
+- `element.tag==<tag>[,tag]`: all elements that have all of the specified tags
+- `element.tag!=<tag>[,tag]`: all elements that do not have all of the specified tags
+- `element=-><identifier>`: the specified element plus afferent couplings
+- `element=<identifier>->`: the specified element plus efferent couplings
+- `element=-><identifier>->`: the specified element plus afferentand efferent couplings
+
+- `*->*`: all relationships
+- `<identifier>->*`: all relationships with the specified source element
+- `*-><identifier>`: all relationships with the specified destination element
+- `relationship==*`: all relationships
+- `relationship==*->*`: all relationships
+- `relationship.tag==<tag>[,tag]`: all relationships that have all of the specified tags
+- `relationship.tag!=<tag>[,tag]`: all relationships that do not have all of the specified tags
+- `relationship.source==<identifier>`: all relationships with the specified source element
+- `relationship.destination==<identifier>`: all relationships with the specified destination element
+- `relationship==<identifier>->*`: all relationships with the specified source element
+- `relationship==*-><identifier>`: all relationships with the specified destination element
+- `relationship==<identifier>-><identifier>`: all relationships between the two specified elements
+
+Element and relationship expressions are not supported on dynamic views.
 
 ## Grammar
 
@@ -175,8 +208,21 @@ workspace [name] [description] {
 }
 ```
 
+A workspace can also extend another workspace, to add more elements, relationships, views, etc to it.
+
+```
+workspace extends <file|url> {
+    ...
+}
+```
+
+The base workspace can either be referenced using a local DSL/JSON file, or a remote (via a HTTPS URL) DSL/JSON file.
+When extending a DSL-based workspace, all of the identifiers defined in that workspace are available to use in the extended workspace.
+
 Permitted children:
 
+- name <name>
+- description <description>
 - [properties](#properties)
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
@@ -270,6 +316,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -296,6 +343,7 @@ Permitted children:
 - [container](#container)
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -320,6 +368,7 @@ Permitted children:
 
 - [group](#group)
 - [component](#component)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -342,6 +391,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -394,6 +444,7 @@ Permitted children:
 - [softwareSystemInstance](#softwareSystemInstance)
 - [containerInstance](#containerInstance)
 - [-> (relationship)](#relationship)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -416,6 +467,7 @@ The following tags are added by default:
 Permitted children:
 
 - [-> (relationship)](#relationship)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -437,6 +489,7 @@ In addition to the software system's tags, the following tags are added by defau
 - `Software System Instance`
 
 - [-> (relationship)](#relationship)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -459,6 +512,7 @@ In addition to the container's tags, the following tags are added by default:
 - `Container Instance`
 
 - [-> (relationship)](#relationship)
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -490,6 +544,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
@@ -546,9 +601,20 @@ The following types of relationships can be created using the DSL:
 
 Permitted children:
 
+- [tags](#tags)
 - [url](#url)
 - [properties](#properties)
 - [perspectives](#perspectives)
+
+## tags
+
+`tags` is used to adds tags to an element or relationship. Tags can be specified comma separated, or individually.
+
+```
+tags "Tag 1"
+tags "Tag 1,Tag 2"
+tags "Tag 1" "Tag 2"
+```
 
 ## url
 
@@ -602,6 +668,7 @@ The `views` block can contain the following:
 - [deployment](#deployment-view)
 - [custom](#custom-view)
 - [styles](#styles)
+- [theme](#theme)
 - [themes](#themes)
 - [branding](#branding)
 - [terminology](#terminology)
@@ -710,7 +777,9 @@ Unlike the other diagram types, Dynamic views are created by specifying the rela
 <identifier> -> <identifier> [description] [technology]
 ```
 
-If a relationship between the two elements does not exist, it will be automatically created.
+With a dynamic view, you're showing _instances_ of relationships that are defined in the static model. For example, imagine that you have two software systems defined in the static model, with a single relationship between them described as "Sends data to". A dynamic view allows you to override the relationship description, to better describe the interaction in the context of the behaviour you're diagramming. See [dynamic.dsl](../examples/dynamic.dsl) for an example of this, and [Modelling multiple relationships](https://dev.to/simonbrown/modelling-multiple-relationships-51bf) for some tips on how to best model multiple relationships between two elements in order to avoid cluttering your static model. For convenience, if a relationship between the two elements does not exist in the static model, the DSL parser will automatically create it for you.
+
+See [parallel.dsl](../examples/parallel.dsl) for an example of how to create dynamic diagrams with parallel sequences.
 
 Permitted children:
 
@@ -781,7 +850,7 @@ The wildcard identifier (`*`) operates differently depending upon the type of di
 - Dynamic view: (not applicable)
 - Deployment view: Include all deployment nodes, infrastructure nodes, and container instances defined within the deployment environment and (optional) software system in scope.
 
-Property expressions are currently only supported on system landscape, system context, container, and component views.
+Element expressions are currently only supported on system landscape, system context, container, and component views.
 They provide a way to include elements based upon some basic conditional logic, as follows:
 
 - `element.tag==<tag>,[tag]`: include elements that have all of the specified tags
@@ -789,32 +858,13 @@ They provide a way to include elements based upon some basic conditional logic, 
 
 #### Including relationships
 
-To include a relationship in a view, you can specify an individual relationship identifier, or a property expression: 
+To include a relationship in a view, you can specify an individual relationship identifier, or an expression: 
 
 ```
 include <identifier|expression> [identifier|expression...]
 ```
 
-Property expressions are currently only supported on system landscape, system context, container, and component views.
-They provide a way to include relationships based upon some basic conditional logic, as follows:
-
-- `relationship.tag==<tag>,[tag]`: include relationships that have all of the specified tags
-- `relationship.tag!=<tag>,[tag]`: include relationships that do not have all of the specified tags
-
-Alternatively, you can use the relationship expression syntax as follows:
-
-```
-include <*|identifier> -> <*|identifier> 
-```
-
-The combinations of parameters are:
-
-- `* -> *`: all relationships between all elements
-- `source -> *`: all relationships from `source` to any element
-- `* -> destination`: all relationships from any element  to `destination`
-- `source -> destination`: all relationships from `source` to `destination`
-
-The relationship expression syntax only operates on elements that exist in the view.
+Relationship expressions only operate on elements that exist in the view.
 
 ### exclude
 
@@ -827,13 +877,6 @@ To exclude specific elements, use one or more `exclude` statements inside the bl
 ```
 exclude <identifier|expression> [identifier|expression...]
 ```
-
-Elements can either be specified using individual identifiers, or a property expression.
-Property expressions are currently only supported on system landscape, system context, container, and component views.
-They provide a way to exclude elements based upon some basic conditional logic, as follows:
-
-- `element.tag==<tag>,[tag]`: exclude elements that have all of the specified tags
-- `element.tag!=<tag>,[tag]`: exclude elements that do not have all of the specified tags
 
 #### Excluding relationships
 
@@ -937,6 +980,9 @@ element <tag> {
     description <true|false>
 }
 ```
+
+Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
+
             
 ### relationship style
 
@@ -956,13 +1002,27 @@ relationship <tag> {
 }
 ```
 
+Please note that relationship styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
+
+### theme
+
+The `theme` keyword can be used to specify a theme that should be used when rendering diagrams. See [Structurizr - Themes](https://structurizr.com/help/themes) for more details.
+
+```
+theme <default|url>
+```
+
+`default` can be used as a theme URL, to include [the default Structurizr theme](https://structurizr.com/help/theme?url=https://static.structurizr.com/themes/default/theme.json).
+
 ### themes
 
 The `themes` keyword can be used to specify one or more themes that should be used when rendering diagrams. See [Structurizr - Themes](https://structurizr.com/help/themes) for more details.
 
 ```
-themes <themeUrl> [themeUrl] ... [themeUrl]
+themes <url> [url] ... [url]
 ```
+
+`default` can be used as a theme URL, to include [the default Structurizr theme](https://structurizr.com/help/theme?url=https://static.structurizr.com/themes/default/theme.json).
 
 ### branding
 
