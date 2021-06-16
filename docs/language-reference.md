@@ -12,7 +12,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [Identifiers](#identifiers)
 - [!include](#includes)
 - [!constant](#constants)
-- [!expressions](#expressions)
+- [Expressions](#expressions)
 - [Grammar](#grammar)
     - [workspace](#workspace)
         - [!docs](#documentation)
