@@ -19,6 +19,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
         - [!adrs](#architecture-decision-records-adrs)
         - [model](#model)
             - [impliedRelationships](#impliedRelationships)
+            - [ref](#ref)
             - [enterprise](#enterprise)
             - [group](#group)
             - [person](#person)
@@ -589,6 +590,24 @@ Permitted children:
 - [properties](#properties)
 - [perspectives](#perspectives)
 - [-> (relationship)](#relationship)
+
+### ref
+
+The `ref` keyword retrieves an already defined element by its canonical name.
+
+```structurizr
+ref = ref <canonical name> {
+    ...
+}
+```
+
+For example:
+
+```structurizr
+person = ref "Person://User"
+```
+
+For permitted children consult the documentation for the model element that is being referenced.
 
 ### relationship
 
