@@ -51,14 +51,19 @@ final class DeploymentViewContentParser extends ViewContentParser {
                 removeRelationshipFromView(relationshipView.getRelationship(), view);
             }
         } else {
-            // exclude <identifier> [identifier...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
+            if (tokens.size() == 4 && tokens.get(2).equals("->")) {
+                // backwards compatibility for "exclude source -> destination"
+                new StaticViewExpressionParser().parseExpression(tokens.get(1) + "->" + tokens.get(3), context).forEach(mi -> removeModelItemFromView(mi, view));
+            } else {
+                // exclude <identifier> [identifier...]
+                for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+                    String token = tokens.get(i);
 
-                if (isExpression(token)) {
-                    new DeploymentViewExpressionParser().parseExpression(token, context).forEach(e -> removeModelItemFromView(e, view));
-                } else {
-                    new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                    if (isExpression(token)) {
+                        new DeploymentViewExpressionParser().parseExpression(token, context).forEach(e -> removeModelItemFromView(e, view));
+                    } else {
+                        new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                    }
                 }
             }
         }

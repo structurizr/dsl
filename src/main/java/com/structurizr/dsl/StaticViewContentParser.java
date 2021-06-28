@@ -46,14 +46,19 @@ final class StaticViewContentParser extends ViewContentParser {
                 removeRelationshipFromView(relationshipView.getRelationship(), view);
             }
         } else {
-            // exclude <identifier|expression> [identifier|expression...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
+            if (tokens.size() == 4 && tokens.get(2).equals("->")) {
+                // backwards compatibility for "exclude source -> destination"
+                new StaticViewExpressionParser().parseExpression(tokens.get(1) + "->" + tokens.get(3), context).forEach(mi -> removeModelItemFromView(mi, view));
+            } else {
+                // exclude <identifier|expression> [identifier|expression...]
+                for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+                    String token = tokens.get(i);
 
-                if (isExpression(token)) {
-                    new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
-                } else {
-                    new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                    if (isExpression(token)) {
+                        new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                    } else {
+                        new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+                    }
                 }
             }
         }
