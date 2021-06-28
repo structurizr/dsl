@@ -15,8 +15,7 @@ abstract class DslContext {
     private Workspace workspace;
     private boolean extendingWorkspace;
 
-    protected Map<String, Element> elements = new HashMap<>();
-    protected Map<String, Relationship> relationships = new HashMap<>();
+    protected IdentifersRegister identifersRegister = new IdentifersRegister();
 
     Workspace getWorkspace() {
         return workspace;
@@ -34,20 +33,33 @@ abstract class DslContext {
         this.extendingWorkspace = extendingWorkspace;
     }
 
-    Element getElement(String identifier) {
-        return elements.get(identifier.toLowerCase());
+    void setIdentifierRegister(IdentifersRegister identifersRegister) {
+        this.identifersRegister = identifersRegister;
     }
 
-    void setElements(Map<String, Element> elements) {
-        this.elements = elements;
+    Element getElement(String identifier) {
+        Element element = identifersRegister.getElement(identifier.toLowerCase());
+
+        if (element == null && identifersRegister.getIdentifierScope() == IdentifierScope.Local) {
+            if (this instanceof ModelItemDslContext) {
+                ModelItemDslContext modelItemDslContext = (ModelItemDslContext)this;
+                if (modelItemDslContext.getModelItem() instanceof Element) {
+                    Element parent = (Element)modelItemDslContext.getModelItem();
+                    while (parent != null && element == null) {
+                        String parentIdentifier = identifersRegister.findIdentifier(parent);
+
+                        element = identifersRegister.getElement(parentIdentifier + "." + identifier);
+                        parent = parent.getParent();
+                    }
+                }
+            }
+        }
+
+        return element;
     }
 
     Relationship getRelationship(String identifier) {
-        return relationships.get(identifier.toLowerCase());
-    }
-
-    void setRelationships(Map<String, Relationship> relationships) {
-        this.relationships = relationships;
+        return identifersRegister.getRelationship(identifier.toLowerCase());
     }
 
     void end() {

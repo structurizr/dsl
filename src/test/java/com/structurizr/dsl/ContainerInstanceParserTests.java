@@ -3,9 +3,6 @@ package com.structurizr.dsl;
 import com.structurizr.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ContainerInstanceParserTests extends AbstractTests {
@@ -45,9 +42,9 @@ class ContainerInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotAContainer() {
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(null);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("containerInstance", "container"));
@@ -63,9 +60,9 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("containerInstance", "container"));
 
@@ -84,9 +81,9 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("containerInstance", "container", "Tag 1, Tag 2"));
 
@@ -105,10 +102,10 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        elements.put("group", new DeploymentGroup("Group"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        elements.register("group", new DeploymentGroup("Group"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("containerInstance", "container", "group"));
 
@@ -127,10 +124,10 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        elements.put("group", new DeploymentGroup("Group"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        elements.register("group", new DeploymentGroup("Group"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("containerInstance", "container", "group", "Tag 1, Tag 2"));
 

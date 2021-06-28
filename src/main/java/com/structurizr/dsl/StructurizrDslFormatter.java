@@ -73,6 +73,8 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
         start(IMPLIED_RELATIONSHIPS_TOKEN, quote("false"));
         end();
+        start(IDENTIFIERS_TOKEN, quote("local"));
+        end();
         newline();
 
         if (workspace.getModel().getEnterprise() != null) {
@@ -94,7 +96,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                 if (r.getSource() instanceof DeploymentElement || r.getDestination() instanceof DeploymentElement) {
                     // deployment element relationships are formatted below, after the deployment nodes have been formatted
                 } else {
-                    start(id(r.getSource()), RELATIONSHIP_TOKEN, id(r.getDestination()), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
+                    start(id(r.getSource(), true), RELATIONSHIP_TOKEN, id(r.getDestination(), true), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
                     formatModelItem(r);
                     end();
                 }
@@ -104,7 +106,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         if (!workspace.getModel().getDeploymentNodes().isEmpty()) {
             newline();
             model.getDeploymentNodes().stream().map(DeploymentElement::getEnvironment).collect(Collectors.toSet()).stream().sorted().forEach(deploymentEnvironment -> {
-                start(DEPLOYMENT_ENVIRONMENT_TOKEN, quote(deploymentEnvironment));
+                start(filter(deploymentEnvironment), ASSIGNMENT_OPERATOR_TOKEN, DEPLOYMENT_ENVIRONMENT_TOKEN, quote(deploymentEnvironment));
                 model.getDeploymentNodes().stream().filter(dn -> dn.getParent() == null && dn.getEnvironment().equals(deploymentEnvironment)).sorted(Comparator.comparing(DeploymentNode::getId)).forEach(this::format);
                 end();
             });
@@ -113,7 +115,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             model.getRelationships().stream().sorted(Comparator.comparing(Relationship::getId)).forEach(r -> {
                 if (StringUtils.isNullOrEmpty(r.getLinkedRelationshipId())) {
                     if (r.getSource() instanceof DeploymentElement || r.getDestination() instanceof DeploymentElement) {
-                        start(id(r.getSource()), RELATIONSHIP_TOKEN, id(r.getDestination()), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
+                        start(id(r.getSource(), true), RELATIONSHIP_TOKEN, id(r.getDestination(), true), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
                         formatModelItem(r);
                         end();
                     } else {
@@ -143,7 +145,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e));
+                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
                     end();
                 });
 
@@ -158,7 +160,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e));
+                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
                     end();
                 });
 
@@ -173,7 +175,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e));
+                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
                     end();
                 });
 
@@ -184,11 +186,11 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getComponentViews().stream().sorted(Comparator.comparing(ComponentView::getKey)).forEach(view -> {
-                start(COMPONENT_VIEW_TOKEN, id(view.getContainer()), quote(view.getKey()), quote(view.getDescription()));
+                start(COMPONENT_VIEW_TOKEN, id(view.getContainer(), true), quote(view.getKey()), quote(view.getDescription()));
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e));
+                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
                     end();
                 });
 
@@ -214,7 +216,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                 if (StringUtils.isNullOrEmpty(view.getElementId())) {
                     start(DYNAMIC_VIEW_TOKEN, quote("*"));
                 } else {
-                    start(DYNAMIC_VIEW_TOKEN, id(view.getElement()));
+                    start(DYNAMIC_VIEW_TOKEN, id(view.getElement(), true));
                 }
 
                 for (RelationshipView relationshipView : view.getRelationships()) {
@@ -233,9 +235,9 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                     }
 
                     if (StringUtils.isNullOrEmpty(relationshipView.getDescription())) {
-                        start(id(source), "->", id(destination));
+                        start(id(source, true), "->", id(destination, true));
                     } else {
-                        start(id(source), "->", id(destination), quote(relationshipView.getDescription()));
+                        start(id(source, true), "->", id(destination, true), quote(relationshipView.getDescription()));
                     }
                     end();
                 }
@@ -269,7 +271,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                 }
 
                 for (Element element : elements) {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(element));
+                    start(INCLUDE_IN_VIEW_TOKEN, id(element, true));
                     end();
                 }
 
@@ -582,6 +584,26 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         return modelItem.getId();
     }
 
+    private String id(ModelItem modelItem, boolean hierarchical) {
+        if (hierarchical) {
+            if (modelItem instanceof Element) {
+                Element element = (Element)modelItem;
+                if (element.getParent() == null) {
+                    if (element instanceof DeploymentNode) {
+                        DeploymentNode dn = (DeploymentNode)element;
+                        return filter(dn.getEnvironment()) + "." + id(dn);
+                    } else {
+                        return id(element);
+                    }
+                } else {
+                    return id(element.getParent(), true) + "." + id(modelItem);
+                }
+            }
+        }
+
+        return id(modelItem);
+    }
+
     private String id(Person person) {
         return filter(person.getName());
     }
@@ -591,31 +613,27 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
     }
 
     private String id(Container container) {
-        return id(container.getSoftwareSystem()) + "_" + filter(container.getName());
+        return filter(container.getName());
     }
 
     private String id(Component component) {
-        return id(component.getContainer()) + "_" + filter(component.getName());
+        return filter(component.getName());
     }
 
     private String id(DeploymentNode deploymentNode) {
-        if (deploymentNode.getParent() == null) {
-            return filter(deploymentNode.getEnvironment()) + "_" + filter(deploymentNode.getName());
-        } else {
-            return id(deploymentNode.getParent()) + "_" + filter(deploymentNode.getName());
-        }
+        return filter(deploymentNode.getName());
     }
 
     private String id(InfrastructureNode infrastructureNode) {
-        return id(infrastructureNode.getParent()) + "_" + filter(infrastructureNode.getName());
+        return filter(infrastructureNode.getName());
     }
 
     private String id(SoftwareSystemInstance softwareSystemInstance) {
-        return id(softwareSystemInstance.getParent()) + "_" + filter(softwareSystemInstance.getName()) + "_" + softwareSystemInstance.getInstanceId();
+        return filter(softwareSystemInstance.getName()) + "_" + softwareSystemInstance.getInstanceId();
     }
 
     private String id(ContainerInstance containerInstance) {
-        return id(containerInstance.getParent()) + "_" + filter(containerInstance.getName()) + "_" + containerInstance.getInstanceId();
+        return filter(containerInstance.getName()) + "_" + containerInstance.getInstanceId();
     }
 
     private String filter(String s) {
@@ -662,13 +680,13 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
     }
 
     private void format(SoftwareSystemInstance softwareSystemInstance) {
-        start(id(softwareSystemInstance), ASSIGNMENT_OPERATOR_TOKEN, SOFTWARE_SYSTEM_INSTANCE_TOKEN, id(softwareSystemInstance.getSoftwareSystem()), quote(tags(softwareSystemInstance)));
+        start(id(softwareSystemInstance), ASSIGNMENT_OPERATOR_TOKEN, SOFTWARE_SYSTEM_INSTANCE_TOKEN, id(softwareSystemInstance.getSoftwareSystem(), true), quote(tags(softwareSystemInstance)));
         formatModelItem(softwareSystemInstance);
         end();
     }
 
     private void format(ContainerInstance containerInstance) {
-        start(id(containerInstance), ASSIGNMENT_OPERATOR_TOKEN, CONTAINER_INSTANCE_TOKEN, id(containerInstance.getContainer()), quote(tags(containerInstance)));
+        start(id(containerInstance), ASSIGNMENT_OPERATOR_TOKEN, CONTAINER_INSTANCE_TOKEN, id(containerInstance.getContainer(), true), quote(tags(containerInstance)));
         formatModelItem(containerInstance);
         end();
     }

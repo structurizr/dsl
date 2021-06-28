@@ -7,6 +7,7 @@ import java.util.Set;
 
 class ElementGroup extends Element {
 
+    private Element parent;
     private String name;
 
     private Set<Element> elements = new HashSet<>();
@@ -25,9 +26,13 @@ class ElementGroup extends Element {
         return name;
     }
 
+    void setParent(Element parent) {
+        this.parent = parent;
+    }
+
     @Override
     public Element getParent() {
-        return null;
+        return parent;
     }
 
     @Override

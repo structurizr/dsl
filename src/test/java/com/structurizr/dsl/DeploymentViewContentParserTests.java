@@ -121,15 +121,15 @@ class DeploymentViewContentParserTests extends AbstractTests {
         ContainerInstance live4 = live2.add(c1);
         ContainerInstance live5 = live2.add(c2);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", live1);
-        elements.put("box1", box1);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", live1);
+        elements.register("box1", box1);
 
         DeploymentView view = views.createDeploymentView(ss1, "key", "Description");
         view.setEnvironment("Live");
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        context.setElements(elements);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "element", "box1"));
 
@@ -146,14 +146,14 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
         InfrastructureNode in = dn.addInfrastructureNode("IN", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", in);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", in);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
         view.setEnvironment("Live");
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        context.setElements(elements);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "element"));
 
@@ -168,14 +168,14 @@ class DeploymentViewContentParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         SoftwareSystemInstance softwareSystemInstance = dn.add(softwareSystem);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", softwareSystemInstance);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", softwareSystemInstance);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
         view.setEnvironment("Live");
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        context.setElements(elements);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "element"));
 
@@ -191,14 +191,14 @@ class DeploymentViewContentParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container");
         ContainerInstance containerInstance = dn.add(container);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", containerInstance);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", containerInstance);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
         view.setEnvironment("Live");
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        context.setElements(elements);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "element"));
 
@@ -232,15 +232,15 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
         InfrastructureNode in = dn.addInfrastructureNode("IN", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", in);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", in);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
         view.setEnvironment("Live");
         view.addAllDeploymentNodes();
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        context.setElements(elements);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertTrue(view.getElements().stream().anyMatch(ev -> ev.getElement().equals(dn)));
@@ -266,10 +266,10 @@ class DeploymentViewContentParserTests extends AbstractTests {
         view.setEnvironment("Live");
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
-        
-        Map<String, Relationship> relationships = new HashMap<>();
-        relationships.put("rel", rel);
-        context.setRelationships(relationships);
+
+        IdentifersRegister identifersRegister = new IdentifersRegister();
+        identifersRegister.register("rel", rel);
+        context.setIdentifierRegister(identifersRegister);
 
         view.addDefaultElements();
         assertEquals(1, view.getRelationships().stream().map(RelationshipView::getRelationship).filter(r -> r.getLinkedRelationshipId().equals(rel.getId())).count());
@@ -294,9 +294,9 @@ class DeploymentViewContentParserTests extends AbstractTests {
             DeploymentViewDslContext context = new DeploymentViewDslContext(view);
             context.setWorkspace(workspace);
 
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("ss2", ss2);
-            context.setElements(elements);
+            IdentifersRegister elements = new IdentifersRegister();
+            elements.register("ss2", ss2);
+            context.setIdentifierRegister(elements);
 
             parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
 
@@ -322,9 +322,9 @@ class DeploymentViewContentParserTests extends AbstractTests {
             DeploymentViewDslContext context = new DeploymentViewDslContext(view);
             context.setWorkspace(workspace);
 
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("ss1", ss1);
-            context.setElements(elements);
+            IdentifersRegister elements = new IdentifersRegister();
+            elements.register("ss1", ss1);
+            context.setIdentifierRegister(elements);
 
             parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
 
@@ -350,10 +350,10 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("ss1", ss1);
-        elements.put("ss2", ss2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("ss1", ss1);
+        elements.register("ss2", ss2);
+        context.setIdentifierRegister(elements);
 
         parser.parseExclude(context, tokens("exclude", "relationship.source==ss1 && relationship.destination==ss2"));
         assertEquals(0, view.getRelationships().size());
@@ -375,10 +375,10 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("ss1", ss1);
-        elements.put("ss2", ss2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("ss1", ss1);
+        elements.register("ss2", ss2);
+        context.setIdentifierRegister(elements);
 
         parser.parseExclude(context, tokens("exclude", "relationship.source==ss1"));
         assertEquals(0, view.getRelationships().size());
@@ -400,10 +400,10 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("ss1", ss1);
-        elements.put("ss2", ss2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("ss1", ss1);
+        elements.register("ss2", ss2);
+        context.setIdentifierRegister(elements);
 
         parser.parseExclude(context, tokens("exclude", "relationship.destination==ss2"));
         assertEquals(0, view.getRelationships().size());
@@ -425,10 +425,10 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("ss1", ss1);
-        elements.put("ss2", ss2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("ss1", ss1);
+        elements.register("ss2", ss2);
+        context.setIdentifierRegister(elements);
 
         parser.parseExclude(context, tokens("exclude", "relationship==*"));
         assertEquals(0, view.getRelationships().size());

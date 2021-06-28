@@ -41,9 +41,9 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "element"));
@@ -61,9 +61,9 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("element", deploymentNode);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("element", deploymentNode);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "element"));
@@ -101,11 +101,11 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        elements.put("box3", box3);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        elements.register("box3", box3);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "box1", "box2"));
 
@@ -125,10 +125,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         view.add(box1);
         view.add(box2);
@@ -180,10 +180,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -207,9 +207,9 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Relationship> relationships = new HashMap<>();
-        relationships.put("rel", relationship);
-        context.setRelationships(relationships);
+        IdentifersRegister identifersRegister = new IdentifersRegister();
+        identifersRegister.register("rel", relationship);
+        context.setIdentifierRegister(identifersRegister);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -245,9 +245,9 @@ class CustomViewContentParserTests extends AbstractTests {
             CustomViewDslContext context = new CustomViewDslContext(view);
             context.setWorkspace(workspace);
 
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("box1", box1);
-            context.setElements(elements);
+            IdentifersRegister elements = new IdentifersRegister();
+            elements.register("box1", box1);
+            context.setIdentifierRegister(elements);
 
             parser.parseExclude(context, tokens("exclude", "relationship.source==box1 && relationship.source==box2"));
 
@@ -269,10 +269,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -294,10 +294,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -319,10 +319,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -344,10 +344,10 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("box1", box1);
-        elements.put("box2", box2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("box1", box1);
+        elements.register("box2", box2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());

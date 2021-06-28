@@ -1,13 +1,10 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.view.ComponentView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,9 +48,9 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotAContainer() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("component", "container", "key"));
@@ -66,9 +63,9 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentView() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addSoftwareSystem("Name", "Description").addContainer("Container", "Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("Container", "Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("component", "container"));
         List<ComponentView> views = new ArrayList<>(context.getWorkspace().getViews().getComponentViews());
@@ -82,9 +79,9 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentViewWithAKey() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("component", "container", "key"));
         List<ComponentView> views = new ArrayList<>(context.getWorkspace().getViews().getComponentViews());
@@ -98,9 +95,9 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentViewWithAKeyAndDescription() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("component", "container", "key", "Description"));
         List<ComponentView> views = new ArrayList<>(context.getWorkspace().getViews().getComponentViews());

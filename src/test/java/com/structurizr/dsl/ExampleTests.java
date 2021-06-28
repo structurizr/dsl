@@ -113,6 +113,42 @@ class ExampleTests extends AbstractTests {
     }
 
     @Test
+    void test_awsLocal() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/amazon-web-services-local.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+
+        assertEquals(13, workspace.getModel().getElements().size());
+        assertEquals(0, workspace.getModel().getPeople().size());
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(2, workspace.getModel().getSoftwareSystemWithName("Spring PetClinic").getContainers().size());
+        assertEquals(1, workspace.getModel().getDeploymentNodes().size());
+        assertEquals(6, workspace.getModel().getElements().stream().filter(e -> e instanceof DeploymentNode).count());
+        assertEquals(2, workspace.getModel().getElements().stream().filter(e -> e instanceof ContainerInstance).count());
+        assertEquals(2, workspace.getModel().getElements().stream().filter(e -> e instanceof InfrastructureNode).count());
+
+        assertEquals(4, workspace.getModel().getRelationships().size());
+
+        assertEquals(0, workspace.getViews().getSystemLandscapeViews().size());
+        assertEquals(0, workspace.getViews().getSystemContextViews().size());
+        assertEquals(0, workspace.getViews().getContainerViews().size());
+        assertEquals(0, workspace.getViews().getComponentViews().size());
+        assertEquals(0, workspace.getViews().getDynamicViews().size());
+        assertEquals(1, workspace.getViews().getDeploymentViews().size());
+
+        DeploymentView deploymentView = workspace.getViews().getDeploymentViews().iterator().next();
+        assertEquals(10, deploymentView.getElements().size());
+        assertEquals(3, deploymentView.getRelationships().size());
+        assertEquals(4, deploymentView.getAnimations().size());
+
+        assertEquals(3, workspace.getViews().getConfiguration().getStyles().getElements().size());
+        assertEquals(0, workspace.getViews().getConfiguration().getStyles().getRelationships().size());
+
+        assertEquals(1, workspace.getViews().getConfiguration().getThemes().length);
+    }
+
+    @Test
     void test_bigbankplc() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/big-bank-plc.dsl"));

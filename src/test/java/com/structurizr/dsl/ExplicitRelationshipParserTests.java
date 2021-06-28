@@ -3,9 +3,6 @@ package com.structurizr.dsl;
 import com.structurizr.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExplicitRelationshipParserTests extends AbstractTests {
@@ -45,9 +42,9 @@ class ExplicitRelationshipParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", model.addPerson("User", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", model.addPerson("User", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("source", "->", "destination"));
@@ -63,10 +60,10 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -87,10 +84,10 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -111,10 +108,10 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -134,10 +131,10 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -159,10 +156,10 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DslContext context = context();
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", container);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 

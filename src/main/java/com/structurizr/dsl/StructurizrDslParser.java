@@ -20,7 +20,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^\\s*");
     private static final Pattern TOKENS_PATTERN = Pattern.compile("\"((\\\\.|[^\"])*)\"|(\\S+)");
-    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^\\s*?(//|#).*$");
     private static final String MULTI_LINE_COMMENT_START_TOKEN = "/*";
@@ -28,9 +27,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern STRING_SUBSTITUTION_PATTERN = Pattern.compile("(\\$\\{[a-zA-Z0-9-_.]+?})");
 
+    private IdentifierScope identifierScope = IdentifierScope.Global;
     private Stack<DslContext> contextStack;
-    private Map<String, Element> elements;
-    private Map<String, Relationship> relationships;
+    private IdentifersRegister identifersRegister;
     private Map<String, Constant> constants;
 
     private List<String> dslSourceLines = new ArrayList<>();
@@ -44,9 +43,21 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      */
     public StructurizrDslParser() {
         contextStack = new Stack<>();
-        elements = new HashMap<>();
-        relationships = new HashMap<>();
+        identifersRegister = new IdentifersRegister();
         constants = new HashMap<>();
+    }
+
+    public IdentifierScope getIdentifierScope() {
+        return identifierScope;
+    }
+
+    public void setIdentifierScope(IdentifierScope identifierScope) {
+        if (identifierScope == null) {
+            identifierScope = IdentifierScope.Global;
+        }
+
+        this.identifierScope = identifierScope;
+        this.identifersRegister.setIdentifierScope(identifierScope);
     }
 
     /**
@@ -83,7 +94,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     void parse(DslParserContext context, File path) throws StructurizrDslParserException {
         parse(path);
 
-        context.copyFrom(elements, relationships);
+        context.copyFrom(identifersRegister);
     }
 
     /**
@@ -115,7 +126,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     void parse(DslParserContext context, String dsl) throws StructurizrDslParserException {
         parse(dsl);
 
-        context.copyFrom(elements, relationships);
+        context.copyFrom(identifersRegister);
     }
 
     /**
@@ -165,8 +176,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     String identifier = null;
                     if (tokens.size() > 3 && ASSIGNMENT_OPERATOR_TOKEN.equals(tokens.get(1))) {
-                        identifier = tokens.get(0).toLowerCase();
-                        validateIdentifierName(identifier);
+                        identifier = tokens.get(0);
+                        identifersRegister.validateIdentifiername(identifier);
 
                         tokens = new Tokens(listOfTokens.subList(2, listOfTokens.size()));
                     }
@@ -289,12 +300,14 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         SoftwareSystem softwareSystem = getContext(SoftwareSystemDslContext.class).getSoftwareSystem();
+                        group.setParent(softwareSystem);
                         startContext(new SoftwareSystemDslContext(softwareSystem, group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class) && !getContext(ContainerDslContext.class).hasGroup()) {
                         ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
 
                         Container container = getContext(ContainerDslContext.class).getContainer();
+                        group.setParent(container);
                         startContext(new ContainerDslContext(container, group));
                         registerIdentifier(identifier, group);
                     } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
@@ -317,8 +330,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
                         DslParserContext dslParserContext = new DslParserContext(file, restricted);
-                        dslParserContext.setElements(elements);
-                        dslParserContext.setRelationships(relationships);
+                        dslParserContext.setIdentifierRegister(identifersRegister);
 
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
                         extendingWorkspace = !workspace.getModel().isEmpty();
@@ -620,7 +632,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new UserRoleParser().parse(getContext(), tokens);
 
                     } else if (INCLUDE_FILE_TOKEN.equalsIgnoreCase(firstToken)) {
-                        if (!restricted) {
+                        if (!restricted || tokens.get(1).startsWith("https://")) {
                             IncludedDslContext context = new IncludedDslContext(file);
                             new IncludeParser().parse(context, tokens);
                             parse(context.getLines(), context.getFile());
@@ -650,6 +662,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (CONSTANT_TOKEN.equalsIgnoreCase(firstToken)) {
                         Constant constant = new ConstantParser().parse(getContext(), tokens);
                         constants.put(constant.getName(), constant);
+
+                    } else if (IDENTIFIERS_TOKEN.equalsIgnoreCase(firstToken)) {
+                        setIdentifierScope(new IdentifierScopeParser().parse(getContext(), tokens));
 
                     } else {
                         throw new StructurizrDslParserException("Unexpected tokens");
@@ -704,8 +719,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private void startContext(DslContext context) {
         context.setWorkspace(workspace);
-        context.setElements(elements);
-        context.setRelationships(relationships);
+        context.setIdentifierRegister(identifersRegister);
         context.setExtendingWorkspace(extendingWorkspace);
         contextStack.push(context);
     }
@@ -735,36 +749,12 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         }
     }
 
-    private void validateIdentifierName(String identifier) {
-        if (!IDENTIFIER_PATTERN.matcher(identifier).matches()) {
-            throw new RuntimeException("Identifiers can only contain the following characters: a-zA-Z_0-9");
-        }
-    }
-
     private void registerIdentifier(String identifier, Element element) {
-        if (!StringUtils.isNullOrEmpty(identifier)) {
-            Element e = elements.get(identifier);
-            Relationship r = relationships.get(identifier);
-
-            if ((e == null && r == null) || (e == element)) {
-                elements.put(identifier, element);
-            } else {
-                throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
-            }
-        }
+        identifersRegister.register(identifier, element);
     }
 
     private void registerIdentifier(String identifier, Relationship relationship) {
-        if (!StringUtils.isNullOrEmpty(identifier)) {
-            Element e = elements.get(identifier);
-            Relationship r = relationships.get(identifier);
-
-            if ((e == null && r == null) || (r == relationship)) {
-                relationships.put(identifier, relationship);
-            } else {
-                throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
-            }
-        }
+        identifersRegister.register(identifier, relationship);
     }
 
     private boolean inContext(Class clazz) {

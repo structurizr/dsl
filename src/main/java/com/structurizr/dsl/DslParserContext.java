@@ -1,11 +1,6 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
-import com.structurizr.model.Relationship;
-
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 final class DslParserContext extends DslContext {
 
@@ -25,13 +20,13 @@ final class DslParserContext extends DslContext {
         return restricted;
     }
 
-    void copyFrom(Map<String, Element> elements, Map<String, Relationship> relationships) {
-        for (String identifier : elements.keySet()) {
-            this.elements.put(identifier, elements.get(identifier));
+    void copyFrom(IdentifersRegister identifersRegister) {
+        for (String identifier : identifersRegister.getElementIdentifiers()) {
+            this.identifersRegister.register(identifier, identifersRegister.getElement(identifier));
         }
 
-        for (String identifier : relationships.keySet()) {
-            this.relationships.put(identifier, relationships.get(identifier));
+        for (String identifier : identifersRegister.getRelationshipIdentifiers()) {
+            this.identifersRegister.register(identifier, identifersRegister.getRelationship(identifier));
         }
     }
 

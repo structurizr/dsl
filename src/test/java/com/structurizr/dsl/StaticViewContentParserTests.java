@@ -2,7 +2,6 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.view.ComponentView;
-import com.structurizr.view.ContainerView;
 import com.structurizr.view.SystemContextView;
 import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
@@ -45,9 +44,9 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "container"));
@@ -67,9 +66,9 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("component", component);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("component", component);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "component"));
@@ -112,12 +111,12 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem1", softwareSystem1);
-        elements.put("softwaresystem2", softwareSystem2);
-        elements.put("box1", box1);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem1", softwareSystem1);
+        elements.register("softwaresystem2", softwareSystem2);
+        elements.register("box1", box1);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "user", "softwareSystem1", "box1"));
 
@@ -160,11 +159,11 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem1", softwareSystem1);
-        elements.put("softwaresystem2", softwareSystem2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem1", softwareSystem1);
+        elements.register("softwaresystem2", softwareSystem2);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "user"));
 
@@ -184,9 +183,9 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("container", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("container", container);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "container"));
@@ -206,9 +205,9 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("component", component);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("component", component);
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseInclude(context, tokens("include", "component"));
@@ -259,11 +258,11 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem1", softwareSystem1);
-        elements.put("softwaresystem2", softwareSystem2);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem1", softwareSystem1);
+        elements.register("softwaresystem2", softwareSystem2);
+        context.setIdentifierRegister(elements);
 
         assertEquals(3, view.getElements().size());
         assertEquals(2, view.getRelationships().size());
@@ -288,9 +287,9 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Relationship> relationships = new HashMap<>();
-        relationships.put("rel", rel);
-        context.setRelationships(relationships);
+        IdentifersRegister identifersRegister = new IdentifersRegister();
+        identifersRegister.register("rel", rel);
+        context.setIdentifierRegister(identifersRegister);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -328,9 +327,9 @@ class StaticViewContentParserTests extends AbstractTests {
             SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
             context.setWorkspace(workspace);
 
-            Map<String, Element> elements = new HashMap<>();
-            elements.put("user", user);
-            context.setElements(elements);
+            IdentifersRegister elements = new IdentifersRegister();
+            elements.register("user", user);
+            context.setIdentifierRegister(elements);
 
             parser.parseExclude(context, tokens("exclude", "relationship.source==user && relationship.destination==softwareSystem"));
 
@@ -351,10 +350,10 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -375,10 +374,10 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -399,10 +398,10 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -423,10 +422,10 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("user", user);
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("user", user);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
@@ -780,9 +779,9 @@ class StaticViewContentParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("cc1", cc1);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("cc1", cc1);
+        context.setIdentifierRegister(elements);
 
         parser.parseInclude(context, tokens("include", "cc1->"));
 

@@ -1,14 +1,8 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
-import com.structurizr.view.ComponentView;
-import com.structurizr.view.ContainerView;
-import com.structurizr.view.SystemContextView;
-import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -164,9 +158,9 @@ class StaticViewExpressionParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("container1", container1);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("container1", container1);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> elements = parser.parseExpression("container1->", context);
         assertEquals(4, elements.size());
@@ -192,9 +186,9 @@ class StaticViewExpressionParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("container1", container1);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("container1", container1);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> elements = parser.parseExpression("container1-> && element.type==Container", context);
         assertEquals(2, elements.size());

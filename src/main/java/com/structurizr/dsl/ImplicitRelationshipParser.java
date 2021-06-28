@@ -22,10 +22,12 @@ final class ImplicitRelationshipParser extends AbstractRelationshipParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        Relationship relationship;
         String destinationId = tokens.get(DESTINATION_IDENTIFIER_INDEX);
 
-        if (context.getElement(destinationId) == null) {
+        Element sourceElement = (Element)context.getModelItem();
+        Element destinationElement = context.getElement(destinationId);
+
+        if (destinationElement == null) {
             throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
         }
 
@@ -43,9 +45,6 @@ final class ImplicitRelationshipParser extends AbstractRelationshipParser {
         if (tokens.includes(TAGS_INDEX)) {
             tags = tokens.get(TAGS_INDEX).split(",");
         }
-
-        Element sourceElement = (Element)context.getModelItem();
-        Element destinationElement = context.getElement(destinationId);
 
         return createRelationship(sourceElement, description, technology, tags, destinationElement);
     }

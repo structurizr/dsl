@@ -1,13 +1,10 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.view.SystemContextView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -52,9 +49,9 @@ class SystemContextViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystem() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("systemContext", "softwareSystem", "key"));
@@ -67,9 +64,9 @@ class SystemContextViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesASystemContextView() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("systemContext", "softwareSystem"));
         List<SystemContextView> views = new ArrayList<>(context.getWorkspace().getViews().getSystemContextViews());
@@ -82,9 +79,9 @@ class SystemContextViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesASystemContextViewWithAKey() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("systemContext", "softwareSystem", "key"));
         List<SystemContextView> views = new ArrayList<>(context.getWorkspace().getViews().getSystemContextViews());
@@ -97,9 +94,9 @@ class SystemContextViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesASystemContextViewWithAKeyAndDescription() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister register = new IdentifersRegister();
+        register.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(register);
 
         parser.parse(context, tokens("systemContext", "softwareSystem", "key", "Description"));
         List<SystemContextView> views = new ArrayList<>(context.getWorkspace().getViews().getSystemContextViews());

@@ -3,9 +3,6 @@ package com.structurizr.dsl;
 import com.structurizr.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ImplicitRelationshipParserTests extends AbstractTests {
@@ -44,8 +41,8 @@ class ImplicitRelationshipParserTests extends AbstractTests {
     void test_parse_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         Person user = model.addPerson("User", "Description");
         ModelItemDslContext context = context(user);
-        Map<String, Element> elements = new HashMap<>();
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("->", "destination"));
@@ -61,9 +58,9 @@ class ImplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         ModelItemDslContext context = context(user);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -84,9 +81,9 @@ class ImplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         ModelItemDslContext context = context(user);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -107,9 +104,9 @@ class ImplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         ModelItemDslContext context = context(user);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -129,9 +126,9 @@ class ImplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         ModelItemDslContext context = context(user);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 
@@ -153,9 +150,9 @@ class ImplicitRelationshipParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         ModelItemDslContext context = context(user);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("destination", container);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", container);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 

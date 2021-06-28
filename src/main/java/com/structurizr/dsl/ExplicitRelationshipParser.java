@@ -23,15 +23,17 @@ final class ExplicitRelationshipParser extends AbstractRelationshipParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        Relationship relationship;
         String sourceId = tokens.get(SOURCE_IDENTIFIER_INDEX);
         String destinationId = tokens.get(DESTINATION_IDENTIFIER_INDEX);
 
-        if (context.getElement(sourceId) == null) {
+        Element sourceElement = context.getElement(sourceId);
+        Element destinationElement = context.getElement(destinationId);
+
+        if (sourceElement == null) {
             throw new RuntimeException("The source element \"" + sourceId + "\" does not exist");
         }
 
-        if (context.getElement(destinationId) == null) {
+        if (destinationElement == null) {
             throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
         }
 
@@ -49,9 +51,6 @@ final class ExplicitRelationshipParser extends AbstractRelationshipParser {
         if (tokens.includes(TAGS_INDEX)) {
             tags = tokens.get(TAGS_INDEX).split(",");
         }
-
-        Element sourceElement = context.getElement(sourceId);
-        Element destinationElement = context.getElement(destinationId);
 
         return createRelationship(sourceElement, description, technology, tags, destinationElement);
     }

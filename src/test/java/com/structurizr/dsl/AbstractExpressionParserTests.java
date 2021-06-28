@@ -1,11 +1,8 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
-import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,11 +74,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship.source==a", context);
         assertEquals(1, relationships.size());
@@ -99,11 +96,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship==a->*", context);
         assertEquals(1, relationships.size());
@@ -125,11 +122,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship.destination==b", context);
         assertEquals(1, relationships.size());
@@ -147,11 +144,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship==*->b", context);
         assertEquals(1, relationships.size());
@@ -173,11 +170,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship.source==a && relationship.destination==b", context);
         assertEquals(1, relationships.size());
@@ -195,11 +192,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("a", a);
-        elements.put("b", b);
-        elements.put("c", c);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("a", a);
+        elements.register("b", b);
+        elements.register("c", c);
+        context.setIdentifierRegister(elements);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship==a->b", context);
         assertEquals(1, relationships.size());
@@ -217,11 +214,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("a", a);
-        map.put("b", b);
-        map.put("c", c);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        map.register("c", c);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> elements = parser.parseExpression("->b", context);
         assertEquals(2, elements.size());
@@ -245,11 +242,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("a", a);
-        map.put("b", b);
-        map.put("c", c);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        map.register("c", c);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> elements = parser.parseExpression("b->", context);
         assertEquals(2, elements.size());
@@ -273,11 +270,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("a", a);
-        map.put("b", b);
-        map.put("c", c);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        map.register("c", c);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> elements = parser.parseExpression("->b->", context);
         assertEquals(3, elements.size());
@@ -303,11 +300,11 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        Map<String, Element> map = new HashMap<>();
-        map.put("a", a);
-        map.put("b", b);
-        map.put("c", c);
-        context.setElements(map);
+        IdentifersRegister map = new IdentifersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        map.register("c", c);
+        context.setIdentifierRegister(map);
 
         Set<ModelItem> relationships = parser.parseExpression("relationship==*->*", context);
         assertEquals(2, relationships.size());

@@ -1,14 +1,11 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DeploymentView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,9 +76,9 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("deployment", "softwareSystem", "Live", "key"));
@@ -124,9 +121,9 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("env", new DeploymentEnvironment("Live"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("env", new DeploymentEnvironment("Live"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("deployment", "*", "env", "key"));
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
@@ -157,10 +154,10 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
+        IdentifersRegister elements = new IdentifersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("deployment", "softwareSystem", "Live"));
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
@@ -176,10 +173,10 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
+        IdentifersRegister elements = new IdentifersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("deployment", "softwareSystem", "Live", "key"));
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
@@ -195,10 +192,10 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        Map<String, Element> elements = new HashMap<>();
+        IdentifersRegister elements = new IdentifersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("deployment", "softwareSystem", "Live", "key", "Description"));
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());

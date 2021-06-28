@@ -1,15 +1,11 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.model.Person;
 import com.structurizr.model.Relationship;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DynamicView;
 import com.structurizr.view.RelationshipView;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,9 +48,9 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheSourceElementIsNotAStaticStructureElement() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", model.addDeploymentNode("Deployment Node"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", model.addDeploymentNode("Deployment Node"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseRelationship(context, tokens("source", "->", "destination"));
@@ -67,9 +63,9 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", model.addPerson("User", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", model.addPerson("User", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseRelationship(context, tokens("source", "->", "destination"));
@@ -82,10 +78,10 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotAStaticStructureElement() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", model.addPerson("User", "Description"));
-        elements.put("destination", model.addDeploymentNode("Deployment Node"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", model.addPerson("User", "Description"));
+        elements.register("destination", model.addDeploymentNode("Deployment Node"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parseRelationship(context, tokens("source", "->", "destination"));
@@ -103,10 +99,10 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parseRelationship(context, tokens("source", "->", "destination"));
 
@@ -126,10 +122,10 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parseRelationship(context, tokens("source", "->", "destination", "Does something with"));
 
@@ -150,10 +146,10 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parseRelationship(context, tokens("source", "->", "destination", "Description", "Tech 2"));
 
@@ -173,10 +169,10 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("source", user);
-        elements.put("destination", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         assertEquals(0, model.getRelationships().size());
 

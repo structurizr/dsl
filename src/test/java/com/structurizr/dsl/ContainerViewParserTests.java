@@ -1,13 +1,10 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.view.ContainerView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,9 +48,9 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystem() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("container", "softwareSystem", "key"));
@@ -66,9 +63,9 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerView() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("container", "softwareSystem"));
         List<ContainerView> views = new ArrayList<>(context.getWorkspace().getViews().getContainerViews());
@@ -82,9 +79,9 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerViewWithAKey() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("container", "softwareSystem", "key"));
         List<ContainerView> views = new ArrayList<>(context.getWorkspace().getViews().getContainerViews());
@@ -98,9 +95,9 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerViewWithAKeyAndDescription() {
         DslContext context = context();
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addSoftwareSystem("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("container", "softwareSystem", "key", "Description"));
         List<ContainerView> views = new ArrayList<>(context.getWorkspace().getViews().getContainerViews());

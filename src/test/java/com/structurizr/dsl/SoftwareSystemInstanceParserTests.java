@@ -3,9 +3,6 @@ package com.structurizr.dsl;
 import com.structurizr.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoftwareSystemInstanceParserTests extends AbstractTests {
@@ -45,9 +42,9 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystem() {
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(null);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", model.addPerson("Name", "Description"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", model.addPerson("Name", "Description"));
+        context.setIdentifierRegister(elements);
 
         try {
             parser.parse(context, tokens("softwareSystemInstance", "softwareSystem"));
@@ -62,9 +59,9 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("softwareSystemInstance", "softwareSystem"));
 
@@ -82,9 +79,9 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", softwareSystem);
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", softwareSystem);
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "Tag 1, Tag 2"));
 
@@ -102,10 +99,10 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", softwareSystem);
-        elements.put("group", new DeploymentGroup("Group"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", softwareSystem);
+        elements.register("group", new DeploymentGroup("Group"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "group"));
 
@@ -123,10 +120,10 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        Map<String, Element> elements = new HashMap<>();
-        elements.put("softwaresystem", softwareSystem);
-        elements.put("group", new DeploymentGroup("Group"));
-        context.setElements(elements);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("softwaresystem", softwareSystem);
+        elements.register("group", new DeploymentGroup("Group"));
+        context.setIdentifierRegister(elements);
 
         parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "group", "Tag 1, Tag 2"));
 

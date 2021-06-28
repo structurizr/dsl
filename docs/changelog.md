@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.0 (unreleased)
+
+- Adds an `!identifiers` keyword to specify whether element identifiers should be `global` (default) or `local`.
+
 ## 1.11.0 (7th June 2021)
 
 - __Breaking change__: Default styles are no longer added; use the `default` theme to add some default styles instead.
