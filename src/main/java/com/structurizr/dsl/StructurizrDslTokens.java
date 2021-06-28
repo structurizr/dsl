@@ -82,6 +82,7 @@ class StructurizrDslTokens {
     static final String TERMINOLOGY_TOKEN = "terminology";
     static final String TERMINOLOGY_RELATIONSHIP_TOKEN = "relationship";
     static final String USERS_TOKEN = "users";
+    static final String THIS_TOKEN = "this";
 
     static final String INCLUDE_FILE_TOKEN = "!include";
     static final String DOCS_TOKEN = "!docs";

@@ -181,4 +181,50 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         assertEquals("Relationship,Tag 1,Tag 2", r.getTags());
     }
 
+    @Test
+    void test_parse_AddsTheRelationship_WithASourceOfThis() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        GroupableElementDslContext context = new PersonDslContext(user);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("destination", softwareSystem);
+        context.setIdentifierRegister(elements);
+
+        assertEquals(0, model.getRelationships().size());
+
+        parser.parse(context, tokens("this", "->", "destination"));
+
+        assertEquals(1, model.getRelationships().size());
+        Relationship r = model.getRelationships().iterator().next();
+        assertSame(user, r.getSource());
+        assertSame(softwareSystem, r.getDestination());
+        assertEquals("", r.getDescription());
+        assertEquals("", r.getTechnology());
+        assertEquals("Relationship", r.getTags());
+    }
+
+    @Test
+    void test_parse_AddsTheRelationship_WithADestinationOfThis() {
+        Person user = model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        GroupableElementDslContext context = new SoftwareSystemDslContext(softwareSystem);
+        IdentifersRegister elements = new IdentifersRegister();
+        elements.register("source", user);
+        context.setIdentifierRegister(elements);
+
+        assertEquals(0, model.getRelationships().size());
+
+        parser.parse(context, tokens("source", "->", "this"));
+
+        assertEquals(1, model.getRelationships().size());
+        Relationship r = model.getRelationships().iterator().next();
+        assertSame(user, r.getSource());
+        assertSame(softwareSystem, r.getDestination());
+        assertEquals("", r.getDescription());
+        assertEquals("", r.getTechnology());
+        assertEquals("Relationship", r.getTags());
+    }
+
 }

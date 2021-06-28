@@ -30,11 +30,21 @@ final class ExplicitRelationshipParser extends AbstractRelationshipParser {
         Element destinationElement = context.getElement(destinationId);
 
         if (sourceElement == null) {
-            throw new RuntimeException("The source element \"" + sourceId + "\" does not exist");
+            if (StructurizrDslTokens.THIS_TOKEN.equalsIgnoreCase(sourceId) && context instanceof GroupableElementDslContext) {
+                GroupableElementDslContext groupableElementDslContext = (GroupableElementDslContext)context;
+                sourceElement = groupableElementDslContext.getElement();
+            } else {
+                throw new RuntimeException("The source element \"" + sourceId + "\" does not exist");
+            }
         }
 
         if (destinationElement == null) {
-            throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
+            if (StructurizrDslTokens.THIS_TOKEN.equalsIgnoreCase(destinationId) && context instanceof GroupableElementDslContext) {
+                GroupableElementDslContext groupableElementDslContext = (GroupableElementDslContext)context;
+                destinationElement = groupableElementDslContext.getElement();
+            } else {
+                throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
+            }
         }
 
         String description = "";

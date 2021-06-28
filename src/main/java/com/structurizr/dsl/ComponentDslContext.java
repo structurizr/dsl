@@ -1,9 +1,10 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Component;
+import com.structurizr.model.GroupableElement;
 import com.structurizr.model.ModelItem;
 
-final class ComponentDslContext extends ModelItemDslContext {
+final class ComponentDslContext extends GroupableElementDslContext {
 
     private Component component;
 
@@ -18,6 +19,11 @@ final class ComponentDslContext extends ModelItemDslContext {
     @Override
     ModelItem getModelItem() {
         return getComponent();
+    }
+
+    @Override
+    GroupableElement getElement() {
+        return component;
     }
 
 }
