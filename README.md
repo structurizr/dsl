@@ -4,11 +4,17 @@
 
 This GitHub repository contains an implementation of the Structurizr DSL - a way to create Structurizr software architecture models based upon the [C4 model](https://c4model.com) using a textual domain specific language (DSL). The Structurizr DSL has appeared on the [ThoughtWorks Tech Radar - Techniques - Diagrams as code](https://www.thoughtworks.com/radar/techniques?blipid=202010027).
 
+##  Getting started
+
 * [Getting started with Structurizr Lite](https://dev.to/simonbrown/getting-started-with-structurizr-lite-27d0) (using the DSL)
 * [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
-* [Language reference](docs/language-reference.md)
-* [Structurizr DSL cookbook](docs/cookbook) (this is a work in progress)
 * [Structurizr DSL demo](https://structurizr.com/dsl)
+
+##  Reference
+
+* [Language reference](docs/language-reference.md)
+* [Changelog](docs/changelog.md)
+* [Structurizr DSL cookbook](docs/cookbook) (this is a work in progress)
 
 ## A quick example
 
