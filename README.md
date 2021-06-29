@@ -62,6 +62,10 @@ workspace {
         user -> webapp "Uses"
         webapp -> database "Reads from and writes to"
     }
+    
+    views {
+    	theme default
+    }
 
 }
 ```
