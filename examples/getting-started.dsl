@@ -1,8 +1,8 @@
 workspace {
 
     model {
-        user = person "User" "A user of my software system."
-        softwareSystem = softwareSystem "Software System" "My software system."
+        user = person "User"
+        softwareSystem = softwareSystem "Software System"
 
         user -> softwareSystem "Uses"
     }
@@ -10,20 +10,10 @@ workspace {
     views {
         systemContext softwareSystem {
             include *
-            autoLayout
+            autolayout
         }
 
-        styles {
-            element "Software System" {
-                background #1168bd
-                color #ffffff
-            }
-            element "Person" {
-                shape person
-                background #08427b
-                color #ffffff
-            }
-        }
+        theme default
     }
     
 }

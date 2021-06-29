@@ -39,8 +39,8 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "        impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
-                "        User = person \"User\" \"A user of my software system.\" \"\" \n" +
-                "        SoftwareSystem = softwareSystem \"Software System\" \"My software system.\" \"\" \n" +
+                "        User = person \"User\" \"\" \"\" \n" +
+                "        SoftwareSystem = softwareSystem \"Software System\" \"\" \"\" \n" +
                 "        User -> SoftwareSystem \"Uses\" \"\" \"\" \n" +
                 "    }\n" +
                 "\n" +
@@ -51,17 +51,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            autolayout tb 300 300 \n" +
                 "        }\n" +
                 "\n" +
-                "        styles {\n" +
-                "            element \"Person\" {\n" +
-                "                shape \"Person\" \n" +
-                "                background \"#08427b\" \n" +
-                "                color \"#ffffff\" \n" +
-                "            }\n" +
-                "            element \"Software System\" {\n" +
-                "                background \"#1168bd\" \n" +
-                "                color \"#ffffff\" \n" +
-                "            }\n" +
-                "        }\n" +
+                "        themes \"https://static.structurizr.com/themes/default/theme.json\" \n" +
                 "\n" +
                 "    }\n" +
                 "\n" +

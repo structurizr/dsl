@@ -4,6 +4,7 @@
 
 This GitHub repository contains an implementation of the Structurizr DSL - a way to create Structurizr software architecture models based upon the [C4 model](https://c4model.com) using a textual domain specific language (DSL). The Structurizr DSL has appeared on the [ThoughtWorks Tech Radar - Techniques - Diagrams as code](https://www.thoughtworks.com/radar/techniques?blipid=202010027).
 
+* [Getting started with Structurizr Lite](https://dev.to/simonbrown/getting-started-with-structurizr-lite-27d0) (using the DSL)
 * [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
 * [Language reference](docs/language-reference.md)
 * [Structurizr DSL cookbook](docs/cookbook) (this is a work in progress)
@@ -14,32 +15,22 @@ This GitHub repository contains an implementation of the Structurizr DSL - a way
 As an example, the following text can be used to create a software architecture __model__ and an associated __view__ that describes a user using a software system.
 
 ```
-workspace "Getting Started" "This is a model of my software system." {
+workspace {
 
     model {
-        user = person "User" "A user of my software system."
-        softwareSystem = softwareSystem "Software System" "My software system."
+        user = person "User"
+        softwareSystem = softwareSystem "Software System"
 
         user -> softwareSystem "Uses"
     }
 
     views {
-        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
+        systemContext softwareSystem {
             include *
-            autoLayout
+            autolayout
         }
 
-        styles {
-            element "Software System" {
-                background #1168bd
-                color #ffffff
-            }
-            element "Person" {
-                shape person
-                background #08427b
-                color #ffffff
-            }
-        }
+        theme default
     }
     
 }
@@ -49,9 +40,7 @@ workspace "Getting Started" "This is a model of my software system." {
 
 ## Multiple output formats
 
-Using the [Structurizr CLI](https://github.com/structurizr/cli), the view can then be uploaded/rendered using the [Structurizr cloud service/on-premises installation](https://structurizr.com), or exported to other diagram formats including PlantUML, Mermaid, and WebSequenceDiagrams.
-
-![Multiple output formats: Structurizr, Mermaid, PlantUML](docs/images/multiple-output-formats.png)
+Using the [Structurizr CLI](https://github.com/structurizr/cli), the view can then be uploaded/rendered using [Structurizr Lite](https://structurizr.com/help/lite) (free), the [Structurizr cloud service/on-premises installation](https://structurizr.com) (free and paid), or exported to other diagram formats including PlantUML, Mermaid, DOT (Graphviz), WebSequenceDiagrams, and Ilograph. See [Structurizr - Rendering tools](https://structurizr.org/#rendering) for more.
 
 ## Convention over configuration, useful defaults
 
@@ -78,10 +67,10 @@ workspace {
 
 Here are some tools designed to support the Structurizr DSL.
 
+* [Structurizr Lite](https://structurizr.com/help/lite)
 * [Structurizr CLI](https://github.com/structurizr/cli)
 * [VS Code extension - syntax highlighting and diagram previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
 * [VS Code extension - syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
-* [Structurizr online DSL editor](https://structurizr.com/help/dsl)
 
 ## Examples
 

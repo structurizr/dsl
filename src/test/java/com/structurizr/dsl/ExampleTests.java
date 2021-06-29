@@ -47,11 +47,9 @@ class ExampleTests extends AbstractTests {
 
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
 
         assertEquals(1, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
 
         assertEquals(1, workspace.getModel().getRelationships().size());
         Relationship relationship = user.getRelationships().iterator().next();
@@ -64,16 +62,6 @@ class ExampleTests extends AbstractTests {
         assertEquals("SoftwareSystem-SystemContext", view.getKey());
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
     @Test
