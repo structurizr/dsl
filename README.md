@@ -43,7 +43,7 @@ workspace {
 The DSL can be rendered using a number of tools:
 
 - [Structurizr Lite](https://structurizr.com/help/lite) (free)
-- [Structurizr cloud service/on-premises installation](https://structurizr.com) (free and paid), PlantUML, Mermaid, DOT (Graphviz), WebSequenceDiagrams, and Ilograph via the [Structurizr CLI](https://github.com/structurizr/cli).
+- [Structurizr cloud service/on-premises installation](https://structurizr.com) (free and paid), PlantUML, Mermaid, DOT (Graphviz), WebSequenceDiagrams, and Ilograph via the [Structurizr CLI](https://github.com/structurizr/cli)
 
 ## Convention over configuration, useful defaults
 
