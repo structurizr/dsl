@@ -15,7 +15,7 @@ class IdentifersRegister {
 
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
-    private IdentifierScope identifierScope = IdentifierScope.Global;
+    private IdentifierScope identifierScope = IdentifierScope.Flat;
 
     private Map<String, Element> elementsByIdentifier = new HashMap<>();
     private Map<Element, String> identifiersByElement = new HashMap<>();
@@ -53,7 +53,7 @@ class IdentifersRegister {
 
         identifier = identifier.toLowerCase();
 
-        if (identifierScope == IdentifierScope.Local) {
+        if (identifierScope == IdentifierScope.Hierarchical) {
             identifier = calculateHierarchicalIdentifier(identifier, element);
         }
 

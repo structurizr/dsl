@@ -12,10 +12,10 @@ class IdentifierScopeParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(context(), tokens("!identifiers", "local", "extra"));
+            parser.parse(context(), tokens("!identifiers", "hierarchical", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: !identifiers <global|local>", e.getMessage());
+            assertEquals("Too many tokens, expected: !identifiers <flat|hierarchical>", e.getMessage());
         }
     }
 
@@ -25,22 +25,22 @@ class IdentifierScopeParserTests extends AbstractTests {
             parser.parse(context(), tokens("!identifiers"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: !identifiers <global|local>", e.getMessage());
+            assertEquals("Expected: !identifiers <flat|hierarchical>", e.getMessage());
         }
     }
 
     @Test
     void test_parse_SetsTheScope_WhenLocalIsSpecified() {
-        IdentifierScope scope = parser.parse(context(), tokens("!identifiers", "local"));
+        IdentifierScope scope = parser.parse(context(), tokens("!identifiers", "hierarchical"));
 
-        assertEquals(IdentifierScope.Local, scope);
+        assertEquals(IdentifierScope.Hierarchical, scope);
     }
 
     @Test
     void test_parse_SetsTheScope_WhenGlobalIsSpecified() {
-        IdentifierScope scope = parser.parse(context(), tokens("!identifiers", "global"));
+        IdentifierScope scope = parser.parse(context(), tokens("!identifiers", "flat"));
 
-        assertEquals(IdentifierScope.Global, scope);
+        assertEquals(IdentifierScope.Flat, scope);
     }
 
 }

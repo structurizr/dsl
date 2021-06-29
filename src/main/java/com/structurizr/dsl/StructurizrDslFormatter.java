@@ -73,7 +73,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
         start(IMPLIED_RELATIONSHIPS_TOKEN, quote("false"));
         end();
-        start(IDENTIFIERS_TOKEN, quote("local"));
+        start(IDENTIFIERS_TOKEN, quote("hierarchical"));
         end();
         newline();
 

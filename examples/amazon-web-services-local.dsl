@@ -1,6 +1,6 @@
 workspace "Amazon Web Services Example" "An example AWS deployment architecture." {
 
-    !identifiers local
+    !identifiers hierarchical
 
     model {
         springPetClinic = softwaresystem "Spring PetClinic" "Allows employees to view and manage information regarding the veterinarians, the clients, and their pets." "Spring Boot Application" {

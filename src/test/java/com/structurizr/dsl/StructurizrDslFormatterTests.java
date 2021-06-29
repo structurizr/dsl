@@ -19,7 +19,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
-                "        !identifiers \"local\" \n" +
+                "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "    }\n" +
                 "\n" +
@@ -37,7 +37,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
-                "        !identifiers \"local\" \n" +
+                "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        User = person \"User\" \"A user of my software system.\" \"\" \n" +
                 "        SoftwareSystem = softwareSystem \"Software System\" \"My software system.\" \"\" \n" +
@@ -79,7 +79,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
-                "        !identifiers \"local\" \n" +
+                "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        SpringPetClinic = softwareSystem \"Spring PetClinic\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Spring Boot Application\" {\n" +
                 "            WebApplication = container \"Web Application\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Java and Spring Boot\" \"\" \n" +
@@ -148,7 +148,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
-                "        !identifiers \"local\" \n" +
+                "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        enterprise \"Big Bank plc\" {\n" +
                 "            CustomerServiceStaff = person \"Customer Service Staff\" \"Customer service staff within the bank.\" \"Bank Staff\" \n" +
@@ -406,7 +406,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        impliedRelationships \"false\" \n" +
-                "        !identifiers \"local\" \n" +
+                "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        BusinessUser = person \"Business User\" \"A regular business user.\" \"\" \n" +
                 "        ConfigurationUser = person \"Configuration User\" \"A regular business user who can also configure the parameters used in the risk calculations.\" \"\" \n" +

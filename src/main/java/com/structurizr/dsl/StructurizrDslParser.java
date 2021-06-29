@@ -27,7 +27,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern STRING_SUBSTITUTION_PATTERN = Pattern.compile("(\\$\\{[a-zA-Z0-9-_.]+?})");
 
-    private IdentifierScope identifierScope = IdentifierScope.Global;
+    private IdentifierScope identifierScope = IdentifierScope.Flat;
     private Stack<DslContext> contextStack;
     private IdentifersRegister identifersRegister;
     private Map<String, Constant> constants;
@@ -53,7 +53,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     public void setIdentifierScope(IdentifierScope identifierScope) {
         if (identifierScope == null) {
-            identifierScope = IdentifierScope.Global;
+            identifierScope = IdentifierScope.Flat;
         }
 
         this.identifierScope = identifierScope;

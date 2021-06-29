@@ -40,7 +40,7 @@ abstract class DslContext {
     Element getElement(String identifier) {
         Element element = identifersRegister.getElement(identifier.toLowerCase());
 
-        if (element == null && identifersRegister.getIdentifierScope() == IdentifierScope.Local) {
+        if (element == null && identifersRegister.getIdentifierScope() == IdentifierScope.Hierarchical) {
             if (this instanceof ModelItemDslContext) {
                 ModelItemDslContext modelItemDslContext = (ModelItemDslContext)this;
                 if (modelItemDslContext.getModelItem() instanceof Element) {

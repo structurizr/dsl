@@ -2,7 +2,7 @@
 
 ## 1.12.0 (unreleased)
 
-- Adds an `!identifiers` keyword to specify whether element identifiers should be `global` (default) or `local`.
+- Adds an `!identifiers` keyword to specify whether element identifiers should be `flat` (default) or `hierarchical`.
 - Adds support for a `this` identifier when defining relationships inside element definitions.
 
 ## 1.11.0 (7th June 2021)
