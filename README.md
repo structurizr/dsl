@@ -40,7 +40,10 @@ workspace {
 
 ## Multiple output formats
 
-Using the [Structurizr CLI](https://github.com/structurizr/cli), the view can then be uploaded/rendered using [Structurizr Lite](https://structurizr.com/help/lite) (free), the [Structurizr cloud service/on-premises installation](https://structurizr.com) (free and paid), or exported to other diagram formats including PlantUML, Mermaid, DOT (Graphviz), WebSequenceDiagrams, and Ilograph. See [Structurizr - Rendering tools](https://structurizr.org/#rendering) for more.
+The DSL can be rendered using a number of tools:
+
+- [Structurizr Lite](https://structurizr.com/help/lite) (free)
+- [Structurizr cloud service/on-premises installation](https://structurizr.com) (free and paid), PlantUML, Mermaid, DOT (Graphviz), WebSequenceDiagrams, and Ilograph via the [Structurizr CLI](https://github.com/structurizr/cli).
 
 ## Convention over configuration, useful defaults
 
