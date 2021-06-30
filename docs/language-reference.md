@@ -154,7 +154,7 @@ workspace {
 }
 ```
 
-The `!identifiers` keyword allows you to specify that identifiers should be treated as `hierarchical`. For example:
+The `!identifiers` keyword allows you to specify that element identifiers should be treated as `hierarchical` (relationship identifiers are unaffected by this setting). For example:
 
 ```
 workspace {
