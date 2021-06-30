@@ -4,6 +4,7 @@
 
 - Adds an `!identifiers` keyword to specify whether element identifiers should be `flat` (default) or `hierarchical`.
 - Adds support for a `this` identifier when defining relationships inside element definitions.
+- Fixes links between ADRs.
 
 ## 1.11.0 (7th June 2021)
 
