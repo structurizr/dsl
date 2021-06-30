@@ -135,6 +135,46 @@ p -> ss "Uses"
 
 Identifiers are only needed where you plan to reference the element/relationship.
 
+### Identifier scope
+
+By default, all identifiers are treated as being globally scoped and `flat`, so the following will fail with an error message saying that the `api` identifier is already in use.
+
+```
+workspace {
+
+    model {
+        softwareSystem1 = softwareSystem "Software System 1" {
+            api = container "API"
+        }
+
+        softwareSystem2 = softwareSystem "Software System 2" {
+            api = container "API"
+        }
+    }
+}
+```
+
+The `!identifiers` keyword allows you to specify that identifiers should be treated as `hierarchical`. For example:
+
+```
+workspace {
+
+    !identifiers local
+
+    model {
+        softwareSystem1 = softwareSystem "Software System 1" {
+            api = container "API"
+        }
+
+        softwareSystem2 = softwareSystem "Software System 2" {
+            api = container "API"
+        }
+    }
+}
+```
+ 
+ Now the two API containers are referenceable via `softwareSystem1.api` and `softwareSystem2.api` respectively.
+ 
 ## Includes
 
 The `!include` keyword can be used to include another file, to provide some degree of modularity, and to reuse definition fragments between workspaces.
@@ -579,6 +619,14 @@ For example:
 ```
 person user {
     -> softwareSystem "Uses"
+}
+```
+
+This is equivalent to the following, where the special `this` identifier is used to refer to the element in scope:
+
+```
+person user {
+    this -> softwareSystem "Uses"
 }
 ```
 
