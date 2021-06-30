@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.12.0 (unreleased)
+## 1.12.0 (30th June 2021)
 
 - Adds an `!identifiers` keyword to specify whether element identifiers should be `flat` (default) or `hierarchical`.
 - Adds support for a `this` identifier when defining relationships inside element definitions.
