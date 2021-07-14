@@ -159,7 +159,7 @@ The `!identifiers` keyword allows you to specify that element identifiers should
 ```
 workspace {
 
-    !identifiers local
+    !identifiers hierarchical
 
     model {
         softwareSystem1 = softwareSystem "Software System 1" {
