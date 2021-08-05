@@ -14,3 +14,4 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [Amazon Web Services](amazon-web-services)
 - [Element styles](element-styles)
 - [Relationship styles](relationship-styles)
+- [Implied relationships](implied-relationships)
