@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased)
+
+Adds support for using custom implied relationship strategies.
+
 ## 1.12.0 (30th June 2021)
 
 - Adds an `!identifiers` keyword to specify whether element identifiers should be `flat` (default) or `hierarchical`.

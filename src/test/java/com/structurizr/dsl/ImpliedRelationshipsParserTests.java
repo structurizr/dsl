@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class ImpliedRelationshipsParserTests extends AbstractTests {
 
-    private ImpliedRelationshipsParser parser = new ImpliedRelationshipsParser();
+    private ImpliedRelationshipsParser parser = new ImpliedRelationshipsParser(false);
 
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
@@ -15,7 +15,7 @@ class ImpliedRelationshipsParserTests extends AbstractTests {
             parser.parse(context(), tokens("impliedRelationships", "boolean", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: impliedRelationships <true|false>", e.getMessage());
+            assertEquals("Too many tokens, expected: impliedRelationships <true|false|fqn>", e.getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ class ImpliedRelationshipsParserTests extends AbstractTests {
             parser.parse(context(), tokens("impliedRelationships"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: impliedRelationships <true|false>", e.getMessage());
+            assertEquals("Expected: impliedRelationships <true|false|fqn>", e.getMessage());
         }
     }
 
@@ -39,6 +39,21 @@ class ImpliedRelationshipsParserTests extends AbstractTests {
     @Test
     void test_parse_SetsTheStrategy_WhenTrueIsSpecified() {
         parser.parse(context(), tokens("impliedRelationships", "true"));
+
+        assertEquals("com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy", workspace.getModel().getImpliedRelationshipsStrategy().getClass().getCanonicalName());
+    }
+
+    @Test
+    void test_parse_SetsTheStrategy_WhenAFullyQualifiedClassNameIsSpecifiedAndNotRestricted() {
+        parser.parse(context(), tokens("impliedRelationships", "com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy"));
+
+        assertEquals("com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy", workspace.getModel().getImpliedRelationshipsStrategy().getClass().getCanonicalName());
+    }
+
+    @Test
+    void test_parse_SetsTheStrategy_WhenAFullyQualifiedClassNameIsSpecifiedAndRestricted() {
+        parser = new ImpliedRelationshipsParser(true);
+        parser.parse(context(), tokens("impliedRelationships", "com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy"));
 
         assertEquals("com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy", workspace.getModel().getImpliedRelationshipsStrategy().getClass().getCanonicalName());
     }
