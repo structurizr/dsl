@@ -12,7 +12,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [Identifiers](#identifiers)
 - [!include](#includes)
 - [!constant](#constants)
-- [!expressions](#expressions)
+- [expressions](#expressions)
 - [Grammar](#grammar)
     - [workspace](#workspace)
         - [!docs](#documentation)
@@ -886,7 +886,7 @@ To include elements in a view, use one or more `include` statements inside the b
 include <*|identifier|expression> [identifier|expression...]
 ```
 
-Elements can either be specified using individual identifiers, the wildcard identifier (`*`), or a property expression.
+Elements can either be specified using individual identifiers, the wildcard identifier (`*`), or a property expression. Please note that including elements will also include the relationships between those elements.
 
 The wildcard identifier (`*`) operates differently depending upon the type of diagram, as follows:
 
