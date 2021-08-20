@@ -749,4 +749,10 @@ class ExampleTests extends AbstractTests {
         assertEquals(6, deploymentView.getElements().size());
     }
 
+    @Test
+    void test_hierarchicalIdentifiersAndDeploymentNodes() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/hierarchical-identifiers-and-deployment-nodes.dsl"));
+    }
+
 }

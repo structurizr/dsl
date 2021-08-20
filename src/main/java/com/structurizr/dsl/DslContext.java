@@ -52,6 +52,12 @@ abstract class DslContext {
                         parent = parent.getParent();
                     }
                 }
+            } else if (this instanceof DeploymentEnvironmentDslContext) {
+                DeploymentEnvironmentDslContext deploymentEnvironmentDslContext = (DeploymentEnvironmentDslContext)this;
+                DeploymentEnvironment deploymentEnvironment = new DeploymentEnvironment(deploymentEnvironmentDslContext.getEnvironment());
+                String parentIdentifier = identifersRegister.findIdentifier(deploymentEnvironment);
+
+                element = identifersRegister.getElement(parentIdentifier + "." + identifier);
             }
         }
 

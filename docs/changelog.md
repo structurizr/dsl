@@ -2,7 +2,8 @@
 
 ## (unreleased)
 
-Adds support for using custom implied relationship strategies.
+- Adds support for using custom implied relationship strategies.
+- Fixes #69 (hierarchical identifiers not working at the top level inside a deployment environment).
 
 ## 1.12.0 (30th June 2021)
 
