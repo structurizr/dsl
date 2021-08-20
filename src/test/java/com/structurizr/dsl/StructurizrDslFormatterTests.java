@@ -18,7 +18,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         assertEquals("workspace \"Name\" \"Description\" {\n" +
                 "\n" +
                 "    model {\n" +
-                "        impliedRelationships \"false\" \n" +
+                "        !impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "    }\n" +
@@ -36,7 +36,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         assertEquals("workspace \"Name\" \"Description\" {\n" +
                 "\n" +
                 "    model {\n" +
-                "        impliedRelationships \"false\" \n" +
+                "        !impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        User = person \"User\" \"\" \"\" \n" +
@@ -68,7 +68,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         assertEquals("workspace \"Amazon Web Services Example\" \"An example AWS deployment architecture.\" {\n" +
                 "\n" +
                 "    model {\n" +
-                "        impliedRelationships \"false\" \n" +
+                "        !impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        SpringPetClinic = softwareSystem \"Spring PetClinic\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Spring Boot Application\" {\n" +
@@ -137,7 +137,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         assertEquals("workspace \"Big Bank plc\" \"This is an example workspace to illustrate the key features of Structurizr, via the DSL, based around a fictional online banking system.\" {\n" +
                 "\n" +
                 "    model {\n" +
-                "        impliedRelationships \"false\" \n" +
+                "        !impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        enterprise \"Big Bank plc\" {\n" +
@@ -395,7 +395,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
         assertEquals("workspace \"Financial Risk System\" \"This is a simple (incomplete) example C4 model based upon the financial risk system architecture kata, which can be found at http://bit.ly/sa4d-risksystem\" {\n" +
                 "\n" +
                 "    model {\n" +
-                "        impliedRelationships \"false\" \n" +
+                "        !impliedRelationships \"false\" \n" +
                 "        !identifiers \"hierarchical\" \n" +
                 "\n" +
                 "        BusinessUser = person \"Business User\" \"A regular business user.\" \"\" \n" +

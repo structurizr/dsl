@@ -335,7 +335,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
                         extendingWorkspace = !workspace.getModel().isEmpty();
                         startContext(new WorkspaceDslContext());
-                    } else if (IMPLIED_RELATIONSHIPS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
+                    } else if (IMPLIED_RELATIONSHIPS_TOKEN.equalsIgnoreCase(firstToken)) {
                         new ImpliedRelationshipsParser(restricted).parse(getContext(), tokens);
 
                     } else if (NAME_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {

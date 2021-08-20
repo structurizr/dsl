@@ -1,7 +1,8 @@
 # Changelog
 
-## (unreleased)
+## 1.13.0 (unreleased)
 
+- __Breaking change__: `impliedRelationships` is now `!impliedRelationships`.
 - Adds support for using custom implied relationship strategies.
 - Adds support for "include relationship==*" (#68).
 - Fixes #69 (hierarchical identifiers not working at the top level inside a deployment environment).
