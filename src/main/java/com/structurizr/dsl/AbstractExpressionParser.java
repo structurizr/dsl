@@ -118,6 +118,10 @@ abstract class AbstractExpressionParser {
 
             if (expr.startsWith(RELATIONSHIP_EQUALS_EXPRESSION)) {
                 expr = expr.substring(RELATIONSHIP_EQUALS_EXPRESSION.length());
+
+                if (WILDCARD.equals(expr)) {
+                    expr = WILDCARD + RELATIONSHIP + WILDCARD;
+                }
             }
 
             if (RELATIONSHIP.equals(expr)) {

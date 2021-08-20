@@ -315,5 +315,10 @@ class AbstractExpressionParserTests extends AbstractTests {
         assertEquals(2, relationships.size());
         assertTrue(relationships.contains(aToB));
         assertTrue(relationships.contains(bToC));
+
+        relationships = parser.parseExpression("relationship==*", context);
+        assertEquals(2, relationships.size());
+        assertTrue(relationships.contains(aToB));
+        assertTrue(relationships.contains(bToC));
     }
 }
