@@ -141,7 +141,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             ViewSet views = workspace.getViews();
 
             views.getSystemLandscapeViews().stream().sorted(Comparator.comparing(SystemLandscapeView::getKey)).forEach(view -> {
-                start(SYSTEM_LANDSCAPE_VIEW_TOKEN, quote(view.getKey()), quote(view.getDescription()));
+                start(SYSTEM_LANDSCAPE_VIEW_TOKEN, quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
@@ -156,7 +156,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getSystemContextViews().stream().sorted(Comparator.comparing(SystemContextView::getKey)).forEach(view -> {
-                start(SYSTEM_CONTEXT_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey()), quote(view.getDescription()));
+                start(SYSTEM_CONTEXT_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
@@ -171,7 +171,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getContainerViews().stream().sorted(Comparator.comparing(ContainerView::getKey)).forEach(view -> {
-                start(CONTAINER_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey()), quote(view.getDescription()));
+                start(CONTAINER_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
@@ -186,7 +186,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getComponentViews().stream().sorted(Comparator.comparing(ComponentView::getKey)).forEach(view -> {
-                start(COMPONENT_VIEW_TOKEN, id(view.getContainer(), true), quote(view.getKey()), quote(view.getDescription()));
+                start(COMPONENT_VIEW_TOKEN, id(view.getContainer(), true), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
                 view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
                 {
@@ -207,7 +207,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                     tags.append(" ");
                 }
 
-                start(FILTERED_VIEW_TOKEN, quote(view.getBaseViewKey()), view.getMode().toString(), quote(tags.toString().trim()), quote(view.getKey()), quote(view.getDescription()));
+                start(FILTERED_VIEW_TOKEN, quote(view.getBaseViewKey().replaceAll(" ", "")), view.getMode().toString(), quote(tags.toString().trim()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
                 end();
                 newline();
             });
@@ -458,6 +458,8 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         if (content != null) {
             s = content.toString();
         }
+
+        s = s.replaceAll("\\n", " ");
 
         return String.format("\"%s\"", s);
     }
