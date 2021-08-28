@@ -698,10 +698,22 @@ perspectives {
 
 ### !ref
 
-The `!ref` keyword provides a way to reference a previously defined element, and is designed to be used with the workspace extension or `!include` features.
+The `!ref` keyword provides a way to reference a previously defined element, and is designed to be used with the workspace `extends` or `!include` features. It can be used in a couple of ways.
+
+The first usage scenario is to reference an existing element that has been defined via the DSL. This allows you to extend the element referenced by the given identifier.
 
 ```
-!ref <identifier|canonical name>
+!ref <identifier> {
+  ...
+}
+```
+
+Or, if you're extending a JSON-based workspace, you can reference an element by its "canonical name", and assign that to an identifer.
+
+```
+<identifier> = !ref <canonical name> {
+  ...
+}
 ```
 
 See [ref.dsl](../examples/ref.dsl) for some usage examples.
