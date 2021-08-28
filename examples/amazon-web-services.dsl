@@ -9,7 +9,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
 
         deploymentEnvironment "Live" {
             deploymentNode "Amazon Web Services" "" "" "Amazon Web Services - Cloud" {
-                deploymentNode "US-East-1" "" "" "Amazon Web Services - Region" {
+                region = deploymentNode "US-East-1" "" "" "Amazon Web Services - Region" {
                     route53 = infrastructureNode "Route 53" "" "" "Amazon Web Services - Route 53"
                     elb = infrastructureNode "Elastic Load Balancer" "" "" "Amazon Web Services - Elastic Load Balancing"
 
