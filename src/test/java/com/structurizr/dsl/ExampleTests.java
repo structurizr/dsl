@@ -718,8 +718,9 @@ class ExampleTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/ref.dsl"));
 
-        Element element = parser.getWorkspace().getModel().getElementWithCanonicalName("InfrastructureNode://Live/Amazon Web Services/US-East-1/New deployment node/New infrastructure node");
-        assertEquals("New infrastructure node", element.getName());
+        assertNotNull(parser.getWorkspace().getModel().getElementWithCanonicalName("InfrastructureNode://Live/Amazon Web Services/New deployment node/New infrastructure node"));
+        assertNotNull(parser.getWorkspace().getModel().getElementWithCanonicalName("InfrastructureNode://Live/Amazon Web Services/US-East-1/New deployment node 1/New infrastructure node 1"));
+        assertNotNull(parser.getWorkspace().getModel().getElementWithCanonicalName("InfrastructureNode://Live/Amazon Web Services/US-East-1/New deployment node 2/New infrastructure node 2"));
     }
 
     @Test

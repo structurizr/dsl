@@ -76,7 +76,7 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -121,7 +121,7 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("env", new DeploymentEnvironment("Live"));
         context.setIdentifierRegister(elements);
 
@@ -154,7 +154,7 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -173,7 +173,7 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -192,7 +192,7 @@ class DeploymentViewParserTests extends AbstractTests {
         DslContext context = context();
         context.getWorkspace().getModel().addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);

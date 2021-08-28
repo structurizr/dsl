@@ -2,9 +2,25 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/examp
 
     model {
 
-        region = ref "DeploymentNode://Live/Amazon Web Services/US-East-1" {
+        !ref "DeploymentNode://Live/Amazon Web Services" {
             deploymentNode "New deployment node" {
                 infrastructureNode "New infrastructure node" {
+                    -> route53
+                }
+            }
+        }
+
+        !ref "DeploymentNode://Live/Amazon Web Services/US-East-1" {
+            deploymentNode "New deployment node 1" {
+                infrastructureNode "New infrastructure node 1" {
+                    -> route53
+                }
+            }
+        }
+
+        !ref region {
+            deploymentNode "New deployment node 2" {
+                infrastructureNode "New infrastructure node 2" {
                     -> route53
                 }
             }
@@ -14,7 +30,7 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/examp
 
     views {
         deployment * "Live" {
-            include region
+            include *
             autolayout lr
         }
     }

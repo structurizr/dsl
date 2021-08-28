@@ -158,7 +158,7 @@ class StaticViewExpressionParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("container1", container1);
         context.setIdentifierRegister(map);
 
@@ -186,7 +186,7 @@ class StaticViewExpressionParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("container1", container1);
         context.setIdentifierRegister(map);
 

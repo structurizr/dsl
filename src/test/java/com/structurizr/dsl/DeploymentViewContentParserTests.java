@@ -5,9 +5,6 @@ import com.structurizr.view.DeploymentView;
 import com.structurizr.view.RelationshipView;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeploymentViewContentParserTests extends AbstractTests {
@@ -121,7 +118,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         ContainerInstance live4 = live2.add(c1);
         ContainerInstance live5 = live2.add(c2);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", live1);
         elements.register("box1", box1);
 
@@ -146,7 +143,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
         InfrastructureNode in = dn.addInfrastructureNode("IN", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", in);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
@@ -168,7 +165,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
         SoftwareSystemInstance softwareSystemInstance = dn.add(softwareSystem);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", softwareSystemInstance);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
@@ -191,7 +188,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container");
         ContainerInstance containerInstance = dn.add(container);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", containerInstance);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
@@ -232,7 +229,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentNode dn = model.addDeploymentNode("Live", "DN", "Description", "Technology");
         InfrastructureNode in = dn.addInfrastructureNode("IN", "Description", "Technology");
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", in);
 
         DeploymentView view = views.createDeploymentView("key", "Description");
@@ -267,7 +264,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister identifersRegister = new IdentifersRegister();
+        IdentifiersRegister identifersRegister = new IdentifiersRegister();
         identifersRegister.register("rel", rel);
         context.setIdentifierRegister(identifersRegister);
 
@@ -294,7 +291,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
             DeploymentViewDslContext context = new DeploymentViewDslContext(view);
             context.setWorkspace(workspace);
 
-            IdentifersRegister elements = new IdentifersRegister();
+            IdentifiersRegister elements = new IdentifiersRegister();
             elements.register("ss2", ss2);
             context.setIdentifierRegister(elements);
 
@@ -322,7 +319,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
             DeploymentViewDslContext context = new DeploymentViewDslContext(view);
             context.setWorkspace(workspace);
 
-            IdentifersRegister elements = new IdentifersRegister();
+            IdentifiersRegister elements = new IdentifiersRegister();
             elements.register("ss1", ss1);
             context.setIdentifierRegister(elements);
 
@@ -350,7 +347,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("ss1", ss1);
         elements.register("ss2", ss2);
         context.setIdentifierRegister(elements);
@@ -375,7 +372,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("ss1", ss1);
         elements.register("ss2", ss2);
         context.setIdentifierRegister(elements);
@@ -400,7 +397,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("ss1", ss1);
         elements.register("ss2", ss2);
         context.setIdentifierRegister(elements);
@@ -425,7 +422,7 @@ class DeploymentViewContentParserTests extends AbstractTests {
         DeploymentViewDslContext context = new DeploymentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("ss1", ss1);
         elements.register("ss2", ss2);
         context.setIdentifierRegister(elements);

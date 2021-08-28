@@ -74,7 +74,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -96,7 +96,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -122,7 +122,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -144,7 +144,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -170,7 +170,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -192,7 +192,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("a", a);
         elements.register("b", b);
         elements.register("c", c);
@@ -214,7 +214,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("a", a);
         map.register("b", b);
         map.register("c", c);
@@ -242,7 +242,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("a", a);
         map.register("b", b);
         map.register("c", c);
@@ -270,7 +270,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("a", a);
         map.register("b", b);
         map.register("c", c);
@@ -300,7 +300,7 @@ class AbstractExpressionParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
         context.setWorkspace(workspace);
 
-        IdentifersRegister map = new IdentifersRegister();
+        IdentifiersRegister map = new IdentifiersRegister();
         map.register("a", a);
         map.register("b", b);
         map.register("c", c);

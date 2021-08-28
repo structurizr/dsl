@@ -29,7 +29,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
     private Stack<DslContext> contextStack;
-    private IdentifersRegister identifersRegister;
+    private IdentifiersRegister identifersRegister;
     private Map<String, Constant> constants;
 
     private List<String> dslSourceLines = new ArrayList<>();
@@ -43,7 +43,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      */
     public StructurizrDslParser() {
         contextStack = new Stack<>();
-        identifersRegister = new IdentifersRegister();
+        identifersRegister = new IdentifiersRegister();
         constants = new HashMap<>();
     }
 
@@ -177,7 +177,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     String identifier = null;
                     if (tokens.size() > 3 && ASSIGNMENT_OPERATOR_TOKEN.equals(tokens.get(1))) {
                         identifier = tokens.get(0);
-                        identifersRegister.validateIdentifiername(identifier);
+                        identifersRegister.validateIdentifierName(identifier);
 
                         tokens = new Tokens(listOfTokens.subList(2, listOfTokens.size()));
                     }
@@ -239,7 +239,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             }
                         }
 
-                        registerIdentifier(identifier, element);
+                        if (!StringUtils.isNullOrEmpty(identifier)) {
+                            registerIdentifier(identifier, element);
+                        }
 
                     } else if (CUSTOM_ELEMENT_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
                         CustomElement customElement = new CustomElementParser().parse(getContext(GroupableDslContext.class), tokens.withoutContextStartToken());

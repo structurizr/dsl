@@ -22,7 +22,6 @@ class StructurizrDslTokens {
     static final String PERSPECTIVES_TOKEN = "perspectives";
     static final String WORKSPACE_TOKEN = "workspace";
     static final String EXTENDS_TOKEN = "extends";
-    static final String REF_TOKEN = "ref";
     static final String IMPLIED_RELATIONSHIPS_TOKEN = "!impliedRelationships";
     static final String MODEL_TOKEN = "model";
     static final String VIEWS_TOKEN = "views";
@@ -89,5 +88,6 @@ class StructurizrDslTokens {
     static final String ADRS_TOKEN = "!adrs";
     static final String CONSTANT_TOKEN = "!constant";
     static final String IDENTIFIERS_TOKEN = "!identifiers";
+    static final String REF_TOKEN = "!ref";
 
 }

@@ -42,7 +42,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", model.addPerson("User", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -60,7 +60,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -84,7 +84,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -108,7 +108,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -131,7 +131,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DslContext context = context();
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -156,7 +156,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DslContext context = context();
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", container);
         context.setIdentifierRegister(elements);
@@ -187,7 +187,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
 
         GroupableElementDslContext context = new PersonDslContext(user);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
 
@@ -210,7 +210,7 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
 
         GroupableElementDslContext context = new SoftwareSystemDslContext(softwareSystem);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         context.setIdentifierRegister(elements);
 

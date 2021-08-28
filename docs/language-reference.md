@@ -33,6 +33,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
                     - [containerInstance](#containerInstance)
             - [element](#element)
             - [-> (relationship)](#relationship)
+            - [!ref](#ref)
         - [views](#views)
             - [systemLandscape](#systemLandscape-view)
             - [systemContext](#systemContext-view)
@@ -694,6 +695,18 @@ perspectives {
     ...
 }
 ```
+
+### !ref
+
+The `!ref` keyword provides a way to reference a previously defined element, and is designed to be used with the workspace extension or `!include` features.
+
+```
+!ref <identifier|canonical name>
+```
+
+See [ref.dsl](../examples/ref.dsl) for some usage examples.
+
+__Please note that `!ref` is currently an experimental feature, and subject to change.__ 
 
 ### views
 

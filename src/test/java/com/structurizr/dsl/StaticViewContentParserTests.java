@@ -6,9 +6,6 @@ import com.structurizr.view.SystemContextView;
 import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class StaticViewContentParserTests extends AbstractTests {
@@ -44,7 +41,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         context.setIdentifierRegister(elements);
 
@@ -66,7 +63,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("component", component);
         context.setIdentifierRegister(elements);
 
@@ -111,7 +108,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem1", softwareSystem1);
         elements.register("softwaresystem2", softwareSystem2);
@@ -159,7 +156,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem1", softwareSystem1);
         elements.register("softwaresystem2", softwareSystem2);
@@ -183,7 +180,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         context.setIdentifierRegister(elements);
 
@@ -205,7 +202,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemContextViewDslContext context = new SystemContextViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("component", component);
         context.setIdentifierRegister(elements);
 
@@ -258,7 +255,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem1", softwareSystem1);
         elements.register("softwaresystem2", softwareSystem2);
@@ -287,7 +284,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister identifersRegister = new IdentifersRegister();
+        IdentifiersRegister identifersRegister = new IdentifiersRegister();
         identifersRegister.register("rel", rel);
         context.setIdentifierRegister(identifersRegister);
 
@@ -327,7 +324,7 @@ class StaticViewContentParserTests extends AbstractTests {
             SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
             context.setWorkspace(workspace);
 
-            IdentifersRegister elements = new IdentifersRegister();
+            IdentifiersRegister elements = new IdentifiersRegister();
             elements.register("user", user);
             context.setIdentifierRegister(elements);
 
@@ -350,7 +347,7 @@ class StaticViewContentParserTests extends AbstractTests {
         SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -374,7 +371,7 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -398,7 +395,7 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -422,7 +419,7 @@ class StaticViewContentParserTests extends AbstractTests {
         context.setWorkspace(workspace);
 
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("user", user);
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -779,7 +776,7 @@ class StaticViewContentParserTests extends AbstractTests {
         ComponentViewDslContext context = new ComponentViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("cc1", cc1);
         context.setIdentifierRegister(elements);
 

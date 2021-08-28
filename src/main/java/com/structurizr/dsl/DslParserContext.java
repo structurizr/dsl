@@ -20,7 +20,7 @@ final class DslParserContext extends DslContext {
         return restricted;
     }
 
-    void copyFrom(IdentifersRegister identifersRegister) {
+    void copyFrom(IdentifiersRegister identifersRegister) {
         for (String identifier : identifersRegister.getElementIdentifiers()) {
             this.identifersRegister.register(identifier, identifersRegister.getElement(identifier));
         }

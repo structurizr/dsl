@@ -42,7 +42,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystem() {
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(null);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -59,7 +59,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
 
@@ -79,7 +79,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
 
@@ -99,7 +99,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", softwareSystem);
         elements.register("group", new DeploymentGroup("Group"));
         context.setIdentifierRegister(elements);
@@ -120,7 +120,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", softwareSystem);
         elements.register("group", new DeploymentGroup("Group"));
         context.setIdentifierRegister(elements);

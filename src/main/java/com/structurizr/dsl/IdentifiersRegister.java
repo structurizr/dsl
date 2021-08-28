@@ -11,18 +11,17 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-class IdentifersRegister {
+class IdentifiersRegister {
 
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
 
     private Map<String, Element> elementsByIdentifier = new HashMap<>();
-    private Map<Element, String> identifiersByElement = new HashMap<>();
 
     private Map<String, Relationship> relationshipsByIdentifier = new HashMap<>();
 
-    IdentifersRegister() {
+    IdentifiersRegister() {
     }
 
     IdentifierScope getIdentifierScope() {
@@ -57,12 +56,24 @@ class IdentifersRegister {
             identifier = calculateHierarchicalIdentifier(identifier, element);
         }
 
+        // check whether this element has already been registered with another identifier
+        for (String id : elementsByIdentifier.keySet()) {
+            Element e = elementsByIdentifier.get(id);
+
+            if (e.equals(element) && !id.equals(identifier)) {
+                if (id.matches("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")) {
+                    throw new RuntimeException("Please assign an identifier to \"" + element.getCanonicalName() + "\" before using it with !ref");
+                } else {
+                    throw new RuntimeException("The element is already registered with an identifier of \"" + id + "\"");
+                }
+            }
+        }
+
         Element e = elementsByIdentifier.get(identifier);
         Relationship r = relationshipsByIdentifier.get(identifier);
 
         if ((e == null && r == null) || (e == element)) {
             elementsByIdentifier.put(identifier, element);
-            identifiersByElement.put(element, identifier);
         } else {
             throw new RuntimeException("The identifier \"" + identifier + "\" is already in use");
         }
@@ -103,10 +114,18 @@ class IdentifersRegister {
     }
 
     String findIdentifier(Element element) {
-        return identifiersByElement.get(element);
+        for (String identifier : elementsByIdentifier.keySet()) {
+            Element e = elementsByIdentifier.get(identifier);
+
+            if (e.equals(element)) {
+                return identifier;
+            }
+        }
+
+        return null;
     }
 
-    void validateIdentifiername(String identifier) {
+    void validateIdentifierName(String identifier) {
         if (!IDENTIFIER_PATTERN.matcher(identifier).matches()) {
             throw new RuntimeException("Identifiers can only contain the following characters: a-zA-Z_0-9");
         }

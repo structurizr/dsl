@@ -15,7 +15,7 @@ abstract class DslContext {
     private Workspace workspace;
     private boolean extendingWorkspace;
 
-    protected IdentifersRegister identifersRegister = new IdentifersRegister();
+    protected IdentifiersRegister identifersRegister = new IdentifiersRegister();
 
     Workspace getWorkspace() {
         return workspace;
@@ -33,7 +33,7 @@ abstract class DslContext {
         this.extendingWorkspace = extendingWorkspace;
     }
 
-    void setIdentifierRegister(IdentifersRegister identifersRegister) {
+    void setIdentifierRegister(IdentifiersRegister identifersRegister) {
         this.identifersRegister = identifersRegister;
     }
 

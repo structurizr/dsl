@@ -4,9 +4,6 @@ import com.structurizr.model.*;
 import com.structurizr.view.CustomView;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomViewContentParserTests extends AbstractTests {
@@ -41,7 +38,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", softwareSystem);
         context.setIdentifierRegister(elements);
 
@@ -61,7 +58,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("element", deploymentNode);
         context.setIdentifierRegister(elements);
 
@@ -101,7 +98,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         elements.register("box3", box3);
@@ -125,7 +122,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);
@@ -180,7 +177,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);
@@ -207,7 +204,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister identifersRegister = new IdentifersRegister();
+        IdentifiersRegister identifersRegister = new IdentifiersRegister();
         identifersRegister.register("rel", relationship);
         context.setIdentifierRegister(identifersRegister);
 
@@ -245,7 +242,7 @@ class CustomViewContentParserTests extends AbstractTests {
             CustomViewDslContext context = new CustomViewDslContext(view);
             context.setWorkspace(workspace);
 
-            IdentifersRegister elements = new IdentifersRegister();
+            IdentifiersRegister elements = new IdentifiersRegister();
             elements.register("box1", box1);
             context.setIdentifierRegister(elements);
 
@@ -269,7 +266,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);
@@ -294,7 +291,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);
@@ -319,7 +316,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);
@@ -344,7 +341,7 @@ class CustomViewContentParserTests extends AbstractTests {
         CustomViewDslContext context = new CustomViewDslContext(view);
         context.setWorkspace(workspace);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("box1", box1);
         elements.register("box2", box2);
         context.setIdentifierRegister(elements);

@@ -58,7 +58,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystemOrContainer() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("person", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -95,7 +95,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithSoftwareSystemScope() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -112,7 +112,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithSoftwareSystemScopeAndKey() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -129,7 +129,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithSoftwareSystemScopeAndKeyAndDescription() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -146,7 +146,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithContainerScope() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         Container container = model.addSoftwareSystem("Name", "Description").addContainer("Container", "Description", "Technology");
         elements.register("container", container);
         context.setIdentifierRegister(elements);
@@ -163,7 +163,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithContainerScopeAndKey() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         Container container = model.addSoftwareSystem("Name", "Description").addContainer("Container", "Description", "Technology");
         elements.register("container", container);
         context.setIdentifierRegister(elements);
@@ -180,7 +180,7 @@ class DynamicViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesADynamicViewWithContainerScopeAndKeyAndDescription() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         Container container = model.addSoftwareSystem("Name", "Description").addContainer("Container", "Description", "Technology");
         elements.register("container", container);
         context.setIdentifierRegister(elements);

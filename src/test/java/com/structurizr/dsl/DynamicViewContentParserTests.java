@@ -48,7 +48,7 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheSourceElementIsNotAStaticStructureElement() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", model.addDeploymentNode("Deployment Node"));
         context.setIdentifierRegister(elements);
 
@@ -63,7 +63,7 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotDefined() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", model.addPerson("User", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -78,7 +78,7 @@ class DynamicViewContentParserTests extends AbstractTests {
     @Test
     void test_parseRelationship_ThrowsAnException_WhenTheDestinationElementIsNotAStaticStructureElement() {
         DynamicViewDslContext context = new DynamicViewDslContext(null);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", model.addPerson("User", "Description"));
         elements.register("destination", model.addDeploymentNode("Deployment Node"));
         context.setIdentifierRegister(elements);
@@ -99,7 +99,7 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -122,7 +122,7 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -146,7 +146,7 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);
@@ -169,7 +169,7 @@ class DynamicViewContentParserTests extends AbstractTests {
         DynamicView view = views.createDynamicView("key", "Description");
         DynamicViewDslContext context = new DynamicViewDslContext(view);
 
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("source", user);
         elements.register("destination", softwareSystem);
         context.setIdentifierRegister(elements);

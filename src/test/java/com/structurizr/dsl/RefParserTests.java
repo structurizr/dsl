@@ -16,7 +16,7 @@ class RefParserTests extends AbstractTests {
             parser.parse(context(), tokens("ref", "name", "tokens"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: ref <canonical name>", e.getMessage());
+            assertEquals("Too many tokens, expected: !ref <identifier|canonical name>", e.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ class RefParserTests extends AbstractTests {
             parser.parse(context(), tokens("ref"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: ref <canonical name>", e.getMessage());
+            assertEquals("Expected: !ref <identifier|canonical name>", e.getMessage());
         }
     }
 
@@ -36,7 +36,7 @@ class RefParserTests extends AbstractTests {
             parser.parse(context(), tokens("ref", "Person://User"));
             fail();
         } catch (Exception e) {
-            assertEquals("Person://User could not be found", e.getMessage());
+            assertEquals("An element referenced by \"Person://User\" could not be found", e.getMessage());
         }
     }
 

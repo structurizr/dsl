@@ -4,26 +4,32 @@ import com.structurizr.model.Element;
 
 final class RefParser extends AbstractParser {
 
-    private static final String GRAMMAR = "ref <canonical name>";
+    private static final String GRAMMAR = "!ref <identifier|canonical name>";
 
-    private final static int NAME_INDEX = 1;
+    private final static int IDENTIFIER_INDEX = 1;
 
     Element parse(DslContext context, Tokens tokens) {
-        // ref <canonical name>
+        // !ref <identifier|canonical name>
 
-        if (tokens.hasMoreThan(NAME_INDEX)) {
+        if (tokens.hasMoreThan(IDENTIFIER_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
         }
 
-        if (!tokens.includes(NAME_INDEX)) {
+        if (!tokens.includes(IDENTIFIER_INDEX)) {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        String canonicalName = tokens.get(NAME_INDEX);
-        Element element = context.getWorkspace().getModel().getElementWithCanonicalName(canonicalName);
+        String s = tokens.get(IDENTIFIER_INDEX);
+
+        Element element;
+        if (s.contains("://")) {
+            element = context.getWorkspace().getModel().getElementWithCanonicalName(s);
+        } else {
+            element = context.getElement(s);
+        }
 
         if (element == null) {
-            throw new RuntimeException(canonicalName + " could not be found");
+            throw new RuntimeException("An element referenced by \"" + s + "\" could not be found");
         }
 
         return element;

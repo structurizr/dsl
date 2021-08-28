@@ -48,7 +48,7 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotASoftwareSystem() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -63,7 +63,7 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerView() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -79,7 +79,7 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerViewWithAKey() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -95,7 +95,7 @@ class ContainerViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAContainerViewWithAKeyAndDescription() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("softwaresystem", model.addSoftwareSystem("Name", "Description"));
         context.setIdentifierRegister(elements);
 

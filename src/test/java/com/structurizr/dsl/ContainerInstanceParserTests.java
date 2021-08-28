@@ -42,7 +42,7 @@ class ContainerInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotAContainer() {
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(null);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -60,7 +60,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         context.setIdentifierRegister(elements);
 
@@ -81,7 +81,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         context.setIdentifierRegister(elements);
 
@@ -102,7 +102,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         elements.register("group", new DeploymentGroup("Group"));
         context.setIdentifierRegister(elements);
@@ -124,7 +124,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         Container container = softwareSystem.addContainer("Container", "Description", "Technology");
         DeploymentNode deploymentNode = model.addDeploymentNode("Live", "Deployment Node", "Description", "Technology");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", container);
         elements.register("group", new DeploymentGroup("Group"));
         context.setIdentifierRegister(elements);

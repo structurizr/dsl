@@ -48,7 +48,7 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheElementIsNotAContainer() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", model.addPerson("Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -63,7 +63,7 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentView() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("Container", "Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -79,7 +79,7 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentViewWithAKey() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
         context.setIdentifierRegister(elements);
 
@@ -95,7 +95,7 @@ class ComponentViewParserTests extends AbstractTests {
     @Test
     void test_parse_CreatesAComponentViewWithAKeyAndDescription() {
         DslContext context = context();
-        IdentifersRegister elements = new IdentifersRegister();
+        IdentifiersRegister elements = new IdentifiersRegister();
         elements.register("container", model.addSoftwareSystem("Name", "Description").addContainer("container", "Name", "Description"));
         context.setIdentifierRegister(elements);
 
