@@ -12,7 +12,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [Identifiers](#identifiers)
 - [!include](#includes)
 - [!constant](#constants)
-- [expressions](#expressions)
+- [Expressions](#expressions)
 - [Grammar](#grammar)
     - [workspace](#workspace)
         - [!docs](#documentation)
@@ -573,7 +573,7 @@ The interval is a number of seconds (default 60s), and the timeout is a number o
 
 ### element
 
-The `element` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation).
+The `element` keyword defines a [custom element](https://structurizr.com/help/custom-elements) (this is only available on the Structurizr cloud service/on-premises installation/Lite).
 
 ```
 element <name> [metadata] [description] [tags] {
@@ -720,7 +720,7 @@ Or, if you're extending a JSON-based workspace, you can reference an element by 
 
 See [ref.dsl](../examples/ref.dsl) for some usage examples.
 
-__Please note that `!ref` is currently an experimental feature, and subject to change.__ 
+__Please note that `!ref` is currently an experimental feature.__ 
 
 ### views
 
