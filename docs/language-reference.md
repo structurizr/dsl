@@ -18,8 +18,8 @@ __Please note that what you see here may not be available in the Structurizr CLI
         - [!docs](#documentation)
         - [!adrs](#architecture-decision-records-adrs)
 		- [!identifiers](#identifiers)
+		- [!impliedRelationships](#impliedRelationships)
         - [model](#model)
-            - [impliedRelationships](#impliedRelationships)
             - [enterprise](#enterprise)
             - [group](#group)
             - [person](#person)
@@ -177,6 +177,16 @@ workspace {
  
  Now the two API containers are referenceable via `softwareSystem1.api` and `softwareSystem2.api` respectively.
  
+### !impliedRelationships
+
+```
+!impliedRelationships <true|false>
+```
+
+The `!impliedRelationships` keyword provides a way to enable or disable whether implied relationships are created.
+A value of `false` disables implied relationship creation, while `true` creates implied relationships between all valid combinations of the parent elements, unless any relationship already exists between them
+(see [Structurizr for Java - Implied relationships - CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy](https://github.com/structurizr/java/blob/master/docs/implied-relationships.md#createimpliedrelationshipsunlessanyrelationshipexistsstrategy) for more details).
+
 ## Includes
 
 The `!include` keyword can be used to include another file, to provide some degree of modularity, and to reuse definition fragments between workspaces.
@@ -269,6 +279,7 @@ Permitted children:
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
 - [!identifiers](#identifier-scope)
+- [!impliedRelationships](#impliedrelationships)
 - [model](#model)
 - [views](#views)
 - [configuration](#configuration)
@@ -285,7 +296,6 @@ model {
 
 Permitted children:
 
-- [impliedRelationships](#impliedrelationships)
 - [enterprise](#enterprise)
 - [group](#group)
 - [person](#person)
@@ -293,16 +303,6 @@ Permitted children:
 - [deploymentEnvironment](#deploymentEnvironment)
 - [element](#element)
 - [-> (relationship)](#relationship)
-
-### impliedRelationships
-
-```
-impliedRelationships <true|false>
-```
-
-The `impliedRelationships` keyword provides a way to enable or disable whether implied relationships are created.
-A flag of `false` disables implied relationship creation, while `true` creates implied relationships between all valid combinations of the parent elements, unless any relationship already exists between them
-(see [Structurizr for Java - Implied relationships - CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy](https://github.com/structurizr/java/blob/master/docs/implied-relationships.md#createimpliedrelationshipsunlessanyrelationshipexistsstrategy) for more details).
 
 ### enterprise
 
