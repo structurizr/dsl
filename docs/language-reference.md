@@ -452,6 +452,7 @@ deploymentEnvironment <name> {
 
 Permitted children:
 
+- [deploymentGroup](#deploymentGroup)
 - [deploymentNode](#deploymentNode)
 - [-> (relationship)](#relationship)
 
