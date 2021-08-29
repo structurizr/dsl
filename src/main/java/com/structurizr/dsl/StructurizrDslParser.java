@@ -668,6 +668,16 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (IDENTIFIERS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         setIdentifierScope(new IdentifierScopeParser().parse(getContext(), tokens));
 
+                    } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
+                        if (!restricted) {
+                            new PluginParser().parse(getContext(), tokens);
+                        }
+
+                    } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
+                        if (!restricted) {
+                            new ScriptParser().parse(getContext(), file, tokens);
+                        }
+
                     } else {
                         throw new StructurizrDslParserException("Unexpected tokens");
                     }

@@ -756,4 +756,22 @@ class ExampleTests extends AbstractTests {
         parser.parse(new File("examples/hierarchical-identifiers-and-deployment-nodes.dsl"));
     }
 
+    @Test
+    void test_plugin() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/plugin.dsl"));
+
+        assertEquals("Name set by plugin", parser.getWorkspace().getName());
+    }
+
+    @Test
+    void test_script() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/script.dsl"));
+
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
+    }
+
 }
