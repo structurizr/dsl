@@ -495,7 +495,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         }
 
         s = s.replaceAll("\\n", " ");
-        s = s.replaceAll("\"", "");
+        s = s.replaceAll("\\\"", "\\\\\"");
 
         return String.format("\"%s\"", s);
     }

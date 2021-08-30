@@ -469,4 +469,23 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "}\n", formatter.format(WorkspaceUtils.toJson(workspace, false)));
     }
 
+    @Test
+    void test_escapingQuotes() throws Exception {
+        Workspace workspace = new Workspace("Name", "Description");
+        workspace.getModel().addPerson("Hello \"World\"");
+
+        StructurizrDslFormatter formatter = new StructurizrDslFormatter();
+        assertEquals("workspace \"Name\" \"Description\" {\n" +
+                "\n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
+                "\n" +
+                "    model {\n" +
+                "        HelloWorld = person \"Hello \\\"World\\\"\" \"\" \"\" \n" +
+                "    }\n" +
+                "\n" +
+                "}\n", formatter.format(WorkspaceUtils.toJson(workspace, false)));
+    }
+
+
 }

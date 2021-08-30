@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Main DSL parser class - forms the API for using the parser.
@@ -19,7 +20,6 @@ import java.util.regex.Pattern;
 public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^\\s*");
-    private static final Pattern TOKENS_PATTERN = Pattern.compile("\"((\\\\.|[^\"])*)\"|(\\S+)");
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^\\s*?(//|#).*$");
     private static final String MULTI_LINE_COMMENT_START_TOKEN = "/*";
@@ -154,23 +154,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                 } else if (COMMENT_PATTERN.matcher(line).matches()) {
                     // do nothing
                 } else {
-                    List<String> listOfTokens = new ArrayList<>();
-                    Matcher m = TOKENS_PATTERN.matcher(line.trim());
-                    while (m.find()) {
-                        String token = null;
-                        if (m.group(1) != null) {
-                            // this is a token specified between double-quotes
-                            token = m.group(1);
-                        } else {
-                            // this is a token specified without double-quotes
-                            token = m.group(3);
-                        }
-
-                        if (token != null) {
-                            token = substituteStrings(token);
-                            listOfTokens.add(token);
-                        }
-                    }
+                    List<String> listOfTokens = new Tokenizer().tokenize(line);
+                    listOfTokens = listOfTokens.stream().map(this::substituteStrings).collect(Collectors.toList());
 
                     Tokens tokens = new Tokens(listOfTokens);
 
