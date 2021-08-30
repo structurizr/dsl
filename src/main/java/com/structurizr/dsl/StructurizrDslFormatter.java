@@ -69,22 +69,23 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         start(WORKSPACE_TOKEN, quote(workspace.getName()), quote(workspace.getDescription()));
         newline();
 
-        start(MODEL_TOKEN);
-
         start(IMPLIED_RELATIONSHIPS_TOKEN, quote("false"));
         end();
         start(IDENTIFIERS_TOKEN, quote("hierarchical"));
         end();
         newline();
 
-        if (workspace.getModel().getEnterprise() != null) {
+        start(MODEL_TOKEN);
+
+        List<Person> internalPeople = model.getPeople().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(Person::getId)).collect(Collectors.toList());
+        List<SoftwareSystem> internalSoftwareSystems = model.getSoftwareSystems().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(SoftwareSystem::getId)).collect(Collectors.toList());
+
+        if (workspace.getModel().getEnterprise() != null && (!internalPeople.isEmpty() || !internalSoftwareSystems.isEmpty())) {
             start(ENTERPRISE_TOKEN, quote(workspace.getModel().getEnterprise().getName()));
-        }
 
-        model.getPeople().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(Person::getId)).forEach(this::format);
-        model.getSoftwareSystems().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(SoftwareSystem::getId)).forEach(this::format);
+            internalPeople.forEach(this::format);
+            internalSoftwareSystems.forEach(this::format);
 
-        if (workspace.getModel().getEnterprise() != null) {
             end();
         }
 
@@ -284,110 +285,144 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             if (hasStyles) {
                 start(STYLES_TOKEN);
                 workspace.getViews().getConfiguration().getStyles().getElements().stream().sorted(Comparator.comparing(ElementStyle::getTag)).forEach(style -> {
+                    boolean hasProperties = false;
                     start(ELEMENT_STYLE_TOKEN, quote(style.getTag()));
 
                     if (style.getShape() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_SHAPE_TOKEN, quote(style.getShape()));
                         end();
                     }
 
                     if (!StringUtils.isNullOrEmpty(style.getIcon())) {
-                        start(ELEMENT_STYLE_ICON_TOKEN, quote(style.getIcon()));
+                        hasProperties = true;
+                        start("# the DSL only supports loading images from local files");
+                        end();
+                        start("#", ELEMENT_STYLE_ICON_TOKEN, quote(style.getIcon()));
                         end();
                     }
 
                     if (style.getWidth() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_WIDTH_TOKEN, quote(style.getWidth()));
                         end();
                     }
 
                     if (style.getHeight() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_HEIGHT_TOKEN, quote(style.getHeight()));
                         end();
                     }
 
                     if (!StringUtils.isNullOrEmpty(style.getBackground())) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_BACKGROUND_TOKEN, quote(style.getBackground()));
                         end();
                     }
 
                     if (!StringUtils.isNullOrEmpty(style.getColor())) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_COLOR_TOKEN, quote(style.getColor()));
                         end();
                     }
 
                     if (!StringUtils.isNullOrEmpty(style.getStroke())) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_STROKE_TOKEN, quote(style.getStroke()));
                         end();
                     }
 
                     if (style.getFontSize() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_FONT_SIZE_TOKEN, quote(style.getFontSize()));
                         end();
                     }
 
                     if (style.getBorder() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_BORDER_TOKEN, quote(style.getBorder()));
                         end();
                     }
 
                     if (style.getOpacity() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_OPACITY_TOKEN, quote(style.getOpacity()));
                         end();
                     }
 
                     if (style.getMetadata() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_METADATA_TOKEN, quote(style.getMetadata()));
                         end();
                     }
 
                     if (style.getDescription() != null) {
+                        hasProperties = true;
                         start(ELEMENT_STYLE_DESCRIPTION_TOKEN, quote(style.getDescription()));
+                        end();
+                    }
+
+                    if (!hasProperties) {
+                        start("# empty style");
                         end();
                     }
 
                     end();
                 });
                 workspace.getViews().getConfiguration().getStyles().getRelationships().stream().sorted(Comparator.comparing(RelationshipStyle::getTag)).forEach(style -> {
+                    boolean hasProperties = false;
                     start(RELATIONSHIP_STYLE_TOKEN, quote(style.getTag()));
 
                     if (style.getThickness() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_THICKNESS_TOKEN, quote(style.getThickness()));
                         end();
                     }
 
                     if (!StringUtils.isNullOrEmpty(style.getColor())) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_COLOR_TOKEN, quote(style.getColor()));
                         end();
                     }
 
                     if (style.getDashed() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_DASHED_TOKEN, quote(style.getDashed()));
                         end();
                     }
 
                     if (style.getRouting() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_ROUTING_TOKEN, quote(style.getRouting()));
                         end();
                     }
 
                     if (style.getFontSize() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_FONT_SIZE_TOKEN, quote(style.getFontSize()));
                         end();
                     }
 
                     if (style.getWidth() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_WIDTH_TOKEN, quote(style.getWidth()));
                         end();
                     }
 
                     if (style.getPosition() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_POSITION_TOKEN, quote(style.getPosition()));
                         end();
                     }
 
                     if (style.getOpacity() != null) {
+                        hasProperties = true;
                         start(RELATIONSHIP_STYLE_OPACITY_TOKEN, quote(style.getOpacity()));
+                        end();
+                    }
+
+                    if (!hasProperties) {
+                        start("# empty style");
                         end();
                     }
 
@@ -416,7 +451,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
     private void format(AutomaticLayout automaticLayout) {
         if (automaticLayout == null) {
-            start(AUTOLAYOUT_VIEW_TOKEN);
+            return;
         } else {
             String direction = "tb";
             switch (automaticLayout.getRankDirection()) {
@@ -434,8 +469,8 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                     break;
             }
             start(AUTOLAYOUT_VIEW_TOKEN, direction, "" + automaticLayout.getRankSeparation(), "" + automaticLayout.getNodeSeparation());
+            end();
         }
-        end();
     }
 
     private void start(String... tokens) {
@@ -460,6 +495,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         }
 
         s = s.replaceAll("\\n", " ");
+        s = s.replaceAll("\"", "");
 
         return String.format("\"%s\"", s);
     }

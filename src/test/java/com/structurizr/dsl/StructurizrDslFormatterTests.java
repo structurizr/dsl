@@ -17,11 +17,10 @@ class StructurizrDslFormatterTests extends AbstractTests {
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
         assertEquals("workspace \"Name\" \"Description\" {\n" +
                 "\n" +
-                "    model {\n" +
-                "        !impliedRelationships \"false\" \n" +
-                "        !identifiers \"hierarchical\" \n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
                 "\n" +
-                "    }\n" +
+                "    model \n" +
                 "\n" +
                 "}\n", formatter.format(WorkspaceUtils.toJson(workspace, false)));
     }
@@ -35,10 +34,10 @@ class StructurizrDslFormatterTests extends AbstractTests {
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
         assertEquals("workspace \"Name\" \"Description\" {\n" +
                 "\n" +
-                "    model {\n" +
-                "        !impliedRelationships \"false\" \n" +
-                "        !identifiers \"hierarchical\" \n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
                 "\n" +
+                "    model {\n" +
                 "        User = person \"User\" \"\" \"\" \n" +
                 "        SoftwareSystem = softwareSystem \"Software System\" \"\" \"\" \n" +
                 "        User -> SoftwareSystem \"Uses\" \"\" \"\" \n" +
@@ -67,10 +66,10 @@ class StructurizrDslFormatterTests extends AbstractTests {
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
         assertEquals("workspace \"Amazon Web Services Example\" \"An example AWS deployment architecture.\" {\n" +
                 "\n" +
-                "    model {\n" +
-                "        !impliedRelationships \"false\" \n" +
-                "        !identifiers \"hierarchical\" \n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
                 "\n" +
+                "    model {\n" +
                 "        SpringPetClinic = softwareSystem \"Spring PetClinic\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Spring Boot Application\" {\n" +
                 "            WebApplication = container \"Web Application\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Java and Spring Boot\" \"\" \n" +
                 "            Database = container \"Database\" \"Stores information regarding the veterinarians, the clients, and their pets.\" \"Relational database schema\" \"Database\" \n" +
@@ -136,10 +135,10 @@ class StructurizrDslFormatterTests extends AbstractTests {
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
         assertEquals("workspace \"Big Bank plc\" \"This is an example workspace to illustrate the key features of Structurizr, via the DSL, based around a fictional online banking system.\" {\n" +
                 "\n" +
-                "    model {\n" +
-                "        !impliedRelationships \"false\" \n" +
-                "        !identifiers \"hierarchical\" \n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
                 "\n" +
+                "    model {\n" +
                 "        enterprise \"Big Bank plc\" {\n" +
                 "            CustomerServiceStaff = person \"Customer Service Staff\" \"Customer service staff within the bank.\" \"Bank Staff\" \n" +
                 "            BackOfficeStaff = person \"Back Office Staff\" \"Administration and support staff within the bank.\" \"Bank Staff\" \n" +
@@ -394,10 +393,10 @@ class StructurizrDslFormatterTests extends AbstractTests {
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
         assertEquals("workspace \"Financial Risk System\" \"This is a simple (incomplete) example C4 model based upon the financial risk system architecture kata, which can be found at http://bit.ly/sa4d-risksystem\" {\n" +
                 "\n" +
-                "    model {\n" +
-                "        !impliedRelationships \"false\" \n" +
-                "        !identifiers \"hierarchical\" \n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
                 "\n" +
+                "    model {\n" +
                 "        BusinessUser = person \"Business User\" \"A regular business user.\" \"\" \n" +
                 "        ConfigurationUser = person \"Configuration User\" \"A regular business user who can also configure the parameters used in the risk calculations.\" \"\" \n" +
                 "        FinancialRiskSystem = softwareSystem \"Financial Risk System\" \"Calculates the bank's exposure to risk for product X.\" \"Financial Risk System\" \n" +
