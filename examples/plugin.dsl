@@ -1,5 +1,5 @@
 workspace "Name" {
 
-    !plugin com.structurizr.dsl.TestPlugin
+    !plugin com.example.ExampleStructurizrDslPlugin
 
 }

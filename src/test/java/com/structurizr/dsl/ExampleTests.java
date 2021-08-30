@@ -761,7 +761,7 @@ class ExampleTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/plugin.dsl"));
 
-        assertEquals("Name set by plugin", parser.getWorkspace().getName());
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Java"));
     }
 
     @Test

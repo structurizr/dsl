@@ -1,6 +1,6 @@
 package com.structurizr.dsl;
 
-interface StructurizrDslPlugin {
+public interface StructurizrDslPlugin {
 
     void run(StructurizrDslPluginContext context);
 

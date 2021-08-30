@@ -670,7 +670,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted) {
-                            new PluginParser().parse(getContext(), tokens);
+                            new PluginParser().parse(getContext(), file, tokens);
                         }
 
                     } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
