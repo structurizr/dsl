@@ -46,7 +46,7 @@ final class ScriptParser extends AbstractParser {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error running scripting at " + filename + ", caused by " + e.getClass().getName() + ": " + e.getMessage());
+            throw new RuntimeException("Error running script at " + filename + ", caused by " + e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
