@@ -1120,7 +1120,7 @@ The `element` keyword is used to define an element style. All nested properties 
 ```
 element <tag> {
     shape <Box|RoundedBox|Circle|Ellipse|Hexagon|Cylinder|Pipe|Person|Robot|Folder|WebBrowser|MobileDevicePortrait|MobileDeviceLandscape|Component>
-    icon <file>
+    icon <file|data uri>
     width <integer>
     height <integer>
     background <#rrggbb>
@@ -1184,7 +1184,7 @@ The `branding` keyword allows you to define some custom branding that should be 
 
 ```
 branding {
-    logo <file>
+    logo <file|data uri>
     font <name> [url]
 }
 ```

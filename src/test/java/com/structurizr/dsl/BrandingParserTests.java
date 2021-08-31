@@ -15,7 +15,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(null);
 
         try {
-            parser.parseLogo(context, tokens("logo", "path", "extra"));
+            parser.parseLogo(context, tokens("logo", "path", "extra"), false);
             fail();
         } catch (Exception e) {
             assertEquals("Too many tokens, expected: logo <path>", e.getMessage());
@@ -27,7 +27,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(null);
 
         try {
-            parser.parseLogo(context, tokens("logo"));
+            parser.parseLogo(context, tokens("logo"), false);
             fail();
         } catch (Exception e) {
             assertEquals("Expected: logo <path>", e.getMessage());
@@ -39,7 +39,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(new File("."));
 
         try {
-            parser.parseLogo(context, tokens("logo", "hello.png"));
+            parser.parseLogo(context, tokens("logo", "hello.png"), false);
             fail();
         } catch (Exception e) {
             assertEquals("hello.png does not exist", e.getMessage());
@@ -51,7 +51,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(new File("."));
 
         try {
-            parser.parseLogo(context, tokens("logo", "examples/getting-started.dsl"));
+            parser.parseLogo(context, tokens("logo", "examples/getting-started.dsl"), false);
             fail();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(new File("."));
         context.setWorkspace(workspace);
 
-        parser.parseLogo(context, tokens("logo", "examples/logo.png"));
+        parser.parseLogo(context, tokens("logo", "examples/logo.png"), false);
         assertTrue(workspace.getViews().getConfiguration().getBranding().getLogo().startsWith("data:image/png;base64,"));
     }
 

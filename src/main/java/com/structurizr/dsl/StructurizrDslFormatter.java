@@ -296,9 +296,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
                     if (!StringUtils.isNullOrEmpty(style.getIcon())) {
                         hasProperties = true;
-                        start("# the DSL only supports loading images from local files");
-                        end();
-                        start("#", ELEMENT_STYLE_ICON_TOKEN, quote(style.getIcon()));
+                        start(ELEMENT_STYLE_ICON_TOKEN, quote(style.getIcon()));
                         end();
                     }
 

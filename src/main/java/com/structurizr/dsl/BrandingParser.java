@@ -15,7 +15,7 @@ final class BrandingParser extends AbstractParser {
     private static final int FONT_NAME_INDEX = 1;
     private static final int FONT_URL_INDEX = 2;
 
-    void parseLogo(BrandingDslContext context, Tokens tokens) {
+    void parseLogo(BrandingDslContext context, Tokens tokens, boolean restricted) {
         // logo <path>
 
         if (tokens.hasMoreThan(LOGO_FILE_INDEX)) {
@@ -23,16 +23,22 @@ final class BrandingParser extends AbstractParser {
         } else if (tokens.includes(LOGO_FILE_INDEX)) {
             String path = tokens.get(1);
 
-            File file = new File(context.getFile().getParent(), path);
-            if (file.exists() && !file.isDirectory()) {
-                try {
-                    String dataUri = ImageUtils.getImageAsDataUri(file);
-                    context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(dataUri);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+            if (path.startsWith("data:image/")) {
+                context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(path);
             } else {
-                throw new RuntimeException(path + " does not exist");
+                if (!restricted) {
+                    File file = new File(context.getFile().getParent(), path);
+                    if (file.exists() && !file.isDirectory()) {
+                        try {
+                            String dataUri = ImageUtils.getImageAsDataUri(file);
+                            context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(dataUri);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        throw new RuntimeException(path + " does not exist");
+                    }
+                }
             }
         } else {
             throw new RuntimeException("Expected: " + LOGO_GRAMMAR);

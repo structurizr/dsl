@@ -260,7 +260,7 @@ final class ElementStyleParser extends AbstractParser {
         }
     }
 
-    void parseIcon(ElementStyleDslContext context, Tokens tokens) {
+    void parseIcon(ElementStyleDslContext context, Tokens tokens, boolean restricted) {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
@@ -270,15 +270,21 @@ final class ElementStyleParser extends AbstractParser {
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String path = tokens.get(1);
 
-            File file = new File(context.getFile().getParent(), path);
-            if (file.exists() && !file.isDirectory()) {
-                try {
-                    style.setIcon(ImageUtils.getImageAsDataUri(file));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            if (path.startsWith("data:image/")) {
+                style.setIcon(path);
             } else {
-                throw new RuntimeException(path + " does not exist");
+                if (!restricted) {
+                    File file = new File(context.getFile().getParent(), path);
+                    if (file.exists() && !file.isDirectory()) {
+                        try {
+                            style.setIcon(ImageUtils.getImageAsDataUri(file));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        throw new RuntimeException(path + " does not exist");
+                    }
+                }
             }
         } else {
             throw new RuntimeException("Expected: icon <file>");

@@ -349,9 +349,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         startContext(new BrandingDslContext(file));
 
                     } else if (BRANDING_LOGO_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
-                        if (!restricted) {
-                            new BrandingParser().parseLogo(getContext(BrandingDslContext.class), tokens);
-                        }
+                        new BrandingParser().parseLogo(getContext(BrandingDslContext.class), tokens, restricted);
 
                     } else if (BRANDING_FONT_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
                         new BrandingParser().parseFont(getContext(BrandingDslContext.class), tokens);
@@ -397,9 +395,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new ElementStyleParser().parseDescription(getContext(ElementStyleDslContext.class), tokens);
 
                     } else if (ELEMENT_STYLE_ICON_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementStyleDslContext.class)) {
-                        if (!restricted) {
-                            new ElementStyleParser().parseIcon(getContext(ElementStyleDslContext.class), tokens);
-                        }
+                        new ElementStyleParser().parseIcon(getContext(ElementStyleDslContext.class), tokens, restricted);
 
                     } else if (RELATIONSHIP_STYLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(StylesDslContext.class)) {
                         RelationshipStyle relationshipStyle = new RelationshipStyleParser().parseRelationshipStyle(getContext(), tokens.withoutContextStartToken());

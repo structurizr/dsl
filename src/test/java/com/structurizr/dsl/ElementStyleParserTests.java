@@ -437,7 +437,7 @@ class ElementStyleParserTests extends AbstractTests {
     @Test
     void test_parseIcon_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parseIcon(elementStyleDslContext(), tokens("icon", "file", "extra"));
+            parser.parseIcon(elementStyleDslContext(), tokens("icon", "file", "extra"), false);
             fail();
         } catch (Exception e) {
             assertEquals("Too many tokens, expected: icon <file>", e.getMessage());
@@ -447,7 +447,7 @@ class ElementStyleParserTests extends AbstractTests {
     @Test
     void test_parseIcon_ThrowsAnException_WhenTheIconIsMissing() {
         try {
-            parser.parseIcon(elementStyleDslContext(), tokens("icon"));
+            parser.parseIcon(elementStyleDslContext(), tokens("icon"), false);
             fail();
         } catch (Exception e) {
             assertEquals("Expected: icon <file>", e.getMessage());
@@ -457,7 +457,7 @@ class ElementStyleParserTests extends AbstractTests {
     @Test
     void test_parseIcon_ThrowsAnException_WhenTheIconDoesNotExist() {
         try {
-            parser.parseIcon(elementStyleDslContext(), tokens("icon", "hello.png"));
+            parser.parseIcon(elementStyleDslContext(), tokens("icon", "hello.png"), false);
             fail();
         } catch (Exception e) {
             assertEquals("hello.png does not exist", e.getMessage());
@@ -465,8 +465,15 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseIcon_SetsTheIcon() {
-        parser.parseIcon(elementStyleDslContext(), tokens("icon", "examples/logo.png"));
+    void test_parseIcon_SetsTheIconFromADataUri() {
+        parser.parseIcon(elementStyleDslContext(), tokens("icon", "data:image/png;base64,123456789012345678901234567890"), true);
+        System.out.println(elementStyle.getIcon());
+        assertTrue(elementStyle.getIcon().startsWith("data:image/png;base64,123456789012345678901234567890"));
+    }
+
+    @Test
+    void test_parseIcon_SetsTheIconFromAFile() {
+        parser.parseIcon(elementStyleDslContext(), tokens("icon", "examples/logo.png"), false);
         System.out.println(elementStyle.getIcon());
         assertTrue(elementStyle.getIcon().startsWith("data:image/png;base64,"));
     }
