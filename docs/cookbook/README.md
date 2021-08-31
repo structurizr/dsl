@@ -16,3 +16,4 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [Relationship styles](relationship-styles)
 - [Themes](themes)
 - [Implied relationships](implied-relationships)
+- [Scripts](scripts)
