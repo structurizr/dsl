@@ -3,6 +3,7 @@ package com.structurizr.dsl;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,4 +37,14 @@ class ScriptParserTests extends AbstractTests {
         assertNotNull(workspace.getModel().getPersonWithName("Kotlin"));
     }
 
+    @Test
+    void test_parse_ThrowsAnException_WhenAnUnsupportedLanguageIsSpecified() {
+        try {
+            parser.parse(context(), "java", Collections.EMPTY_LIST);
+            fail();
+        } catch (Exception e) {
+            assertEquals("Error running inline script, caused by java.lang.RuntimeException: Unsupported scripting language \"java\"", e.getMessage());
+        }
+    }
+    
 }

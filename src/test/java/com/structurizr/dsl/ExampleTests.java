@@ -774,4 +774,14 @@ class ExampleTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
     }
 
+    @Test
+    void test_inlineScript() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/inline-script.dsl"));
+
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
+    }
+
 }

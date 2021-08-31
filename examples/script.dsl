@@ -1,4 +1,4 @@
-workspace "Name" {
+workspace {
 
     !script test.js
     !script test.groovy

@@ -13,6 +13,8 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - [!include](#includes)
 - [!constant](#constants)
 - [Expressions](#expressions)
+- [Plugins](#plugins)
+- [Scripts](#scripts)
 - [Grammar](#grammar)
     - [workspace](#workspace)
         - [!docs](#documentation)
@@ -57,6 +59,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 ## General rules
 
 - Line breaks are important.
+- Lines are processed in order.
 - Tokens must be separated by whitespace, but the quantity of whitespace/indentation isn't important.
 - Keywords are case-insensitive (e.g. you can use `softwareSystem` or `softwaresystem`).
 - Double quote characters (`"..."`) are optional when a property contains no whitespace.
@@ -244,6 +247,81 @@ The Structurizr DSL supports a number of expressions for use when including or e
 - `relationship==<identifier>-><identifier>`: all relationships between the two specified elements
 
 Element and relationship expressions are not supported on dynamic views.
+
+### Plugins
+
+Plugins can be used where more control or customisation is required, and provide access to the workspace via the [Structurizr for Java library](https://github.com/structurizr/java). For example, you could use a plugin to create model elements based upon an external data source, or perhaps define views programmatically. Plugins can be used at any point in the DSL.
+
+To write a plugin, create a Java class that implements the `com.structurizr.dsl.StructurizrDslPlugin` interface (you will need to add a dependency on the DSL library, which can be found on Maven Central via `com.structurizr:structurizr-dsl`).
+
+```
+package com.example;
+
+import com.structurizr.Workspace;
+
+public class TestPlugin implements StructurizrDslPlugin {
+
+    @Override
+    public void run(StructurizrDslPluginContext context) {
+        Workspace workspace = context.getWorkspace();
+        workspace.setName("Name set by plugin");
+    }
+
+}
+```
+ 
+The compiled plugin packaged as a JAR file (plus any other JAR dependencies) should be placed in a directory named `plugins` next to your DSL file. You can then use your plugin from the DSL using the `!plugin` keyword.
+ 
+ ```
+ workspace {
+
+    !plugin com.example.TestPlugin
+
+}
+```
+
+__Please note that `!plugin` is currently an experimental feature.__
+
+### Scripts
+
+Scripts are like plugins, except they don't need to be compiled before use. JavaScript(*), Kotlin, and Groovy are supported out of the box, and you can add more languages via the Java Scripting API. The workspace (again from the [Structurizr for Java library](https://github.com/structurizr/java)) is bound to a variable named `workspace`. Scripts can be used at any point in the DSL.
+
+__Please note that `!script` is currently an experimental feature.__
+(*) Nashorn (the JVM JavaScript engine is deprecated), see [https://openjdk.java.net/jeps/372](https://openjdk.java.net/jeps/372) for details.
+
+#### Inline scripts
+
+To use an inline script, use the `!script` keyword followed by the language you'd like to use (`groovy`, `kotlin`, or `javascript`). For example, the following Kotlin script will create the default set of views, without automatic layout enabled.
+
+```
+!script kotlin {
+  workspace.views.createDefaultViews()
+  workspace.views.views.forEach { it.disableAutomaticLayout() }
+}
+```
+
+Please note that inline scripts cannot have a line that only contains a closing `}` character.
+
+#### External scripts
+
+To use an external script, create a script file next to your DSL file (e.g. `script.kts`).
+
+```
+workspace.views.createDefaultViews()
+workspace.views.views.forEach { it.disableAutomaticLayout() }
+```
+ 
+You can then use your script from the DSL using the `!script` keyword.
+ 
+ ```
+  !script script.kts
+  ```
+
+The following file extensions are recognised:
+
+- `.groovy` (Groovy)
+- `.kts` (Kotlin)
+- `.js` (JavaScript)
 
 ## Grammar
 

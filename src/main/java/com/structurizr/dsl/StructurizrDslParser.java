@@ -153,6 +153,14 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     // do nothing
                 } else if (COMMENT_PATTERN.matcher(line).matches()) {
                     // do nothing
+                } else if (inContext(InlineScriptDslContext.class)) {
+                    if (DslContext.CONTEXT_END_TOKEN.equals(line.trim())) {
+                        endContext();
+                    } else if (!restricted) {
+                        getContext(InlineScriptDslContext.class).addLine(line);
+                    } else {
+                        // ignore line
+                    }
                 } else {
                     List<String> listOfTokens = new Tokenizer().tokenize(line);
                     listOfTokens = listOfTokens.stream().map(this::substituteStrings).collect(Collectors.toList());
@@ -657,6 +665,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         if (!restricted) {
                             new PluginParser().parse(getContext(), file, tokens);
                         }
+
+                    } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken) && tokens.includes(1) && shouldStartContext(tokens)) {
+                        startContext(new InlineScriptDslContext(tokens.get(1)));
 
                     } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted) {

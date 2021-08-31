@@ -4,7 +4,9 @@ import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.io.File;
-import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.List;
 
 final class ScriptParser extends AbstractParser {
 
@@ -31,22 +33,58 @@ final class ScriptParser extends AbstractParser {
                 throw new RuntimeException("Script file " + scriptFile.getCanonicalPath() + " does not exist");
             }
 
-            ScriptEngineManager manager = new ScriptEngineManager();
             String fileExtension = filename.substring(filename.lastIndexOf('.') + 1);
-            ScriptEngine engine = manager.getEngineByExtension(fileExtension);
+            List<String> lines = Files.readAllLines(scriptFile.toPath(), StandardCharsets.UTF_8);
 
-            if (engine != null) {
-                Bindings bindings = engine.createBindings();
-                bindings.put("workspace", context.getWorkspace());
-
-
-                engine.eval(new FileReader(scriptFile), bindings);
-            } else {
-                throw new RuntimeException("Could not load a scripting engine to run " + filename);
-            }
+            runScript(context, fileExtension, lines);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error running script at " + filename + ", caused by " + e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
+    void parse(DslContext context, String language, List<String> lines) {
+        try {
+            String fileExtension;
+
+            switch (language.toLowerCase()) {
+                case "javascript":
+                    fileExtension = "js";
+                    break;
+                case "groovy":
+                    fileExtension = "groovy";
+                    break;
+                case "kotlin":
+                    fileExtension = "kts";
+                    break;
+                default:
+                    throw new RuntimeException("Unsupported scripting language \"" + language + "\"");
+            }
+
+            runScript(context, fileExtension, lines);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error running inline script, caused by " + e.getClass().getName() + ": " + e.getMessage());
+        }
+    }
+
+    private void runScript(DslContext context, String extension, List<String> lines) throws Exception {
+        StringBuilder script = new StringBuilder();
+        for (String line : lines) {
+            script.append(line);
+            script.append('\n');
+        }
+
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByExtension(extension);
+
+        if (engine != null) {
+            Bindings bindings = engine.createBindings();
+            bindings.put("workspace", context.getWorkspace());
+
+            engine.eval(script.toString(), bindings);
+        } else {
+            throw new RuntimeException("Could not load a scripting engine for extension \"" + extension + "\"");
         }
     }
 
