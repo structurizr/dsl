@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'signing'
@@ -30,8 +31,17 @@ description = 'Structurizr DSL'
 group = 'com.structurizr'
 version = '1.13.0'
 
+jacoco {
+  toolVersion = "0.8.4"
+}
+
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
 }
 
 jar {
