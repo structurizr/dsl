@@ -302,7 +302,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            autolayout tb 300 300 \n" +
                 "        }\n" +
                 "\n" +
-                "        dynamic InternetBankingSystem.APIApplication {\n" +
+                "        dynamic InternetBankingSystem.APIApplication \"SignIn\" \"Summarises how the sign in feature works in the single-page application.\" {\n" +
                 "            # 1 \n" +
                 "            InternetBankingSystem.SinglePageApplication -> InternetBankingSystem.APIApplication.SignInController \"Submits credentials to\" \n" +
                 "            # 2 \n" +

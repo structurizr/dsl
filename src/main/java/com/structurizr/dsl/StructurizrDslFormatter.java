@@ -214,39 +214,41 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getDynamicViews().stream().sorted(Comparator.comparing(DynamicView::getKey)).forEach(view -> {
-                if (StringUtils.isNullOrEmpty(view.getElementId())) {
-                    start(DYNAMIC_VIEW_TOKEN, quote("*"));
-                } else {
-                    start(DYNAMIC_VIEW_TOKEN, id(view.getElement(), true));
-                }
-
-                for (RelationshipView relationshipView : view.getRelationships()) {
-                    start("# " + relationshipView.getOrder());
-                    end();
-
-                    Element source;
-                    Element destination;
-
-                    if (relationshipView.isResponse() != null && relationshipView.isResponse()) {
-                        source = relationshipView.getRelationship().getDestination();
-                        destination = relationshipView.getRelationship().getSource();
+                if (view.getRelationships().size() > 0) {
+                    if (StringUtils.isNullOrEmpty(view.getElementId())) {
+                        start(DYNAMIC_VIEW_TOKEN, quote("*"), quote(view.getKey()), quote(view.getDescription()));
                     } else {
-                        source = relationshipView.getRelationship().getSource();
-                        destination = relationshipView.getRelationship().getDestination();
+                        start(DYNAMIC_VIEW_TOKEN, id(view.getElement(), true), quote(view.getKey()), quote(view.getDescription()));
                     }
 
-                    if (StringUtils.isNullOrEmpty(relationshipView.getDescription())) {
-                        start(id(source, true), "->", id(destination, true));
-                    } else {
-                        start(id(source, true), "->", id(destination, true), quote(relationshipView.getDescription()));
+                    for (RelationshipView relationshipView : view.getRelationships()) {
+                        start("# " + relationshipView.getOrder());
+                        end();
+
+                        Element source;
+                        Element destination;
+
+                        if (relationshipView.isResponse() != null && relationshipView.isResponse()) {
+                            source = relationshipView.getRelationship().getDestination();
+                            destination = relationshipView.getRelationship().getSource();
+                        } else {
+                            source = relationshipView.getRelationship().getSource();
+                            destination = relationshipView.getRelationship().getDestination();
+                        }
+
+                        if (StringUtils.isNullOrEmpty(relationshipView.getDescription())) {
+                            start(id(source, true), "->", id(destination, true));
+                        } else {
+                            start(id(source, true), "->", id(destination, true), quote(relationshipView.getDescription()));
+                        }
+                        end();
                     }
+
+                    format(view.getAutomaticLayout());
+
                     end();
+                    newline();
                 }
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
             });
 
             views.getDeploymentViews().stream().sorted(Comparator.comparing(DeploymentView::getKey)).forEach(view -> {
