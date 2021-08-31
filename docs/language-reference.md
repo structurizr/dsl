@@ -284,7 +284,7 @@ __Please note that `!plugin` is currently an experimental feature.__
 
 ### Scripts
 
-Scripts are like plugins, except they don't need to be compiled before use. JavaScript(*), Kotlin, and Groovy are supported out of the box, and you can add more languages via the Java Scripting API. The workspace (again from the [Structurizr for Java library](https://github.com/structurizr/java)) is bound to a variable named `workspace`. Scripts can be used at any point in the DSL.
+Scripts are like plugins, except they don't need to be compiled before use. JavaScript(*), Kotlin, Groovy, and Ruby are supported out of the box, and you can add more languages via the Java Scripting API. The workspace (again from the [Structurizr for Java library](https://github.com/structurizr/java)) is bound to a variable named `workspace`. Scripts can be used at any point in the DSL.
 
 __Please note that `!script` is currently an experimental feature.__
 (*) Nashorn (the JVM JavaScript engine) is deprecated, see [https://openjdk.java.net/jeps/372](https://openjdk.java.net/jeps/372) for details.
@@ -321,6 +321,7 @@ The following file extensions are recognised:
 
 - `.groovy` (Groovy)
 - `.kts` (Kotlin)
+- `.rb` (Ruby)
 - `.js` (JavaScript)
 
 ## Grammar

@@ -15,6 +15,7 @@ dependencies {
 
     implementation 'org.codehaus.groovy:groovy-jsr223:3.0.8'
     implementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30'
+    implementation 'org.jruby:jruby-core:9.2.19.0'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }

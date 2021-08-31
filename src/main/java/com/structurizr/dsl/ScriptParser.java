@@ -57,6 +57,9 @@ final class ScriptParser extends AbstractParser {
                 case "kotlin":
                     fileExtension = "kts";
                     break;
+                case "ruby":
+                    fileExtension = "rb";
+                    break;
                 default:
                     throw new RuntimeException("Unsupported scripting language \"" + language + "\"");
             }

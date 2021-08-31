@@ -15,4 +15,9 @@ workspace {
         workspace.model.addPerson("JavaScript");
     }
 
+    !script ruby {
+        puts "Hello from Ruby"
+        workspace.model.addPerson("Ruby");
+    }
+
 }

@@ -772,6 +772,7 @@ class ExampleTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
     }
 
     @Test
@@ -782,6 +783,7 @@ class ExampleTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
     }
 
 }
