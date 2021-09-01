@@ -142,63 +142,71 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             ViewSet views = workspace.getViews();
 
             views.getSystemLandscapeViews().stream().sorted(Comparator.comparing(SystemLandscapeView::getKey)).forEach(view -> {
-                start(SYSTEM_LANDSCAPE_VIEW_TOKEN, quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
+                    start(SYSTEM_LANDSCAPE_VIEW_TOKEN, quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
-                view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
-                {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                    view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
+                    {
+                        start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                        end();
+                    });
+
+                    format(view.getAutomaticLayout());
+
                     end();
-                });
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
+                    newline();
+                }
             });
 
             views.getSystemContextViews().stream().sorted(Comparator.comparing(SystemContextView::getKey)).forEach(view -> {
-                start(SYSTEM_CONTEXT_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
+                    start(SYSTEM_CONTEXT_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
-                view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
-                {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                    view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
+                    {
+                        start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                        end();
+                    });
+
+                    format(view.getAutomaticLayout());
+
                     end();
-                });
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
+                    newline();
+                }
             });
 
             views.getContainerViews().stream().sorted(Comparator.comparing(ContainerView::getKey)).forEach(view -> {
-                start(CONTAINER_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
+                    start(CONTAINER_VIEW_TOKEN, id(view.getSoftwareSystem()), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
-                view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
-                {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                    view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
+                    {
+                        start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                        end();
+                    });
+
+                    format(view.getAutomaticLayout());
+
                     end();
-                });
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
+                    newline();
+                }
             });
 
             views.getComponentViews().stream().sorted(Comparator.comparing(ComponentView::getKey)).forEach(view -> {
-                start(COMPONENT_VIEW_TOKEN, id(view.getContainer(), true), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
+                    start(COMPONENT_VIEW_TOKEN, id(view.getContainer(), true), quote(view.getKey().replaceAll(" ", "")), quote(view.getDescription()));
 
-                view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
-                {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                    view.getElements().stream().map(ElementView::getElement).sorted(Comparator.comparing(Element::getId)).forEach(e ->
+                    {
+                        start(INCLUDE_IN_VIEW_TOKEN, id(e, true));
+                        end();
+                    });
+
+                    format(view.getAutomaticLayout());
+
                     end();
-                });
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
+                    newline();
+                }
             });
 
             views.getFilteredViews().stream().sorted(Comparator.comparing(FilteredView::getKey)).forEach(view -> {
@@ -214,7 +222,7 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getDynamicViews().stream().sorted(Comparator.comparing(DynamicView::getKey)).forEach(view -> {
-                if (view.getRelationships().size() > 0) {
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
                     if (StringUtils.isNullOrEmpty(view.getElementId())) {
                         start(DYNAMIC_VIEW_TOKEN, quote("*"), quote(view.getKey()), quote(view.getDescription()));
                     } else {
@@ -252,36 +260,38 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
             });
 
             views.getDeploymentViews().stream().sorted(Comparator.comparing(DeploymentView::getKey)).forEach(view -> {
-                String scope;
+                if (view.getElements().size() > 0 || view.getRelationships().size() > 0) {
+                    String scope;
 
-                if (StringUtils.isNullOrEmpty(view.getSoftwareSystemId())) {
-                    scope = "*";
-                } else {
-                    scope = id(view.getSoftwareSystem());
-                }
-
-                start(DEPLOYMENT_VIEW_TOKEN, scope, quote(view.getEnvironment()), quote(view.getKey()), quote(view.getDescription()));
-
-                Set<Element> elements = new LinkedHashSet<>();
-                for (ElementView elementView : view.getElements()) {
-                    DeploymentElement deploymentElement = (DeploymentElement) elementView.getElement();
-
-                    if (deploymentElement instanceof DeploymentNode) {
-                        // ignore
+                    if (StringUtils.isNullOrEmpty(view.getSoftwareSystemId())) {
+                        scope = "*";
                     } else {
-                        elements.add(deploymentElement.getParent());
+                        scope = id(view.getSoftwareSystem());
                     }
-                }
 
-                for (Element element : elements) {
-                    start(INCLUDE_IN_VIEW_TOKEN, id(element, true));
+                    start(DEPLOYMENT_VIEW_TOKEN, scope, quote(view.getEnvironment()), quote(view.getKey()), quote(view.getDescription()));
+
+                    Set<Element> elements = new LinkedHashSet<>();
+                    for (ElementView elementView : view.getElements()) {
+                        DeploymentElement deploymentElement = (DeploymentElement) elementView.getElement();
+
+                        if (deploymentElement instanceof DeploymentNode) {
+                            // ignore
+                        } else {
+                            elements.add(deploymentElement.getParent());
+                        }
+                    }
+
+                    for (Element element : elements) {
+                        start(INCLUDE_IN_VIEW_TOKEN, id(element, true));
+                        end();
+                    }
+
+                    format(view.getAutomaticLayout());
+
                     end();
+                    newline();
                 }
-
-                format(view.getAutomaticLayout());
-
-                end();
-                newline();
             });
 
             if (hasStyles) {
