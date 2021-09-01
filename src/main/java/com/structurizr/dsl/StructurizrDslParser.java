@@ -103,6 +103,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      * If "path" represents a directory, all files in that directory (recursively) will be parsed.
      *
      * @param path      a File object representing a file or directory
+     * @throws StructurizrDslParserException when something goes wrong
      */
     public void parse(File path) throws StructurizrDslParserException {
         if (path == null) {
@@ -133,6 +134,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      * Parses the specified Structurizr DSL fragment, adding the parsed content to the workspace.
      *
      * @param dsl       a DSL fragment
+     * @throws StructurizrDslParserException when something goes wrong
      */
     public void parse(String dsl) throws StructurizrDslParserException {
         if (StringUtils.isNullOrEmpty(dsl)) {

@@ -25,6 +25,8 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
      * Formats the specified Structurizr JSON file to the Structurizr DSL.
      *
      * @param file      a File object representing a JSON file
+     * @throws StructurizrDslFormatterException if the workspace can't be formatted
+     * @return a DSL representation of the workspace
      */
     public String format(File file) throws StructurizrDslFormatterException {
         if (file == null) {
@@ -50,6 +52,8 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
      * Formats the specified Structurizr JSON to the Structurizr DSL.
      *
      * @param json       a JSON document
+     * @throws StructurizrDslFormatterException if the workspace can't be formatted
+     * @return a DSL representation of the workspace
      */
     public String format(String json) throws StructurizrDslFormatterException {
         if (StringUtils.isNullOrEmpty(json)) {
