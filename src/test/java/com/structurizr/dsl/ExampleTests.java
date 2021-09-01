@@ -757,9 +757,17 @@ class ExampleTests extends AbstractTests {
     }
 
     @Test
-    void test_plugin() throws Exception {
+    void test_pluginWithoutParameters() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/plugin.dsl"));
+        parser.parse(new File("examples/plugin-without-parameters.dsl"));
+
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Java"));
+    }
+
+    @Test
+    void test_pluginWithParameters() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/plugin-with-parameters.dsl"));
 
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Java"));
     }

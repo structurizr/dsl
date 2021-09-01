@@ -280,6 +280,20 @@ The compiled plugin packaged as a JAR file (plus any other JAR dependencies) sho
 }
 ```
 
+Parameters can be specified in the plugin body, for example.
+
+ ```
+ workspace {
+
+    !plugin com.example.TestPlugin {
+		name value      
+    }
+
+}
+```
+
+The named parameters are then available via the `getParameter(name)` method of the `StructurizrDslPluginContext`object.
+
 __Please note that `!plugin` is currently an experimental feature.__
 
 ### Scripts

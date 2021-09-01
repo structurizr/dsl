@@ -1,4 +1,4 @@
-workspace "Name" {
+workspace {
 
     !plugin com.example.ExampleStructurizrDslPlugin
 

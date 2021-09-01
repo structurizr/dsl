@@ -659,8 +659,16 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted) {
-                            new PluginParser().parse(getContext(), file, tokens);
+                            String fullyQualifiedClassName = new PluginParser().parse(getContext(), tokens.withoutContextStartToken());
+                            startContext(new PluginDslContext(fullyQualifiedClassName, file.getParentFile()));
+                            if (!shouldStartContext(tokens)) {
+                                // run the plugin immediately, without looking for parameters
+                                endContext();
+                            }
                         }
+
+                    } else if (inContext(PluginDslContext.class)) {
+                        new PluginParser().parseParameter(getContext(PluginDslContext.class), tokens);
 
                     } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken) && tokens.includes(1) && shouldStartContext(tokens)) {
                         startContext(new InlineScriptDslContext(tokens.get(1)));
