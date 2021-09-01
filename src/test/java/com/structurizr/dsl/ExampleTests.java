@@ -775,7 +775,7 @@ class ExampleTests extends AbstractTests {
     @Test
     void test_script() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/script.dsl"));
+        parser.parse(new File("examples/script-external.dsl"));
 
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
@@ -786,7 +786,7 @@ class ExampleTests extends AbstractTests {
     @Test
     void test_inlineScript() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/inline-script.dsl"));
+        parser.parse(new File("examples/script-inline.dsl"));
 
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));

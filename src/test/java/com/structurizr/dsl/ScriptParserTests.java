@@ -12,9 +12,9 @@ class ScriptParserTests extends AbstractTests {
     private ScriptParser parser = new ScriptParser();
 
     @Test
-    void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
+    void test_parseExternal_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(context(), new File("examples/script.dsl"), tokens("!script", "test.kts", "extra"));
+            parser.parseExternal(tokens("!script", "test.kts", "extra"));
             fail();
         } catch (Exception e) {
             assertEquals("Too many tokens, expected: !script <filename>", e.getMessage());
@@ -22,29 +22,13 @@ class ScriptParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenNoFilenameIsSpecified() {
+    void test_parseExternal_ThrowsAnException_WhenNoFilenameIsSpecified() {
         try {
-            parser.parse(context(), new File("examples/script.dsl"), tokens("!script"));
+            parser.parseExternal(tokens("!script"));
             fail();
         } catch (Exception e) {
             assertEquals("Expected: !script <filename>", e.getMessage());
         }
     }
 
-    @Test
-    void test_parse_RunsTheScript_WhenAValidScriptFilenameIsSpecified() {
-        parser.parse(context(), new File("examples/script.dsl"), tokens("!script", "test.kts"));
-        assertNotNull(workspace.getModel().getPersonWithName("Kotlin"));
-    }
-
-    @Test
-    void test_parse_ThrowsAnException_WhenAnUnsupportedLanguageIsSpecified() {
-        try {
-            parser.parse(context(), "java", Collections.EMPTY_LIST);
-            fail();
-        } catch (Exception e) {
-            assertEquals("Error running inline script, caused by java.lang.RuntimeException: Unsupported scripting language \"java\"", e.getMessage());
-        }
-    }
-    
 }

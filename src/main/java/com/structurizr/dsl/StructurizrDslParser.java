@@ -156,10 +156,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                 } else if (inContext(InlineScriptDslContext.class)) {
                     if (DslContext.CONTEXT_END_TOKEN.equals(line.trim())) {
                         endContext();
-                    } else if (!restricted) {
-                        getContext(InlineScriptDslContext.class).addLine(line);
                     } else {
-                        // ignore line
+                        getContext(InlineScriptDslContext.class).addLine(line);
                     }
                 } else {
                     List<String> listOfTokens = new Tokenizer().tokenize(line);
@@ -665,17 +663,26 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 // run the plugin immediately, without looking for parameters
                                 endContext();
                             }
+                        } else {
+                            throw new RuntimeException("Plugins are not available");
                         }
 
                     } else if (inContext(PluginDslContext.class)) {
                         new PluginParser().parseParameter(getContext(PluginDslContext.class), tokens);
 
-                    } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken) && tokens.includes(1) && shouldStartContext(tokens)) {
-                        startContext(new InlineScriptDslContext(tokens.get(1)));
-
                     } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted) {
-                            new ScriptParser().parse(getContext(), file, tokens);
+                            if (shouldStartContext(tokens)) {
+                                // assume this is an inline script
+                                String language = new ScriptParser().parseInline(tokens.withoutContextStartToken());
+                                startContext(new InlineScriptDslContext(language));
+                            } else {
+                                String filename = new ScriptParser().parseExternal(tokens);
+                                startContext(new ExternalScriptDslContext(file.getParentFile(), filename));
+                                endContext();
+                            }
+                        } else {
+                            throw new RuntimeException("Scripts are not available");
                         }
 
                     } else {
