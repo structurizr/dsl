@@ -1,6 +1,6 @@
 workspace {
 
-    !plugin com.structurizr.dsl.TestStructurizrDslPlugin {
+    !plugin com.example.ExampleStructurizrDslPlugin {
         name Java
     }
 
