@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.13.0 (unreleased)
+## 1.13.0 (3rd September 2021)
 
-- __Breaking change__: `impliedRelationships` is now `!impliedRelationships`, and needs to be placed at the workspace level.
+- __Breaking change__: `impliedRelationships` is now `!impliedRelationships`.
 - Adds support for "include relationship==*" (#68).
 - Fixes #69 (hierarchical identifiers not working at the top level inside a deployment environment).
 - Adds experimental support for `!ref`, `!plugin`, and `!script`.
