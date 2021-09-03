@@ -1,7 +1,8 @@
 workspace {
 
+    !impliedRelationships false
+
     model {
-        impliedRelationships false
 
         u = person "User"
         s = softwareSystem "Software System" {

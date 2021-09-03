@@ -30,13 +30,14 @@ Although the DSL does not define an explicit relationship between the person and
 
 ## Disabling implied relationships
 
-This functionality can be disabled using the `impliedRelationships` keyword. For example:
+This functionality can be disabled using the `!impliedRelationships` keyword. For example:
 
 ```
 workspace {
 
+    !impliedRelationships false
+
     model {
-        impliedRelationships false
 
         u = person "User"
         s = softwareSystem "Software System" {
@@ -122,4 +123,4 @@ A better approach is to collapse multiple relationships into a single descriptio
 
 ## Links
 
-- [DSL language reference - impliedRelationships](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#impliedRelationships)
+- [DSL language reference - !impliedRelationships](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#impliedRelationships)
