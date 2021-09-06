@@ -11,6 +11,44 @@ The `!script` keyword provides a way to run scripts written in Groovy, Kotlin, R
 }
 ```
 
+#### Programmatically add elements to a view
+
+```
+workspace {
+
+    model {
+        group "Group 1" {
+            a = softwareSystem "A" {
+                tags "Tag 1"
+            }
+            b = softwareSystem "B" {
+                tags "Tag 2"
+            }
+        }
+        group "Group 2" {
+            c = softwareSystem "C" {
+                tags "Tag 1"
+            }
+            d = softwareSystem "D" {
+                tags "Tag 2"
+            }
+        }
+    }
+
+    views {
+        systemLandscape "key" {
+            !script groovy {
+                view = workspace.views.getViewWithKey("key");
+                workspace.model.softwareSystems.findAll { it.group == "Group 1" && it.hasTag("Tag 1") }.each{ view.add(it); };
+            }
+
+            autolayout
+        }
+    }
+
+}
+```
+
 #### Run Graphviz locally
 
 ```
