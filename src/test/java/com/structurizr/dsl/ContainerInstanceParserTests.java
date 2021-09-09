@@ -12,10 +12,10 @@ class ContainerInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance", "identifier", "deploymentGroup", "tags", "extra"));
+            parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance", "identifier", "deploymentGroups", "tags", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: containerInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+            assertEquals("Too many tokens, expected: containerInstance <identifier> [deploymentGroups] [tags]", e.getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ class ContainerInstanceParserTests extends AbstractTests {
             parser.parse(new DeploymentNodeDslContext(null), tokens("containerInstance"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: containerInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+            assertEquals("Expected: containerInstance <identifier> [deploymentGroups] [tags]", e.getMessage());
         }
     }
 
@@ -72,7 +72,8 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals("Default", containerInstance.getDeploymentGroup());
+        assertEquals(1, containerInstance.getDeploymentGroups().size());
+        assertEquals("Default", containerInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -85,7 +86,7 @@ class ContainerInstanceParserTests extends AbstractTests {
         elements.register("container", container);
         context.setIdentifierRegister(elements);
 
-        parser.parse(context, tokens("containerInstance", "container", "Tag 1, Tag 2"));
+        parser.parse(context, tokens("containerInstance", "container", "", "Tag 1, Tag 2"));
 
         assertEquals(4, model.getElements().size());
         assertEquals(1, deploymentNode.getContainerInstances().size());
@@ -93,7 +94,8 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance,Tag 1,Tag 2", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals("Default", containerInstance.getDeploymentGroup());
+        assertEquals(1, containerInstance.getDeploymentGroups().size());
+        assertEquals("Default", containerInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -115,7 +117,8 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals("Group", containerInstance.getDeploymentGroup());
+        assertEquals(1, containerInstance.getDeploymentGroups().size());
+        assertEquals("Group", containerInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -137,7 +140,8 @@ class ContainerInstanceParserTests extends AbstractTests {
         assertSame(container, containerInstance.getContainer());
         assertEquals("Container Instance,Tag 1,Tag 2", containerInstance.getTags());
         assertEquals("Live", containerInstance.getEnvironment());
-        assertEquals("Group", containerInstance.getDeploymentGroup());
+        assertEquals(1, containerInstance.getDeploymentGroups().size());
+        assertEquals("Group", containerInstance.getDeploymentGroups().iterator().next());
     }
 
 }

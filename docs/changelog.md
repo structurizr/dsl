@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.1 (9th September 2021)
+
+- Adds support for software system/container instances in multiple deployment groups.
+
 ## 1.13.0 (3rd September 2021)
 
 - __Breaking change__: `impliedRelationships` is now `!impliedRelationships`.

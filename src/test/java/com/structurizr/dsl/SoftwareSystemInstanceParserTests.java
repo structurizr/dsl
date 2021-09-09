@@ -12,10 +12,10 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance", "identifier", "group", "tags", "extra"));
+            parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance", "identifier", "deploymentGroups", "tags", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+            assertEquals("Too many tokens, expected: softwareSystemInstance <identifier> [deploymentGroups] [tags]", e.getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
             parser.parse(new DeploymentNodeDslContext(null), tokens("softwareSystemInstance"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]", e.getMessage());
+            assertEquals("Expected: softwareSystemInstance <identifier> [deploymentGroups] [tags]", e.getMessage());
         }
     }
 
@@ -71,7 +71,8 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
-        assertEquals("Default", softwareSystemInstance.getDeploymentGroup());
+        assertEquals(1, softwareSystemInstance.getDeploymentGroups().size());
+        assertEquals("Default", softwareSystemInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -83,7 +84,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         elements.register("softwaresystem", softwareSystem);
         context.setIdentifierRegister(elements);
 
-        parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "Tag 1, Tag 2"));
+        parser.parse(context, tokens("softwareSystemInstance", "softwareSystem", "", "Tag 1, Tag 2"));
 
         assertEquals(3, model.getElements().size());
         assertEquals(1, deploymentNode.getSoftwareSystemInstances().size());
@@ -91,7 +92,8 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance,Tag 1,Tag 2", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
-        assertEquals("Default", softwareSystemInstance.getDeploymentGroup());
+        assertEquals(1, softwareSystemInstance.getDeploymentGroups().size());
+        assertEquals("Default", softwareSystemInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -112,7 +114,8 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
-        assertEquals("Group", softwareSystemInstance.getDeploymentGroup());
+        assertEquals(1, softwareSystemInstance.getDeploymentGroups().size());
+        assertEquals("Group", softwareSystemInstance.getDeploymentGroups().iterator().next());
     }
 
     @Test
@@ -133,7 +136,8 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
         assertSame(softwareSystem, softwareSystemInstance.getSoftwareSystem());
         assertEquals("Software System Instance,Tag 1,Tag 2", softwareSystemInstance.getTags());
         assertEquals("Live", softwareSystemInstance.getEnvironment());
-        assertEquals("Group", softwareSystemInstance.getDeploymentGroup());
+        assertEquals(1, softwareSystemInstance.getDeploymentGroups().size());
+        assertEquals("Group", softwareSystemInstance.getDeploymentGroups().iterator().next());
     }
 
 }

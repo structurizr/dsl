@@ -83,12 +83,12 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "                    ElasticLoadBalancer = infrastructureNode \"Elastic Load Balancer\" \"\" \"\" \"Amazon Web Services - Elastic Load Balancing\" \n" +
                 "                    AmazonRDS = deploymentNode \"Amazon RDS\" \"\" \"\" \"Amazon Web Services - RDS\" {\n" +
                 "                        MySQL = deploymentNode \"MySQL\" \"\" \"\" \"Amazon Web Services - RDS MySQL instance\" {\n" +
-                "                            Database_1 = containerInstance SpringPetClinic.Database \"\" \n" +
+                "                            Database_1 = containerInstance SpringPetClinic.Database \"\" \"\" \n" +
                 "                        }\n" +
                 "                    }\n" +
                 "                    Autoscalinggroup = deploymentNode \"Autoscaling group\" \"\" \"\" \"Amazon Web Services - Auto Scaling\" {\n" +
                 "                        AmazonEC2 = deploymentNode \"Amazon EC2\" \"\" \"\" \"Amazon Web Services - EC2\" {\n" +
-                "                            WebApplication_1 = containerInstance SpringPetClinic.WebApplication \"\" \n" +
+                "                            WebApplication_1 = containerInstance SpringPetClinic.WebApplication \"\" \"\" \n" +
                 "                        }\n" +
                 "                    }\n" +
                 "                }\n" +
@@ -196,58 +196,58 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "        Development = deploymentEnvironment \"Development\" {\n" +
                 "            DeveloperLaptop = deploymentNode \"Developer Laptop\" \"\" \"Microsoft Windows 10 or Apple macOS\" \"\" {\n" +
                 "                WebBrowser = deploymentNode \"Web Browser\" \"\" \"Chrome, Firefox, Safari, or Edge\" \"\" {\n" +
-                "                    SinglePageApplication_1 = containerInstance InternetBankingSystem.SinglePageApplication \"\" \n" +
+                "                    SinglePageApplication_1 = containerInstance InternetBankingSystem.SinglePageApplication \"\" \"\" \n" +
                 "                }\n" +
                 "                DockerContainerWebServer = deploymentNode \"Docker Container - Web Server\" \"\" \"Docker\" \"\" {\n" +
                 "                    ApacheTomcat = deploymentNode \"Apache Tomcat\" \"\" \"Apache Tomcat 8.x\" \"\" {\n" +
-                "                        WebApplication_1 = containerInstance InternetBankingSystem.WebApplication \"\" \n" +
-                "                        APIApplication_1 = containerInstance InternetBankingSystem.APIApplication \"\" \n" +
+                "                        WebApplication_1 = containerInstance InternetBankingSystem.WebApplication \"\" \"\" \n" +
+                "                        APIApplication_1 = containerInstance InternetBankingSystem.APIApplication \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "                DockerContainerDatabaseServer = deploymentNode \"Docker Container - Database Server\" \"\" \"Docker\" \"\" {\n" +
                 "                    DatabaseServer = deploymentNode \"Database Server\" \"\" \"Oracle 12c\" \"\" {\n" +
-                "                        Database_1 = containerInstance InternetBankingSystem.Database \"\" \n" +
+                "                        Database_1 = containerInstance InternetBankingSystem.Database \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "            }\n" +
                 "            BigBankplc = deploymentNode \"Big Bank plc\" \"\" \"Big Bank plc data center\" \"\" {\n" +
                 "                bigbankdev001 = deploymentNode \"bigbank-dev001\" \"\" \"\" \"\" {\n" +
-                "                    MainframeBankingSystem_1 = softwareSystemInstance MainframeBankingSystem \"\" \n" +
+                "                    MainframeBankingSystem_1 = softwareSystemInstance MainframeBankingSystem \"\" \"\" \n" +
                 "                }\n" +
                 "            }\n" +
                 "        }\n" +
                 "        Live = deploymentEnvironment \"Live\" {\n" +
                 "            Customersmobiledevice = deploymentNode \"Customer's mobile device\" \"\" \"Apple iOS or Android\" \"\" {\n" +
-                "                MobileApp_1 = containerInstance InternetBankingSystem.MobileApp \"\" \n" +
+                "                MobileApp_1 = containerInstance InternetBankingSystem.MobileApp \"\" \"\" \n" +
                 "            }\n" +
                 "            Customerscomputer = deploymentNode \"Customer's computer\" \"\" \"Microsoft Windows or Apple macOS\" \"\" {\n" +
                 "                WebBrowser = deploymentNode \"Web Browser\" \"\" \"Chrome, Firefox, Safari, or Edge\" \"\" {\n" +
-                "                    SinglePageApplication_1 = containerInstance InternetBankingSystem.SinglePageApplication \"\" \n" +
+                "                    SinglePageApplication_1 = containerInstance InternetBankingSystem.SinglePageApplication \"\" \"\" \n" +
                 "                }\n" +
                 "            }\n" +
                 "            BigBankplc = deploymentNode \"Big Bank plc\" \"\" \"Big Bank plc data center\" \"\" {\n" +
                 "                bigbankweb = deploymentNode \"bigbank-web***\" \"\" \"Ubuntu 16.04 LTS\" \"\" {\n" +
                 "                    ApacheTomcat = deploymentNode \"Apache Tomcat\" \"\" \"Apache Tomcat 8.x\" \"\" {\n" +
-                "                        WebApplication_1 = containerInstance InternetBankingSystem.WebApplication \"\" \n" +
+                "                        WebApplication_1 = containerInstance InternetBankingSystem.WebApplication \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "                bigbankapi = deploymentNode \"bigbank-api***\" \"\" \"Ubuntu 16.04 LTS\" \"\" {\n" +
                 "                    ApacheTomcat = deploymentNode \"Apache Tomcat\" \"\" \"Apache Tomcat 8.x\" \"\" {\n" +
-                "                        APIApplication_1 = containerInstance InternetBankingSystem.APIApplication \"\" \n" +
+                "                        APIApplication_1 = containerInstance InternetBankingSystem.APIApplication \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "                bigbankdb01 = deploymentNode \"bigbank-db01\" \"\" \"Ubuntu 16.04 LTS\" \"\" {\n" +
                 "                    OraclePrimary = deploymentNode \"Oracle - Primary\" \"\" \"Oracle 12c\" \"\" {\n" +
-                "                        Database_1 = containerInstance InternetBankingSystem.Database \"\" \n" +
+                "                        Database_1 = containerInstance InternetBankingSystem.Database \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "                bigbankdb02 = deploymentNode \"bigbank-db02\" \"\" \"Ubuntu 16.04 LTS\" \"Failover\" {\n" +
                 "                    OracleSecondary = deploymentNode \"Oracle - Secondary\" \"\" \"Oracle 12c\" \"Failover\" {\n" +
-                "                        Database_1 = containerInstance InternetBankingSystem.Database \"Failover\" \n" +
+                "                        Database_1 = containerInstance InternetBankingSystem.Database \"\" \"\" \n" +
                 "                    }\n" +
                 "                }\n" +
                 "                bigbankprod001 = deploymentNode \"bigbank-prod001\" \"\" \"\" \"\" {\n" +
-                "                    MainframeBankingSystem_1 = softwareSystemInstance MainframeBankingSystem \"\" \n" +
+                "                    MainframeBankingSystem_1 = softwareSystemInstance MainframeBankingSystem \"\" \"\" \n" +
                 "                }\n" +
                 "            }\n" +
                 "        }\n" +

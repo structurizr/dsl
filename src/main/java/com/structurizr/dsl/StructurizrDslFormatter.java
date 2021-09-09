@@ -732,13 +732,13 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
     }
 
     private void format(SoftwareSystemInstance softwareSystemInstance) {
-        start(id(softwareSystemInstance), ASSIGNMENT_OPERATOR_TOKEN, SOFTWARE_SYSTEM_INSTANCE_TOKEN, id(softwareSystemInstance.getSoftwareSystem(), true), quote(tags(softwareSystemInstance)));
+        start(id(softwareSystemInstance), ASSIGNMENT_OPERATOR_TOKEN, SOFTWARE_SYSTEM_INSTANCE_TOKEN, id(softwareSystemInstance.getSoftwareSystem(), true), quote(""), quote(tags(softwareSystemInstance)));
         formatModelItem(softwareSystemInstance);
         end();
     }
 
     private void format(ContainerInstance containerInstance) {
-        start(id(containerInstance), ASSIGNMENT_OPERATOR_TOKEN, CONTAINER_INSTANCE_TOKEN, id(containerInstance.getContainer(), true), quote(tags(containerInstance)));
+        start(id(containerInstance), ASSIGNMENT_OPERATOR_TOKEN, CONTAINER_INSTANCE_TOKEN, id(containerInstance.getContainer(), true), quote(""), quote(tags(containerInstance)));
         formatModelItem(containerInstance);
         end();
     }

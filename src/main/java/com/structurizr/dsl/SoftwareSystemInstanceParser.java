@@ -2,19 +2,22 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 final class SoftwareSystemInstanceParser extends AbstractParser {
 
-    private static final String GRAMMAR = "softwareSystemInstance <identifier> [deploymentGroup|tags] [tags]";
+    private static final String GRAMMAR = "softwareSystemInstance <identifier> [deploymentGroups] [tags]";
 
     private static final int IDENTIFIER_INDEX = 1;
-    private static final int SECOND_TOKEN = 2;
-    private static final int THIRD_TOKEN = 3;
+    private static final int DEPLOYMENT_GROUPS_TOKEN = 2;
+    private static final int TAGS_INDEX = 3;
 
     SoftwareSystemInstance parse(DeploymentNodeDslContext context, Tokens tokens) {
         // softwareSystemInstance <identifier> [tags]
         // softwareSystemInstance <identifier> [deploymentGroup] [tags]
 
-        if (tokens.hasMoreThan(THIRD_TOKEN)) {
+        if (tokens.hasMoreThan(TAGS_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
         }
 
@@ -32,22 +35,23 @@ final class SoftwareSystemInstanceParser extends AbstractParser {
         if (element instanceof SoftwareSystem) {
             DeploymentNode deploymentNode = context.getDeploymentNode();
 
-            String deploymentGroup = DeploymentElement.DEFAULT_DEPLOYMENT_GROUP;
-            int tagsIndex = SECOND_TOKEN;
+            Set<String> deploymentGroups = new HashSet<>();
+            if (tokens.includes(DEPLOYMENT_GROUPS_TOKEN)) {
+                String token = tokens.get(DEPLOYMENT_GROUPS_TOKEN);
 
-            if (tokens.includes(SECOND_TOKEN)) {
-                String token = tokens.get(SECOND_TOKEN);
-
-                if (context.getElement(token) instanceof DeploymentGroup) {
-                    deploymentGroup = context.getElement(token).getName();
-                    tagsIndex = THIRD_TOKEN;
+                String[] deploymentGroupReferences = token.split(",");
+                for (String deploymentGroupReference : deploymentGroupReferences) {
+                    Element e = context.getElement(deploymentGroupReference);
+                    if (e instanceof DeploymentGroup) {
+                        deploymentGroups.add(e.getName());
+                    }
                 }
             }
 
-            SoftwareSystemInstance softwareSystemInstance = deploymentNode.add((SoftwareSystem)element, deploymentGroup);
+            SoftwareSystemInstance softwareSystemInstance = deploymentNode.add((SoftwareSystem)element, deploymentGroups.toArray(new String[]{}));
 
-            if (tokens.includes(tagsIndex)) {
-                String tags = tokens.get(tagsIndex);
+            if (tokens.includes(TAGS_INDEX)) {
+                String tags = tokens.get(TAGS_INDEX);
                 softwareSystemInstance.addTags(tags.split(","));
             }
 
