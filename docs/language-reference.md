@@ -924,6 +924,12 @@ filtered <baseKey> <include|exclude> <tags> [key] [description]
 
 The `baseKey` specifies the key of the System Landscape, System Context, Container, or Component view on which this filtered view should be based. The mode (`include` or `exclude`) defines whether the view should include or exclude elements/relationships based upon the `tags` provided.
 
+Please note that once a filtered view is defined for a given "base view", that base view will no longer show up in your diagram list when using the Structurizr renderer. This is by design. If you'd like to see the base view too, just create another filtered view for the same base view, which includes the `Element` and `Relationship` tags.
+
+```
+filtered <baseKey> include "Element,Relationship" [key] [description]
+```
+
 ### dynamic view
 
 The `dynamic` keyword defines a [Dynamic view](https://c4model.com/#DynamicDiagram) for the specified scope.
