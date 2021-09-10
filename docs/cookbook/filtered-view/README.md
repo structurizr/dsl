@@ -73,7 +73,7 @@ The first of these filtered views includes all elements/relationships that are t
 filtered "landscape" include "Tag 1,Tag 2,Relationship" "landscape1"
 ```
 
-[![](example-2-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-2.dsl)
+[![](example-2-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-2.dsl&view=landscape1)
 
 And the second excludes all elements/relationships that are tagged `Tag 1`.
 
@@ -81,7 +81,7 @@ And the second excludes all elements/relationships that are tagged `Tag 1`.
 filtered "landscape" exclude "Tag 1" "landscape2"
 ```
 
-[![](example-2-2.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-2.dsl)
+[![](example-2-2.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-2.dsl&view=landscape2)
 
 When using filtered views, you'll notice that the original "base view" no longer shows in the list of viewable diagrams. This is by design. If you'd like to see the base view, you will need to create another filtered view that shows all elements and elements. For example:
 
@@ -89,7 +89,7 @@ When using filtered views, you'll notice that the original "base view" no longer
 filtered "landscape" include "Element,Relationship" "landscape-all"
 ```
 
-[![](example-3.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-3.dsl)
+[![](example-3.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/filtered-view/example-3.dsl&view=landscape-all)
 
 ## Links
 
