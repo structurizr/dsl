@@ -1,0 +1,28 @@
+workspace {
+
+    model {
+        a = softwareSystem "A" {
+            tags "Tag 1"
+        }
+        b = softwareSystem "B" {
+            tags "Tag 2"
+        }
+        c = softwareSystem "C" {
+            tags "Tag 3"
+        }
+        
+        a -> b
+        b -> c
+    }
+    
+    views {
+        systemLandscape "landscape" {
+            include *
+            autolayout lr
+        }
+        
+        filtered "landscape" include "Tag 1,Tag 2,Relationship" "landscape1"
+        filtered "landscape" exclude "Tag 1" "landscape2"
+    }
+        
+}
