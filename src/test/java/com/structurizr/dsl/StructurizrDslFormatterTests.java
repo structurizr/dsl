@@ -1,6 +1,8 @@
 package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
+import com.structurizr.model.Location;
+import com.structurizr.model.SoftwareSystem;
 import com.structurizr.util.WorkspaceUtils;
 import org.junit.jupiter.api.Test;
 
@@ -485,6 +487,29 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "    }\n" +
                 "\n" +
                 "}\n", formatter.format(WorkspaceUtils.toJson(workspace, false)));
+    }
+
+    @Test
+    void test_formattingInternalSoftwareSystemsWhenNoEnterpriseSpecified() throws Exception {
+        Workspace workspace = new Workspace("Name", "Description");
+        SoftwareSystem ss = workspace.getModel().addSoftwareSystem("Software System");
+        ss.setLocation(Location.Internal);
+
+        StructurizrDslFormatter formatter = new StructurizrDslFormatter();
+        String result = formatter.format(WorkspaceUtils.toJson(workspace, false));
+
+        assertEquals("workspace \"Name\" \"Description\" {\n" +
+                "\n" +
+                "    !impliedRelationships \"false\" \n" +
+                "    !identifiers \"hierarchical\" \n" +
+                "\n" +
+                "    model {\n" +
+                "        enterprise \"Enterprise\" {\n" +
+                "            SoftwareSystem = softwareSystem \"Software System\" \n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "}\n", result);
     }
 
 

@@ -84,6 +84,10 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         List<Person> internalPeople = model.getPeople().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(Person::getId)).collect(Collectors.toList());
         List<SoftwareSystem> internalSoftwareSystems = model.getSoftwareSystems().stream().filter(p -> p.getLocation() == Location.Internal).sorted(Comparator.comparing(SoftwareSystem::getId)).collect(Collectors.toList());
 
+        if (workspace.getModel().getEnterprise() == null) {
+            workspace.getModel().setEnterprise(new Enterprise("Enterprise"));
+        }
+
         if (workspace.getModel().getEnterprise() != null && (!internalPeople.isEmpty() || !internalSoftwareSystems.isEmpty())) {
             start(ENTERPRISE_TOKEN, quote(workspace.getModel().getEnterprise().getName()));
 

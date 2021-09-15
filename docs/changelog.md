@@ -3,6 +3,7 @@
 ## 1.14.0 (unreleased)
 
 - Adds support for software system/container instances in multiple deployment groups.
+- Fixes an issue where internal software systems/people are not included by the DSL formatter when the enterprise is not set.
 - The DSL formatter now removes empty tokens at the end of lines.
 
 ## 1.13.0 (3rd September 2021)
