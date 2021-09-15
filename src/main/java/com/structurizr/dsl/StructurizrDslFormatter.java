@@ -488,7 +488,20 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
     }
 
     private void start(String... tokens) {
-        format(true, tokens);
+        // remove empty tokens that appear at the end of the line
+        List<String> list = Arrays.asList(tokens);
+        boolean repeat = true;
+
+        while (repeat) {
+            if (list.get(list.size() - 1).equals("\"\"")) {
+                list = list.subList(0, list.size() - 1);
+                repeat = true;
+            } else {
+                repeat = false;
+            }
+        }
+
+        format(true, list.toArray(new String[]{}));
         indent++;
     }
 

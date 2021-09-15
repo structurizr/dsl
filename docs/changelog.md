@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.13.1 (9th September 2021)
+## 1.14.0 (unreleased)
 
 - Adds support for software system/container instances in multiple deployment groups.
+- The DSL formatter now removes empty tokens at the end of lines.
 
 ## 1.13.0 (3rd September 2021)
 
