@@ -47,15 +47,15 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/
 }
 ```
 
-In this example we're extending a workspace that's accessible via a public URL, but you can also specify the name of a local file. We can use the `!ref` keyword to extend the existing software system named "A", and identified in the parent workspace as `a`.
+In this example we're extending a workspace that's accessible via a public URL, but you can also specify the name of a local file. We can use the `!ref` keyword to reference and extend the existing software system named "A", which is identified in the parent workspace as `a`. Since `b` is already defined in the parent workspace, we can reference it from the child workspace as if it was defined locally. 
 
 This will create a system context diagram:
 
-[![](A-SystemContext.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl?view=A-SystemContext)
+[![](A-SystemContext.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl&view=A-SystemContext)
 
 And a container diagram:
 
-[![](A-Containers.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl?view=A-Containers)
+[![](A-Containers.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl&view=A-Containers)
 
 ## Links
 
