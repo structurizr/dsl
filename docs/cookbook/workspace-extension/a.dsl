@@ -1,4 +1,4 @@
-workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/extends/system-landscape.dsl {
+workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/system-landscape.dsl {
 
     model {
         !ref a {

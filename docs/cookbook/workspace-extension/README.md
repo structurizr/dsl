@@ -20,7 +20,7 @@ workspace {
 Next, define your child workspace, using the `extends` keyword to specify the workspace that should be extended. For example:
 
 ```
-workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/extends/system-landscape.dsl {
+workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/system-landscape.dsl {
 
     model {
         !ref a {
@@ -51,11 +51,11 @@ In this example we're extending a workspace that's accessible via a public URL, 
 
 This will create a system context diagram:
 
-[![](A-SystemContext.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/extends/a.dsl?view=A-SystemContext)
+[![](A-SystemContext.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl?view=A-SystemContext)
 
 And a container diagram:
 
-[![](A-Containers.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/extends/a.dsl?view=A-Containers)
+[![](A-Containers.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/workspace-extension/a.dsl?view=A-Containers)
 
 ## Links
 

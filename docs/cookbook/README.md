@@ -6,7 +6,7 @@ Creating software architecture diagrams from a textual definition is becoming mo
 
 - [Introduction](introduction)
 - [Workspace](workspace)
-- [Workspace extension](extends)
+- [Workspace extension](workspace-extension)
 - [System Context view](system-context-view)
 - [Container view](container-view)
 - [Component view](component-view)
