@@ -1,5 +1,7 @@
 workspace {
 
+    !identifiers hierarchical
+
     model {
         a = softwareSystem "A"
         b = softwareSystem "B"
@@ -8,7 +10,7 @@ workspace {
     }
     
     views {
-        systemLandscape "landscape" {
+        systemLandscape "SystemLandscape" {
             include *
             autolayout lr
         }
