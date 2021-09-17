@@ -11,14 +11,14 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/docs/
     }
     
     views {
-        systemContext a "SystemContext-A" {
+        systemContext a "A-SystemContext" {
             include *
             autolayout lr
         }
 
-        container a "Containers-A" {
+        container a "A-Containers" {
             include *
-            autolayout lr
+            autolayout
         }
     }
     
