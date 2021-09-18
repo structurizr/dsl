@@ -11,7 +11,7 @@ final class Tokens {
     }
 
     String get(int index) {
-        return tokens.get(index).trim().replaceAll("\\\\\"", "\"").trim();
+        return tokens.get(index).trim().replaceAll("\\\\\"", "\"").trim().replaceAll("\\\\n", "\n");
     }
 
     int size() {
