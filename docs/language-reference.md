@@ -614,12 +614,12 @@ Permitted children:
 The `softwareSystemInstance` keyword defines an instance of the specified software system that is deployed on the parent deployment node.
 
 ```
-softwareSystemInstance <identifier> [deploymentGroup|tags] [tags] {
+softwareSystemInstance <identifier> [deploymentGroups] [tags] {
     ...
 }
 ```
 
-The `identifier` must represent a software system.
+The `identifier` must represent a software system. `deploymentGroups` is a comma seperated list of identifiers representing deployment groups.
 
 In addition to the software system's tags, the following tags are added by default:
 
@@ -637,12 +637,12 @@ In addition to the software system's tags, the following tags are added by defau
 The `containerInstance` keyword defines an instance of the specified container that is deployed on the parent deployment node.
 
 ```
-containerInstance <identifier> [deploymentGroup|tags] [tags] {
+containerInstance <identifier> [deploymentGroups] [tags] {
     ...
 }
 ```
 
-The `identifier` must represent a container.
+The `identifier` must represent a container. `deploymentGroups` is a comma seperated list of identifiers representing deployment groups.
 
 In addition to the container's tags, the following tags are added by default:
 

@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.14.0 (unreleased)
+## 1.14.0 (19th September 2021)
 
-- Adds support for software system/container instances in multiple deployment groups.
+- __Breaking change__: Adds support for software system/container instances in multiple deployment groups.
 - Fixes an issue where internal software systems/people are not included by the DSL formatter when the enterprise is not set.
 - The DSL formatter now removes empty tokens at the end of lines.
 - Adds support for recognising escaped newlines (\n) in tokens.
