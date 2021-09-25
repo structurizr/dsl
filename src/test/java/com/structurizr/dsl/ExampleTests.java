@@ -794,4 +794,12 @@ class ExampleTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
     }
 
+    @Test
+    void test_adrs() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/adrs/workspace.dsl"));
+
+        assertEquals(10, parser.getWorkspace().getDocumentation().getDecisions().size());
+    }
+
 }
