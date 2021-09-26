@@ -795,6 +795,14 @@ class ExampleTests extends AbstractTests {
     }
 
     @Test
+    void test_docs() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/docs/workspace.dsl"));
+
+        assertEquals(1, parser.getWorkspace().getDocumentation().getSections().size());
+    }
+
+    @Test
     void test_adrs() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("examples/adrs/workspace.dsl"));
