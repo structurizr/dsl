@@ -2,18 +2,20 @@ workspace {
 
     model {
         user = person "User"
-
         softwareSystem = softwareSystem "Software System" {
-            user -> this "Uses"
             !docs docs
         }
+
+        user -> softwareSystem "Uses"
     }
 
     views {
         systemContext softwareSystem "Diagram1" {
             include *
-            autolayout
+            autoLayout
         }
+
+        theme default
     }
 
 }
