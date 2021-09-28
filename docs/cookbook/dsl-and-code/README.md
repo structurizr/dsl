@@ -1,4 +1,4 @@
-# DSL and code hybrid usage
+# DSL and code
 
 It's possible to use both the DSL and the Structurizr for Java library together - perhaps you want to define a basic model via the DSL, and use automatic extraction to add components to the model. To do this, define your workspace using the DSL as normal, for example:
 

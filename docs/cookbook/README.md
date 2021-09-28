@@ -19,3 +19,4 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [Themes](themes)
 - [Implied relationships](implied-relationships)
 - [Scripts](scripts)
+- [DSL and code (hybrid usage pattern)](dsl-and-code)
