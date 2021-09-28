@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.14.1 (unreleased)
+
+Adds support for specifying element style icons and the branding logo as a HTTPS/HTTP URL.
+
 ## 1.14.0 (19th September 2021)
 
 - __Breaking change__: Adds support for software system/container instances in multiple deployment groups.

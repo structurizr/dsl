@@ -264,13 +264,13 @@ final class ElementStyleParser extends AbstractParser {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: icon <file>");
+            throw new RuntimeException("Too many tokens, expected: icon <file|url>");
         }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String path = tokens.get(1);
 
-            if (path.startsWith("data:image/")) {
+            if (path.startsWith("data:image/") || path.startsWith("https://") || path.startsWith("http://")) {
                 style.setIcon(path);
             } else {
                 if (!restricted) {
@@ -287,7 +287,7 @@ final class ElementStyleParser extends AbstractParser {
                 }
             }
         } else {
-            throw new RuntimeException("Expected: icon <file>");
+            throw new RuntimeException("Expected: icon <file|url>");
         }
     }
 

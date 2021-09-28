@@ -18,7 +18,7 @@ class BrandingParserTests extends AbstractTests {
             parser.parseLogo(context, tokens("logo", "path", "extra"), false);
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: logo <path>", e.getMessage());
+            assertEquals("Too many tokens, expected: logo <path|url>", e.getMessage());
         }
     }
 
@@ -30,7 +30,7 @@ class BrandingParserTests extends AbstractTests {
             parser.parseLogo(context, tokens("logo"), false);
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: logo <path>", e.getMessage());
+            assertEquals("Expected: logo <path|url>", e.getMessage());
         }
     }
 
@@ -66,6 +66,33 @@ class BrandingParserTests extends AbstractTests {
 
         parser.parseLogo(context, tokens("logo", "examples/logo.png"), false);
         assertTrue(workspace.getViews().getConfiguration().getBranding().getLogo().startsWith("data:image/png;base64,"));
+    }
+
+    @Test
+    void test_parseLogo_SetsTheLogoFromADataUri() {
+        BrandingDslContext context = new BrandingDslContext(new File("."));
+        context.setWorkspace(workspace);
+
+        parser.parseLogo(context, tokens("logo", "data:image/png;base64,123456789012345678901234567890"), true);
+        assertTrue(workspace.getViews().getConfiguration().getBranding().getLogo().startsWith("data:image/png;base64,123456789012345678901234567890"));
+    }
+
+    @Test
+    void test_parseLogo_SetsTheLogoFromAHttpUrl() {
+        BrandingDslContext context = new BrandingDslContext(new File("."));
+        context.setWorkspace(workspace);
+
+        parser.parseLogo(context, tokens("logo", "http://structurizr.com/logo.png"), true);
+        assertEquals("http://structurizr.com/logo.png", workspace.getViews().getConfiguration().getBranding().getLogo());
+    }
+
+    @Test
+    void test_parseLogo_SetsTheLogoFromAHttpsUrl() {
+        BrandingDslContext context = new BrandingDslContext(new File("."));
+        context.setWorkspace(workspace);
+
+        parser.parseLogo(context, tokens("logo", "https://structurizr.com/logo.png"), true);
+        assertEquals("https://structurizr.com/logo.png", workspace.getViews().getConfiguration().getBranding().getLogo());
     }
 
     @Test

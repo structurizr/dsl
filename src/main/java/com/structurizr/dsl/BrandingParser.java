@@ -7,7 +7,7 @@ import java.io.File;
 
 final class BrandingParser extends AbstractParser {
 
-    private static final String LOGO_GRAMMAR = "logo <path>";
+    private static final String LOGO_GRAMMAR = "logo <path|url>";
     private static final String FONT_GRAMMAR = "font <name> [url]";
 
     private static final int LOGO_FILE_INDEX = 1;
@@ -23,7 +23,7 @@ final class BrandingParser extends AbstractParser {
         } else if (tokens.includes(LOGO_FILE_INDEX)) {
             String path = tokens.get(1);
 
-            if (path.startsWith("data:image/")) {
+            if (path.startsWith("data:image/") || path.startsWith("https://") || path.startsWith("http://")) {
                 context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(path);
             } else {
                 if (!restricted) {

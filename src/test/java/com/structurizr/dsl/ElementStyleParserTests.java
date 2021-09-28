@@ -440,7 +440,7 @@ class ElementStyleParserTests extends AbstractTests {
             parser.parseIcon(elementStyleDslContext(), tokens("icon", "file", "extra"), false);
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: icon <file>", e.getMessage());
+            assertEquals("Too many tokens, expected: icon <file|url>", e.getMessage());
         }
     }
 
@@ -450,7 +450,7 @@ class ElementStyleParserTests extends AbstractTests {
             parser.parseIcon(elementStyleDslContext(), tokens("icon"), false);
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: icon <file>", e.getMessage());
+            assertEquals("Expected: icon <file|url>", e.getMessage());
         }
     }
 
@@ -467,8 +467,19 @@ class ElementStyleParserTests extends AbstractTests {
     @Test
     void test_parseIcon_SetsTheIconFromADataUri() {
         parser.parseIcon(elementStyleDslContext(), tokens("icon", "data:image/png;base64,123456789012345678901234567890"), true);
-        System.out.println(elementStyle.getIcon());
         assertTrue(elementStyle.getIcon().startsWith("data:image/png;base64,123456789012345678901234567890"));
+    }
+
+    @Test
+    void test_parseIcon_SetsTheIconFromAHttpUrl() {
+        parser.parseIcon(elementStyleDslContext(), tokens("icon", "http://structurizr.com/logo.png"), true);
+        assertEquals("http://structurizr.com/logo.png", elementStyle.getIcon());
+    }
+
+    @Test
+    void test_parseIcon_SetsTheIconFromAHttpsUrl() {
+        parser.parseIcon(elementStyleDslContext(), tokens("icon", "https://structurizr.com/logo.png"), true);
+        assertEquals("https://structurizr.com/logo.png", elementStyle.getIcon());
     }
 
     @Test
