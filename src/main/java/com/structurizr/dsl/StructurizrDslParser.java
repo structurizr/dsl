@@ -75,7 +75,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      * @return  a Workspace instance
      */
     public Workspace getWorkspace() {
-        DslUtils.setDsl(workspace, getParsedDsl());
+        if (workspace != null) {
+            DslUtils.setDsl(workspace, getParsedDsl());
+        }
 
         return workspace;
     }
@@ -107,11 +109,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      */
     public void parse(File path) throws StructurizrDslParserException {
         if (path == null) {
-            throw new RuntimeException("A file must be specified");
+            throw new StructurizrDslParserException("A file must be specified");
         }
 
         if (!path.exists()) {
-            throw new RuntimeException("The file at " + path.getAbsolutePath() + " does not exist");
+            throw new StructurizrDslParserException("The file at " + path.getAbsolutePath() + " does not exist");
         }
 
         List<File> files = FileUtils.findFiles(path);
@@ -138,7 +140,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      */
     public void parse(String dsl) throws StructurizrDslParserException {
         if (StringUtils.isNullOrEmpty(dsl)) {
-            throw new RuntimeException("A DSL fragment must be specified");
+            throw new StructurizrDslParserException("A DSL fragment must be specified");
         }
 
         List<String> lines = Arrays.asList(dsl.split("\\r?\\n"));
@@ -666,7 +668,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 endContext();
                             }
                         } else {
-                            throw new RuntimeException("Plugins are not available");
+                            throw new StructurizrDslParserException("Plugins are not available");
                         }
 
                     } else if (inContext(PluginDslContext.class)) {
@@ -684,7 +686,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 endContext();
                             }
                         } else {
-                            throw new RuntimeException("Scripts are not available");
+                            throw new StructurizrDslParserException("Scripts are not available");
                         }
 
                     } else {
@@ -753,20 +755,20 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         }
     }
 
-    private <T> T getContext(Class<T> clazz) {
+    private <T> T getContext(Class<T> clazz) throws StructurizrDslParserException {
         if (inContext(clazz)) {
             return (T)contextStack.peek();
         } else {
-            throw new RuntimeException("Expected " + clazz.getName() + " but got " + contextStack.peek().getClass().getName());
+            throw new StructurizrDslParserException("Expected " + clazz.getName() + " but got " + contextStack.peek().getClass().getName());
         }
     }
 
-    private void endContext() {
+    private void endContext() throws StructurizrDslParserException {
         if (!contextStack.empty()) {
             DslContext context = contextStack.pop();
             context.end();
         } else {
-            throw new RuntimeException("Unexpected end of context");
+            throw new StructurizrDslParserException("Unexpected end of context");
         }
     }
 
