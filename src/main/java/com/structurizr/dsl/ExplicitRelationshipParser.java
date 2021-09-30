@@ -39,12 +39,16 @@ final class ExplicitRelationshipParser extends AbstractRelationshipParser {
         }
 
         if (destinationElement == null) {
-            if (StructurizrDslTokens.THIS_TOKEN.equalsIgnoreCase(destinationId) && context instanceof GroupableElementDslContext) {
-                GroupableElementDslContext groupableElementDslContext = (GroupableElementDslContext)context;
-                destinationElement = groupableElementDslContext.getElement();
-            } else {
-                throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
+            if (StructurizrDslTokens.THIS_TOKEN.equalsIgnoreCase(destinationId) && context instanceof ModelItemDslContext) {
+                ModelItemDslContext modelItemDslContext = (ModelItemDslContext) context;
+                if (modelItemDslContext.getModelItem() instanceof Element) {
+                    destinationElement = (Element)modelItemDslContext.getModelItem();
+                }
             }
+        }
+
+        if (destinationElement == null) {
+            throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
         }
 
         String description = "";

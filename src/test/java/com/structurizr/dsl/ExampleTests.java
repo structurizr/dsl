@@ -810,4 +810,10 @@ class ExampleTests extends AbstractTests {
         assertEquals(10, parser.getWorkspace().getDocumentation().getDecisions().size());
     }
 
+    @Test
+    void test_this() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/this.dsl"));
+    }
+
 }

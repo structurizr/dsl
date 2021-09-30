@@ -3,6 +3,7 @@
 ## 1.14.1 (unreleased)
 
 Adds support for specifying element style icons and the branding logo as a HTTPS/HTTP URL.
+- Fixes an issue where `this` didn't work when defining relationships inside deployment/infrastructure nodes.
 
 ## 1.14.0 (19th September 2021)
 
