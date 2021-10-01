@@ -15,6 +15,8 @@ abstract class AbstractRelationshipParser extends AbstractParser {
             relationship = ((StaticStructureElement)sourceElement).uses((StaticStructureElement)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof DeploymentNode && destinationElement instanceof DeploymentNode) {
             relationship = ((DeploymentNode)sourceElement).uses((DeploymentNode)destinationElement, description, technology, null, tags);
+        } else if (sourceElement instanceof DeploymentNode && destinationElement instanceof InfrastructureNode) {
+            relationship = ((DeploymentNode)sourceElement).uses((InfrastructureNode) destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof InfrastructureNode && destinationElement instanceof DeploymentElement) {
             relationship = ((InfrastructureNode)sourceElement).uses((DeploymentElement)destinationElement, description, technology, null, tags);
         } else if (sourceElement instanceof StaticStructureElementInstance && destinationElement instanceof InfrastructureNode) {

@@ -3,6 +3,7 @@
 ## 1.14.1 (unreleased)
 
 - Adds support for specifying element style icons and the branding logo as a HTTPS/HTTP URL.
+- Adds support for relationships from deployment nodes to infrastructure nodes.
 - Fixes an issue where `this` didn't work when defining relationships inside deployment/infrastructure nodes.
 - Removes the restriction that `include *` must be on a line of its own inside view definitions.
 
