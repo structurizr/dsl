@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 public final class StructurizrDslFormatter extends StructurizrDslTokens {
 
+    private static final String DEFAULT_FONT = "Open Sans";
+
     private StringBuilder buf = new StringBuilder();
     private int indent = 0;
 
@@ -142,8 +144,9 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         boolean hasViews = !workspace.getViews().isEmpty();
         boolean hasStyles = !workspace.getViews().getConfiguration().getStyles().getElements().isEmpty() || !workspace.getViews().getConfiguration().getStyles().getRelationships().isEmpty();
         boolean hasThemes = workspace.getViews().getConfiguration().getThemes() != null && workspace.getViews().getConfiguration().getThemes().length > 0;
+        boolean hasBranding = workspace.getViews().getConfiguration().getBranding() != null && (!StringUtils.isNullOrEmpty(workspace.getViews().getConfiguration().getBranding().getLogo()) || workspace.getViews().getConfiguration().getBranding().getFont() != null);
 
-        if (hasViews || hasStyles || hasThemes) {
+        if (hasViews || hasStyles || hasThemes || hasBranding) {
             newline();
             start(VIEWS_TOKEN);
 
@@ -455,6 +458,29 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
                     start(THEMES_TOKEN, quote(theme));
                     end();
                 }
+            }
+
+            if (hasBranding) {
+                newline();
+                start(BRANDING_TOKEN);
+                String brandingLogo = workspace.getViews().getConfiguration().getBranding().getLogo();
+                Font brandingFont = workspace.getViews().getConfiguration().getBranding().getFont();
+
+                if (!StringUtils.isNullOrEmpty(brandingLogo)) {
+                    start(BRANDING_LOGO_TOKEN, quote(brandingLogo));
+                    end();
+                }
+
+                if (brandingFont != null) {
+                    if (!StringUtils.isNullOrEmpty(brandingFont.getUrl())) {
+                        start(BRANDING_FONT_TOKEN, quote(brandingFont.getName()), quote(brandingFont.getUrl()));
+                        end();
+                    } else if (!DEFAULT_FONT.equals(brandingFont.getName())){
+                        start(BRANDING_FONT_TOKEN, quote(brandingFont.getName()));
+                        end();
+                    }
+                }
+                end();
             }
 
             newline();
