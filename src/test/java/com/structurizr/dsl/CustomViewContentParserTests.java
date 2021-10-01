@@ -16,7 +16,7 @@ class CustomViewContentParserTests extends AbstractTests {
             parser.parseInclude(new CustomViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier> [identifier...]", iae.getMessage());
+            assertEquals("Expected: include <*|identifier> [*|identifier...]", iae.getMessage());
         }
     }
 

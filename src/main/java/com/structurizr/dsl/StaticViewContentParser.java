@@ -12,24 +12,22 @@ final class StaticViewContentParser extends ViewContentParser {
 
     void parseInclude(StaticViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier|expression> [identifier|expression...]");
+            throw new RuntimeException("Expected: include <*|identifier|expression> [*|identifier|expression...]");
         }
 
         StaticView view = context.getView();
 
-        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
-            // include * or include element==*
-            view.addDefaultElements();
-        } else {
-            // include <identifier|expression> [identifier|expression...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
+        // include <identifier|expression> [identifier|expression...]
+        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+            String token = tokens.get(i);
 
-                if (isExpression(token)) {
-                    new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
-                } else {
-                    new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
-                }
+            if (token.equals(WILDCARD) || token.equals(ELEMENT_WILDCARD)) {
+                // include * or include element==*
+                view.addDefaultElements();
+            } else if (isExpression(token)) {
+                new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
+            } else {
+                new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
             }
         }
     }

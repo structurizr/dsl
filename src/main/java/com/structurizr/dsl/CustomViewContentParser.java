@@ -15,26 +15,24 @@ final class CustomViewContentParser extends ViewContentParser {
 
     void parseInclude(CustomViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier> [identifier...]");
+            throw new RuntimeException("Expected: include <*|identifier> [*|identifier...]");
         }
 
         CustomView view = context.getCustomView();
 
-        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
-            // include * or include element==*
-            for (CustomElement element : context.getWorkspace().getModel().getCustomElements()) {
-                view.add(element);
-            }
-        } else {
-            // include <identifier> [identifier...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
+        // include <identifier> [identifier...]
+        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+            String token = tokens.get(i);
 
-                if (isExpression(token)) {
-                    new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
-                } else {
-                    new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
+            if (token.equals(WILDCARD) || token.equals(ELEMENT_WILDCARD)) {
+                // include * or include element==*
+                for (CustomElement element : context.getWorkspace().getModel().getCustomElements()) {
+                    view.add(element);
                 }
+            } else if (isExpression(token)) {
+                new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
+            } else {
+                new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
             }
         }
     }

@@ -17,24 +17,22 @@ final class DeploymentViewContentParser extends ViewContentParser {
 
     void parseInclude(DeploymentViewDslContext context, Tokens tokens) {
         if (!tokens.includes(FIRST_IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: include <*|identifier> [identifier...]");
+            throw new RuntimeException("Expected: include <*|identifier> [*|identifier...]");
         }
 
         DeploymentView view = context.getView();
 
-        if (tokens.contains(WILDCARD) || tokens.contains(ELEMENT_WILDCARD)) {
-            // include * or include element==*
-            view.addDefaultElements();
-        } else {
-            // include <identifier> [identifier...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
+        // include <identifier> [identifier...]
+        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+            String token = tokens.get(i);
 
-                if (isExpression(token)) {
-                    new DeploymentViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
-                } else {
-                    new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
-                }
+            if (token.equals(WILDCARD) || token.equals(ELEMENT_WILDCARD)) {
+                // include * or include element==*
+                view.addDefaultElements();
+            } else if (isExpression(token)) {
+                new DeploymentViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
+            } else {
+                new DeploymentViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
             }
         }
     }

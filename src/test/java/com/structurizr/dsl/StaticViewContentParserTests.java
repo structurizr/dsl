@@ -18,7 +18,7 @@ class StaticViewContentParserTests extends AbstractTests {
             parser.parseInclude(new SystemLandscapeViewDslContext(null), tokens("include"));
             fail();
         } catch (RuntimeException iae) {
-            assertEquals("Expected: include <*|identifier|expression> [identifier|expression...]", iae.getMessage());
+            assertEquals("Expected: include <*|identifier|expression> [*|identifier|expression...]", iae.getMessage());
         }
     }
 
