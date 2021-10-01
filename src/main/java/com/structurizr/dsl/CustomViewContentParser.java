@@ -26,9 +26,7 @@ final class CustomViewContentParser extends ViewContentParser {
 
             if (token.equals(WILDCARD) || token.equals(ELEMENT_WILDCARD)) {
                 // include * or include element==*
-                for (CustomElement element : context.getWorkspace().getModel().getCustomElements()) {
-                    view.add(element);
-                }
+                view.addDefaultElements();
             } else if (isExpression(token)) {
                 new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
             } else {
