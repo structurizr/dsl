@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.14.1 (unreleased)
+## 1.15.0 (2nd October 2021)
 
 - Adds support for specifying element style icons and the branding logo as a HTTPS/HTTP URL.
 - Adds support for relationships from deployment nodes to infrastructure nodes.
