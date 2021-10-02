@@ -1010,7 +1010,7 @@ The `include` keyword can be used to include elements or relationships.
 To include elements in a view, use one or more `include` statements inside the block defining the view.
 
 ```
-include <*|identifier|expression> [identifier|expression...]
+include <*|identifier|expression> [*|identifier|expression...]
 ```
 
 Elements can either be specified using individual identifiers, the wildcard identifier (`*`), or a property expression. Please note that including elements will also include the relationships between those elements.
@@ -1141,7 +1141,7 @@ The `element` keyword is used to define an element style. All nested properties 
 ```
 element <tag> {
     shape <Box|RoundedBox|Circle|Ellipse|Hexagon|Cylinder|Pipe|Person|Robot|Folder|WebBrowser|MobileDevicePortrait|MobileDeviceLandscape|Component>
-    icon <file|data uri>
+    icon <file|url>
     width <integer>
     height <integer>
     background <#rrggbb>
@@ -1156,7 +1156,9 @@ element <tag> {
 }
 ```
 
-Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
+Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats.
+
+Important note: see [Help - Icons](https://structurizr.com/help/icons) if you are specifying an element style icon via a URL. 
 
             
 ### relationship style
@@ -1205,10 +1207,12 @@ The `branding` keyword allows you to define some custom branding that should be 
 
 ```
 branding {
-    logo <file|data uri>
+    logo <file|url>
     font <name> [url]
 }
 ```
+
+Important note: see [Help - Icons](https://structurizr.com/help/icons) if you are specifying a branding logo via a URL.
 
 ### terminology
 
