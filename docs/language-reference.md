@@ -1025,7 +1025,6 @@ The wildcard identifier (`*`) operates differently depending upon the type of di
 - Dynamic view: (not applicable)
 - Deployment view: Include all deployment nodes, infrastructure nodes, and container instances defined within the deployment environment and (optional) software system in scope.
 
-Element expressions are currently only supported on system landscape, system context, container, and component views.
 They provide a way to include elements based upon some basic conditional logic, as follows:
 
 - `element.tag==<tag>,[tag]`: include elements that have all of the specified tags
@@ -1061,7 +1060,6 @@ To exclude a relationship in a view, you can specify an individual relationship 
 exclude <identifier|expression> [identifier|expression...]
 ```
 
-Property expressions are currently only supported on system landscape, system context, container, and component views.
 They provide a way to exclude relationships based upon some basic conditional logic, as follows:
 
 - `relationship.tag==<tag>,[tag]`: exclude relationships that have all of the specified tags
