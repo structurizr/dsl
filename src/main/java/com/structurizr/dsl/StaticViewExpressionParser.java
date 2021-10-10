@@ -40,6 +40,7 @@ final class StaticViewExpressionParser extends AbstractExpressionParser {
     protected Set<Element> findAfferentCouplings(Element element) {
         Set<Element> elements = new LinkedHashSet<>();
 
+        elements.addAll(findAfferentCouplings(element, CustomElement.class));
         elements.addAll(findAfferentCouplings(element, Person.class));
         elements.addAll(findAfferentCouplings(element, SoftwareSystem.class));
         elements.addAll(findAfferentCouplings(element, Container.class));
@@ -51,6 +52,7 @@ final class StaticViewExpressionParser extends AbstractExpressionParser {
     protected Set<Element> findEfferentCouplings(Element element) {
         Set<Element> elements = new LinkedHashSet<>();
 
+        elements.addAll(findEfferentCouplings(element, CustomElement.class));
         elements.addAll(findEfferentCouplings(element, Person.class));
         elements.addAll(findEfferentCouplings(element, SoftwareSystem.class));
         elements.addAll(findEfferentCouplings(element, Container.class));

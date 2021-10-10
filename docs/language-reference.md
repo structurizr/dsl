@@ -226,7 +226,7 @@ The Structurizr DSL supports a number of expressions for use when including or e
 - `-><identifier>`: the specified element plus afferent couplings
 - `<identifier>->`: the specified element plus efferent couplings
 - `-><identifier>->`: the specified element plus afferent and efferent couplings
-- `element.type==<type>`: elements of the specified type (Person|SoftwareSystem|Container|Component|DeploymentNode|InfrastructureNode|SoftwareSystemInstance|ContainerInstance)
+- `element.type==<type>`: elements of the specified type (Person|SoftwareSystem|Container|Component|DeploymentNode|InfrastructureNode|SoftwareSystemInstance|ContainerInstance|Custom)
 - `element.tag==<tag>[,tag]`: all elements that have all of the specified tags
 - `element.tag!=<tag>[,tag]`: all elements that do not have all of the specified tags
 - `element=-><identifier>`: the specified element plus afferent couplings

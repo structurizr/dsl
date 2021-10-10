@@ -46,6 +46,7 @@ final class DeploymentViewExpressionParser extends AbstractExpressionParser {
     protected Set<Element> findAfferentCouplings(Element element) {
         Set<Element> elements = new LinkedHashSet<>();
 
+        elements.addAll(findAfferentCouplings(element, CustomElement.class));
         elements.addAll(findAfferentCouplings(element, DeploymentNode.class));
         elements.addAll(findAfferentCouplings(element, InfrastructureNode.class));
         elements.addAll(findAfferentCouplings(element, SoftwareSystemInstance.class));
@@ -57,6 +58,7 @@ final class DeploymentViewExpressionParser extends AbstractExpressionParser {
     protected Set<Element> findEfferentCouplings(Element element) {
         Set<Element> elements = new LinkedHashSet<>();
 
+        elements.addAll(findEfferentCouplings(element, CustomElement.class));
         elements.addAll(findEfferentCouplings(element, DeploymentNode.class));
         elements.addAll(findEfferentCouplings(element, InfrastructureNode.class));
         elements.addAll(findEfferentCouplings(element, SoftwareSystemInstance.class));

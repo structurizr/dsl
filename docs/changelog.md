@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.16.0 (unreleaed)
+
+- Adds the implied relationships functionality for custom elements.
+- "addDefaultElements" will now also add any connected custom elements.
+- Adds better support for custom elements when using element expressions.
+
 ## 1.15.0 (2nd October 2021)
 
 - Adds support for specifying element style icons and the branding logo as a HTTPS/HTTP URL.
