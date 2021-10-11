@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.16.0 (unreleaed)
+## 1.16.0 (unreleased)
 
 - Adds the implied relationships functionality for custom elements.
 - "addDefaultElements" will now also add any connected custom elements.
