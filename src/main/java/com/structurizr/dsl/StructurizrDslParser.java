@@ -310,6 +310,21 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
                         new ModelItemParser().parseTags(getContext(ModelItemDslContext.class), tokens);
 
+                    } else if (DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && getContext(ModelItemDslContext.class).getModelItem() instanceof Element) {
+                        new ModelItemParser().parseDescription(getContext(ModelItemDslContext.class), tokens);
+
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
+                        new ContainerParser().parseTechnology(getContext(ContainerDslContext.class), tokens);
+
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class)) {
+                        new ComponentParser().parseTechnology(getContext(ComponentDslContext.class), tokens);
+
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
+                        new DeploymentNodeParser().parseTechnology(getContext(DeploymentNodeDslContext.class), tokens);
+
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(InfrastructureNodeDslContext.class)) {
+                        new InfrastructureNodeParser().parseTechnology(getContext(InfrastructureNodeDslContext.class), tokens);
+
                     } else if (URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
                         new ModelItemParser().parseUrl(getContext(ModelItemDslContext.class), tokens);
 

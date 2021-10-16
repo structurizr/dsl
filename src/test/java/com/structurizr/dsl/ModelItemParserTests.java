@@ -41,6 +41,38 @@ class ModelItemParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseDescription_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            ModelItemDslContext context = new SoftwareSystemDslContext(null);
+            parser.parseDescription(context, tokens("description", "description", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: description <description>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseDescription_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+            ModelItemDslContext context = new SoftwareSystemDslContext(softwareSystem);
+            parser.parseDescription(context, tokens("description"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: description <description>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseDescription_SetsTheDescription_WhenADescriptionIsSpecified() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "");
+        ModelItemDslContext context = new SoftwareSystemDslContext(softwareSystem);
+        parser.parseDescription(context, tokens("description", "Description"));
+
+        assertEquals("Description", softwareSystem.getDescription());
+    }
+
+    @Test
     void test_parseUrl_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             ModelItemDslContext context = new SoftwareSystemDslContext(null);

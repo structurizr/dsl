@@ -91,4 +91,37 @@ class ComponentParserTests extends AbstractTests {
         assertEquals("Element,Component,Tag 1,Tag 2", component.getTags());
     }
 
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            Component component = model.addSoftwareSystem("Software System").addContainer("Container").addComponent("Component");
+            ComponentDslContext context = new ComponentDslContext(component);
+            parser.parseTechnology(context, tokens("technology", "technology", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            Component component = model.addSoftwareSystem("Software System").addContainer("Container").addComponent("Component");
+            ComponentDslContext context = new ComponentDslContext(component);
+            parser.parseTechnology(context, tokens("technology"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_SetsTheDescription_WhenADescriptionIsSpecified() {
+        Component component = model.addSoftwareSystem("Software System").addContainer("Container").addComponent("Component");
+        ComponentDslContext context = new ComponentDslContext(component);
+        parser.parseTechnology(context, tokens("technology", "Technology"));
+
+        assertEquals("Technology", component.getTechnology());
+    }
+
 }

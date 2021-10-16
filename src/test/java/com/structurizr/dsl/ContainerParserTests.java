@@ -86,4 +86,37 @@ class ContainerParserTests extends AbstractTests {
         assertEquals("Element,Container,Tag 1,Tag 2", container.getTags());
     }
 
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            Container container = model.addSoftwareSystem("Software System").addContainer("Container");
+            ContainerDslContext context = new ContainerDslContext(container);
+            parser.parseTechnology(context, tokens("technology", "technology", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            Container container = model.addSoftwareSystem("Software System").addContainer("Container");
+            ContainerDslContext context = new ContainerDslContext(container);
+            parser.parseTechnology(context, tokens("technology"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_SetsTheDescription_WhenADescriptionIsSpecified() {
+        Container container = model.addSoftwareSystem("Software System").addContainer("Container");
+        ContainerDslContext context = new ContainerDslContext(container);
+        parser.parseTechnology(context, tokens("technology", "Technology"));
+
+        assertEquals("Technology", container.getTechnology());
+    }
+
 }

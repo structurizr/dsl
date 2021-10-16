@@ -65,4 +65,20 @@ final class DeploymentNodeParser extends AbstractParser {
         return deploymentNode;
     }
 
+    void parseTechnology(DeploymentNodeDslContext context, Tokens tokens) {
+        int index = 1;
+
+        // technology <technology>
+        if (tokens.hasMoreThan(index)) {
+            throw new RuntimeException("Too many tokens, expected: technology <technology>");
+        }
+
+        if (!tokens.includes(index)) {
+            throw new RuntimeException("Expected: technology <technology>");
+        }
+
+        String technology = tokens.get(index);
+        context.getDeploymentNode().setTechnology(technology);
+    }
+
 }

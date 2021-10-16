@@ -47,4 +47,20 @@ final class InfrastructureNodeParser extends AbstractParser {
         return infrastructureNode;
     }
 
+    void parseTechnology(InfrastructureNodeDslContext context, Tokens tokens) {
+        int index = 1;
+
+        // technology <technology>
+        if (tokens.hasMoreThan(index)) {
+            throw new RuntimeException("Too many tokens, expected: technology <technology>");
+        }
+
+        if (!tokens.includes(index)) {
+            throw new RuntimeException("Expected: technology <technology>");
+        }
+
+        String technology = tokens.get(index);
+        context.getInfrastructureNode().setTechnology(technology);
+    }
+
 }

@@ -98,4 +98,37 @@ class InfrastructureNodeParserTests extends AbstractTests {
         assertEquals("Live", infrastructureNode.getEnvironment());
     }
 
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            InfrastructureNode infrastructureNode = model.addDeploymentNode("Deployment Node").addInfrastructureNode("Infrastructure Node");
+            InfrastructureNodeDslContext context = new InfrastructureNodeDslContext(infrastructureNode);
+            parser.parseTechnology(context, tokens("technology", "technology", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            InfrastructureNode infrastructureNode = model.addDeploymentNode("Deployment Node").addInfrastructureNode("Infrastructure Node");
+            InfrastructureNodeDslContext context = new InfrastructureNodeDslContext(infrastructureNode);
+            parser.parseTechnology(context, tokens("technology"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_SetsTheDescription_WhenADescriptionIsSpecified() {
+        InfrastructureNode infrastructureNode = model.addDeploymentNode("Deployment Node").addInfrastructureNode("Infrastructure Node");
+        InfrastructureNodeDslContext context = new InfrastructureNodeDslContext(infrastructureNode);
+        parser.parseTechnology(context, tokens("technology", "Technology"));
+
+        assertEquals("Technology", infrastructureNode.getTechnology());
+    }
+
 }

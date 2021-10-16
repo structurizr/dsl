@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Component;
 import com.structurizr.model.DeploymentNode;
 import org.junit.jupiter.api.Test;
 
@@ -138,6 +139,39 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("Element,Deployment Node", deploymentNode.getTags());
         assertEquals(1, deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
+    }
+
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+            DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+            parser.parseTechnology(context, tokens("technology", "technology", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_ThrowsAnException_WhenNoDescriptionIsSpecified() {
+        try {
+            DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+            DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+            parser.parseTechnology(context, tokens("technology"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: technology <technology>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseTechnology_SetsTheDescription_WhenADescriptionIsSpecified() {
+        DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        parser.parseTechnology(context, tokens("technology", "Technology"));
+
+        assertEquals("Technology", deploymentNode.getTechnology());
     }
 
 }
