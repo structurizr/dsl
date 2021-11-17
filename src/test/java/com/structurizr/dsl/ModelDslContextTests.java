@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Enterprise;
 import com.structurizr.model.Location;
 import com.structurizr.model.Person;
 import com.structurizr.model.SoftwareSystem;
@@ -28,6 +29,7 @@ class ModelDslContextTests extends AbstractTests {
     void end_MarksAllOtherPeopleAsExternal_WhenSomePeopleAreMarkedAsInternal() {
         ModelDslContext context = new ModelDslContext();
         context.setWorkspace(workspace);
+        workspace.getModel().setEnterprise(new Enterprise("Name"));
 
         Person user1 = workspace.getModel().addPerson("Name 1");
         Person user2 = workspace.getModel().addPerson("Name 2");
@@ -59,6 +61,7 @@ class ModelDslContextTests extends AbstractTests {
     void end_MarksAllOtherSoftwareSystemsAsExternal_WhenSomeSoftwareSystemsAreMarkedAsInternal() {
         ModelDslContext context = new ModelDslContext();
         context.setWorkspace(workspace);
+        workspace.getModel().setEnterprise(new Enterprise("Name"));
 
         SoftwareSystem softwareSystem1 = workspace.getModel().addSoftwareSystem("Name 1");
         SoftwareSystem softwareSystem2 = workspace.getModel().addSoftwareSystem("Name 2");
