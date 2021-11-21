@@ -1,6 +1,6 @@
 # Scripts
 
-The `!script` keyword provides a way to run scripts written in Groovy, Kotlin, Ruby, and JavaScript. This gives you access to the underlying Structurizr for Java workspace, for when you need to do something not supported by the DSL. Here are some useful scripts.
+The `!script` keyword provides a way to run scripts written in Groovy, Kotlin, Ruby, and JavaScript. This gives you access to the underlying [Structurizr for Java workspace object](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/Workspace.java) via a variable named `workspace`, for when you need to do something not supported by the DSL. Here are some useful scripts.
 
 #### Create the default views, without automatic layout
 
@@ -62,3 +62,4 @@ workspace {
 ## Links
 
 - [DSL language reference - !script](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#scripts)
+- [Structurizr for Java source code](https://github.com/structurizr/java/tree/master/structurizr-core/src/com/structurizr)
