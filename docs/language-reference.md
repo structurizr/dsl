@@ -452,6 +452,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [description](#description)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -479,6 +480,7 @@ Permitted children:
 - [container](#container)
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
+- [description](#description)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -504,6 +506,8 @@ Permitted children:
 
 - [group](#group)
 - [component](#component)
+- [description](#description)
+- [technology](#technology)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -527,6 +531,8 @@ The following tags are added by default:
 
 Permitted children:
 
+- [description](#description)
+- [technology](#technology)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -581,6 +587,8 @@ Permitted children:
 - [softwareSystemInstance](#softwareSystemInstance)
 - [containerInstance](#containerInstance)
 - [-> (relationship)](#relationship)
+- [description](#description)
+- [technology](#technology)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -604,6 +612,8 @@ The following tags are added by default:
 Permitted children:
 
 - [-> (relationship)](#relationship)
+- [description](#description)
+- [technology](#technology)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -626,6 +636,7 @@ In addition to the software system's tags, the following tags are added by defau
 - `Software System Instance`
 
 - [-> (relationship)](#relationship)
+- [description](#description)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -649,6 +660,7 @@ In addition to the container's tags, the following tags are added by default:
 - `Container Instance`
 
 - [-> (relationship)](#relationship)
+- [description](#description)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -681,6 +693,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [description](#description)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -751,9 +764,9 @@ Permitted children:
 - [properties](#properties)
 - [perspectives](#perspectives)
 
-## tags
+### tags
 
-`tags` is used to adds tags to an element or relationship. Tags can be specified comma separated, or individually.
+`tags` is used to add tags to an element or relationship. Tags can be specified comma separated, or individually.
 
 ```
 tags "Tag 1"
@@ -761,7 +774,23 @@ tags "Tag 1,Tag 2"
 tags "Tag 1" "Tag 2"
 ```
 
-## url
+### description
+
+`description` is used to set the description on an element.
+
+```
+description "Description"
+```
+
+### technology
+
+`technology` is used to set the technology on a container, component, deployment node, infrastructure node.
+
+```
+technology "Technology"
+```
+
+### url
 
 `url` is used to set a URL on an element or relationship.
 

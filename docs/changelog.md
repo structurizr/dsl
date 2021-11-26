@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.16.0 (unreleased)
+## 1.16.0 (26th November 2021)
 
 - Adds the implied relationships functionality for custom elements.
-- "addDefaultElements" will now also add any connected custom elements.
+- The "add default elements" feature (`include *`) will now also add any connected custom elements.
 - Adds better support for custom elements when using element expressions.
 - Adds a `description` keyword for setting the description on elements.
 - Adds a `technology` keyword for setting the technology on containers, components, deployment nodes, and infrastructure nodes.
