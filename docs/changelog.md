@@ -1,4 +1,7 @@
 # Changelog
+## 1.16.1 (unreleased)
+
+- Adds support for extending deployment environments via the `!ref` keyword (issue #92).
 
 ## 1.16.0 (26th November 2021)
 

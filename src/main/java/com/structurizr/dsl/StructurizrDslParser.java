@@ -223,6 +223,8 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 startContext(new ContainerDslContext((Container) element));
                             } else if (element instanceof Component) {
                                 startContext(new ComponentDslContext((Component)element));
+                            } else if (element instanceof DeploymentEnvironment) {
+                                startContext(new DeploymentEnvironmentDslContext(element.getName()));
                             } else if (element instanceof DeploymentNode) {
                                 startContext(new DeploymentNodeDslContext((DeploymentNode)element));
                             } else if (element instanceof InfrastructureNode) {

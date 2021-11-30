@@ -7,7 +7,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
 
         webApplication -> database "Reads from and writes to" "JDBC/SSL"
 
-        deploymentEnvironment "Live" {
+        live = deploymentEnvironment "Live" {
             deploymentNode "Amazon Web Services" "" "" "Amazon Web Services - Cloud" {
                 region = deploymentNode "US-East-1" "" "" "Amazon Web Services - Region" {
                     route53 = infrastructureNode "Route 53" "" "" "Amazon Web Services - Route 53"

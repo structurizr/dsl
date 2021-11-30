@@ -1,4 +1,4 @@
-workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/examples/amazon-web-services.dsl {
+workspace extends amazon-web-services.dsl {
 
     model {
 
@@ -26,6 +26,13 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/examp
             }
         }
 
+        !ref live {
+            deploymentNode "New deployment node 3" {
+                infrastructureNode "New infrastructure node 3" {
+                    -> route53
+                }
+            }
+        }
     }
 
     views {
