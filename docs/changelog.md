@@ -2,6 +2,7 @@
 ## 1.16.1 (unreleased)
 
 - Adds support for extending deployment environments via the `!ref` keyword (issue #92).
+- Adds support for extending relationships via the `!ref` keyword (issue #93).
 
 ## 1.16.0 (26th November 2021)
 

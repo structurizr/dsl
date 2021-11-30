@@ -212,32 +212,38 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         registerIdentifier(identifier, relationship);
 
                     } else if (REF_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {
-                        Element element = new RefParser().parse(getContext(), tokens.withoutContextStartToken());
+                        ModelItem modelItem = new RefParser().parse(getContext(), tokens.withoutContextStartToken());
 
                         if (shouldStartContext(tokens)) {
-                            if (element instanceof Person) {
-                                startContext(new PersonDslContext((Person)element));
-                            } else if (element instanceof SoftwareSystem) {
-                                startContext(new SoftwareSystemDslContext((SoftwareSystem)element));
-                            } else if (element instanceof Container) {
-                                startContext(new ContainerDslContext((Container) element));
-                            } else if (element instanceof Component) {
-                                startContext(new ComponentDslContext((Component)element));
-                            } else if (element instanceof DeploymentEnvironment) {
-                                startContext(new DeploymentEnvironmentDslContext(element.getName()));
-                            } else if (element instanceof DeploymentNode) {
-                                startContext(new DeploymentNodeDslContext((DeploymentNode)element));
-                            } else if (element instanceof InfrastructureNode) {
-                                startContext(new InfrastructureNodeDslContext((InfrastructureNode)element));
-                            } else if (element instanceof SoftwareSystemInstance) {
-                                startContext(new SoftwareSystemInstanceDslContext((SoftwareSystemInstance)element));
-                            } else if (element instanceof ContainerInstance) {
-                                startContext(new ContainerInstanceDslContext((ContainerInstance)element));
+                            if (modelItem instanceof Person) {
+                                startContext(new PersonDslContext((Person)modelItem));
+                            } else if (modelItem instanceof SoftwareSystem) {
+                                startContext(new SoftwareSystemDslContext((SoftwareSystem)modelItem));
+                            } else if (modelItem instanceof Container) {
+                                startContext(new ContainerDslContext((Container) modelItem));
+                            } else if (modelItem instanceof Component) {
+                                startContext(new ComponentDslContext((Component)modelItem));
+                            } else if (modelItem instanceof DeploymentEnvironment) {
+                                startContext(new DeploymentEnvironmentDslContext(((DeploymentEnvironment)modelItem).getName()));
+                            } else if (modelItem instanceof DeploymentNode) {
+                                startContext(new DeploymentNodeDslContext((DeploymentNode)modelItem));
+                            } else if (modelItem instanceof InfrastructureNode) {
+                                startContext(new InfrastructureNodeDslContext((InfrastructureNode)modelItem));
+                            } else if (modelItem instanceof SoftwareSystemInstance) {
+                                startContext(new SoftwareSystemInstanceDslContext((SoftwareSystemInstance)modelItem));
+                            } else if (modelItem instanceof ContainerInstance) {
+                                startContext(new ContainerInstanceDslContext((ContainerInstance)modelItem));
+                            } else if (modelItem instanceof Relationship) {
+                                startContext(new RelationshipDslContext((Relationship)modelItem));
                             }
                         }
 
                         if (!StringUtils.isNullOrEmpty(identifier)) {
-                            registerIdentifier(identifier, element);
+                            if (modelItem instanceof Element) {
+                                registerIdentifier(identifier, (Element)modelItem);
+                            } else if (modelItem instanceof Relationship) {
+                                registerIdentifier(identifier, (Relationship)modelItem);
+                            }
                         }
 
                     } else if (CUSTOM_ELEMENT_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ModelDslContext.class))) {

@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
+import com.structurizr.model.ModelItem;
 
 final class RefParser extends AbstractParser {
 
@@ -8,7 +9,7 @@ final class RefParser extends AbstractParser {
 
     private final static int IDENTIFIER_INDEX = 1;
 
-    Element parse(DslContext context, Tokens tokens) {
+    ModelItem parse(DslContext context, Tokens tokens) {
         // !ref <identifier|canonical name>
 
         if (tokens.hasMoreThan(IDENTIFIER_INDEX)) {
@@ -21,18 +22,23 @@ final class RefParser extends AbstractParser {
 
         String s = tokens.get(IDENTIFIER_INDEX);
 
-        Element element;
+        ModelItem modelItem;
+
         if (s.contains("://")) {
-            element = context.getWorkspace().getModel().getElementWithCanonicalName(s);
+            modelItem = context.getWorkspace().getModel().getElementWithCanonicalName(s);
         } else {
-            element = context.getElement(s);
+            modelItem = context.getElement(s);
+
+            if (modelItem == null) {
+                modelItem = context.getRelationship(s);
+            }
         }
 
-        if (element == null) {
-            throw new RuntimeException("An element referenced by \"" + s + "\" could not be found");
+        if (modelItem == null) {
+            throw new RuntimeException("An element/relationship referenced by \"" + s + "\" could not be found");
         }
 
-        return element;
+        return modelItem;
     }
 
 }

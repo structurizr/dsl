@@ -1,7 +1,9 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
+import com.structurizr.model.ModelItem;
 import com.structurizr.model.Person;
+import com.structurizr.model.Relationship;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +23,7 @@ class RefParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
+    void test_parse_ThrowsAnException_WhenTheIdentifierOrCanonicalNameIsNotSpecified() {
         try {
             parser.parse(context(), tokens("ref"));
             fail();
@@ -31,21 +33,48 @@ class RefParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenTheNamedElementCannotBeFound() {
+    void test_parse_ThrowsAnException_WhenTheReferencedElementCannotBeFound() {
         try {
             parser.parse(context(), tokens("ref", "Person://User"));
             fail();
         } catch (Exception e) {
-            assertEquals("An element referenced by \"Person://User\" could not be found", e.getMessage());
+            assertEquals("An element/relationship referenced by \"Person://User\" could not be found", e.getMessage());
         }
     }
 
     @Test
-    void test_parse_FindTheNamedElement() {
+    void test_parse_FindsAnElementByCanonicalName() {
         Person user = workspace.getModel().addPerson("User");
-        Element element = parser.parse(context(), tokens("ref", "Person://User"));
+        ModelItem element = parser.parse(context(), tokens("ref", "Person://User"));
 
         assertSame(user, element);
+    }
+
+    @Test
+    void test_parse_FindsAnElementByIdentifier() {
+        Person user = workspace.getModel().addPerson("User");
+
+        ModelDslContext context = context();
+        IdentifiersRegister register = new IdentifiersRegister();
+        register.register("user", user);
+        context.setIdentifierRegister(register);
+
+        ModelItem modelItem = parser.parse(context, tokens("ref", "user"));
+        assertSame(modelItem, user);
+    }
+
+    @Test
+    void test_parse_FindsARelationshipByIdentifier() {
+        Person user = workspace.getModel().addPerson("User");
+        Relationship relationship = user.interactsWith(user, "Description");
+
+        ModelDslContext context = context();
+        IdentifiersRegister register = new IdentifiersRegister();
+        register.register("rel", relationship);
+        context.setIdentifierRegister(register);
+
+        ModelItem modelItem = parser.parse(context, tokens("ref", "rel"));
+        assertSame(modelItem, relationship);
     }
 
 }
