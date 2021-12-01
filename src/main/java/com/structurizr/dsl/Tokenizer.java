@@ -21,7 +21,7 @@ class Tokenizer {
                     quoted = true;
                     tokenStarted = true;
                     token = new StringBuilder();
-                } else if (c == ' ') {
+                } else if (Character.isWhitespace(c)) {
                     // skip
                 } else {
                     quoted = false;
@@ -38,7 +38,7 @@ class Tokenizer {
                     tokens.add(token.toString());
                     tokenStarted = false;
                     quoted = false;
-                } else if (!quoted && c == ' ') {
+                } else if (!quoted && Character.isWhitespace(c)) {
                     tokens.add(token.toString());
                     tokenStarted = false;
                     quoted = false;

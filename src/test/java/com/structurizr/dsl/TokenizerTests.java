@@ -50,12 +50,22 @@ class TokenizerTests extends AbstractTests {
 
     @Test
     void tokenize_ReturnsTokens_WhenTheLineIsSeveralQuotedTokens() {
-        List<String> tokens = new Tokenizer().tokenize("user = person \"A User\"");
+        List<String> tokens = new Tokenizer().tokenize("user = person \"User\"");
         assertEquals(4, tokens.size());
         assertEquals("user", tokens.get(0));
         assertEquals("=", tokens.get(1));
         assertEquals("person", tokens.get(2));
-        assertEquals("A User", tokens.get(3));
+        assertEquals("User", tokens.get(3));
+    }
+
+    @Test
+    void tokenize_ReturnsASingleToken_WhenTheLineIncludesTabCharacters() {
+        List<String> tokens = new Tokenizer().tokenize("\t\tuser\t=\tperson\t\"User\"");
+        assertEquals(4, tokens.size());
+        assertEquals("user", tokens.get(0));
+        assertEquals("=", tokens.get(1));
+        assertEquals("person", tokens.get(2));
+        assertEquals("User", tokens.get(3));
     }
 
 }
