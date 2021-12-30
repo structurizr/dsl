@@ -72,6 +72,7 @@ class StructurizrDslTokens {
     static final String RELATIONSHIP_STYLE_DASHED_TOKEN = "dashed";
     static final String RELATIONSHIP_STYLE_OPACITY_TOKEN = "opacity";
     static final String RELATIONSHIP_STYLE_ROUTING_TOKEN = "routing";
+    static final String RELATIONSHIP_STYLE_LINE_STYLE_TOKEN = "style";
     static final String RELATIONSHIP_STYLE_FONT_SIZE_TOKEN = "fontSize";
     static final String RELATIONSHIP_STYLE_WIDTH_TOKEN = "width";
     static final String RELATIONSHIP_STYLE_POSITION_TOKEN = "position";

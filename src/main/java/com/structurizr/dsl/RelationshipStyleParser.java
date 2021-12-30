@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.util.StringUtils;
+import com.structurizr.view.LineStyle;
 import com.structurizr.view.RelationshipStyle;
 import com.structurizr.view.Routing;
 
@@ -175,6 +176,32 @@ final class RelationshipStyleParser extends AbstractParser {
             }
         } else {
             throw new RuntimeException("Expected: position <0-100>");
+        }
+    }
+
+    void parseLineStyle(RelationshipStyleDslContext context, Tokens tokens) {
+        // style solid|dashed|dotted
+        Map<String, LineStyle> lineStyles = new HashMap<>();
+        for (LineStyle lineStyle : LineStyle.values()) {
+            lineStyles.put(lineStyle.toString().toLowerCase(), lineStyle);
+        }
+
+        RelationshipStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: style <solid|dashed|dotted>");
+        }
+
+        if (tokens.includes(FIRST_PROPERTY_INDEX)) {
+            String lineStyle = tokens.get(1).toLowerCase();
+
+            if (lineStyles.containsKey(lineStyle)) {
+                style.setStyle(lineStyles.get(lineStyle));
+            } else {
+                throw new RuntimeException("The line style \"" + lineStyle + "\" is not valid");
+            }
+        } else {
+            throw new RuntimeException("Expected: style <solid|dashed|dotted>");
         }
     }
 

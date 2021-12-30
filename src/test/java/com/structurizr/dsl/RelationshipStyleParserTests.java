@@ -1,5 +1,7 @@
 package com.structurizr.dsl;
 
+import com.structurizr.view.Border;
+import com.structurizr.view.LineStyle;
 import com.structurizr.view.RelationshipStyle;
 import com.structurizr.view.Routing;
 import org.junit.jupiter.api.Test;
@@ -265,6 +267,42 @@ class RelationshipStyleParserTests extends AbstractTests {
 
         parser.parseDashed(context, tokens("dashed", "true"));
         assertEquals(true, relationshipStyle.getDashed());
+    }
+
+    @Test
+    void test_parseLineStyle_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseLineStyle(relationshipStyleDslContext(), tokens("style", "solid", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: style <solid|dashed|dotted>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseLineStyle_ThrowsAnException_WhenTheStyleIsMissing() {
+        try {
+            parser.parseLineStyle(relationshipStyleDslContext(), tokens("style"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: style <solid|dashed|dotted>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseLineStyle_ThrowsAnException_WhenTheStyleIsNotValid() {
+        try {
+            parser.parseLineStyle(relationshipStyleDslContext(), tokens("style", "none"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("The line style \"none\" is not valid", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseLineStyle_SetsTheStyle() {
+        parser.parseLineStyle(relationshipStyleDslContext(), tokens("style", "dotted"));
+        assertEquals(LineStyle.Dotted, relationshipStyle.getStyle());
     }
 
     @Test

@@ -5,6 +5,7 @@
 - Adds support for extending deployment environments via the `!ref` keyword (issue #92).
 - Adds support for extending relationships via the `!ref` keyword (issue #93).
 - Fixes #94 (tabs cause parsing errors).
+- Adds support for different relationship line styles (solid, dashed, dotted).
 - Adds support for name/value properties on the view set.
 
 ## 1.16.0 (26th November 2021)
