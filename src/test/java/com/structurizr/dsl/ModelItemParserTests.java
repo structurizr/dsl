@@ -105,38 +105,6 @@ class ModelItemParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseProperty_ThrowsAnException_WhenThereAreTooManyTokens() {
-        try {
-            ModelItemPropertiesDslContext context = new ModelItemPropertiesDslContext(null);
-            parser.parseProperty(context, tokens("name", "value", "extra"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("Too many tokens, expected: <name> <value>", e.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseProperty_ThrowsAnException_WhenNoValueIsSpecified() {
-        try {
-            SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
-            ModelItemPropertiesDslContext context = new ModelItemPropertiesDslContext(softwareSystem);
-            parser.parseProperty(context, tokens("name"));
-            fail();
-        } catch (Exception e) {
-            assertEquals("Expected: <name> <value>", e.getMessage());
-        }
-    }
-
-    @Test
-    void test_parseProperty_AddsTheProperty_WhenAValueIsSpecified() {
-        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
-        ModelItemPropertiesDslContext context = new ModelItemPropertiesDslContext(softwareSystem);
-        parser.parseProperty(context, tokens("name", "value"));
-
-        assertEquals("value", softwareSystem.getProperties().get("name"));
-    }
-
-    @Test
     void test_parsePerspective_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(null);

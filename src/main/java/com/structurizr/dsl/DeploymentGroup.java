@@ -28,7 +28,7 @@ class DeploymentGroup extends Element {
     }
 
     @Override
-    protected Set<String> getRequiredTags() {
+    public Set<String> getDefaultTags() {
         return null;
     }
 

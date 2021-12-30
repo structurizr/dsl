@@ -337,10 +337,13 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new ModelItemParser().parseUrl(getContext(ModelItemDslContext.class), tokens);
 
                     } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
-                        startContext(new ModelItemPropertiesDslContext(getContext(ModelItemDslContext.class).getModelItem()));
+                        startContext(new PropertiesDslContext(getContext(ModelItemDslContext.class).getModelItem()));
 
-                    } else if (inContext(ModelItemPropertiesDslContext.class)) {
-                        new ModelItemParser().parseProperty(getContext(ModelItemPropertiesDslContext.class), tokens);
+                    } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
+                        startContext(new PropertiesDslContext(workspace.getViews().getConfiguration()));
+
+                    } else if (inContext(PropertiesDslContext.class)) {
+                        new PropertyParser().parse(getContext(PropertiesDslContext.class), tokens);
 
                     } else if (PERSPECTIVES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
                         startContext(new ModelItemPerspectivesDslContext(getContext(ModelItemDslContext.class).getModelItem()));

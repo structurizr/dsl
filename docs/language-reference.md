@@ -870,6 +870,7 @@ The `views` block can contain the following:
 - [themes](#themes)
 - [branding](#branding)
 - [terminology](#terminology)
+- [properties](#properties)
 
 ### systemLandscape view
 
