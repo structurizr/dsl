@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.17.0 (unreleased)
+## 1.17.0 (4th January 2022)
 
 - Adds support for extending deployment environments via the `!ref` keyword (issue #92).
 - Adds support for extending relationships via the `!ref` keyword (issue #93).
