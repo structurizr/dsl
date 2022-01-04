@@ -80,10 +80,11 @@ workspace {
 
 Here are some tools designed to support the Structurizr DSL.
 
-* [Structurizr Lite](https://structurizr.com/help/lite)
-* [Structurizr CLI](https://github.com/structurizr/cli)
-* [VS Code extension - syntax highlighting and diagram previews](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
-* [VS Code extension - syntax highlighting](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr)
+* [Structurizr Lite](https://structurizr.com/help/lite) (web-based rendering tool)
+* [c4viz](https://github.com/pmorch/c4viz) (web-based rendering tool)
+* [Structurizr CLI](https://github.com/structurizr/cli) (command line utilities)
+* [VS Code extension]](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (syntax highlighting and diagram previews; please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
+* [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr) (syntax highlighting)
 
 ## Examples
 
