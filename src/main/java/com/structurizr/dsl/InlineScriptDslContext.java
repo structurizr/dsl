@@ -40,8 +40,7 @@ class InlineScriptDslContext extends ScriptDslContext {
 
             run(this, fileExtension, lines);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error running inline script, caused by " + e.getClass().getName() + ": " + e.getMessage());
+            throw new ("Error running inline script, caused by " + e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
