@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
  */
 public final class StructurizrDslParser extends StructurizrDslTokens {
 
+    private static final String BOM = "\uFEFF";
+
     private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^\\s*");
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^\\s*?(//|#).*$");
@@ -151,6 +153,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         int lineNumber = 1;
         for (String line : lines) {
             boolean includeInDslSourceLines = true;
+
+            if (line.startsWith(BOM)) {
+                // this caters for files encoded as "UTF-8 with BOM"
+                line = line.substring(1);
+            }
 
             try {
                 if (EMPTY_LINE_PATTERN.matcher(line).matches()) {

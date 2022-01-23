@@ -816,4 +816,10 @@ class ExampleTests extends AbstractTests {
         parser.parse(new File("examples/this.dsl"));
     }
 
+    @Test
+    void test_workspaceWithControlCharacters() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("examples/workspace-with-bom.dsl"));
+    }
+
 }
