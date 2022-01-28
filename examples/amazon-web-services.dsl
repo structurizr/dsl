@@ -14,7 +14,7 @@ workspace "Amazon Web Services Example" "An example AWS deployment architecture.
                 tags "Amazon Web Services - Cloud"
 
                 region = deploymentNode "US-East-1" {
-                    tags Amazon Web Services - Region"
+                    tags "Amazon Web Services - Region"
 
                     route53 = infrastructureNode "Route 53" {
                         tags "Amazon Web Services - Route 53"

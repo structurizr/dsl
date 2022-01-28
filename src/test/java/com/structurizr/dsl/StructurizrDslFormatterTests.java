@@ -76,7 +76,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "            WebApplication = container \"Web Application\" \"Allows employees to view and manage information regarding the veterinarians, the clients, and their pets.\" \"Java and Spring Boot\" \n" +
                 "            Database = container \"Database\" \"Stores information regarding the veterinarians, the clients, and their pets.\" \"Relational database schema\" \"Database\" \n" +
                 "        }\n" +
-                "        SpringPetClinic.WebApplication -> SpringPetClinic.Database \"Reads from and writes to\" \"JDBC/SSL\" \n" +
+                "        SpringPetClinic.WebApplication -> SpringPetClinic.Database \"Reads from and writes to\" \"MySQL Protocol/SSL\" \n" +
                 "\n" +
                 "        Live = deploymentEnvironment \"Live\" {\n" +
                 "            AmazonWebServices = deploymentNode \"Amazon Web Services\" \"\" \"\" \"Amazon Web Services - Cloud\" {\n" +
