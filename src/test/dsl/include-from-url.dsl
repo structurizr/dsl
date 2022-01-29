@@ -1,7 +1,7 @@
 workspace "Getting Started" "This is a model of my software system." {
 
     model {
-        !include https://raw.githubusercontent.com/structurizr/dsl/master/examples/include/model.dsl
+        !include https://raw.githubusercontent.com/structurizr/dsl/master/src/test/dsl/include/model.dsl
     }
 
     views {

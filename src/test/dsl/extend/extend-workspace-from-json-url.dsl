@@ -1,4 +1,4 @@
-workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/examples/extend/workspace.json {
+workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/src/test/dsl/extend/workspace.json {
     name "A new name"
     description "A new description"
 
