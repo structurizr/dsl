@@ -30,7 +30,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
     @Test
     void test_gettingstarted() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/getting-started.dsl"));
+        parser.parse(new File("src/test/dsl/getting-started.dsl"));
         Workspace workspace = parser.getWorkspace();
 
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
@@ -62,7 +62,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
     @Test
     void test_aws() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/amazon-web-services.dsl"));
+        parser.parse(new File("src/test/dsl/amazon-web-services.dsl"));
         Workspace workspace = parser.getWorkspace();
 
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
@@ -131,7 +131,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
     @Test
     void test_bigbankplc() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/big-bank-plc.dsl"));
+        parser.parse(new File("src/test/dsl/big-bank-plc.dsl"));
         Workspace workspace = parser.getWorkspace();
 
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();
@@ -389,7 +389,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
     @Test
     void test_frs() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("examples/financial-risk-system.dsl"));
+        parser.parse(new File("src/test/dsl/financial-risk-system.dsl"));
         Workspace workspace = parser.getWorkspace();
 
         StructurizrDslFormatter formatter = new StructurizrDslFormatter();

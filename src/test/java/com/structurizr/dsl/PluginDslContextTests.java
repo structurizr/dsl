@@ -12,7 +12,7 @@ class PluginDslContextTests extends AbstractTests {
     @Test
     void test_end_ThrowsAnException_WhenThePluginClassDoesNotExist() {
         try {
-            PluginDslContext context = new PluginDslContext("com.structurizr.TestPlugin", new File("examples"));
+            PluginDslContext context = new PluginDslContext("com.structurizr.TestPlugin", new File("src/test/dsl"));
             context.end();
             fail();
         } catch (Exception e) {

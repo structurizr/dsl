@@ -20,7 +20,7 @@ class IncludeParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parse_ThrowsAnException_WhenAFileIsNotSpefieid() {
+    void test_parse_ThrowsAnException_WhenAFileIsNotSpecified() {
         try {
             parser.parse(new IncludedDslContext(null), tokens("!include"));
             fail();

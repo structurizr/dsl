@@ -51,7 +51,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(new File("."));
 
         try {
-            parser.parseLogo(context, tokens("logo", "examples/getting-started.dsl"), false);
+            parser.parseLogo(context, tokens("logo", "src/test/dsl/getting-started.dsl"), false);
             fail();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ class BrandingParserTests extends AbstractTests {
         BrandingDslContext context = new BrandingDslContext(new File("."));
         context.setWorkspace(workspace);
 
-        parser.parseLogo(context, tokens("logo", "examples/logo.png"), false);
+        parser.parseLogo(context, tokens("logo", "src/test/dsl/logo.png"), false);
         assertTrue(workspace.getViews().getConfiguration().getBranding().getLogo().startsWith("data:image/png;base64,"));
     }
 
