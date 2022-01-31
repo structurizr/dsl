@@ -7,7 +7,6 @@ import com.structurizr.model.Relationship;
 import com.structurizr.util.StringUtils;
 import com.structurizr.view.CustomView;
 import com.structurizr.view.ElementNotPermittedInViewException;
-import com.structurizr.view.RelationshipView;
 
 final class CustomViewContentParser extends ViewContentParser {
 
@@ -30,7 +29,7 @@ final class CustomViewContentParser extends ViewContentParser {
             } else if (isExpression(token)) {
                 new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
             } else {
-                new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
+                new CustomViewExpressionParser().parseIdentifier(token, context).forEach(mi -> addModelItemToView(mi, view, token));
             }
         }
     }
@@ -42,19 +41,13 @@ final class CustomViewContentParser extends ViewContentParser {
 
         CustomView view = context.getCustomView();
 
-        if (tokens.contains(RELATIONSHIP_WILDCARD)) {
-            for (RelationshipView relationshipView : view.getRelationships()) {
-                removeRelationshipFromView(relationshipView.getRelationship(), view);
-            }
-        } else {
-            // exclude <identifier> [identifier...]
-            for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                String token = tokens.get(i);
-                if (isExpression(token)) {
-                    new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
-                } else {
-                    new CustomViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
-                }
+        // exclude <identifier> [identifier...]
+        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+            String token = tokens.get(i);
+            if (isExpression(token)) {
+                new CustomViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+            } else {
+                new CustomViewExpressionParser().parseIdentifier(token, context).forEach(mi -> removeModelItemFromView(mi, view));
             }
         }
     }

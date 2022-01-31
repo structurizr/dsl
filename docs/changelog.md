@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.18.0 (unreleased)
+
+- Removes backwards compatibility for unquoted expressions (e.g. `exclude src -> dest` - use `exclude "src -> dest"` instead).
+- Adds the ability to include/exclude relationships by the tag of source of destination elements (e.g. `exclude "* -> element.tag==Tag"`).
+
 ## 1.17.0 (4th January 2022)
 
 - Adds support for extending deployment environments via the `!ref` keyword (issue #92).

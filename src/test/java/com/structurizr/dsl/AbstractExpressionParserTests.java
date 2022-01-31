@@ -86,6 +86,34 @@ class AbstractExpressionParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseExpression_ReturnsARelationship_WhenTheRelationshipSourceIsSpecifiedUsingAnExpression() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        a.addTags("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        b.addTags("B");
+        SoftwareSystem c = model.addSoftwareSystem("C");
+        c.addTags("C");
+        Relationship aToB = a.uses(b, "Uses");
+        Relationship bToC = b.uses(c, "Uses");
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> relationships = parser.parseExpression("* -> element.tag==B", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(aToB));
+
+        relationships = parser.parseExpression("element.tag==A -> *", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(aToB));
+
+        relationships = parser.parseExpression("element.tag==A -> element.tag==B", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(aToB));
+    }
+
+    @Test
     void test_parseExpression_ReturnsARelationship_WhenTheRelationshipSourceIsSpecifiedUsingShortSyntax() {
         SoftwareSystem a = model.addSoftwareSystem("A");
         SoftwareSystem b = model.addSoftwareSystem("B");

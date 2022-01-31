@@ -2,9 +2,10 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
-import com.structurizr.view.*;
-
-import java.util.Set;
+import com.structurizr.view.ComponentView;
+import com.structurizr.view.ContainerView;
+import com.structurizr.view.ElementNotPermittedInViewException;
+import com.structurizr.view.StaticView;
 
 final class StaticViewContentParser extends ViewContentParser {
 
@@ -27,7 +28,7 @@ final class StaticViewContentParser extends ViewContentParser {
             } else if (isExpression(token)) {
                 new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> addModelItemToView(mi, view, null));
             } else {
-                new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> addModelItemToView(mi, view, token));
+                new StaticViewExpressionParser().parseIdentifier(token, context).forEach(mi -> addModelItemToView(mi, view, token));
             }
         }
     }
@@ -39,25 +40,14 @@ final class StaticViewContentParser extends ViewContentParser {
 
         StaticView view = context.getView();
 
-        if (tokens.contains(RELATIONSHIP_WILDCARD)) {
-            for (RelationshipView relationshipView : view.getRelationships()) {
-                removeRelationshipFromView(relationshipView.getRelationship(), view);
-            }
-        } else {
-            if (tokens.size() == 4 && tokens.get(2).equals("->")) {
-                // backwards compatibility for "exclude source -> destination"
-                new StaticViewExpressionParser().parseExpression(tokens.get(1) + "->" + tokens.get(3), context).forEach(mi -> removeModelItemFromView(mi, view));
-            } else {
-                // exclude <identifier|expression> [identifier|expression...]
-                for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
-                    String token = tokens.get(i);
+        // exclude <identifier|expression> [identifier|expression...]
+        for (int i = FIRST_IDENTIFIER_INDEX; i < tokens.size(); i++) {
+            String token = tokens.get(i);
 
-                    if (isExpression(token)) {
-                        new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
-                    } else {
-                        new StaticViewExpressionParser().parseIdentifierExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
-                    }
-                }
+            if (isExpression(token)) {
+                new StaticViewExpressionParser().parseExpression(token, context).forEach(mi -> removeModelItemFromView(mi, view));
+            } else {
+                new StaticViewExpressionParser().parseIdentifier(token, context).forEach(mi -> removeModelItemFromView(mi, view));
             }
         }
     }
