@@ -822,10 +822,10 @@ class DslTests extends AbstractTests {
         parser.parse(new File("src/test/dsl/workspace-with-bom.dsl"));
     }
 
-    @Test
-    void test_excludeRelationships() throws Exception {
-        StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/exclude-relationships.dsl"));
-    }
+//    @Test
+//    void test_excludeRelationships() throws Exception {
+//        StructurizrDslParser parser = new StructurizrDslParser();
+//        parser.parse(new File("src/test/dsl/exclude-relationships.dsl"));
+//    }
 
 }
