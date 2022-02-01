@@ -78,6 +78,8 @@ abstract class AbstractExpressionParser {
             } else {
                 modelItems.addAll(parseIdentifier(expr, context));
             }
+        } else if (RELATIONSHIP.equals(expr)) {
+            throw new RuntimeException("Unexpected identifier \"->\"");
         } else if (expr.startsWith(RELATIONSHIP) || expr.endsWith(RELATIONSHIP)) {
             // this is an element expression: ->identifier identifier-> ->identifier->
             boolean includeAfferentCouplings = false;
