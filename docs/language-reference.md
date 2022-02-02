@@ -201,22 +201,25 @@ A value of `false` disables implied relationship creation, while `true` creates 
 
 ## Includes
 
-The `!include` keyword can be used to include another file, to provide some degree of modularity, and to reuse definition fragments between workspaces.
+The `!include` keyword can be used to include one or more files, to provide some degree of modularity, and to reuse definition fragments between workspaces.
+The content of any included files is simply inlined into the parent document, in the order the files are discovered.
 
 ```
-!include <file|url>
+!include <file|directory|url>
 ```
 
-The file must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
+- file: a single local file, specified by a relative path, located within the same directory as the parent file or a subdirectory of it
+- file: a local directory containing one or more DSL files, specified by a relative path, located within the same directory as the parent file or a subdirectory of it
+- url: a HTTPS URL pointing to a single DSL file
+
+Some examples are:
 
 ```
-!include child.dsl
-!include subdirectory/child.dsl
+!include people.dsl
+!include model/people.dsl
+!include model
+!include https://example.com/model/people.dsl
 ``` 
-
-Alternatively, a HTTPS URL pointing to a single DSL file can be used.
-
-The content of any included files is simply inlined into the parent document. 
 
 ## Constants
 

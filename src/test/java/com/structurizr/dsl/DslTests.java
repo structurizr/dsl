@@ -323,9 +323,9 @@ class DslTests extends AbstractTests {
     }
 
     @Test
-    void test_includeFromFile() throws Exception {
+    void test_includeLocalFile() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/include-from-file.dsl"));
+        parser.parse(new File("src/test/dsl/include-file.dsl"));
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
@@ -397,9 +397,82 @@ class DslTests extends AbstractTests {
     }
 
     @Test
-    void test_includeFromUrl() throws Exception {
+    void test_includeLocalDirectory() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/include-from-url.dsl"));
+        parser.parse(new File("src/test/dsl/include-directory.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+        ViewSet views = workspace.getViews();
+
+        assertEquals("Getting Started", workspace.getName());
+        assertEquals("This is a model of my software system.", workspace.getDescription());
+
+        assertEquals(1, model.getPeople().size());
+        Person user = model.getPersonWithName("User");
+        assertEquals("A user of my software system.", user.getDescription());
+
+        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        assertEquals("My software system, code-named \"X\".", softwareSystem.getDescription());
+
+        assertEquals(1, workspace.getModel().getRelationships().size());
+        Relationship relationship = user.getRelationships().iterator().next();
+        assertEquals("Uses", relationship.getDescription());
+        assertSame(softwareSystem, relationship.getDestination());
+
+        assertEquals(1, views.getViews().size());
+        assertEquals(1, views.getSystemContextViews().size());
+        SystemContextView view = views.getSystemContextViews().iterator().next();
+        assertEquals("SystemContext", view.getKey());
+        assertEquals("An example of a System Context diagram.", view.getDescription());
+        assertEquals(2, view.getElements().size());
+        assertEquals(1, view.getRelationships().size());
+
+        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
+        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
+        assertEquals(Shape.Person, personStyle.getShape());
+        assertEquals("#08427b", personStyle.getBackground());
+        assertEquals("#ffffff", personStyle.getColor());
+
+        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
+        assertEquals("#1168bd", softwareSystemStyle.getBackground());
+        assertEquals("#ffffff", softwareSystemStyle.getColor());
+
+        assertEquals("workspace \"Getting Started\" \"This is a model of my software system.\" {\n" +
+                "\n" +
+                "    model {\n" +
+                "user = person \"User\" \"A user of my software system.\"\n" +
+                "softwareSystem = softwareSystem \"Software System\" \"My software system, code-named \\\"X\\\".\"\n" +
+                "user -> softwareSystem \"Uses\"\n" +
+                "    }\n" +
+                "\n" +
+                "    views {\n" +
+                "        systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {\n" +
+                "            include *\n" +
+                "            autoLayout\n" +
+                "        }\n" +
+                "\n" +
+                "        styles {\n" +
+                "            element \"Software System\" {\n" +
+                "                background #1168bd\n" +
+                "                color #ffffff\n" +
+                "            }\n" +
+                "            element \"Person\" {\n" +
+                "                shape person\n" +
+                "                background #08427b\n" +
+                "                color #ffffff\n" +
+                "            }\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
+    }
+
+    @Test
+    void test_includeUrl() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/include-url.dsl"));
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
@@ -477,7 +550,7 @@ class DslTests extends AbstractTests {
 
         try {
             // this will fail, because the model include will be ignored
-            parser.parse(new File("src/test/dsl/include-from-file.dsl"));
+            parser.parse(new File("src/test/dsl/include-file.dsl"));
             fail();
         } catch (StructurizrDslParserException e) {
             assertEquals("The software system \"softwareSystem\" does not exist at line 8: systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {", e.getMessage());
