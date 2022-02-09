@@ -235,9 +235,9 @@ Constant names may only contain the following characters: `a-zA-Z0-9-_.`
 
 The Structurizr DSL supports a number of expressions for use when including or excluding elements/relationships on views.
 
-- `-><identifier>`: the specified element plus afferent couplings
-- `<identifier>->`: the specified element plus efferent couplings
-- `-><identifier>->`: the specified element plus afferent and efferent couplings
+- `-><identifier|expression>`: the specified element(s) plus afferent couplings
+- `<identifier|expression>->`: the specified element(s) plus efferent couplings
+- `-><identifier|expression>->`: the specified element(s) plus afferent and efferent couplings
 - `element.type==<type>`: elements of the specified type (Person|SoftwareSystem|Container|Component|DeploymentNode|InfrastructureNode|SoftwareSystemInstance|ContainerInstance|Custom)
 - `element.tag==<tag>[,tag]`: all elements that have all of the specified tags
 - `element.tag!=<tag>[,tag]`: all elements that do not have all of the specified tags

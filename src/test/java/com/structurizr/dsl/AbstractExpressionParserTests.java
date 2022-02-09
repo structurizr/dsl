@@ -232,7 +232,7 @@ class AbstractExpressionParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseExpression_ReturnsElements_WhenUsingAnAfferentCouplingExpression() {
+    void test_parseExpression_ReturnsElements_WhenUsingAnAfferentCouplingExpressionWithAnElementIdentifier() {
         SoftwareSystem a = model.addSoftwareSystem("A");
         SoftwareSystem b = model.addSoftwareSystem("B");
         SoftwareSystem c = model.addSoftwareSystem("C");
@@ -260,7 +260,7 @@ class AbstractExpressionParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseExpression_ReturnsElements_WhenUsingAnEfferentCouplingExpression() {
+    void test_parseExpression_ReturnsElements_WhenUsingAnEfferentCouplingExpressionWithAnElementIdentifier() {
         SoftwareSystem a = model.addSoftwareSystem("A");
         SoftwareSystem b = model.addSoftwareSystem("B");
         SoftwareSystem c = model.addSoftwareSystem("C");
@@ -288,7 +288,7 @@ class AbstractExpressionParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseExpression_ReturnsElements_WhenUsingAnAfferentAndEfferentCouplingExpression() {
+    void test_parseExpression_ReturnsElements_WhenUsingAnAfferentAndEfferentCouplingExpressionWithAnElementIdentifier() {
         SoftwareSystem a = model.addSoftwareSystem("A");
         SoftwareSystem b = model.addSoftwareSystem("B");
         SoftwareSystem c = model.addSoftwareSystem("C");
@@ -311,6 +311,37 @@ class AbstractExpressionParserTests extends AbstractTests {
         assertTrue(elements.contains(c));
 
         elements = parser.parseExpression("element==->b->", context);
+        assertEquals(3, elements.size());
+        assertTrue(elements.contains(a));
+        assertTrue(elements.contains(b));
+        assertTrue(elements.contains(c));
+    }
+
+    @Test
+    void test_parseExpression_ReturnsElements_WhenUsingAnAfferentAndEfferentCouplingExpressionWithAnElementExpression() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        b.addTags("Tag 1");
+        SoftwareSystem c = model.addSoftwareSystem("C");
+        Relationship aToB = a.uses(b, "Uses");
+        Relationship bToC = b.uses(c, "Uses");
+
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
+        context.setWorkspace(workspace);
+
+        IdentifiersRegister map = new IdentifiersRegister();
+        map.register("a", a);
+        map.register("b", b);
+        map.register("c", c);
+        context.setIdentifierRegister(map);
+
+        Set<ModelItem> elements = parser.parseExpression("->element.tag==Tag 1->", context);
+        assertEquals(3, elements.size());
+        assertTrue(elements.contains(a));
+        assertTrue(elements.contains(b));
+        assertTrue(elements.contains(c));
+
+        elements = parser.parseExpression("element==->element.tag==Tag 1->", context);
         assertEquals(3, elements.size());
         assertTrue(elements.contains(a));
         assertTrue(elements.contains(b));

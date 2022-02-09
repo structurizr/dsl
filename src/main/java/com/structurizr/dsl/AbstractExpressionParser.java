@@ -7,6 +7,7 @@ import com.structurizr.model.Relationship;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.structurizr.dsl.StructurizrDslExpressions.*;
 
@@ -97,7 +98,13 @@ abstract class AbstractExpressionParser {
             }
 
             identifier = identifier.trim();
-            Set<Element> elements = getElements(identifier, context);
+            Set<Element> elements;
+
+            if (isExpression(identifier)) {
+                elements = parseExpression(identifier, context).stream().filter(mi -> mi instanceof Element).map(mi -> (Element)mi).collect(Collectors.toSet());
+            } else {
+                elements = getElements(identifier, context);
+            }
 
             if (elements.isEmpty()) {
                 throw new RuntimeException("The element \"" + identifier + "\" does not exist");
@@ -286,11 +293,13 @@ abstract class AbstractExpressionParser {
         Set<Element> elements = new HashSet<>();
 
         Element element = context.getElement(identifier);
-        if (element instanceof ElementGroup) {
-            ElementGroup group = (ElementGroup)element;
-            elements.addAll(group.getElements());
-        } else {
-            elements.add(element);
+        if (element != null) {
+            if (element instanceof ElementGroup) {
+                ElementGroup group = (ElementGroup) element;
+                elements.addAll(group.getElements());
+            } else {
+                elements.add(element);
+            }
         }
 
         return elements;
