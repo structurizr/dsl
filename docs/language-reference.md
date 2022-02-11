@@ -647,6 +647,8 @@ In addition to the software system's tags, the following tags are added by defau
 
 - `Software System Instance`
 
+Permitted children:
+
 - [-> (relationship)](#relationship)
 - [description](#description)
 - [tags](#tags)
@@ -670,6 +672,8 @@ The `identifier` must represent a container. `deploymentGroups` is a comma seper
 In addition to the container's tags, the following tags are added by default:
 
 - `Container Instance`
+
+Permitted children:
 
 - [-> (relationship)](#relationship)
 - [description](#description)
