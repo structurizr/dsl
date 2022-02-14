@@ -2,9 +2,11 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.documentation.AdrToolsImporter;
+import com.structurizr.documentation.AutomaticDocumentationTemplate;
 import com.structurizr.model.SoftwareSystem;
 
 import java.io.File;
+import java.io.IOException;
 
 final class AdrsParser extends AbstractParser {
 
@@ -51,6 +53,13 @@ final class AdrsParser extends AbstractParser {
                 }
             } catch (Exception e) {
                 throw new RuntimeException("Error importing ADRs from " + path.getAbsolutePath() + ": " + e.getMessage());
+            }
+
+            try {
+                AutomaticDocumentationTemplate template = new AutomaticDocumentationTemplate(workspace);
+                template.addImages(path);
+            } catch (Exception e) {
+                throw new RuntimeException("Error importing images from " + path.getAbsolutePath() + ": " + e.getMessage());
             }
         }
     }
