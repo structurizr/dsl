@@ -22,6 +22,7 @@ abstract class AbstractExpressionParser {
                 token.startsWith(ELEMENT_TYPE_EQUALS_EXPRESSION.toLowerCase()) ||
                         token.startsWith(ELEMENT_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
                         token.startsWith(ELEMENT_TAG_NOT_EQUALS_EXPRESSION.toLowerCase()) ||
+                        token.startsWith(ELEMENT_PARENT_EQUALS_EXPRESSION.toLowerCase()) ||
                         token.startsWith(RELATIONSHIP) || token.endsWith(RELATIONSHIP) || token.contains(RELATIONSHIP) ||
                         token.startsWith(ELEMENT_EQUALS_EXPRESSION) ||
                         token.startsWith(RELATIONSHIP_TAG_EQUALS_EXPRESSION.toLowerCase()) ||
@@ -137,6 +138,18 @@ abstract class AbstractExpressionParser {
                 modelItems.addAll(parseExpression(destinationExpression, context));
             } else {
                 modelItems.addAll(parseExpression(sourceExpression + " && " + destinationExpression, context));
+            }
+        } else if (expr.toLowerCase().startsWith(ELEMENT_PARENT_EQUALS_EXPRESSION)) {
+            String parentIdentifier = expr.substring(ELEMENT_PARENT_EQUALS_EXPRESSION.length());
+            Element parentElement = context.getElement(parentIdentifier);
+            if (parentElement == null) {
+                throw new RuntimeException("The parent element \"" + parentIdentifier + "\" does not exist");
+            } else {
+                context.getWorkspace().getModel().getElements().forEach(element -> {
+                    if (element.getParent() == parentElement) {
+                        modelItems.add(element);
+                    }
+                });
             }
         } else if (expr.toLowerCase().startsWith(ELEMENT_TYPE_EQUALS_EXPRESSION)) {
             modelItems.addAll(evaluateElementTypeExpression(expr, context));

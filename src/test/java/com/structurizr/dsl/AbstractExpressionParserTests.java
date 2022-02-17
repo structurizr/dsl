@@ -1,6 +1,8 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.*;
+import com.structurizr.view.ContainerView;
+import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -380,4 +382,53 @@ class AbstractExpressionParserTests extends AbstractTests {
         assertTrue(relationships.contains(aToB));
         assertTrue(relationships.contains(bToC));
     }
+
+    @Test
+    void test_parseExpression_ReturnsElements_WhenUsingAnElementTypeExpression() {
+        model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> elements = parser.parseExpression("element.type==SoftwareSystem", context);
+        assertEquals(1, elements.size());
+        assertTrue(elements.contains(softwareSystem));
+    }
+
+    @Test
+    void test_parseExpression_ThrowsAnException_WhenUsingAnElementParentExpressionAndTheElementDoesNotExist() {
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(null);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        try {
+            parser.parseExpression("element.parent==a", context);
+            fail();
+        } catch (Exception e) {
+            assertEquals("The parent element \"a\" does not exist", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseExpression_ReturnsElements_WhenUsingAnElementParentExpression() {
+        SoftwareSystem softwareSystemA = model.addSoftwareSystem("Software System A");
+        Container container1 = softwareSystemA.addContainer("Container 1");
+        SoftwareSystem softwareSystemB = model.addSoftwareSystem("Software System B");
+        Container container2 = softwareSystemB.addContainer("Container 2");
+
+        ContainerView view = views.createContainerView(softwareSystemA, "key", "Description");
+        ContainerViewDslContext context = new ContainerViewDslContext(view);
+        context.setWorkspace(workspace);
+        IdentifiersRegister identifiersRegister = new IdentifiersRegister();
+        identifiersRegister.register("b", softwareSystemB);
+        context.setIdentifierRegister(identifiersRegister);
+
+        Set<ModelItem> elements = parser.parseExpression("element.parent==b", context);
+        assertEquals(1, elements.size());
+        assertTrue(elements.contains(container2));
+    }
+
 }
