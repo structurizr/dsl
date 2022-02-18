@@ -103,14 +103,12 @@ public final class StructurizrDslFormatter extends StructurizrDslTokens {
         model.getSoftwareSystems().stream().filter(p -> p.getLocation() != Location.Internal).sorted(Comparator.comparing(SoftwareSystem::getId)).forEach(this::format);
 
         model.getRelationships().stream().sorted(Comparator.comparing(Relationship::getId)).forEach(r -> {
-            if (StringUtils.isNullOrEmpty(r.getLinkedRelationshipId())) {
-                if (r.getSource() instanceof DeploymentElement || r.getDestination() instanceof DeploymentElement) {
-                    // deployment element relationships are formatted below, after the deployment nodes have been formatted
-                } else {
-                    start(id(r.getSource(), true), RELATIONSHIP_TOKEN, id(r.getDestination(), true), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
-                    formatModelItem(r);
-                    end();
-                }
+            if (r.getSource() instanceof DeploymentElement || r.getDestination() instanceof DeploymentElement) {
+                // deployment element relationships are formatted below, after the deployment nodes have been formatted
+            } else {
+                start(id(r.getSource(), true), RELATIONSHIP_TOKEN, id(r.getDestination(), true), quote(r.getDescription()), quote(r.getTechnology()), quote(tags(r)));
+                formatModelItem(r);
+                end();
             }
         });
 

@@ -164,8 +164,9 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         assertEquals(0, model.getRelationships().size());
 
         parser.parse(context, tokens("source", "->", "destination", "Uses", "HTTP", "Tag 1,Tag 2"));
-
         assertEquals(2, model.getRelationships().size());
+
+        // this is the relationship that was created
         Relationship r = user.getEfferentRelationshipWith(container);
         assertSame(user, r.getSource());
         assertSame(container, r.getDestination());
@@ -173,12 +174,13 @@ class ExplicitRelationshipParserTests extends AbstractTests {
         assertEquals("HTTP", r.getTechnology());
         assertEquals("Relationship,Tag 1,Tag 2", r.getTags());
 
+        // and this is an implied relationship
         r = user.getEfferentRelationshipWith(softwareSystem);
         assertSame(user, r.getSource());
         assertSame(softwareSystem, r.getDestination());
         assertEquals("Uses", r.getDescription());
         assertEquals("HTTP", r.getTechnology());
-        assertEquals("Relationship,Tag 1,Tag 2", r.getTags());
+        assertEquals("", r.getTags());
     }
 
     @Test
