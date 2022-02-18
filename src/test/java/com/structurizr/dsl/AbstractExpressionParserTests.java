@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.view.ContainerView;
+import com.structurizr.view.DeploymentView;
 import com.structurizr.view.SystemLandscapeView;
 import org.junit.jupiter.api.Test;
 
@@ -384,6 +385,38 @@ class AbstractExpressionParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseExpression_ReturnsElements_WhenUsingAnElementTagExpression() {
+        model.addPerson("User");
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> elements = parser.parseExpression("element.tag==Software System", context);
+        assertEquals(1, elements.size());
+        assertTrue(elements.contains(softwareSystem));
+    }
+
+    @Test
+    void test_parseExpression_ReturnsElementInstances_WhenUsingAnElementTagExpression() {
+        model.addPerson("User");
+        SoftwareSystem ss = model.addSoftwareSystem("Software System");
+        SoftwareSystemInstance ssi = model.addDeploymentNode("DN").add(ss);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> elements = parser.parseExpression("element.tag==Software System", context);
+        assertEquals(2, elements.size());
+        assertTrue(elements.contains(ss)); // this is tagged "Software System"
+        assertTrue(elements.contains(ssi)); // this is not tagged "Software System", but the element it's based upon is
+    }
+
+    @Test
     void test_parseExpression_ReturnsElements_WhenUsingAnElementTypeExpression() {
         model.addPerson("User");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System");
@@ -429,6 +462,45 @@ class AbstractExpressionParserTests extends AbstractTests {
         Set<ModelItem> elements = parser.parseExpression("element.parent==b", context);
         assertEquals(1, elements.size());
         assertTrue(elements.contains(container2));
+    }
+
+    @Test
+    void test_parseExpression_ReturnsRelationships_WhenUsingARelationshipTagExpression() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        Relationship r = a.uses(b, "Uses");
+        r.addTags("Tag 1");
+
+        SystemLandscapeView view = views.createSystemLandscapeView("key", "Description");
+        SystemLandscapeViewDslContext context = new SystemLandscapeViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> relationships = parser.parseExpression("relationship.tag==Tag 1", context);
+        assertEquals(1, relationships.size());
+        assertTrue(relationships.contains(r));
+    }
+
+    @Test
+    void test_parseExpression_ReturnsRelationships_WhenUsingARelationshipTagExpressionAndTheTagIsSetOnTheLinkedRelationship() {
+        SoftwareSystem a = model.addSoftwareSystem("A");
+        SoftwareSystem b = model.addSoftwareSystem("B");
+        Relationship r = a.uses(b, "Uses");
+        r.addTags("Tag 1");
+
+        DeploymentNode dn = model.addDeploymentNode("DN");
+        SoftwareSystemInstance ai = dn.add(a);
+        SoftwareSystemInstance bi = dn.add(b);
+
+        DeploymentView view = views.createDeploymentView("key", "Description");
+        DeploymentViewDslContext context = new DeploymentViewDslContext(view);
+        context.setWorkspace(workspace);
+        context.setIdentifierRegister(new IdentifiersRegister());
+
+        Set<ModelItem> relationships = parser.parseExpression("relationship.tag==Tag 1", context);
+        assertEquals(2, relationships.size());
+        assertTrue(relationships.contains(r));
+        assertTrue(relationships.contains(ai.getRelationships().iterator().next()));
     }
 
 }

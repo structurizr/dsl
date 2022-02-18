@@ -3,6 +3,8 @@ package com.structurizr.dsl;
 import com.structurizr.model.Element;
 import com.structurizr.model.ModelItem;
 import com.structurizr.model.Relationship;
+import com.structurizr.model.StaticStructureElementInstance;
+import com.structurizr.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -250,7 +252,25 @@ abstract class AbstractExpressionParser {
         boolean result = true;
 
         for (String tag : tags) {
-            result = result && modelItem.hasTag(tag.trim());
+            boolean hasTag = modelItem.hasTag(tag.trim());
+
+            if (!hasTag) {
+                // perhaps the tag is instead on a related model item?
+                if (modelItem instanceof StaticStructureElementInstance) {
+                    StaticStructureElementInstance elementInstance = (StaticStructureElementInstance)modelItem;
+                    hasTag = elementInstance.getElement().hasTag(tag.trim());
+                } else if (modelItem instanceof Relationship) {
+                    Relationship relationship = (Relationship)modelItem;
+                    if (!StringUtils.isNullOrEmpty(relationship.getLinkedRelationshipId())) {
+                        Relationship linkedRelationship = relationship.getModel().getRelationship(relationship.getLinkedRelationshipId());
+                        if (linkedRelationship != null) {
+                            hasTag = linkedRelationship.hasTag(tag.trim());
+                        }
+                    }
+                }
+            }
+
+            result = result && hasTag;
         }
 
         return result;

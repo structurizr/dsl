@@ -7,6 +7,7 @@
 - Adds support for directory based includes with `!include`.
 - Adds support for element expressions to be used in the afferent/efferent coupling expression (e.g. `exclude "->element.tag==Tag"`)
 - Adds support for element expressions of the form `element.parent==<identifier>`.
+- Fixes #113 (Excluding relationships with tags in a Deployment Diagram)
 
 ## 1.17.0 (4th January 2022)
 
