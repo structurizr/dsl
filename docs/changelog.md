@@ -1,13 +1,13 @@
 # Changelog
 
-## 1.18.0 (unreleased)
+## 1.18.0 (20th February 2022)
 
 - Removes backwards compatibility for unquoted expressions (e.g. `exclude src -> dest` - use `exclude "src -> dest"` instead).
 - Adds the ability to include/exclude relationships by the tag of source of destination elements (e.g. `exclude "* -> element.tag==Tag"`).
 - Adds support for directory based includes with `!include`.
 - Adds support for element expressions to be used in the afferent/efferent coupling expression (e.g. `exclude "->element.tag==Tag"`)
 - Adds support for element expressions of the form `element.parent==<identifier>`.
-- Fixes #113 (Excluding relationships with tags in a Deployment Diagram)
+- Fixes #113 (Excluding relationships with tags in a Deployment Diagram).
 
 ## 1.17.0 (4th January 2022)
 
