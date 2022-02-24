@@ -8,9 +8,9 @@ import java.util.Map;
 
 class PluginDslContext extends DslContext {
 
-    private String fullyQualifiedClassName;
-    private File pluginsDirectory;
-    private Map<String,String> parameters = new HashMap<>();
+    private final String fullyQualifiedClassName;
+    private final File pluginsDirectory;
+    private final Map<String,String> parameters = new HashMap<>();
 
     PluginDslContext(String fullyQualifiedClassName, File scriptDirectory) {
         this.fullyQualifiedClassName = fullyQualifiedClassName;
