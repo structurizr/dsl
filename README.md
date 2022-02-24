@@ -76,6 +76,12 @@ workspace {
 }
 ```
 
+## Examples
+
+* [Getting started](https://structurizr.com/dsl?example=getting-started)
+* [Big Bank plc](https://structurizr.com/dsl?example=big-bank-plc)
+* [Amazon Web Services](https://structurizr.com/dsl?example=amazon-web-services)
+
 ## Tooling support
 
 Here are some tools designed to support the Structurizr DSL.
@@ -85,9 +91,3 @@ Here are some tools designed to support the Structurizr DSL.
 * [Structurizr CLI](https://github.com/structurizr/cli) (command line utilities)
 * [VS Code extension](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (syntax highlighting and diagram previews; please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
 * [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr) (syntax highlighting)
-
-## Examples
-
-* [Getting started](https://structurizr.com/dsl?example=getting-started)
-* [Big Bank plc](https://structurizr.com/dsl?example=big-bank-plc)
-* [Amazon Web Services](https://structurizr.com/dsl?example=amazon-web-services)
