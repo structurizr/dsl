@@ -31,7 +31,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
     private Stack<DslContext> contextStack;
-    private IdentifiersRegister identifersRegister;
+    private IdentifiersRegister identifiersRegister;
     private Map<String, Constant> constants;
 
     private List<String> dslSourceLines = new ArrayList<>();
@@ -45,7 +45,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      */
     public StructurizrDslParser() {
         contextStack = new Stack<>();
-        identifersRegister = new IdentifiersRegister();
+        identifiersRegister = new IdentifiersRegister();
         constants = new HashMap<>();
     }
 
@@ -59,7 +59,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         }
 
         this.identifierScope = identifierScope;
-        this.identifersRegister.setIdentifierScope(identifierScope);
+        this.identifiersRegister.setIdentifierScope(identifierScope);
     }
 
     /**
@@ -98,7 +98,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     void parse(DslParserContext context, File path) throws StructurizrDslParserException {
         parse(path);
 
-        context.copyFrom(identifersRegister);
+        context.copyFrom(identifiersRegister);
     }
 
     /**
@@ -131,7 +131,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     void parse(DslParserContext context, String dsl) throws StructurizrDslParserException {
         parse(dsl);
 
-        context.copyFrom(identifersRegister);
+        context.copyFrom(identifiersRegister);
     }
 
     /**
@@ -179,7 +179,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     String identifier = null;
                     if (tokens.size() > 3 && ASSIGNMENT_OPERATOR_TOKEN.equals(tokens.get(1))) {
                         identifier = tokens.get(0);
-                        identifersRegister.validateIdentifierName(identifier);
+                        identifiersRegister.validateIdentifierName(identifier);
 
                         tokens = new Tokens(listOfTokens.subList(2, listOfTokens.size()));
                     }
@@ -360,7 +360,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
                         DslParserContext dslParserContext = new DslParserContext(file, restricted);
-                        dslParserContext.setIdentifierRegister(identifersRegister);
+                        dslParserContext.setIdentifierRegister(identifiersRegister);
 
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
                         extendingWorkspace = !workspace.getModel().isEmpty();
@@ -778,7 +778,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private void startContext(DslContext context) {
         context.setWorkspace(workspace);
-        context.setIdentifierRegister(identifersRegister);
+        context.setIdentifierRegister(identifiersRegister);
         context.setExtendingWorkspace(extendingWorkspace);
         contextStack.push(context);
     }
@@ -808,12 +808,21 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         }
     }
 
+    /**
+     * Gets the identifier register in use (this is the mapping of DSL identifiers to elements/relationships).
+     *
+     * @return      an IdentifiersRegister object
+     */
+    public IdentifiersRegister getIdentifiersRegister() {
+        return identifiersRegister;
+    }
+
     private void registerIdentifier(String identifier, Element element) {
-        identifersRegister.register(identifier, element);
+        identifiersRegister.register(identifier, element);
     }
 
     private void registerIdentifier(String identifier, Relationship relationship) {
-        identifersRegister.register(identifier, relationship);
+        identifiersRegister.register(identifier, relationship);
     }
 
     private boolean inContext(Class clazz) {

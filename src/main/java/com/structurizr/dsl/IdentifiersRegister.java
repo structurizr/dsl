@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-class IdentifiersRegister {
+public class IdentifiersRegister {
 
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
 
@@ -32,18 +32,35 @@ class IdentifiersRegister {
         this.identifierScope = identifierScope;
     }
 
-    Set<String> getElementIdentifiers() {
+    /**
+     * Gets the set of element identifiers.
+     *
+     * @return  a Set of String identifiers
+     */
+    public Set<String> getElementIdentifiers() {
         return elementsByIdentifier.keySet();
     }
 
-    Set<String> getRelationshipIdentifiers() {
+    /**
+     * Gets the set of relationship identifiers.
+     *
+     * @return  a Set of String identifiers
+     */
+    public Set<String> getRelationshipIdentifiers() {
         return relationshipsByIdentifier.keySet();
     }
 
-    Element getElement(String identifier) {
+    /**
+     * Gets the element identified by the specified identifier.
+     *
+     * @param identifier        a String identifier
+     * @return                  an Element, or null if one doesn't exist
+     */
+    public Element getElement(String identifier) {
         identifier = identifier.toLowerCase();
         return elementsByIdentifier.get(identifier);
     }
+
 
     void register(String identifier, Element element) {
         if (StringUtils.isNullOrEmpty(identifier)) {
@@ -79,7 +96,14 @@ class IdentifiersRegister {
         }
     }
 
-    Relationship getRelationship(String identifier) {
+    /**
+     * Gets the relationship identified by the specified identifier.
+     *
+     * @param identifier        a String identifier
+     * @return                  a Relationship, or null if one doesn't exist
+     */
+    public Relationship getRelationship(String identifier) {
+        identifier = identifier.toLowerCase();
         return relationshipsByIdentifier.get(identifier);
     }
 
@@ -113,12 +137,28 @@ class IdentifiersRegister {
         }
     }
 
-    String findIdentifier(Element element) {
-        for (String identifier : elementsByIdentifier.keySet()) {
-            Element e = elementsByIdentifier.get(identifier);
+    public String findIdentifier(Element element) {
+        if (elementsByIdentifier.values().contains(element)) {
+            for (String identifier : elementsByIdentifier.keySet()) {
+                Element e = elementsByIdentifier.get(identifier);
 
-            if (e.equals(element)) {
-                return identifier;
+                if (e.equals(element)) {
+                    return identifier;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public String findIdentifier(Relationship relationship) {
+        if (relationshipsByIdentifier.values().contains(relationship)) {
+            for (String identifier : relationshipsByIdentifier.keySet()) {
+                Relationship r = relationshipsByIdentifier.get(identifier);
+
+                if (r.equals(relationship)) {
+                    return identifier;
+                }
             }
         }
 
