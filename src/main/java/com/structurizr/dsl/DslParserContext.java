@@ -22,11 +22,11 @@ final class DslParserContext extends DslContext {
 
     void copyFrom(IdentifiersRegister identifersRegister) {
         for (String identifier : identifersRegister.getElementIdentifiers()) {
-            this.identifersRegister.register(identifier, identifersRegister.getElement(identifier));
+            this.identifiersRegister.register(identifier, identifersRegister.getElement(identifier));
         }
 
         for (String identifier : identifersRegister.getRelationshipIdentifiers()) {
-            this.identifersRegister.register(identifier, identifersRegister.getRelationship(identifier));
+            this.identifiersRegister.register(identifier, identifersRegister.getRelationship(identifier));
         }
     }
 
