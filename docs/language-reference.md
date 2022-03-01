@@ -62,7 +62,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - Lines are processed in order.
 - Tokens must be separated by whitespace, but the quantity of whitespace/indentation isn't important.
 - Keywords are case-insensitive (e.g. you can use `softwareSystem` or `softwaresystem`).
-- Double quote characters (`"..."`) are optional when a property contains no whitespace.
+- Double quote characters (`"..."`) are optional when a property/expression contains no whitespace.
 - Opening curly brace symbols (`{`) must be on the same line (i.e. the last token of the statement, not on a line of their own).
 - Closing curly brace symbols (`}`) must be on a line of their own.
 - Opening/closing braces are only required when adding child content.
@@ -1112,10 +1112,10 @@ They provide a way to exclude relationships based upon some basic conditional lo
 - `relationship.tag==<tag>,[tag]`: exclude relationships that have all of the specified tags
 - `relationship.tag!=<tag>,[tag]`: exclude relationships that do not have all of the specified tags
 
-Alternatively, you can use the relationship expression syntax as follows:
+Alternatively, you can use the relationship expression syntax as follows (please note the double quotes surrounding the entire expression):
 
 ```
-exclude <*|identifier> -> <*|identifier> 
+exclude "<*|identifier> -> <*|identifier>" 
 ```
 
 The combinations of parameters are:
