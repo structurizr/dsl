@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.19.0 (unreleased to Maven Central)
+
+- Uses the new documentation/ADR importers, and makes it possible to use a custom implementation via `!docs` and `!adrs`.
+
 ## 1.18.0 (20th February 2022)
 
 - Removes backwards compatibility for unquoted expressions (e.g. `exclude src -> dest` - use `exclude "src -> dest"` instead).

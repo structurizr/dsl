@@ -284,8 +284,8 @@ class DslTests extends AbstractTests {
 
         assertEquals(0, workspace.getViews().getConfiguration().getThemes().length);
 
-        assertEquals(4, workspace.getDocumentation().getSections().size());
-        assertEquals(1, workspace.getDocumentation().getDecisions().size());
+        assertEquals(4, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getDocumentation().getSections().size());
+        assertEquals(1, workspace.getModel().getSoftwareSystemWithName("Internet Banking System").getDocumentation().getDecisions().size());
     }
 
     @Test
@@ -873,6 +873,7 @@ class DslTests extends AbstractTests {
         parser.parse(new File("src/test/dsl/docs/workspace.dsl"));
 
         assertEquals(1, parser.getWorkspace().getDocumentation().getSections().size());
+        assertEquals(1, parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System").getDocumentation().getSections().size());
     }
 
     @Test
@@ -881,6 +882,7 @@ class DslTests extends AbstractTests {
         parser.parse(new File("src/test/dsl/adrs/workspace.dsl"));
 
         assertEquals(10, parser.getWorkspace().getDocumentation().getDecisions().size());
+        assertEquals(10, parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System").getDocumentation().getDecisions().size());
     }
 
     @Test

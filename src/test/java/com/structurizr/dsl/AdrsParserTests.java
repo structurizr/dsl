@@ -12,10 +12,10 @@ class AdrsParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(new WorkspaceDslContext(), null, tokens("adrs", "path", "extra"));
+            parser.parse(new WorkspaceDslContext(), null, tokens("adrs", "path", "fqn", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: !adrs <path>", e.getMessage());
+            assertEquals("Too many tokens, expected: !adrs <path> <fqn>", e.getMessage());
         }
     }
 

@@ -7,18 +7,18 @@ import java.util.List;
 
 class ExternalScriptDslContext extends ScriptDslContext {
 
-    private File directory;
-    private String filename;
+    private final File dslFile;
+    private final String filename;
 
-    ExternalScriptDslContext(File directory, String filename) {
-        this.directory = directory;
+    ExternalScriptDslContext(File dslFile, String filename) {
+        this.dslFile = dslFile;
         this.filename = filename;
     }
 
     @Override
     void end() {
         try {
-            File scriptFile = new File(directory, filename);
+            File scriptFile = new File(dslFile.getParent(), filename);
             if (!scriptFile.exists()) {
                 throw new RuntimeException("Script file " + scriptFile.getCanonicalPath() + " does not exist");
             }

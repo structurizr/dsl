@@ -149,7 +149,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         parse(lines, new File("."));
     }
 
-    void parse(List<String> lines, File file) throws StructurizrDslParserException {
+    void parse(List<String> lines, File dslFile) throws StructurizrDslParserException {
         int lineNumber = 1;
         for (String line : lines) {
             boolean includeInDslSourceLines = true;
@@ -359,7 +359,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new ModelItemParser().parsePerspective(getContext(ModelItemPerspectivesDslContext.class), tokens);
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
-                        DslParserContext dslParserContext = new DslParserContext(file, restricted);
+                        DslParserContext dslParserContext = new DslParserContext(dslFile, restricted);
                         dslParserContext.setIdentifierRegister(identifiersRegister);
 
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
@@ -381,7 +381,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         startContext(new ViewsDslContext());
 
                     } else if (BRANDING_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
-                        startContext(new BrandingDslContext(file));
+                        startContext(new BrandingDslContext(dslFile));
 
                     } else if (BRANDING_LOGO_TOKEN.equalsIgnoreCase(firstToken) && inContext(BrandingDslContext.class)) {
                         new BrandingParser().parseLogo(getContext(BrandingDslContext.class), tokens, restricted);
@@ -394,7 +394,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (ELEMENT_STYLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(StylesDslContext.class)) {
                         ElementStyle elementStyle = new ElementStyleParser().parseElementStyle(getContext(), tokens.withoutContextStartToken());
-                        startContext(new ElementStyleDslContext(elementStyle, file));
+                        startContext(new ElementStyleDslContext(elementStyle, dslFile));
 
                     } else if (ELEMENT_STYLE_BACKGROUND_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementStyleDslContext.class)) {
                         new ElementStyleParser().parseBackground(getContext(ElementStyleDslContext.class), tokens);
@@ -662,7 +662,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (INCLUDE_FILE_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted || tokens.get(1).startsWith("https://")) {
-                            IncludedDslContext context = new IncludedDslContext(file);
+                            IncludedDslContext context = new IncludedDslContext(dslFile);
                             new IncludeParser().parse(context, tokens);
                             parse(context.getLines(), context.getFile());
                             includeInDslSourceLines = false;
@@ -670,22 +670,22 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         if (!restricted) {
-                            new DocsParser().parse(getContext(WorkspaceDslContext.class), file, tokens);
+                            new DocsParser().parse(getContext(WorkspaceDslContext.class), dslFile, tokens);
                         }
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
                         if (!restricted) {
-                            new DocsParser().parse(getContext(SoftwareSystemDslContext.class), file, tokens);
+                            new DocsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
                         }
 
                     } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         if (!restricted) {
-                            new AdrsParser().parse(getContext(WorkspaceDslContext.class), file, tokens);
+                            new AdrsParser().parse(getContext(WorkspaceDslContext.class), dslFile, tokens);
                         }
 
                     } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
                         if (!restricted) {
-                            new AdrsParser().parse(getContext(SoftwareSystemDslContext.class), file, tokens);
+                            new AdrsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
                         }
 
                     } else if (CONSTANT_TOKEN.equalsIgnoreCase(firstToken)) {
@@ -698,7 +698,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
                         if (!restricted) {
                             String fullyQualifiedClassName = new PluginParser().parse(getContext(), tokens.withoutContextStartToken());
-                            startContext(new PluginDslContext(fullyQualifiedClassName, file.getParentFile()));
+                            startContext(new PluginDslContext(fullyQualifiedClassName, dslFile));
                             if (!shouldStartContext(tokens)) {
                                 // run the plugin immediately, without looking for parameters
                                 endContext();
@@ -718,7 +718,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 startContext(new InlineScriptDslContext(language));
                             } else {
                                 String filename = new ScriptParser().parseExternal(tokens);
-                                startContext(new ExternalScriptDslContext(file.getParentFile(), filename));
+                                startContext(new ExternalScriptDslContext(dslFile, filename));
                                 endContext();
                             }
                         } else {

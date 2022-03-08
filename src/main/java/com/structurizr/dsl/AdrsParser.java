@@ -1,31 +1,33 @@
 package com.structurizr.dsl;
 
-import com.structurizr.Workspace;
-import com.structurizr.documentation.AdrToolsImporter;
-import com.structurizr.documentation.AutomaticDocumentationTemplate;
-import com.structurizr.model.SoftwareSystem;
+import com.structurizr.documentation.Documentable;
+import com.structurizr.documentation.importer.DefaultImageImporter;
+import com.structurizr.documentation.importer.DocumentationImporter;
 
 import java.io.File;
-import java.io.IOException;
+import java.lang.reflect.Constructor;
 
 final class AdrsParser extends AbstractParser {
 
-    private static final String GRAMMAR = "!adrs <path>";
+    private static final String DEFAULT_DECISION_IMPORTER = "com.structurizr.documentation.importer.AdrToolsDecisionImporter";
+
+    private static final String GRAMMAR = "!adrs <path> <fqn>";
 
     private static final int PATH_INDEX = 1;
+    private static final int FQN_INDEX = 2;
 
-    void parse(WorkspaceDslContext context, File file, Tokens tokens) {
-        parse(context.getWorkspace(), null, file, tokens);
+    void parse(WorkspaceDslContext context, File dslFile, Tokens tokens) {
+        parse(context, context.getWorkspace(), dslFile, tokens);
     }
 
-    void parse(SoftwareSystemDslContext context, File file, Tokens tokens) {
-        parse(context.getWorkspace(), context.getSoftwareSystem(), file, tokens);
+    void parse(SoftwareSystemDslContext context, File dslFile, Tokens tokens) {
+        parse(context, context.getSoftwareSystem(), dslFile, tokens);
     }
 
-    private void parse(Workspace workspace, SoftwareSystem softwareSystem, File file, Tokens tokens) {
+    private void parse(DslContext context, Documentable documentable, File dslFile, Tokens tokens) {
         // !adrs <path>
 
-        if (tokens.hasMoreThan(PATH_INDEX)) {
+        if (tokens.hasMoreThan(FQN_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
         }
 
@@ -33,8 +35,13 @@ final class AdrsParser extends AbstractParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        if (file != null) {
-            File path = new File(file.getParentFile(), tokens.get(PATH_INDEX));
+        String fullyQualifiedClassName = DEFAULT_DECISION_IMPORTER;
+        if (tokens.includes(FQN_INDEX)) {
+            fullyQualifiedClassName = tokens.get(FQN_INDEX);
+        }
+
+        if (dslFile != null) {
+            File path = new File(dslFile.getParentFile(), tokens.get(PATH_INDEX));
 
             if (!path.exists()) {
                 throw new RuntimeException("Documentation path " + path + " does not exist");
@@ -44,22 +51,20 @@ final class AdrsParser extends AbstractParser {
                 throw new RuntimeException("Documentation path " + path + " is not a directory");
             }
 
-            AdrToolsImporter adrToolsImporter = new AdrToolsImporter(workspace, path);
             try {
-                if (softwareSystem == null) {
-                    adrToolsImporter.importArchitectureDecisionRecords();
-                } else {
-                    adrToolsImporter.importArchitectureDecisionRecords(softwareSystem);
+                Class decisionImporterClass = context.loadClass(fullyQualifiedClassName, dslFile);
+                Constructor constructor = decisionImporterClass.getDeclaredConstructor();
+                DocumentationImporter decisionImporter = (DocumentationImporter)constructor.newInstance();
+                decisionImporter.importDocumentation(documentable, path);
+
+                if (!tokens.includes(FQN_INDEX)) {
+                    DefaultImageImporter imageImporter = new DefaultImageImporter();
+                    imageImporter.importDocumentation(documentable, path);
                 }
+            } catch (ClassNotFoundException cnfe) {
+                throw new RuntimeException("Error importing ADRs from " + path.getAbsolutePath() + ": " + fullyQualifiedClassName + " was not found");
             } catch (Exception e) {
                 throw new RuntimeException("Error importing ADRs from " + path.getAbsolutePath() + ": " + e.getMessage());
-            }
-
-            try {
-                AutomaticDocumentationTemplate template = new AutomaticDocumentationTemplate(workspace);
-                template.addImages(path);
-            } catch (Exception e) {
-                throw new RuntimeException("Error importing images from " + path.getAbsolutePath() + ": " + e.getMessage());
             }
         }
     }

@@ -1,5 +1,7 @@
 workspace {
 
+    !docs docs com.structurizr.example.ExampleDocumentationImporter
+
     model {
         user = person "User"
         softwareSystem = softwareSystem "Software System" {
