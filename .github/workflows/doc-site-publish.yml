@@ -1,7 +1,7 @@
-name: Mkdocs Site
+name: Mkdocs Site Publish
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 jobs:
@@ -22,3 +22,6 @@ jobs:
       - name: Build site
         run: |
           mkdocs build --strict
+      - name: Publish site
+        run: |
+          mkdocs gh-deploy --force
