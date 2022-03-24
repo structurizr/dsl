@@ -17,6 +17,8 @@ nav:
     - language-reference/grammar.md
   - "Cookbook":
     - cookbook/introduction/README.md
+    - cookbook/workspace/README.md
+    - cookbook/workspace-extension/README.md
     - "Views":
       - cookbook/system-context-view/README.md
       - cookbook/container-view/README.md
@@ -24,13 +26,11 @@ nav:
       - cookbook/deployment-view/README.md
       - cookbook/dynamic-view/README.md
       - cookbook/filtered-view/README.md
-    - cookbook/dsl-and-code/README.md
     - cookbook/amazon-web-services/README.md
     - cookbook/element-styles/README.md
-    - cookbook/implied-relationships/README.md
     - cookbook/relationship-styles/README.md
-    - cookbook/scripts/README.md
     - cookbook/themes/README.md
-    - cookbook/workspace/README.md
-    - cookbook/workspace-extension/README.md
+    - cookbook/implied-relationships/README.md
+    - cookbook/scripts/README.md
+    - cookbook/dsl-and-code/README.md
   - changelog.md

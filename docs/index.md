@@ -12,7 +12,7 @@ This GitHub repository contains an implementation of the Structurizr DSL - a way
 
 ##  Reference
 
-* [Language reference](language-reference.md)
+* [Language reference](language-reference/index.md)
 * [Changelog](changelog.md)
 * [Structurizr DSL cookbook](cookbook) (this is a work in progress)
 
