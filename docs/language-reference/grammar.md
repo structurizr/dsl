@@ -77,7 +77,7 @@ Permitted children:
 ## group
 
 The `group` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
-See [groups.dsl](../src/test/dsl/groups.dsl) for an example.
+See [groups.dsl](https://github.com/structurizr/dsl/tree/master/src/test/dsl/groups.dsl) for an example.
 
 ```
 group <name> {
@@ -223,7 +223,11 @@ The `deploymentGroup` keyword provides a way to define a named deployment group.
 deploymentGroup <name>
 ```
 
-When software system/container instances are added to a deployment environment, all of the relationships between these elements are automatically replicated between *all* instances. Deployment groups provide a way to restrict the scope in which relationships are replicated. See [deployment-groups.dsl](../src/test/dsl/deployment-groups.dsl) for an example.
+When software system/container instances are added to a deployment environment,
+all of the relationships between these elements are automatically replicated
+between *all* instances. Deployment groups provide a way to restrict the scope
+in which relationships are replicated. See
+[deployment-groups.dsl](https://github.com/structurizr/dsl/tree/master/src/test/dsl/deployment-groups.dsl) for an example.
 
 ## deploymentNode
 
@@ -514,7 +518,7 @@ Or, if you're extending a JSON-based workspace, you can reference an element by 
 }
 ```
 
-See [ref.dsl](../src/test/dsl/ref.dsl) for some usage examples.
+See [ref.dsl](https://github.com/structurizr/dsl/tree/master/src/test/dsl/ref.dsl) for some usage examples.
 
 __Please note that `!ref` is currently an experimental feature.__
 
@@ -664,9 +668,21 @@ Unlike the other diagram types, Dynamic views are created by specifying the rela
 <relationship identifier> [description]
 ```
 
-With a dynamic view, you're showing _instances_ of relationships that are defined in the static model. For example, imagine that you have two software systems defined in the static model, with a single relationship between them described as "Sends data to". A dynamic view allows you to override the relationship description, to better describe the interaction in the context of the behaviour you're diagramming. See [dynamic.dsl](../src/test/dsl/dynamic.dsl) for an example of this, and [Modelling multiple relationships](https://dev.to/simonbrown/modelling-multiple-relationships-51bf) for some tips on how to best model multiple relationships between two elements in order to avoid cluttering your static model. For convenience, if a relationship between the two elements does not exist in the static model, the DSL parser will automatically create it for you.
+With a dynamic view, you're showing _instances_ of relationships that are
+defined in the static model. For example, imagine that you have two software
+systems defined in the static model, with a single relationship between them
+described as "Sends data to". A dynamic view allows you to override the
+relationship description, to better describe the interaction in the context of
+the behaviour you're diagramming. See [dynamic.dsl](https://github.com/structurizr/dsl/tree/master/src/test/dsl/dynamic.dsl)
+for an example of this, and [Modelling multiple
+  relationships](https://dev.to/simonbrown/modelling-multiple-relationships-51bf)
+  for some tips on how to best model multiple relationships between two elements
+    in order to avoid cluttering your static model. For convenience, if a
+    relationship between the two elements does not exist in the static model,
+    the DSL parser will automatically create it for you.
 
-See [parallel.dsl](../src/test/dsl/parallel.dsl) for an example of how to create dynamic diagrams with parallel sequences.
+See [parallel.dsl](https://github.com/structurizr/dsl/tree/master/src/test/dsl/parallel.dsl) for an example of how to create
+dynamic diagrams with parallel sequences.
 
 Permitted children:
 
