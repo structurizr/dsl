@@ -1,0 +1,36 @@
+site_name: "Structurizr DSL"
+site_url: https://example.com
+theme: material
+nav:
+  - Home: index.md
+  - "Language Reference":
+    - "Intro": language-reference/index.md
+    - language-reference/general-rules.md
+    - language-reference/string-substitution.md
+    - language-reference/comments.md
+    - language-reference/identifiers.md
+    - language-reference/include.md
+    - language-reference/constant.md
+    - language-reference/expressions.md
+    - language-reference/plugins.md
+    - language-reference/scripts.md
+    - language-reference/grammar.md
+  - "Cookbook":
+    - cookbook/introduction/README.md
+    - "Views":
+      - cookbook/system-context-view/README.md
+      - cookbook/container-view/README.md
+      - cookbook/component-view/README.md
+      - cookbook/deployment-view/README.md
+      - cookbook/dynamic-view/README.md
+      - cookbook/filtered-view/README.md
+    - cookbook/dsl-and-code/README.md
+    - cookbook/amazon-web-services/README.md
+    - cookbook/element-styles/README.md
+    - cookbook/implied-relationships/README.md
+    - cookbook/relationship-styles/README.md
+    - cookbook/scripts/README.md
+    - cookbook/themes/README.md
+    - cookbook/workspace/README.md
+    - cookbook/workspace-extension/README.md
+  - changelog.md
