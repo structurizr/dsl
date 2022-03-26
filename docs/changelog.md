@@ -3,6 +3,7 @@
 ## 1.19.1 (unreleased to Maven Central)
 
 - `title` now works for custom views.
+- Added `description` to set view descriptions.
 
 ## 1.19.0 (23rd March 2022)
 

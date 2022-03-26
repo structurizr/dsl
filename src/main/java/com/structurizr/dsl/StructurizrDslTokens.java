@@ -47,6 +47,7 @@ class StructurizrDslTokens {
     static final String ANIMATION_STEP_IN_VIEW_TOKEN = "animationStep";
     static final String AUTOLAYOUT_VIEW_TOKEN = "autolayout";
     static final String VIEW_TITLE_TOKEN = "title";
+    static final String VIEW_DESCRIPTION_TOKEN = "description";
     static final String STYLES_TOKEN = "styles";
     static final String BRANDING_TOKEN = "branding";
     static final String BRANDING_LOGO_TOKEN = "logo";
