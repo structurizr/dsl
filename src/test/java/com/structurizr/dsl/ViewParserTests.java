@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.view.CustomView;
 import com.structurizr.view.DeploymentView;
 import com.structurizr.view.DynamicView;
 import com.structurizr.view.SystemLandscapeView;
@@ -36,6 +37,17 @@ class ViewParserTests extends AbstractTests {
         } catch (Exception e) {
             assertEquals("Expected: title <title>", e.getMessage());
         }
+    }
+
+    @Test
+    void test_parseTitle_SetsTheTitleOfACustomView() {
+        CustomView view = workspace.getViews().createCustomView("key", "title", "description");
+        CustomViewDslContext context = new CustomViewDslContext(view);
+        context.setWorkspace(workspace);
+
+        assertEquals("title", view.getTitle());
+        parser.parseTitle(context, tokens("title", "A new title"));
+        assertEquals("A new title", view.getTitle());
     }
 
     @Test

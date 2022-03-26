@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.19.1 (unreleased to Maven Central)
+
+- `title` now works for custom views.
+
 ## 1.19.0 (23rd March 2022)
 
 - Uses the new documentation/ADR importers, and makes it possible to use a custom implementation via `!docs` and `!adrs`.

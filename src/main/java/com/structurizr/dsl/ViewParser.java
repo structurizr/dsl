@@ -4,9 +4,13 @@ import com.structurizr.view.View;
 
 final class ViewParser extends AbstractParser {
 
-    private static final String GRAMMAR = "title <title>";
+    private static final String TITLE_GRAMMAR = "title <title>";
 
     private static final int TITLE_INDEX = 1;
+
+    void parseTitle(CustomViewDslContext context, Tokens tokens) {
+        parseTitle(context.getView(), tokens);
+    }
 
     void parseTitle(StaticViewDslContext context, Tokens tokens) {
         parseTitle(context.getView(), tokens);
@@ -24,7 +28,7 @@ final class ViewParser extends AbstractParser {
         // title <title>
 
         if (tokens.hasMoreThan(TITLE_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+            throw new RuntimeException("Too many tokens, expected: " + TITLE_GRAMMAR);
         }
 
         if (view != null) {
@@ -33,7 +37,7 @@ final class ViewParser extends AbstractParser {
 
                 view.setTitle(title);
             } else {
-                throw new RuntimeException("Expected: " + GRAMMAR);
+                throw new RuntimeException("Expected: " + TITLE_GRAMMAR);
             }
         }
     }

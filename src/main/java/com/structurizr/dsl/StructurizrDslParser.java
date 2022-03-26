@@ -609,6 +609,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
                         new AutoLayoutParser().parse(getContext(DeploymentViewDslContext.class), tokens);
 
+                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
+                        new ViewParser().parseTitle(getContext(CustomViewDslContext.class), tokens);
+
                     } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new ViewParser().parseTitle(getContext(StaticViewDslContext.class), tokens);
 
