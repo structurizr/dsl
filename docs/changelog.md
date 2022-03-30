@@ -3,7 +3,7 @@
 ## 1.19.1 (30th March 2022)
 
 - `title` now works for custom views.
-- Added `description` to set view descriptions.
+- Adds `description` to set view descriptions.
 
 ## 1.19.0 (23rd March 2022)
 
