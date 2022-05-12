@@ -322,16 +322,16 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         group.setParent(container);
                         startContext(new ContainerDslContext(container, group));
                         registerIdentifier(identifier, group);
-                    } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                    } else if (TAGS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && !getContext(ModelItemDslContext.class).hasGroup()) {
                         new ModelItemParser().parseTags(getContext(ModelItemDslContext.class), tokens);
 
-                    } else if (DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && getContext(ModelItemDslContext.class).getModelItem() instanceof Element) {
+                    } else if (DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && getContext(ModelItemDslContext.class).getModelItem() instanceof Element && !getContext(ModelItemDslContext.class).hasGroup()) {
                         new ModelItemParser().parseDescription(getContext(ModelItemDslContext.class), tokens);
 
-                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class) && !getContext(ContainerDslContext.class).hasGroup()) {
                         new ContainerParser().parseTechnology(getContext(ContainerDslContext.class), tokens);
 
-                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class)) {
+                    } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(ComponentDslContext.class) && !getContext(ComponentDslContext.class).hasGroup()) {
                         new ComponentParser().parseTechnology(getContext(ComponentDslContext.class), tokens);
 
                     } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
@@ -340,10 +340,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (TECHNOLOGY_TOKEN.equalsIgnoreCase(firstToken) && inContext(InfrastructureNodeDslContext.class)) {
                         new InfrastructureNodeParser().parseTechnology(getContext(InfrastructureNodeDslContext.class), tokens);
 
-                    } else if (URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                    } else if (URL_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && !getContext(ModelItemDslContext.class).hasGroup()) {
                         new ModelItemParser().parseUrl(getContext(ModelItemDslContext.class), tokens);
 
-                    } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                    } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && !getContext(ModelItemDslContext.class).hasGroup()) {
                         startContext(new PropertiesDslContext(getContext(ModelItemDslContext.class).getModelItem()));
 
                     } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
@@ -352,7 +352,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (inContext(PropertiesDslContext.class)) {
                         new PropertyParser().parse(getContext(PropertiesDslContext.class), tokens);
 
-                    } else if (PERSPECTIVES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class)) {
+                    } else if (PERSPECTIVES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelItemDslContext.class) && !getContext(ModelItemDslContext.class).hasGroup()) {
                         startContext(new ModelItemPerspectivesDslContext(getContext(ModelItemDslContext.class).getModelItem()));
 
                     } else if (inContext(ModelItemPerspectivesDslContext.class)) {

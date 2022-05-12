@@ -29,7 +29,7 @@ targetCompatibility = 1.8
 
 description = 'Structurizr DSL'
 group = 'com.structurizr'
-version = '1.19.1'
+version = '1.19.2'
 
 jacoco {
   toolVersion = "0.8.4"

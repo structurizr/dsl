@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.19.2 (unreleased to Maven Central)
+
+- Fixes #130 (Incorrect displaying of multiple urls within a container).
+
 ## 1.19.1 (30th March 2022)
 
 - `title` now works for custom views.
