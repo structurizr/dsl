@@ -24,7 +24,11 @@ final class BrandingParser extends AbstractParser {
             String path = tokens.get(1);
 
             if (path.startsWith("data:image/") || path.startsWith("https://") || path.startsWith("http://")) {
-                context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(path);
+                if (IconUtils.isSupported(path)) {
+                    context.getWorkspace().getViews().getConfiguration().getBranding().setLogo(path);
+                } else {
+                    throw new IllegalArgumentException("Only PNG and JPG URLs and data URIs are supported: " + path);
+                }
             } else {
                 if (!restricted) {
                     File file = new File(context.getFile().getParent(), path);

@@ -271,7 +271,11 @@ final class ElementStyleParser extends AbstractParser {
             String path = tokens.get(1);
 
             if (path.startsWith("data:image/") || path.startsWith("https://") || path.startsWith("http://")) {
-                style.setIcon(path);
+                if (IconUtils.isSupported(path)) {
+                    style.setIcon(path);
+                } else {
+                    throw new IllegalArgumentException("Only PNG and JPG URLs/data URIs are supported: " + path);
+                }
             } else {
                 if (!restricted) {
                     File file = new File(context.getFile().getParent(), path);
