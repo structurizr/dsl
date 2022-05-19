@@ -81,4 +81,24 @@ final class DeploymentNodeParser extends AbstractParser {
         context.getDeploymentNode().setTechnology(technology);
     }
 
+    void parseInstances(DeploymentNodeDslContext context, Tokens tokens) {
+        int index = 1;
+
+        // instances <number>
+        if (tokens.hasMoreThan(index)) {
+            throw new RuntimeException("Too many tokens, expected: instances <number>");
+        }
+
+        if (!tokens.includes(index)) {
+            throw new RuntimeException("Expected: instances <number>");
+        }
+
+        try {
+            int instances = Integer.parseInt(tokens.get(index));
+            context.getDeploymentNode().setInstances(instances);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Expected: instances <number>");
+        }
+    }
+
 }

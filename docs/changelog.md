@@ -4,6 +4,7 @@
 
 - Fixes #130 (Incorrect displaying of multiple urls within a container).
 - Added more validation for supported icon types (PNG and JPG, not SVG).
+- Adds support for `instances` as child of deploymentNode (#133).
 
 ## 1.19.1 (30th March 2022)
 

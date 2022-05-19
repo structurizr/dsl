@@ -602,6 +602,7 @@ Permitted children:
 - [-> (relationship)](#relationship)
 - [description](#description)
 - [technology](#technology)
+- [instances](#instances)
 - [tags](#tags)
 - [url](#url)
 - [properties](#properties)
@@ -805,6 +806,14 @@ description "Description"
 
 ```
 technology "Technology"
+```
+
+### instances
+
+`instances` is used to set the number of instances of a deployment node.
+
+```
+imstances "4"
 ```
 
 ### url

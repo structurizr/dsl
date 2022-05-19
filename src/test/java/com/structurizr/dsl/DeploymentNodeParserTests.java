@@ -166,12 +166,57 @@ class DeploymentNodeParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseTechnology_SetsTheDescription_WhenADescriptionIsSpecified() {
+    void test_parseTechnology_SetsTheTechnology_WhenADescriptionIsSpecified() {
         DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
         parser.parseTechnology(context, tokens("technology", "Technology"));
 
         assertEquals("Technology", deploymentNode.getTechnology());
+    }
+
+    @Test
+    void test_parseInstances_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+            DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+            parser.parseInstances(context, tokens("instances", "number", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: instances <number>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseInstances_ThrowsAnException_WhenNoNumberIsSpecified() {
+        try {
+            DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+            DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+            parser.parseInstances(context, tokens("instances"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: instances <number>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseInstances_ThrowsAnException_WhenAnInvalidNumberIsSpecified() {
+        try {
+            DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+            DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+            parser.parseInstances(context, tokens("instances", "abc"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: instances <number>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseInstances_SetsTheInstances_WhenANumberIsSpecified() {
+        DeploymentNode deploymentNode = model.addDeploymentNode("Deployment Node");
+        DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
+        parser.parseInstances(context, tokens("instances", "123"));
+
+        assertEquals(123, deploymentNode.getInstances());
     }
 
 }
