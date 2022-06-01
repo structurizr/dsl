@@ -813,7 +813,7 @@ technology "Technology"
 `instances` is used to set the number of instances of a deployment node.
 
 ```
-imstances "4"
+instances "4"
 ```
 
 ### url
