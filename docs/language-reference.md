@@ -209,7 +209,7 @@ The content of any included files is simply inlined into the parent document, in
 ```
 
 - file: a single local file, specified by a relative path, located within the same directory as the parent file or a subdirectory of it
-- file: a local directory containing one or more DSL files, specified by a relative path, located within the same directory as the parent file or a subdirectory of it
+- directory: a local directory containing one or more DSL files, specified by a relative path, located within the same directory as the parent file or a subdirectory of it
 - url: a HTTPS URL pointing to a single DSL file
 
 Some examples are:
