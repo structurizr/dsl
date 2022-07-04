@@ -41,9 +41,10 @@ abstract class DslContext {
     }
 
     Element getElement(String identifier) {
-        Element element = identifiersRegister.getElement(identifier.toLowerCase());
+        Element element = null;
+        identifier = identifier.toLowerCase();
 
-        if (element == null && identifiersRegister.getIdentifierScope() == IdentifierScope.Hierarchical) {
+        if (identifiersRegister.getIdentifierScope() == IdentifierScope.Hierarchical) {
             if (this instanceof ModelItemDslContext) {
                 ModelItemDslContext modelItemDslContext = (ModelItemDslContext)this;
                 if (modelItemDslContext.getModelItem() instanceof Element) {
@@ -62,6 +63,13 @@ abstract class DslContext {
 
                 element = identifiersRegister.getElement(parentIdentifier + "." + identifier);
             }
+
+            if (element == null) {
+                // default to finding a top-level element
+                element = identifiersRegister.getElement(identifier);
+            }
+        } else {
+            element = identifiersRegister.getElement(identifier);
         }
 
         return element;

@@ -824,6 +824,15 @@ class DslTests extends AbstractTests {
     }
 
     @Test
+    void test_hierarchicalIdentifiers() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/hierarchical-identifiers.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        assertEquals(0, workspace.getModel().getSoftwareSystemWithName("B").getRelationships().size());
+    }
+
+    @Test
     void test_hierarchicalIdentifiersAndDeploymentNodes() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes.dsl"));

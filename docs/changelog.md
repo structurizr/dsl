@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.19.2 (unreleased to Maven Central)
+## 1.20.0 (unreleased to Maven Central)
 
 - Fixes #130 (Incorrect displaying of multiple urls within a container).
 - Added more validation for supported icon types (PNG and JPG, not SVG).
 - Adds support for `instances` as child of deploymentNode (#133).
+- Fixes #142 (Invalid object scoping strategy).
 
 ## 1.19.1 (30th March 2022)
 
