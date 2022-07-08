@@ -31,6 +31,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
     private Stack<DslContext> contextStack;
+    private Set<String> parsedTokens = new HashSet<>();
     private IdentifiersRegister identifiersRegister;
     private Map<String, Constant> constants;
 
@@ -362,12 +363,16 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new ModelItemParser().parsePerspective(getContext(ModelItemPerspectivesDslContext.class), tokens);
 
                     } else if (WORKSPACE_TOKEN.equalsIgnoreCase(firstToken) && contextStack.empty()) {
+                        if (parsedTokens.contains(WORKSPACE_TOKEN)) {
+                            throw new RuntimeException("Multiple workspaces are not permitted in a DSL definition");
+                        }
                         DslParserContext dslParserContext = new DslParserContext(dslFile, restricted);
                         dslParserContext.setIdentifierRegister(identifiersRegister);
 
                         workspace = new WorkspaceParser().parse(dslParserContext, tokens.withoutContextStartToken());
                         extendingWorkspace = !workspace.getModel().isEmpty();
                         startContext(new WorkspaceDslContext());
+                        parsedTokens.add(WORKSPACE_TOKEN);
                     } else if (IMPLIED_RELATIONSHIPS_TOKEN.equalsIgnoreCase(firstToken) || IMPLIED_RELATIONSHIPS_TOKEN.substring(1).equalsIgnoreCase(firstToken)) {
                         new ImpliedRelationshipsParser().parse(getContext(), tokens);
 
@@ -378,10 +383,20 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         new WorkspaceParser().parseDescription(getContext(), tokens);
 
                     } else if (MODEL_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        if (parsedTokens.contains(MODEL_TOKEN)) {
+                            throw new RuntimeException("Multiple models are not permitted in a DSL definition");
+                        }
+
                         startContext(new ModelDslContext());
+                        parsedTokens.add(MODEL_TOKEN);
 
                     } else if (VIEWS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
+                        if (parsedTokens.contains(VIEWS_TOKEN)) {
+                            throw new RuntimeException("Multiple view sets are not permitted in a DSL definition");
+                        }
+
                         startContext(new ViewsDslContext());
+                        parsedTokens.add(VIEWS_TOKEN);
 
                     } else if (BRANDING_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         startContext(new BrandingDslContext(dslFile));

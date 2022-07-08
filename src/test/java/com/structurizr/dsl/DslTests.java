@@ -923,4 +923,37 @@ class DslTests extends AbstractTests {
         }
     }
 
+    @Test
+    void test_multipleWorkspaceTokens_ThrowsAnException() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/multiple-workspace-tokens.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Multiple workspaces are not permitted in a DSL definition at line 9: workspace {", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_multipleModelTokens_ThrowsAnException() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/multiple-model-tokens.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Multiple models are not permitted in a DSL definition at line 7: model {", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_multipleViewTokens_ThrowsAnException() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/multiple-view-tokens.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Multiple view sets are not permitted in a DSL definition at line 13: views {", e.getMessage());
+        }
+    }
+
 }
