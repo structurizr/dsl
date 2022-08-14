@@ -826,7 +826,7 @@ url https://example.com
 
 ### properties
 
-The `properties` block is used to define one or more name/value properties for an element or relationship.
+The `properties` block is used to define one or more name/value properties.
 
 ```
 properties {
@@ -1300,6 +1300,7 @@ configuration {
 Permitted children:
 
 - [users](#users)
+- [properties](#properties)
 
 ### users
 
