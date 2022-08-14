@@ -859,7 +859,6 @@ class DslTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/script-external.dsl"));
 
-        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
@@ -870,7 +869,6 @@ class DslTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/script-inline.dsl"));
 
-        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("JavaScript"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
