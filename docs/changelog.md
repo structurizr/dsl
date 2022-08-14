@@ -6,6 +6,7 @@
 - Added more validation for supported icon types (PNG and JPG, not SVG).
 - Adds support for `instances` as child of deploymentNode (#133).
 - Fixes #142 (Invalid object scoping strategy).
+- Provides a way to add specific relationships to dynamic views.
 
 ## 1.19.1 (30th March 2022)
 

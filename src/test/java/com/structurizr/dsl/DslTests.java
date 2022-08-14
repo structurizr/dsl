@@ -954,4 +954,10 @@ class DslTests extends AbstractTests {
         }
     }
 
+    @Test
+    void test_dynamicViewWithExplicitRelationships() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/dynamic-view-with-explicit-relationships.dsl"));
+    }
+
 }
