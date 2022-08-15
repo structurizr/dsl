@@ -1,7 +1,5 @@
-apply plugin: 'java'
-apply plugin: 'jacoco'
+apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-apply plugin: 'maven'
 apply plugin: 'signing'
 
 defaultTasks 'clean', 'compileJava', 'test'
@@ -11,14 +9,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.structurizr:structurizr-client:1.14.0'
+    api 'com.structurizr:structurizr-client:1.14.1'
     implementation 'com.structurizr:structurizr-documentation:1.0.1'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.1.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
 
-    testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.8'
-    testImplementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.5.30'
-    testImplementation 'org.jruby:jruby-core:9.2.19.0'
+    testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.12'
+    testImplementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10'
+    testImplementation 'org.jruby:jruby-core:9.3.6.0'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -31,17 +31,13 @@ description = 'Structurizr DSL'
 group = 'com.structurizr'
 version = '1.20.0'
 
-jacoco {
-  toolVersion = "0.8.4"
-}
-
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
 }
 
-jacocoTestReport {
-    dependsOn test
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 jar {
@@ -53,61 +49,45 @@ jar {
     }
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allJava
-}
-
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
-signing {
-    sign configurations.archives
-}
-
-uploadArchives {
+publishing {
     repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+        maven {
+            name = "ossrh"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = findProperty('ossrhUsername')
+                password = findProperty('ossrhPassword')
             }
+        }
+    }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
 
-            pom.project {
-                name 'Structurizr DSL'
-                packaging 'jar'
-                description 'Structurizr DSL'
-                url 'https://github.com/structurizr/dsl'
+            pom {
+                name = 'Structurizr DSL'
+                description = 'Structurizr DSL'
+                url = 'https://github.com/structurizr/dsl'
 
                 scm {
-                    connection 'scm:git:git://github.com/structurizr/dsl.git'
-                    developerConnection 'scm:git:git@github.com:structurizr/dsl.git'
-                    url 'https://github.com/structurizr/dsl'
+                    connection = 'scm:git:git://github.com/structurizr/structurizr-dsl.git'
+                    developerConnection = 'scm:git:git@github.com:structurizr/structurizr-dsl.git'
+                    url = 'https://github.com/structurizr/dsl'
                 }
 
                 licenses {
                     license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
 
                 developers {
                     developer {
-                        id "simon"
-                        name "Simon Brown"
-                        email "simon@structurizr.com"
+                        id = "simon"
+                        name = "Simon Brown"
+                        email = "simon@structurizr.com"
                     }
                 }
             }
@@ -115,43 +95,6 @@ uploadArchives {
     }
 }
 
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
-        }
-    }
-    developers {
-        developer {
-            id "simon"
-            name "Simon Brown"
-            email "simon@structurizr.com"
-        }
-    }
+signing {
+    sign publishing.publications.mavenJava
 }
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', 'Visualise, document and explore your software architecture with the C4 model.')
-                root.appendNode('name', 'Structurizr DSL')
-                root.appendNode('url', 'https://github.com/structurizr/dsl')
-                root.children().last() + pomConfig
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            url "$buildDir/repo"
-        }
-    }
-}
-
