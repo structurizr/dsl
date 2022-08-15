@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.20.0 (unreleased to Maven Central)
+## 1.20.0 (15th August 2022)
 
 - Fixes #130 (Incorrect displaying of multiple urls within a container).
 - Added more validation for supported icon types (PNG and JPG, not SVG).
