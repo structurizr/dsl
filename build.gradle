@@ -66,13 +66,13 @@ publishing {
             from components.java
 
             pom {
-                name = 'Structurizr DSL'
-                description = 'Structurizr DSL'
+                name = 'structurizr-dsl'
+                description = 'Structurizr DSL parser'
                 url = 'https://github.com/structurizr/dsl'
 
                 scm {
-                    connection = 'scm:git:git://github.com/structurizr/structurizr-dsl.git'
-                    developerConnection = 'scm:git:git@github.com:structurizr/structurizr-dsl.git'
+                    connection = 'scm:git:git://github.com/structurizr/dsl.git'
+                    developerConnection = 'scm:git:git@github.com:structurizr/dsl.git'
                     url = 'https://github.com/structurizr/dsl'
                 }
 
