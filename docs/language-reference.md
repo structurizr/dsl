@@ -1154,6 +1154,9 @@ The first property is the rank direction:
 
 The second property is the separation of ranks in pixels (default: `300`), while the third property is the separation of nodes in the same rank in pixels (default: `300`).
 
+Please note that if your DSL workspace does not explicitly define any views, the DSL parser will automatically create a default set of views for you, with auto-layout enabled.
+To change this behaviour, you can either (1) explicitly define your views or (2) use a script to disable automatic layout ([example](https://github.com/structurizr/dsl/tree/master/docs/cookbook/scripts#create-the-default-views-without-automatic-layout)).
+
 ### animation
 
 The `animation` keyword defines the animation for the specified view.
