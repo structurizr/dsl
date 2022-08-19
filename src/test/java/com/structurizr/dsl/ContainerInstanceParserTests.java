@@ -50,7 +50,7 @@ class ContainerInstanceParserTests extends AbstractTests {
             parser.parse(context, tokens("containerInstance", "container"));
             fail();
         } catch (Exception e) {
-            assertEquals("The element \"container\" is not a container", e.getMessage());
+            assertEquals("The container \"container\" does not exist", e.getMessage());
         }
     }
 

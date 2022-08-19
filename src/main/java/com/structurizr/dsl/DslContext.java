@@ -41,6 +41,10 @@ abstract class DslContext {
     }
 
     Element getElement(String identifier) {
+        return getElement(identifier, null);
+    }
+
+    Element getElement(String identifier, Class<? extends Element> type) {
         Element element = null;
         identifier = identifier.toLowerCase();
 
@@ -54,6 +58,8 @@ abstract class DslContext {
 
                         element = identifiersRegister.getElement(parentIdentifier + "." + identifier);
                         parent = parent.getParent();
+
+                        element = checkElementType(element, type);
                     }
                 }
             } else if (this instanceof DeploymentEnvironmentDslContext) {
@@ -70,6 +76,17 @@ abstract class DslContext {
             }
         } else {
             element = identifiersRegister.getElement(identifier);
+        }
+
+        element = checkElementType(element, type);
+        return element;
+    }
+
+    Element checkElementType(Element element, Class<? extends Element> type) {
+        if (element != null && type != null) {
+            if (!element.getClass().isAssignableFrom(type)) {
+                element = null;
+            }
         }
 
         return element;

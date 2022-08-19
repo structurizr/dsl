@@ -835,7 +835,19 @@ class DslTests extends AbstractTests {
     @Test
     void test_hierarchicalIdentifiersAndDeploymentNodes() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes.dsl"));
+        parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes-1.dsl"));
+    }
+
+    @Test
+    void test_hierarchicalIdentifiersAndDeploymentNodes_WhenSoftwareSystemNameClashes() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes-2.dsl"));
+    }
+
+    @Test
+    void test_hierarchicalIdentifiersAndDeploymentNodes_WhenSoftwareContainerClashes() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes-3.dsl"));
     }
 
     @Test

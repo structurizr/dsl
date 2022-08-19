@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.20.1 (unreleased to Maven Central)
+
+- Fixes #153 (Error when deploymentNode identifier is the same as a softwareSystem or container identifier)
+
 ## 1.20.0 (15th August 2022)
 
 - Fixes #130 (Incorrect displaying of multiple urls within a container).

@@ -50,7 +50,7 @@ class SoftwareSystemInstanceParserTests extends AbstractTests {
             parser.parse(context, tokens("softwareSystemInstance", "softwareSystem"));
             fail();
         } catch (Exception e) {
-            assertEquals("The element \"softwareSystem\" is not a software system", e.getMessage());
+            assertEquals("The software system \"softwareSystem\" does not exist", e.getMessage());
         }
     }
 

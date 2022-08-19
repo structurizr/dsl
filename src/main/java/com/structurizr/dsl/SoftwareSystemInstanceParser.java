@@ -27,38 +27,34 @@ final class SoftwareSystemInstanceParser extends AbstractParser {
 
         String softwareSystemIdentifier = tokens.get(IDENTIFIER_INDEX);
 
-        Element element = context.getElement(softwareSystemIdentifier);
+        Element element = context.getElement(softwareSystemIdentifier, SoftwareSystem.class);
         if (element == null) {
             throw new RuntimeException("The software system \"" + softwareSystemIdentifier + "\" does not exist");
         }
 
-        if (element instanceof SoftwareSystem) {
-            DeploymentNode deploymentNode = context.getDeploymentNode();
+        DeploymentNode deploymentNode = context.getDeploymentNode();
 
-            Set<String> deploymentGroups = new HashSet<>();
-            if (tokens.includes(DEPLOYMENT_GROUPS_TOKEN)) {
-                String token = tokens.get(DEPLOYMENT_GROUPS_TOKEN);
+        Set<String> deploymentGroups = new HashSet<>();
+        if (tokens.includes(DEPLOYMENT_GROUPS_TOKEN)) {
+            String token = tokens.get(DEPLOYMENT_GROUPS_TOKEN);
 
-                String[] deploymentGroupReferences = token.split(",");
-                for (String deploymentGroupReference : deploymentGroupReferences) {
-                    Element e = context.getElement(deploymentGroupReference);
-                    if (e instanceof DeploymentGroup) {
-                        deploymentGroups.add(e.getName());
-                    }
+            String[] deploymentGroupReferences = token.split(",");
+            for (String deploymentGroupReference : deploymentGroupReferences) {
+                Element e = context.getElement(deploymentGroupReference);
+                if (e instanceof DeploymentGroup) {
+                    deploymentGroups.add(e.getName());
                 }
             }
-
-            SoftwareSystemInstance softwareSystemInstance = deploymentNode.add((SoftwareSystem)element, deploymentGroups.toArray(new String[]{}));
-
-            if (tokens.includes(TAGS_INDEX)) {
-                String tags = tokens.get(TAGS_INDEX);
-                softwareSystemInstance.addTags(tags.split(","));
-            }
-
-            return softwareSystemInstance;
-        } else {
-            throw new RuntimeException("The element \"" + softwareSystemIdentifier + "\" is not a software system");
         }
+
+        SoftwareSystemInstance softwareSystemInstance = deploymentNode.add((SoftwareSystem)element, deploymentGroups.toArray(new String[]{}));
+
+        if (tokens.includes(TAGS_INDEX)) {
+            String tags = tokens.get(TAGS_INDEX);
+            softwareSystemInstance.addTags(tags.split(","));
+        }
+
+        return softwareSystemInstance;
     }
 
 }

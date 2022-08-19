@@ -26,38 +26,34 @@ final class ContainerInstanceParser extends AbstractParser {
 
         String containerIdentifier = tokens.get(IDENTIFIER_INDEX);
 
-        Element element = context.getElement(containerIdentifier);
+        Element element = context.getElement(containerIdentifier, Container.class);
         if (element == null) {
             throw new RuntimeException("The container \"" + containerIdentifier + "\" does not exist");
         }
 
-        if (element instanceof Container) {
-            DeploymentNode deploymentNode = context.getDeploymentNode();
+        DeploymentNode deploymentNode = context.getDeploymentNode();
 
-            Set<String> deploymentGroups = new HashSet<>();
-            if (tokens.includes(DEPLOYMENT_GROUPS_TOKEN)) {
-                String token = tokens.get(DEPLOYMENT_GROUPS_TOKEN);
+        Set<String> deploymentGroups = new HashSet<>();
+        if (tokens.includes(DEPLOYMENT_GROUPS_TOKEN)) {
+            String token = tokens.get(DEPLOYMENT_GROUPS_TOKEN);
 
-                String[] deploymentGroupReferences = token.split(",");
-                for (String deploymentGroupReference : deploymentGroupReferences) {
-                    Element e = context.getElement(deploymentGroupReference);
-                    if (e instanceof DeploymentGroup) {
-                        deploymentGroups.add(e.getName());
-                    }
+            String[] deploymentGroupReferences = token.split(",");
+            for (String deploymentGroupReference : deploymentGroupReferences) {
+                Element e = context.getElement(deploymentGroupReference);
+                if (e instanceof DeploymentGroup) {
+                    deploymentGroups.add(e.getName());
                 }
             }
-
-            ContainerInstance containerInstance = deploymentNode.add((Container)element, deploymentGroups.toArray(new String[]{}));
-
-            if (tokens.includes(TAGS_INDEX)) {
-                String tags = tokens.get(TAGS_INDEX);
-                containerInstance.addTags(tags.split(","));
-            }
-
-            return containerInstance;
-        } else {
-            throw new RuntimeException("The element \"" + containerIdentifier + "\" is not a container");
         }
+
+        ContainerInstance containerInstance = deploymentNode.add((Container)element, deploymentGroups.toArray(new String[]{}));
+
+        if (tokens.includes(TAGS_INDEX)) {
+            String tags = tokens.get(TAGS_INDEX);
+            containerInstance.addTags(tags.split(","));
+        }
+
+        return containerInstance;
     }
 
 }
