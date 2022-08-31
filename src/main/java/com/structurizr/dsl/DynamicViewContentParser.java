@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.CustomElement;
 import com.structurizr.model.Element;
 import com.structurizr.model.Relationship;
 import com.structurizr.model.StaticStructureElement;
@@ -39,8 +40,8 @@ final class DynamicViewContentParser extends AbstractParser {
                 throw new RuntimeException("The source element \"" + sourceId + "\" does not exist");
             }
 
-            if (!(sourceElement instanceof StaticStructureElement)) {
-                throw new RuntimeException("The source element \"" + sourceId + "\" should be a static structure element");
+            if (!(sourceElement instanceof StaticStructureElement || sourceElement instanceof CustomElement)) {
+                throw new RuntimeException("The source element \"" + sourceId + "\" should be a static structure or custom element");
             }
 
             Element destinationElement = context.getElement(destinationId);
@@ -48,8 +49,8 @@ final class DynamicViewContentParser extends AbstractParser {
                 throw new RuntimeException("The destination element \"" + destinationId + "\" does not exist");
             }
 
-            if (!(destinationElement instanceof StaticStructureElement)) {
-                throw new RuntimeException("The destination element \"" + destinationId + "\" should be a static structure element");
+            if (!(destinationElement instanceof StaticStructureElement || destinationElement instanceof CustomElement)) {
+                throw new RuntimeException("The destination element \"" + destinationId + "\" should be a static structure or custom element");
             }
 
             String description = "";
@@ -66,7 +67,15 @@ final class DynamicViewContentParser extends AbstractParser {
                 new ExplicitRelationshipParser().parse(context, tokens);
             }
 
-            view.add((StaticStructureElement)sourceElement, description, technology, (StaticStructureElement)destinationElement);
+            if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
+                view.add((StaticStructureElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
+            } else if (sourceElement instanceof StaticStructureElement && destinationElement instanceof CustomElement) {
+                view.add((StaticStructureElement) sourceElement, description, technology, (CustomElement) destinationElement);
+            } else if (sourceElement instanceof CustomElement && destinationElement instanceof StaticStructureElement) {
+                view.add((CustomElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
+            } else if (sourceElement instanceof CustomElement && destinationElement instanceof CustomElement) {
+                view.add((CustomElement) sourceElement, description, technology, (CustomElement) destinationElement);
+            }
         } else {
             // <relationship identifier> [description] [technology]
             String relationshipId = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX);

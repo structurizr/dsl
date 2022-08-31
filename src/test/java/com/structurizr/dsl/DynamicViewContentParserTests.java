@@ -56,7 +56,7 @@ class DynamicViewContentParserTests extends AbstractTests {
             parser.parseRelationship(context, tokens("source", "->", "destination"));
             fail();
         } catch (Exception e) {
-            assertEquals("The source element \"source\" should be a static structure element", e.getMessage());
+            assertEquals("The source element \"source\" should be a static structure or custom element", e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class DynamicViewContentParserTests extends AbstractTests {
             parser.parseRelationship(context, tokens("source", "->", "destination"));
             fail();
         } catch (Exception e) {
-            assertEquals("The destination element \"destination\" should be a static structure element", e.getMessage());
+            assertEquals("The destination element \"destination\" should be a static structure or custom element", e.getMessage());
         }
     }
 
