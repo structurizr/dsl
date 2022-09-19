@@ -4,6 +4,7 @@
 
 - Fixes #153 (Error when deploymentNode identifier is the same as a softwareSystem or container identifier)
 - Adds support for custom elements on dynamic views.
+- The DSL parser will now throw an error if the enterprise is set more than once (#159).
 
 ## 1.20.0 (15th August 2022)
 
