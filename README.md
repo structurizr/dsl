@@ -9,6 +9,7 @@ This GitHub repository contains an implementation of the Structurizr DSL - a way
 * [Getting started with Structurizr Lite](https://dev.to/simonbrown/getting-started-with-structurizr-lite-27d0) (using the DSL)
 * [Getting started with the Structurizr CLI and DSL](https://github.com/structurizr/cli/blob/master/docs/getting-started.md)
 * [Structurizr DSL demo](https://structurizr.com/dsl)
+* [Diagrams as code 2.0](https://www.youtube.com/watch?v=Za1-v4Zkq5E) (video from GOTO Copenhagen 2021)
 
 ##  Reference
 
