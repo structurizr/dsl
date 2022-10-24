@@ -57,6 +57,7 @@ class StructurizrDslTokens {
     static final String ELEMENT_STYLE_SHAPE_TOKEN = "shape";
     static final String ELEMENT_STYLE_BACKGROUND_TOKEN = "background";
     static final String ELEMENT_STYLE_STROKE_TOKEN = "stroke";
+    static final String ELEMENT_STYLE_STROKE_WIDTH_TOKEN = "strokeWidth";
     static final String ELEMENT_STYLE_COLOUR_TOKEN = "colour";
     static final String ELEMENT_STYLE_COLOR_TOKEN = "color";
     static final String ELEMENT_STYLE_ICON_TOKEN = "icon";

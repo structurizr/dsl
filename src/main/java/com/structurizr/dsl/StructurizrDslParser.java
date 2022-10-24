@@ -432,6 +432,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (ELEMENT_STYLE_STROKE_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementStyleDslContext.class)) {
                         new ElementStyleParser().parseStroke(getContext(ElementStyleDslContext.class), tokens);
 
+                    } else if (ELEMENT_STYLE_STROKE_WIDTH_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementStyleDslContext.class)) {
+                        new ElementStyleParser().parseStrokeWidth(getContext(ElementStyleDslContext.class), tokens);
+
                     } else if (ELEMENT_STYLE_SHAPE_TOKEN.equalsIgnoreCase(firstToken) && inContext(ElementStyleDslContext.class)) {
                         new ElementStyleParser().parseShape(getContext(ElementStyleDslContext.class), tokens);
 

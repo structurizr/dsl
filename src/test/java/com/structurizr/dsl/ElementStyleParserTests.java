@@ -149,6 +149,42 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseStrokeWidth_ThrowsAnException_WhenThereAreTooManyTokens() {
+        try {
+            parser.parseStrokeWidth(elementStyleDslContext(), tokens("strokeWidth", "4", "extra"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Too many tokens, expected: strokeWidth <1-10>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseStrokeWidth_ThrowsAnException_WhenTheStrokeWidthIsMissing() {
+        try {
+            parser.parseStrokeWidth(elementStyleDslContext(), tokens("strokeWidth"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: strokeWidth <1-10>", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseStrokeWidth_ThrowsAnException_WhenTheStrokeWidthIsNotANumber() {
+        try {
+            parser.parseStrokeWidth(elementStyleDslContext(), tokens("strokeWidth", "abc"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("Stroke width must be an integer between 1 and 10", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parseStrokeWidth_SetsTheStrokeWidth() {
+        parser.parseStrokeWidth(elementStyleDslContext(), tokens("strokeWidth", "4"));
+        assertEquals(4, elementStyle.getStrokeWidth());
+    }
+
+    @Test
     void test_parseColour_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             parser.parseColour(elementStyleDslContext(), tokens("colour", "hex", "extra"));

@@ -1206,6 +1206,7 @@ element <tag> {
     color <#rrggbb>
     colour <#rrggbb>
     stroke <#rrggbb>
+    strokeWidth <integer: 1-10>
     fontSize <integer>
     border <solid|dashed|dotted>
     opacity <integer: 0-100>

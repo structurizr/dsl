@@ -92,6 +92,27 @@ final class ElementStyleParser extends AbstractParser {
         }
     }
 
+    void parseStrokeWidth(ElementStyleDslContext context, Tokens tokens) {
+        ElementStyle style = context.getStyle();
+
+        if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: strokeWidth <1-10>");
+        }
+
+        if (tokens.includes(FIRST_PROPERTY_INDEX)) {
+            String strokeWidthAsString = tokens.get(1);
+
+            try {
+                int strokeWidth = Integer.parseInt(strokeWidthAsString);
+                style.setStrokeWidth(strokeWidth);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("Stroke width must be an integer between 1 and 10");
+            }
+        } else {
+            throw new RuntimeException("Expected: strokeWidth <1-10>");
+        }
+    }
+
     void parseColour(ElementStyleDslContext context, Tokens tokens) {
         ElementStyle style = context.getStyle();
 
