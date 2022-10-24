@@ -191,6 +191,9 @@ workspace "Name" "Description" {
                 opacity 50
                 metadata false
                 description false
+                properties {
+                    "Name" "Value"
+                }
             }
 
             relationship "Relationship" {
@@ -203,6 +206,9 @@ workspace "Name" "Description" {
                 width 400
                 position 50
                 opacity 50
+                properties {
+                    "Name" "Value"
+                }
             }
         }
 

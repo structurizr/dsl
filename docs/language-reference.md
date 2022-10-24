@@ -1211,10 +1211,13 @@ element <tag> {
     opacity <integer: 0-100>
     metadata <true|false>
     description <true|false>
+    properties {
+        name value
+    }
 }
 ```
 
-Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats.
+Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the PlantUML, Mermaid, etc export formats.
 
 Important note: see [Help - Icons](https://structurizr.com/help/icons) if you are specifying an element style icon via a URL. 
 
@@ -1235,10 +1238,13 @@ relationship <tag> {
     width <integer>
     position <integer: 0-100>
     opacity <integer: 0-100>
+    properties {
+        name value
+    }
 }
 ```
 
-Please note that relationship styles are designed to work with the Structurizr cloud service/on-premises installation, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
+Please note that relationship styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
 
 ### theme
 
