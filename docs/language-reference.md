@@ -49,6 +49,8 @@ __Please note that what you see here may not be available in the Structurizr CLI
             - [styles](#styles)
                 - [element](#element-style)
                 - [relationship](#relationship-style)
+                - [theme](#theme)
+                - [themes](#themes)
             - [theme](#theme)
             - [themes](#themes)
             - [branding](#branding)

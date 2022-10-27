@@ -8,6 +8,7 @@
 - Adds the ability to set name/value properties on element and relationship styles.
 - Adds support for setting element style stroke widths.
 - Adds name-value properties to views.
+- Adds support for using `theme` and `themes` inside the `styles` block.
 
 ## 1.20.0 (15th August 2022)
 
