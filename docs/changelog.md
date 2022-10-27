@@ -7,6 +7,7 @@
 - The DSL parser will now throw an error if the enterprise is set more than once (#159).
 - Adds the ability to set name/value properties on element and relationship styles.
 - Adds support for setting element style stroke widths.
+- Adds name-value properties to views.
 
 ## 1.20.0 (15th August 2022)
 

@@ -142,6 +142,10 @@ workspace "Name" "Description" {
             }
 
             autolayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         systemLandscape "SystemLandscape" "Description" {
@@ -150,6 +154,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         systemContext softwareSystem "SystemContext" "Description" {
@@ -158,6 +166,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         container softwareSystem "Containers" "Description" {
@@ -166,6 +178,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         component webApplication "Components" "Description" {
@@ -174,6 +190,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         dynamic webApplication "Dynamic" "Description" {
@@ -182,6 +202,10 @@ workspace "Name" "Description" {
 
             user -> homePageController "Requests via web browser"
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         deployment * developmentEnvironment "Deployment-Development" "Description" {
@@ -190,6 +214,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         deployment * "Live" "Deployment-Live" "Description" {
@@ -198,6 +226,10 @@ workspace "Name" "Description" {
 
             include *
             autoLayout
+
+            properties {
+                "Name" "Value"
+            }
         }
 
         styles {
@@ -252,6 +284,10 @@ workspace "Name" "Description" {
             deploymentNode "Deployment Node"
             infrastructureNode "Infrastructure Node"
             relationship "Relationship"
+        }
+
+        properties {
+            "Name" "Value"
         }
     }
 

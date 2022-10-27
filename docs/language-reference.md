@@ -794,7 +794,7 @@ tags "Tag 1" "Tag 2"
 
 ### description
 
-`description` is used to set the description on an element.
+`description` is used to set the description on an element or view.
 
 ```
 description "Description"
@@ -915,6 +915,8 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### systemContext view
 
@@ -933,6 +935,8 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### container view
 
@@ -951,6 +955,8 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### component view
 
@@ -969,6 +975,8 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### filtered view
 
@@ -1017,6 +1025,8 @@ Permitted children:
 
 - [autoLayout](#autoLayout)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### deployment view
 
@@ -1040,6 +1050,8 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [animation](#animation)
 - [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### custom view
 
@@ -1057,6 +1069,9 @@ Permitted children:
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
 - [animation](#animation)
+- [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ### include
 
