@@ -82,7 +82,7 @@ In addition, workspaces are subject to the following rules:
 
 ## String substitution
 
-String substitution will take place on any text specified using the `${NAME}` syntax, where `NAME` corresponds to a [constant](#constants) or an environment variable.
+String substitution will take place on any text specified within a token using the `${NAME}` syntax, where `NAME` corresponds to a [constant](#constants) or an environment variable.
 For example:
 
 ```
