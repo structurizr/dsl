@@ -602,9 +602,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (inContext(CustomViewAnimationDslContext.class)) {
                         new CustomViewAnimationStepParser().parse(getContext(CustomViewAnimationDslContext.class), tokens);
 
-                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
-                        new AutoLayoutParser().parse(getContext(CustomViewDslContext.class), tokens);
-
                     } else if (INCLUDE_IN_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
                         new StaticViewContentParser().parseInclude(getContext(StaticViewDslContext.class), tokens);
 
@@ -635,38 +632,14 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (inContext(DeploymentViewAnimationDslContext.class)) {
                         new DeploymentViewAnimationStepParser().parse(getContext(DeploymentViewAnimationDslContext.class), tokens);
 
-                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
-                        new AutoLayoutParser().parse(getContext(StaticViewDslContext.class), tokens);
+                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
+                        new AutoLayoutParser().parse(getContext(ViewDslContext.class), tokens);
 
-                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DynamicViewDslContext.class)) {
-                        new AutoLayoutParser().parse(getContext(DynamicViewDslContext.class), tokens);
+                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
+                        new ViewParser().parseTitle(getContext(ViewDslContext.class), tokens);
 
-                    } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
-                        new AutoLayoutParser().parse(getContext(DeploymentViewDslContext.class), tokens);
-
-                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
-                        new ViewParser().parseTitle(getContext(CustomViewDslContext.class), tokens);
-
-                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
-                        new ViewParser().parseTitle(getContext(StaticViewDslContext.class), tokens);
-
-                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DynamicViewDslContext.class)) {
-                        new ViewParser().parseTitle(getContext(DynamicViewDslContext.class), tokens);
-
-                    } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
-                        new ViewParser().parseTitle(getContext(DeploymentViewDslContext.class), tokens);
-
-                    } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(CustomViewDslContext.class)) {
-                        new ViewParser().parseDescription(getContext(CustomViewDslContext.class), tokens);
-
-                    } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(StaticViewDslContext.class)) {
-                        new ViewParser().parseDescription(getContext(StaticViewDslContext.class), tokens);
-
-                    } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(DynamicViewDslContext.class)) {
-                        new ViewParser().parseDescription(getContext(DynamicViewDslContext.class), tokens);
-
-                    } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentViewDslContext.class)) {
-                        new ViewParser().parseDescription(getContext(DeploymentViewDslContext.class), tokens);
+                    } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
+                        new ViewParser().parseDescription(getContext(ViewDslContext.class), tokens);
 
                     } else if (inContext(DynamicViewDslContext.class)) {
                         new DynamicViewContentParser().parseRelationship(getContext(DynamicViewDslContext.class), tokens);

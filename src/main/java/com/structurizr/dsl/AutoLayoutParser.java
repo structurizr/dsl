@@ -24,24 +24,9 @@ final class AutoLayoutParser extends AbstractParser {
         RANK_DIRECTIONS.put("rl", AutomaticLayout.RankDirection.RightLeft);
     }
 
-    void parse(CustomViewDslContext context, Tokens tokens) {
-        parse(context.getView(), tokens);
-    }
-
-    void parse(StaticViewDslContext context, Tokens tokens) {
-        parse(context.getView(), tokens);
-    }
-
-    void parse(DynamicViewDslContext context, Tokens tokens) {
-        parse(context.getView(), tokens);
-    }
-
-    void parse(DeploymentViewDslContext context, Tokens tokens) {
-        parse(context.getView(), tokens);
-    }
-
-    private void parse(View view, Tokens tokens) {
+    void parse(ViewDslContext context, Tokens tokens) {
         // autoLayout [rankDirection] [rankSeparation] [nodeSeparation]
+        View view = context.getView();
         if (view != null) {
             AutomaticLayout.RankDirection rankDirection = AutomaticLayout.RankDirection.TopBottom;
             int rankSeparation = DEFAULT_RANK_SEPARATION;

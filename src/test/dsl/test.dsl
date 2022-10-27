@@ -131,6 +131,9 @@ workspace "Name" "Description" {
     views {
 
         custom "CustomDiagram" "Title" "Description" {
+            title "Title"
+            description "Description"
+
             include box1 box2
 
             animation {
@@ -142,36 +145,57 @@ workspace "Name" "Description" {
         }
 
         systemLandscape "SystemLandscape" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
 
         systemContext softwareSystem "SystemContext" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
 
         container softwareSystem "Containers" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
 
         component webApplication "Components" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
 
         dynamic webApplication "Dynamic" "Description" {
+            title "Title"
+            description "Description"
+
             user -> homePageController "Requests via web browser"
             autoLayout
         }
 
         deployment * developmentEnvironment "Deployment-Development" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
 
         deployment * "Live" "Deployment-Live" "Description" {
+            title "Title"
+            description "Description"
+
             include *
             autoLayout
         }
