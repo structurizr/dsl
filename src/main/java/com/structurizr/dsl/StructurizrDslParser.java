@@ -201,6 +201,14 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (DslContext.CONTEXT_END_TOKEN.equals(tokens.get(0))) {
                         endContext();
 
+                    } else if (INCLUDE_FILE_TOKEN.equalsIgnoreCase(firstToken)) {
+                        if (!restricted || tokens.get(1).startsWith("https://")) {
+                            IncludedDslContext context = new IncludedDslContext(dslFile);
+                            new IncludeParser().parse(context, tokens);
+                            parse(context.getLines(), context.getFile());
+                            includeInDslSourceLines = false;
+                        }
+
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(CustomElementDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
                         Relationship relationship = new ExplicitRelationshipParser().parse(getContext(), tokens.withoutContextStartToken());
 
@@ -704,14 +712,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (inContext(UsersDslContext.class)) {
                         new UserRoleParser().parse(getContext(), tokens);
-
-                    } else if (INCLUDE_FILE_TOKEN.equalsIgnoreCase(firstToken)) {
-                        if (!restricted || tokens.get(1).startsWith("https://")) {
-                            IncludedDslContext context = new IncludedDslContext(dslFile);
-                            new IncludeParser().parse(context, tokens);
-                            parse(context.getLines(), context.getFile());
-                            includeInDslSourceLines = false;
-                        }
 
                     } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         if (!restricted) {
