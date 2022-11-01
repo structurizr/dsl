@@ -149,7 +149,7 @@ Now we can use these identifiers when creating relationships, specifying which e
 p -> ss "Uses"
 ```
 
-Identifiers are only needed where you plan to reference the element/relationship.
+Identifiers are only needed where you plan to reference the element/relationship. The following characters may be used when defining an identifier: `a-zA-Z_0-9`
 
 ### Identifier scope
 
