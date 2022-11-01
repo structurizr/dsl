@@ -83,12 +83,19 @@ workspace {
 * [Big Bank plc](https://structurizr.com/dsl?example=big-bank-plc)
 * [Amazon Web Services](https://structurizr.com/dsl?example=amazon-web-services)
 
-## Tooling support
+## Rendering tools
 
-Here are some tools designed to support the Structurizr DSL.
+The Structurizr DSL is rendering tool independent, and there are a number of tools that can be used to render diagrams.
 
-* [Structurizr Lite](https://structurizr.com/help/lite) (web-based rendering tool)
-* [c4viz](https://github.com/pmorch/c4viz) (web-based rendering tool)
-* [Structurizr CLI](https://github.com/structurizr/cli) (command line utilities)
+* [Structurizr Lite/on-premises/cloud service](https://structurizr.com): A browser-based diagram and documentation rendering tool with interactive diagrams, "double-click to zoom", etc.
+* [c4viz](https://github.com/pmorch/c4viz): A browser-based diagram renderer, with diagram navigation and "click to zoom".
+* [Structurizr Site Generatr](https://github.com/avisi-cloud/structurizr-site-generatr): Generates a HTML microsite with diagrams, documentation, and a UI to explore the model. 
+* [Kroki](https://kroki.io): Kroki generates diagrams from a number of text-based formats, including the Structurizr DSL.
+* [Git for Confluence | Markdown, PlantUML, Graphviz, Mermaid](https://marketplace.atlassian.com/apps/1211675/git-for-confluence-markdown-plantuml-graphviz-mermaid): A Confluence plugin that will render a specific diagram from a Structurizr DSL file stored in your git repo.
+* [Structurizr Export](https://github.com/structurizr/export): A collection of Java classes to generate diagrams as PlantUML, Mermaid, DOT, and WebSequenceDiagrams. An export to Ilograph is also available.
+* [Structurizr CLI](https://github.com/structurizr/cli): A command line tool that bundles the Structurizr Export utilities.
+
+## Other tooling support
+
 * [VS Code extension](https://marketplace.visualstudio.com/items?itemName=systemticks.c4-dsl-extension) (syntax highlighting and diagram previews; please note that there are some known issues with the syntax highlighting - see [Divergences](https://gitlab.com/systemticks/c4-grammar/-/tree/master/extension#divergences) for more details, and [Examples](https://gitlab.com/systemticks/c4-grammar/-/tree/master/workspace) for examples that work correctly with the extension)
 * [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ciarant.vscode-structurizr) (syntax highlighting)
