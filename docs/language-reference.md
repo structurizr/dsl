@@ -1249,7 +1249,6 @@ relationship <tag> {
     thickness <integer>
     color #777777
     colour #777777
-    dashed <true|false>
     style <solid|dashed|dotted>
     routing <Direct|Orthogonal|Curved>
     fontSize <integer>
