@@ -2,6 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
 import com.structurizr.model.ModelItem;
+import com.structurizr.model.StaticStructureElement;
 
 final class RefParser extends AbstractParser {
 
@@ -36,6 +37,14 @@ final class RefParser extends AbstractParser {
 
         if (modelItem == null) {
             throw new RuntimeException("An element/relationship referenced by \"" + s + "\" could not be found");
+        }
+
+        if (context instanceof GroupableDslContext && modelItem instanceof StaticStructureElement) {
+            GroupableDslContext groupableDslContext = (GroupableDslContext)context;
+            StaticStructureElement staticStructureElement = (StaticStructureElement)modelItem;
+            if (groupableDslContext.hasGroup()) {
+                staticStructureElement.setGroup(groupableDslContext.getGroup().getName());
+            }
         }
 
         return modelItem;
