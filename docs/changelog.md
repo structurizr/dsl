@@ -9,6 +9,7 @@
 - Adds support for setting element style stroke widths.
 - Adds name-value properties to views.
 - Adds support for using `theme` and `themes` inside the `styles` block.
+- __Breaking change__: Dynamic views will no longer create relationships that don't exist in the model.
 
 ## 1.20.0 (15th August 2022)
 

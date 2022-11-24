@@ -163,7 +163,7 @@ class DynamicViewContentParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseRelationship_AddsTheRelationshipToTheModelAndView_WhenItDoesNotAlreadyExistInTheModel() {
+    void test_parseRelationship_ThrowsAnException_WhenItDoesNotAlreadyExistInTheModel() {
         Person user = model.addPerson("User", "Description");
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Software System", "Description");
         DynamicView view = views.createDynamicView("key", "Description");
@@ -176,20 +176,12 @@ class DynamicViewContentParserTests extends AbstractTests {
 
         assertEquals(0, model.getRelationships().size());
 
-        parser.parseRelationship(context, tokens("source", "->", "destination", "Uses"));
-
-        assertEquals(1, model.getRelationships().size());
-        Relationship r = model.getRelationships().iterator().next();
-        assertSame(user, r.getSource());
-        assertSame(softwareSystem, r.getDestination());
-        assertEquals("Uses", r.getDescription());
-
-        assertEquals(1, view.getRelationships().size());
-        RelationshipView rv = view.getRelationships().iterator().next();
-        assertSame(user, rv.getRelationship().getSource());
-        assertSame(softwareSystem, rv.getRelationship().getDestination());
-        assertEquals("Uses", rv.getDescription());
-        assertEquals("1", rv.getOrder());
+        try {
+            parser.parseRelationship(context, tokens("source", "->", "destination", "Uses"));
+            fail();
+        } catch (Exception e) {
+            assertEquals("A relationship between User and Software System does not exist in model.", e.getMessage());
+        }
     }
 
 }

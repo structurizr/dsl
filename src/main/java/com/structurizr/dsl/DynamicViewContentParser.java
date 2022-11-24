@@ -63,10 +63,6 @@ final class DynamicViewContentParser extends AbstractParser {
                 technology = tokens.get(TECHNOLOGY_INDEX);
             }
 
-            if (!sourceElement.hasEfferentRelationshipWith(destinationElement) && !destinationElement.hasEfferentRelationshipWith(sourceElement)) {
-                new ExplicitRelationshipParser().parse(context, tokens);
-            }
-
             if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
                 view.add((StaticStructureElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
             } else if (sourceElement instanceof StaticStructureElement && destinationElement instanceof CustomElement) {
