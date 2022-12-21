@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.21.0 (unreleased to Maven Central)
+## 1.21.0 (21st December 2022)
 
 - Fixes #153 (Error when deploymentNode identifier is the same as a softwareSystem or container identifier)
 - Adds support for custom elements on dynamic views.
