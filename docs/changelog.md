@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.21.1 (23rd December 2022)
+
+- Updated dependencies.
+
 ## 1.21.0 (21st December 2022)
 
 - Fixes #153 (Error when deploymentNode identifier is the same as a softwareSystem or container identifier)
