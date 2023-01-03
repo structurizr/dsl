@@ -978,4 +978,12 @@ class DslTests extends AbstractTests {
         parser.parse(new File("src/test/dsl/dynamic-view-with-custom-elements.dsl"));
     }
 
+    @Test
+    void test_workspaceProperties() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/workspace-properties.dsl"));
+
+        assertEquals("false", parser.getWorkspace().getProperties().get("structurizr.dslEditor"));
+    }
+
 }

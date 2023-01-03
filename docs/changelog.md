@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.21.2 (unreleased)
+
+- Fixes #194 (Disabling the online DSL editor). 
+
 ## 1.21.1 (23rd December 2022)
 
 - Updated dependencies.
