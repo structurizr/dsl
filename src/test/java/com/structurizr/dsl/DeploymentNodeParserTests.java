@@ -42,7 +42,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("", deploymentNode.getDescription());
         assertEquals("", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node", deploymentNode.getTags());
-        assertEquals(1, deploymentNode.getInstances());
+        assertEquals("1", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -58,7 +58,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("Description", deploymentNode.getDescription());
         assertEquals("", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node", deploymentNode.getTags());
-        assertEquals(1, deploymentNode.getInstances());
+        assertEquals("1", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -74,7 +74,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("Description", deploymentNode.getDescription());
         assertEquals("Technology", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node", deploymentNode.getTags());
-        assertEquals(1, deploymentNode.getInstances());
+        assertEquals("1", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -90,7 +90,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("Description", deploymentNode.getDescription());
         assertEquals("Technology", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node,Tag 1,Tag 2", deploymentNode.getTags());
-        assertEquals(1, deploymentNode.getInstances());
+        assertEquals("1", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -106,7 +106,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("Description", deploymentNode.getDescription());
         assertEquals("Technology", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node,Tag 1,Tag 2", deploymentNode.getTags());
-        assertEquals(8, deploymentNode.getInstances());
+        assertEquals("8", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -120,7 +120,7 @@ class DeploymentNodeParserTests extends AbstractTests {
             System.out.println(model.getDeploymentNodes().iterator().next().getInstances());
             fail();
         } catch (Exception e) {
-            assertEquals("\"abc\" is not a valid number of instances", e.getMessage());
+            assertEquals("Number of instances must be a positive integer or a range.", e.getMessage());
         }
     }
 
@@ -137,7 +137,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         assertEquals("", deploymentNode.getDescription());
         assertEquals("", deploymentNode.getTechnology());
         assertEquals("Element,Deployment Node", deploymentNode.getTags());
-        assertEquals(1, deploymentNode.getInstances());
+        assertEquals("1", deploymentNode.getInstances());
         assertEquals("Live", deploymentNode.getEnvironment());
     }
 
@@ -182,7 +182,7 @@ class DeploymentNodeParserTests extends AbstractTests {
             parser.parseInstances(context, tokens("instances", "number", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: instances <number>", e.getMessage());
+            assertEquals("Too many tokens, expected: instances <number|range>", e.getMessage());
         }
     }
 
@@ -194,7 +194,7 @@ class DeploymentNodeParserTests extends AbstractTests {
             parser.parseInstances(context, tokens("instances"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: instances <number>", e.getMessage());
+            assertEquals("Expected: instances <number|range>", e.getMessage());
         }
     }
 
@@ -206,7 +206,7 @@ class DeploymentNodeParserTests extends AbstractTests {
             parser.parseInstances(context, tokens("instances", "abc"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: instances <number>", e.getMessage());
+            assertEquals("Number of instances must be a positive integer or a range.", e.getMessage());
         }
     }
 
@@ -216,7 +216,7 @@ class DeploymentNodeParserTests extends AbstractTests {
         DeploymentNodeDslContext context = new DeploymentNodeDslContext(deploymentNode);
         parser.parseInstances(context, tokens("instances", "123"));
 
-        assertEquals(123, deploymentNode.getInstances());
+        assertEquals("123", deploymentNode.getInstances());
     }
 
 }

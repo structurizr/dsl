@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.21.2 (unreleased)
+## 1.22.0 (5th January 2023)
 
-- Fixes #194 (Disabling the online DSL editor). 
+- Fixes #194 (Disabling the online DSL editor).
+- Adds support for deployment node instance ranges (e.g. 0..1, 1..3, 5..10, 0..N, 0..*, 1..N, 1..*, etc).
 
 ## 1.21.1 (23rd December 2022)
 

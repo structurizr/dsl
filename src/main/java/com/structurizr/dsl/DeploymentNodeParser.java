@@ -51,14 +51,9 @@ final class DeploymentNodeParser extends AbstractParser {
             deploymentNode.addTags(tags.split(","));
         }
 
-        int instances = 1;
+        String instances = "1";
         if (tokens.includes(INSTANCES_INDEX)) {
-            String instancesAsString = tokens.get(INSTANCES_INDEX);
-            try {
-                instances = Integer.parseInt(instancesAsString);
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("\"" + instancesAsString + "\" is not a valid number of instances");
-            }
+            instances = tokens.get(INSTANCES_INDEX);
             deploymentNode.setInstances(instances);
         }
 
@@ -84,21 +79,17 @@ final class DeploymentNodeParser extends AbstractParser {
     void parseInstances(DeploymentNodeDslContext context, Tokens tokens) {
         int index = 1;
 
-        // instances <number>
+        // instances <number|range>
         if (tokens.hasMoreThan(index)) {
-            throw new RuntimeException("Too many tokens, expected: instances <number>");
+            throw new RuntimeException("Too many tokens, expected: instances <number|range>");
         }
 
         if (!tokens.includes(index)) {
-            throw new RuntimeException("Expected: instances <number>");
+            throw new RuntimeException("Expected: instances <number|range>");
         }
 
-        try {
-            int instances = Integer.parseInt(tokens.get(index));
-            context.getDeploymentNode().setInstances(instances);
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Expected: instances <number>");
-        }
+        String instances = tokens.get(index);
+        context.getDeploymentNode().setInstances(instances);
     }
 
 }

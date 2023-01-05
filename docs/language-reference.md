@@ -819,9 +819,14 @@ technology "Technology"
 ### instances
 
 `instances` is used to set the number of instances of a deployment node.
+This can either be a static number, or a range (e.g. 0..1, 1..3, 5..10, 0..N, 0..*, 1..N, 1..*, etc).
 
 ```
 instances "4"
+```
+
+```
+instances "1..N"
 ```
 
 ### url
