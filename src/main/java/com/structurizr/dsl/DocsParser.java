@@ -24,6 +24,10 @@ final class DocsParser extends AbstractParser {
         parse(context, context.getSoftwareSystem(), dslFile, tokens);
     }
 
+    void parse(ContainerDslContext context, File dslFile, Tokens tokens) {
+        parse(context, context.getContainer(), dslFile, tokens);
+    }
+
     private void parse(DslContext context, Documentable documentable, File dslFile, Tokens tokens) {
         // !docs <path>
 

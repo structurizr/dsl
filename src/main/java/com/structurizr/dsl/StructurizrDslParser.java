@@ -702,6 +702,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             new DocsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
                         }
 
+                    } else if (DOCS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
+                        if (!restricted) {
+                            new DocsParser().parse(getContext(ContainerDslContext.class), dslFile, tokens);
+                        }
+
                     } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         if (!restricted) {
                             new AdrsParser().parse(getContext(WorkspaceDslContext.class), dslFile, tokens);
@@ -710,6 +715,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
                         if (!restricted) {
                             new AdrsParser().parse(getContext(SoftwareSystemDslContext.class), dslFile, tokens);
+                        }
+
+                    } else if (ADRS_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
+                        if (!restricted) {
+                            new AdrsParser().parse(getContext(ContainerDslContext.class), dslFile, tokens);
                         }
 
                     } else if (CONSTANT_TOKEN.equalsIgnoreCase(firstToken)) {
