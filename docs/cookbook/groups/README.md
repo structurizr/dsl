@@ -109,7 +109,7 @@ workspace {
 }
 ```
 
-[![](example-3.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/groups/example-2.dsl)
+[![](example-3.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/groups/example-3.dsl)
 
 ## Notes
 
