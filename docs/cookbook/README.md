@@ -13,6 +13,7 @@ Creating software architecture diagrams from a textual definition is becoming mo
 - [Filtered view](filtered-view)
 - [Dynamic view](dynamic-view)
 - [Deployment view](deployment-view)
+- [Groups](groups)
 - [Perspectives](perspectives)
 - [Amazon Web Services](amazon-web-services)
 - [Element styles](element-styles)
