@@ -34,7 +34,7 @@ workspace {
 
 [![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/groups/example-1.dsl)
 
-## Styling groups
+## Styling all groups
 
 By default, groups are shown as dashed boundaries with a light grey colour.
 This can be customised via an element style, as described at [Structurizr - Notation](https://structurizr.com/help/notation).
@@ -76,7 +76,7 @@ workspace {
 
 ## Styling individual groups
 
-To change the style of an individual group, add an element style for the 'Group:XXX` tag, where `XXX` is the name of the group.
+To change the style of an individual group, add an element style for the `Group:XXX` tag, where `XXX` is the name of the group.
 
 ```
 workspace {
