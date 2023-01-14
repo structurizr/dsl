@@ -8,7 +8,7 @@ The DSL is rendering tool independent, and to render diagrams you will need to u
 ## Table of contents
 
 - [General rules](#general-rules)
-- [Convention over configuration](#convention-over-configuration-useful-defaults)
+- [Convention over configuration, useful defaults](#convention-over-configuration-useful-defaults)
 - [String substitution](#string-substitution)
 - [Comments](#comments)
 - [Identifiers](#identifiers)
