@@ -1,12 +1,14 @@
 # Language reference
 
-The Structurizr DSL provides a way to define a software architecture model (based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL). The [Structurizr CLI](https://github.com/structurizr/cli) (command line interface) provides tooling to parse DSL workspace definitions, upload them to the Structurizr cloud service/on-premises installation, and export diagrams to other formats (e.g. PlantUML and WebSequenceDiagrams). See [https://structurizr.com/dsl](https://structurizr.com/dsl) for a demo of the DSL.
-
-__Please note that what you see here may not be available in the Structurizr CLI yet, but it will likely be available on the [Structurizr DSL demo page](https://structurizr.com/dsl).__
+The Structurizr DSL provides a way to define a software architecture model
+(based upon the [C4 model](https://c4model.com)) as text, using a domain specific language (DSL).
+The DSL is rendering tool independent, and to render diagrams you will need to use one of the tools listed at
+[Structurizr DSL - Rendering tools](https://github.com/structurizr/dsl#rendering-tools).
 
 ## Table of contents
 
 - [General rules](#general-rules)
+- [Convention over configuration](#convention-over-configuration-useful-defaults)
 - [String substitution](#string-substitution)
 - [Comments](#comments)
 - [Identifiers](#identifiers)
@@ -70,7 +72,7 @@ __Please note that what you see here may not be available in the Structurizr CLI
 - Opening/closing braces are only required when adding child content.
 - Use `""` as a placeholder for an earlier optional property that you'd like to skip.
 - Tags are comma separated (e.g. `Tag 1,Tag 2,Tag 3`) - see [Structurizr - Notation](https://structurizr.com/help/notation) for details of how tags and styling works.
-- The Structurizr CLI will provide some default views and styles when they are not specified in your DSL - see [Structurizr CLI - Defaults](https://github.com/structurizr/cli/blob/master/docs/defaults.md) for details.
+- The Structurizr CLI will provide some default views and styles when they are not specified in your DSL - see [Convention over configuration, useful defaults](#convention-over-configuration-useful-defaults) for details.
 
 In addition, workspaces are subject to the following rules:
 
@@ -81,6 +83,40 @@ In addition, workspaces are subject to the following rules:
 - Deployment node names must be unique with their parent context.
 - Infrastructure node names must be unique with their parent context.
 - All relationships from a source element to a destination element must have a unique description.
+
+## Convention over configuration, useful defaults
+
+The DSL is designed to be as compact as possible.
+When used in conjunction with [Structurizr Lite](https://structurizr.com/help/lite)
+or the [Structurizr CLI](https://github.com/structurizr/cli),
+the following DSL fragment will automatically:
+
+- Create the [implied relationship](docs/cookbook/implied-relationships)
+between the ```user``` and ```softwareSystem``` elements.
+- Create three views with auto-layout enabled
+(1 x System Landscape, 1 x System Context, 1 x Container).
+- Add some default element styles from a theme.
+
+```
+workspace {
+
+    model {
+        user = person "User"
+        softwareSystem = softwareSystem "Software System" {
+            webapp = container "Web Application"
+            database = container "Database"
+         }
+
+        user -> webapp "Uses"
+        webapp -> database "Reads from and writes to"
+    }
+    
+    views {
+    	theme default
+    }
+
+}
+```
 
 ## String substitution
 
