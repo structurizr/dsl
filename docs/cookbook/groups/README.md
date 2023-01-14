@@ -1,11 +1,11 @@
 # Groups
 
 The `group` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
-See the [DSL language reference - group](../../language-reference.md) for more details.
+See [DSL language reference - group](../../language-reference.md#group) for more details.
 
 ## Example
 
-Here is an example of a system context diagram that uses groups to represent organisational boundaries.
+Here is an example of a system landscape diagram that uses groups to represent organisational boundaries.
 
 ```
 workspace {
@@ -31,6 +31,8 @@ workspace {
     
 }
 ```
+
+[![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/groups/example-1.dsl)
 
 ## Styling groups
 
