@@ -117,9 +117,15 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseBackground_SetsTheBackground() {
+    void test_parseBackground_SetsTheBackgroundWhenUsingAHexColourCode() {
         parser.parseBackground(elementStyleDslContext(), tokens("background", "#ff0000"));
         assertEquals("#ff0000", elementStyle.getBackground());
+    }
+
+    @Test
+    void test_parseBackground_SetsTheBackgroundWhenUsingAColourName() {
+        parser.parseBackground(elementStyleDslContext(), tokens("background", "yellow"));
+        assertEquals("#ffff00", elementStyle.getBackground());
     }
 
     @Test
@@ -143,9 +149,9 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseStroke_SetsTheStroke() {
-        parser.parseStroke(elementStyleDslContext(), tokens("stroke", "#ff0000"));
-        assertEquals("#ff0000", elementStyle.getStroke());
+    void test_parseStroke_SetsTheStrokeWhenUsingAHexColourCode() {
+        parser.parseStroke(elementStyleDslContext(), tokens("stroke", "yellow"));
+        assertEquals("#ffff00", elementStyle.getStroke());
     }
 
     @Test
@@ -205,9 +211,15 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
-    void test_parseColour_SetsTheColour() {
+    void test_parseColour_SetsTheColourWhenUsingAHexColourCode() {
         parser.parseColour(elementStyleDslContext(), tokens("colour", "#ff0000"));
         assertEquals("#ff0000", elementStyle.getColor());
+    }
+
+    @Test
+    void test_parseColour_SetsTheColourWhenUsingColourName() {
+        parser.parseColour(elementStyleDslContext(), tokens("colour", "yellow"));
+        assertEquals("#ffff00", elementStyle.getColor());
     }
 
     @Test
