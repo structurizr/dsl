@@ -5,6 +5,8 @@ The Structurizr DSL provides a way to define a software architecture model
 The DSL is rendering tool independent, and to render diagrams you will need to use one of the tools listed at
 [Structurizr DSL - Rendering tools](https://github.com/structurizr/dsl#rendering-tools).
 
+Please see the [DSL cookbook](cookbook) for a tutorial guide to the Structurizr DSL.
+
 ## Table of contents
 
 - [General rules](#general-rules)
