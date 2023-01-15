@@ -1343,11 +1343,13 @@ branding {
 }
 ```
 
-Important note: see [Help - Icons](https://structurizr.com/help/icons) if you are specifying a branding logo via a URL.
+Notes:
+
+- See [Help - Icons](https://structurizr.com/help/icons) for information about HTTPS/CORS if you are using the Structurizr cloud service/on-premises installation/Lite and specifying a branding icon via a URL.
 
 ### terminology
 
-The `terminology` keyword allows you to override the terminology used when rendering diagrams (this may not be supported in all rendering tools). See [Structurizr - Terminology](https://structurizr.com/help/terminology) for more details.
+The `terminology` keyword allows you to override the terminology used when rendering diagrams.
 
 ```
 terminology {
