@@ -1260,7 +1260,8 @@ Permitted children:
 
 ### element style
 
-The `element` keyword is used to define an element style. All nested properties (`shape`, `icon`, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation) for details about how tags and styles work.
+The `element` keyword is used to define an element style.
+All nested properties (`shape`, `icon`, etc) are optional.
 
 ```
 element <tag> {
@@ -1268,10 +1269,10 @@ element <tag> {
     icon <file|url>
     width <integer>
     height <integer>
-    background <#rrggbb>
-    color <#rrggbb>
-    colour <#rrggbb>
-    stroke <#rrggbb>
+    background <#rrggbb|color name>
+    color <#rrggbb|color name>
+    colour <#rrggbb|color name>
+    stroke <#rrggbb|color name>
     strokeWidth <integer: 1-10>
     fontSize <integer>
     border <solid|dashed|dotted>
@@ -1284,20 +1285,28 @@ element <tag> {
 }
 ```
 
-Please note that element styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the PlantUML, Mermaid, etc export formats.
+See the following links for details about how to use element styles:
 
-Important note: see [Help - Icons](https://structurizr.com/help/icons) if you are specifying an element style icon via a URL. 
+- [DSL cookbook - Element styles](https://github.com/structurizr/dsl/tree/master/docs/cookbook/element-styles)
+- [DSL cookbook - Groups](https://github.com/structurizr/dsl/tree/master/docs/cookbook/groups)
+- [Structurizr - Notation](https://structurizr.com/help/notation)
 
-            
+Notes:
+
+- Colors can be specified as a hex code (e.g. `#ffff00`) or a CSS/HTML named color (e.g. `yellow`).
+- See [Help - Icons](https://structurizr.com/help/icons) for information about HTTPS/CORS if you are using the Structurizr cloud service/on-premises installation/Lite and specifying an element style icon via a URL.
+- Element styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the [PlantUML, Mermaid, etc export formats](https://github.com/structurizr/export) (e.g. shapes and icons).
+
 ### relationship style
 
-The `relationship` keyword is used to define a relationship style. All nested properties (`thickness`, `color`, etc) are optional, see [Structurizr - Notation](https://structurizr.com/help/notation)  for details about how tags and styles work.
+The `relationship` keyword is used to define a relationship style.
+All nested properties (`thickness`, `color`, etc) are optional.
 
 ```
 relationship <tag> {
     thickness <integer>
-    color #777777
-    colour #777777
+    color <#rrggbb|color name>
+    colour <#rrggbb|color name>
     style <solid|dashed|dotted>
     routing <Direct|Orthogonal|Curved>
     fontSize <integer>
@@ -1310,7 +1319,15 @@ relationship <tag> {
 }
 ```
 
-Please note that relationship styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the PlantUML, Mermaid, etc export formats. 
+See the following links for details about how to use element styles:
+
+- [DSL cookbook - Relationship styles](https://github.com/structurizr/dsl/tree/master/docs/cookbook/relationship-styles)
+- [Structurizr - Notation](https://structurizr.com/help/notation)
+
+Notes:
+
+- Colors can be specified as a hex code (e.g. `#ffff00`) or a CSS/HTML named color (e.g. `yellow`).
+- Relationship styles are designed to work with the Structurizr cloud service/on-premises installation/Lite, and may not be fully supported by the [PlantUML, Mermaid, etc export formats](https://github.com/structurizr/export) (e.g. line/arrow colours). 
 
 ### theme
 

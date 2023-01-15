@@ -66,14 +66,14 @@ final class ElementStyleParser extends AbstractParser {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: background <#rrggbb>");
+            throw new RuntimeException("Too many tokens, expected: background <#rrggbb|color name>");
         }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setBackground(colour);
         } else {
-            throw new RuntimeException("Expected: background <#rrggbb>");
+            throw new RuntimeException("Expected: background <#rrggbb|color name>");
         }
     }
 
@@ -81,14 +81,14 @@ final class ElementStyleParser extends AbstractParser {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: stroke <#rrggbb>");
+            throw new RuntimeException("Too many tokens, expected: stroke <#rrggbb|color name>");
         }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setStroke(colour);
         } else {
-            throw new RuntimeException("Expected: stroke <#rrggbb>");
+            throw new RuntimeException("Expected: stroke <#rrggbb|color name>");
         }
     }
 
@@ -117,14 +117,14 @@ final class ElementStyleParser extends AbstractParser {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: colour <#rrggbb>");
+            throw new RuntimeException("Too many tokens, expected: colour <#rrggbb|color name>");
         }
 
         if (tokens.includes(FIRST_PROPERTY_INDEX)) {
             String colour = tokens.get(1);
             style.setColor(colour);
         } else {
-            throw new RuntimeException("Expected: colour <#rrggbb>");
+            throw new RuntimeException("Expected: colour <#rrggbb|color name>");
         }
     }
 

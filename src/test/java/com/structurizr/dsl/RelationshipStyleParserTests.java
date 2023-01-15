@@ -101,7 +101,7 @@ class RelationshipStyleParserTests extends AbstractTests {
             parser.parseColour(relationshipStyleDslContext(), tokens("colour", "hex", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: colour <#rrggbb>", e.getMessage());
+            assertEquals("Too many tokens, expected: colour <#rrggbb|color name>", e.getMessage());
         }
     }
 
@@ -111,7 +111,7 @@ class RelationshipStyleParserTests extends AbstractTests {
             parser.parseColour(relationshipStyleDslContext(), tokens("colour"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: colour <#rrggbb>", e.getMessage());
+            assertEquals("Expected: colour <#rrggbb|color name>", e.getMessage());
         }
     }
 

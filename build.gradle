@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    api 'com.structurizr:structurizr-client:1.17.0'
+    api 'com.structurizr:structurizr-client:1.18.0'
     implementation 'com.structurizr:structurizr-documentation:1.0.2'
 
     testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.13'
@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 description = 'Structurizr DSL'
 group = 'com.structurizr'
-version = '1.22.0'
+version = '1.23.0'
 
 test {
     useJUnitPlatform()

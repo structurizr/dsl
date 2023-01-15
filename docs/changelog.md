@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.23.0 (15th January 2023)
+
+- Adds support for using (CSS/HTML) named colors instead of hex color codes.
+
 ## 1.22.0 (5th January 2023)
 
 - Fixes #194 (Disabling the online DSL editor).
