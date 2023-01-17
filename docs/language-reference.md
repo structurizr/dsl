@@ -535,10 +535,10 @@ The following tags are added by default:
 
 Permitted children:
 
-- [group](#group)
-- [container](#container)
 - [!docs](#documentation)
 - [!adrs](#architecture-decision-records-adrs)
+- [group](#group)
+- [container](#container)
 - [description](#description)
 - [tags](#tags)
 - [url](#url)
@@ -563,6 +563,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [!docs](#documentation)
 - [group](#group)
 - [component](#component)
 - [description](#description)
@@ -1408,7 +1409,7 @@ users {
 
 ## Documentation
 
-The `!docs` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, or a software system).
+The `!docs` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, a software system, or a container).
 
 ```
 !docs <path> <fully qualified class name>
