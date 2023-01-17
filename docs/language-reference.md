@@ -564,6 +564,7 @@ The following tags are added by default:
 Permitted children:
 
 - [!docs](#documentation)
+- [!adrs](#architecture-decision-records-adrs)
 - [group](#group)
 - [component](#component)
 - [description](#description)
@@ -1431,7 +1432,7 @@ The above behaviour can be customised by specifying the fully qualified class na
 
 ## Architecture decision records (ADRs)
 
-The `!adrs` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, or a software system).
+The `!adrs` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, a software system, or a container).
 
 ```
 !adrs <path> <fully qualified class name>
