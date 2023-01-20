@@ -353,13 +353,18 @@ Parameters can be specified in the plugin body, for example.
 
 The named parameters are then available via the `getParameter(name)` method of the `StructurizrDslPluginContext`object.
 
-__Please note that `!plugin` is currently an experimental feature.__
-
 ### Scripts
 
-Scripts are like plugins, except they don't need to be compiled before use. JavaScript(*), Kotlin, Groovy, and Ruby are supported out of the box, and you can add more languages via the Java Scripting API. The workspace (again from the [Structurizr for Java library](https://github.com/structurizr/java)) is bound to a variable named `workspace`. Scripts can be used at any point in the DSL.
+Scripts are like plugins, except they don't need to be compiled before use. JavaScript(*), Kotlin, Groovy, and Ruby are supported out of the box, and you can add more languages via the Java Scripting API.
+Scripts can be used at any point in the DSL.
 
-__Please note that `!script` is currently an experimental feature.__
+The following variables are available from scripts:
+
+- `workspace`: the [Workspace](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/Workspace.java) object
+- `element`: the current [Element](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/model/Element.java) object, if the script is used within the scope of an element
+- `relationship`: the current [Relationship](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/model/Relationship.java) object, if the script is used within the scope of a relationship
+- `view`: the current [View](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/view/View.java) object, if the script is used within the scope of a view
+
 (*) Nashorn (the JVM JavaScript engine) is deprecated, see [https://openjdk.java.net/jeps/372](https://openjdk.java.net/jeps/372) for details.
 
 #### Inline scripts

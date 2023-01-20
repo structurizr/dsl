@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.24.0 (unreleased)
+
+- More variables are exposed to scripts, based upon where the script is defined (`element`, `relationship`, `view`). 
+
 ## 1.23.0 (15th January 2023)
 
 - Adds support for using (CSS/HTML) named colors instead of hex color codes.

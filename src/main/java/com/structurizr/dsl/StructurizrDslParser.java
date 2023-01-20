@@ -749,10 +749,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             if (shouldStartContext(tokens)) {
                                 // assume this is an inline script
                                 String language = new ScriptParser().parseInline(tokens.withoutContextStartToken());
-                                startContext(new InlineScriptDslContext(language));
+                                startContext(new InlineScriptDslContext(getContext(), language));
                             } else {
                                 String filename = new ScriptParser().parseExternal(tokens);
-                                startContext(new ExternalScriptDslContext(dslFile, filename));
+                                startContext(new ExternalScriptDslContext(getContext(), dslFile, filename));
                                 endContext();
                             }
                         } else {

@@ -884,6 +884,10 @@ class DslTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Kotlin"));
         assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Ruby"));
+
+        assertTrue(parser.getWorkspace().getModel().getPersonWithName("User").hasTag("Groovy"));
+        assertTrue(parser.getWorkspace().getModel().getPersonWithName("User").getRelationships().iterator().next().hasTag("Groovy"));
+        assertEquals("Groovy", parser.getWorkspace().getViews().getSystemLandscapeViews().iterator().next().getDescription());
     }
 
     @Test
