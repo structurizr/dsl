@@ -121,4 +121,6 @@ abstract class DslContext {
     void end() {
     }
 
+    protected abstract String[] getPermittedTokens();
+
 }

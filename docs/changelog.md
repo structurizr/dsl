@@ -2,7 +2,8 @@
 
 ## 1.24.0 (unreleased)
 
-- More variables are exposed to scripts, based upon where the script is defined (`element`, `relationship`, `view`). 
+- More variables are exposed to scripts, based upon where the script is defined (`element`, `relationship`, `view`).
+- Improved the "unexpected tokens" error message to include a list of expected tokens.
 
 ## 1.23.0 (15th January 2023)
 

@@ -32,4 +32,20 @@ final class SoftwareSystemDslContext extends GroupableElementDslContext {
         return softwareSystem;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.DOCS_TOKEN,
+                StructurizrDslTokens.ADRS_TOKEN,
+                StructurizrDslTokens.GROUP_TOKEN,
+                StructurizrDslTokens.CONTAINER_TOKEN,
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

@@ -26,4 +26,17 @@ final class ComponentDslContext extends GroupableElementDslContext {
         return component;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TECHNOLOGY_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

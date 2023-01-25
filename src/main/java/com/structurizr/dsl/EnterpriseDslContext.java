@@ -10,4 +10,14 @@ final class EnterpriseDslContext extends GroupableDslContext {
         super(group);
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.GROUP_TOKEN,
+                StructurizrDslTokens.PERSON_TOKEN,
+                StructurizrDslTokens.SOFTWARE_SYSTEM_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

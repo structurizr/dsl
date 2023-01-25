@@ -26,4 +26,17 @@ final class SoftwareSystemInstanceDslContext extends StaticStructureElementInsta
         return getSoftwareSystemInstance();
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.RELATIONSHIP_TOKEN,
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.HEALTH_CHECK_TOKEN
+        };
+    }
+
 }

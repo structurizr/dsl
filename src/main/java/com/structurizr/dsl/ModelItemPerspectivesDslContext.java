@@ -14,4 +14,9 @@ final class ModelItemPerspectivesDslContext extends DslContext {
         return this.modelItem;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[0];
+    }
+
 }

@@ -2,7 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.view.View;
 
-class ViewDslContext extends DslContext {
+abstract class ViewDslContext extends DslContext {
 
     private View view;
 

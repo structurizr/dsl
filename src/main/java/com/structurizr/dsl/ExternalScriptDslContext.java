@@ -35,4 +35,9 @@ class ExternalScriptDslContext extends ScriptDslContext {
         }
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[0];
+    }
+
 }

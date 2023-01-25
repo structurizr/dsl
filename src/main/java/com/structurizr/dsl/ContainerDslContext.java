@@ -32,4 +32,21 @@ final class ContainerDslContext extends GroupableElementDslContext {
         return container;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.DOCS_TOKEN,
+                StructurizrDslTokens.ADRS_TOKEN,
+                StructurizrDslTokens.GROUP_TOKEN,
+                StructurizrDslTokens.COMPONENT_TOKEN,
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TECHNOLOGY_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

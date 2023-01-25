@@ -30,4 +30,9 @@ final class DslParserContext extends DslContext {
         }
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[0];
+    }
+
 }

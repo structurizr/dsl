@@ -760,7 +760,25 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         }
 
                     } else {
-                        throw new StructurizrDslParserException("Unexpected tokens");
+                        String[] expectedTokens;
+                        if (getContext() == null) {
+                            expectedTokens = new String[] {
+                                    StructurizrDslTokens.WORKSPACE_TOKEN
+                            };
+                        } else {
+                            expectedTokens = getContext().getPermittedTokens();
+                        }
+
+                        if (expectedTokens.length > 0) {
+                            StringBuilder buf = new StringBuilder();
+                            for (String expectedToken : expectedTokens) {
+                                buf.append(expectedToken);
+                                buf.append(", ");
+                            }
+                            throw new StructurizrDslParserException("Unexpected tokens (expected: " + buf.substring(0, buf.length() - 2) + ")");
+                        } else {
+                            throw new StructurizrDslParserException("Unexpected tokens");
+                        }
                     }
                 }
 

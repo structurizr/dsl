@@ -14,4 +14,12 @@ final class BrandingDslContext extends DslContext {
         return file;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.BRANDING_LOGO_TOKEN,
+                StructurizrDslTokens.BRANDING_FONT_TOKEN
+        };
+    }
+
 }

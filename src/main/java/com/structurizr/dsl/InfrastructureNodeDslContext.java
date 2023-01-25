@@ -20,4 +20,17 @@ final class InfrastructureNodeDslContext extends ModelItemDslContext {
         return getInfrastructureNode();
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.RELATIONSHIP_TOKEN,
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TECHNOLOGY_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN
+        };
+    }
+
 }

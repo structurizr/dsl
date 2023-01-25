@@ -14,4 +14,9 @@ final class PropertiesDslContext extends DslContext {
         return this.propertyHolder;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[0];
+    }
+
 }

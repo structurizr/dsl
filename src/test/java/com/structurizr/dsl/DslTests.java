@@ -927,13 +927,35 @@ class DslTests extends AbstractTests {
     }
 
     @Test
+    void test_unexpectedTokensInDsl() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/unexpected-tokens-in-dsl.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Unexpected tokens (expected: workspace) at line 1: hello world", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_unexpectedTokensInWorkspace() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/unexpected-tokens-in-workspace.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Unexpected tokens (expected: name, description, properties, !docs, !adrs, !identifiers, !impliedRelationships, model, views, configuration) at line 3: softwareSystem \"Name\"", e.getMessage());
+        }
+    }
+
+    @Test
     void test_urlNotPermittedInGroup() throws Exception {
         try {
             StructurizrDslParser parser = new StructurizrDslParser();
             parser.parse(new File("src/test/dsl/group-url.dsl"));
             fail();
         } catch (StructurizrDslParserException e) {
-            assertEquals("Unexpected tokens at line 6: url \"https://example.com\"", e.getMessage());
+            assertEquals("Unexpected tokens (expected: !docs, !adrs, group, container, description, tags, url, properties, perspectives, ->) at line 6: url \"https://example.com\"", e.getMessage());
         }
     }
 

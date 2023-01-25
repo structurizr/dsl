@@ -33,4 +33,9 @@ final class IncludedDslContext extends DslContext {
         this.file = file;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[0];
+    }
+
 }

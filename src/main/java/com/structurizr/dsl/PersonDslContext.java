@@ -26,4 +26,16 @@ final class PersonDslContext extends GroupableElementDslContext {
         return person;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.DESCRIPTION_TOKEN,
+                StructurizrDslTokens.TAGS_TOKEN,
+                StructurizrDslTokens.URL_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.PERSPECTIVES_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

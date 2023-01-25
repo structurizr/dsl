@@ -16,4 +16,11 @@ class DeploymentViewAnimationDslContext extends DslContext {
         return view;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.ANIMATION_STEP_IN_VIEW_TOKEN
+        };
+    }
+
 }

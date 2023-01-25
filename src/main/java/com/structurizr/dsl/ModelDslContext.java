@@ -21,4 +21,17 @@ final class ModelDslContext extends GroupableDslContext {
         }
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.ENTERPRISE_TOKEN,
+                StructurizrDslTokens.GROUP_TOKEN,
+                StructurizrDslTokens.PERSON_TOKEN,
+                StructurizrDslTokens.SOFTWARE_SYSTEM_TOKEN,
+                StructurizrDslTokens.DEPLOYMENT_ENVIRONMENT_TOKEN,
+                StructurizrDslTokens.CUSTOM_ELEMENT_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }

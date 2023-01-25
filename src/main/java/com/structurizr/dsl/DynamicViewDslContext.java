@@ -16,4 +16,15 @@ class DynamicViewDslContext extends ViewDslContext {
         return view;
     }
 
+    @Override
+    protected String[] getPermittedTokens() {
+        return new String[] {
+                StructurizrDslTokens.AUTOLAYOUT_VIEW_TOKEN,
+                StructurizrDslTokens.VIEW_TITLE_TOKEN,
+                StructurizrDslTokens.VIEW_DESCRIPTION_TOKEN,
+                StructurizrDslTokens.PROPERTIES_TOKEN,
+                StructurizrDslTokens.RELATIONSHIP_TOKEN
+        };
+    }
+
 }
