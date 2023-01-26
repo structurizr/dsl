@@ -927,13 +927,24 @@ class DslTests extends AbstractTests {
     }
 
     @Test
-    void test_unexpectedTokensInDsl() throws Exception {
+    void test_unexpectedTokensBeforeWorkspace() throws Exception {
         try {
             StructurizrDslParser parser = new StructurizrDslParser();
-            parser.parse(new File("src/test/dsl/unexpected-tokens-in-dsl.dsl"));
+            parser.parse(new File("src/test/dsl/unexpected-tokens-before-workspace.dsl"));
             fail();
         } catch (StructurizrDslParserException e) {
             assertEquals("Unexpected tokens (expected: workspace) at line 1: hello world", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_unexpectedTokensAfterWorkspace() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/unexpected-tokens-after-workspace.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Unexpected tokens at line 4: hello world", e.getMessage());
         }
     }
 

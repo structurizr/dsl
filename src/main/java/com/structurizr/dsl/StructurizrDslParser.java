@@ -762,9 +762,14 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else {
                         String[] expectedTokens;
                         if (getContext() == null) {
-                            expectedTokens = new String[] {
-                                    StructurizrDslTokens.WORKSPACE_TOKEN
-                            };
+                            if (getWorkspace() == null) {
+                                // the workspace hasn't yet been created
+                                expectedTokens = new String[]{
+                                        StructurizrDslTokens.WORKSPACE_TOKEN
+                                };
+                            } else {
+                                expectedTokens = new String[0];
+                            }
                         } else {
                             expectedTokens = getContext().getPermittedTokens();
                         }
