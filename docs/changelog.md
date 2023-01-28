@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.24.0 (unreleased)
+## 1.24.0 (28th January 2023)
 
 - More variables are exposed to scripts, based upon where the script is defined (`element`, `relationship`, `view`).
 - Improved the "unexpected tokens" error message to include a list of expected tokens.
