@@ -8,7 +8,7 @@ import com.structurizr.view.DynamicView;
 
 import java.text.DecimalFormat;
 
-class DynamicViewParser extends AbstractParser {
+class DynamicViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "dynamic <*|software system identifier|container identifier> [key] [description] {";
 
@@ -47,7 +47,7 @@ class DynamicViewParser extends AbstractParser {
             if (tokens.includes(KEY_INDEX)) {
                 key = tokens.get(KEY_INDEX);
             } else {
-                key = VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+                key = generateViewKey(workspace, VIEW_TYPE);
             }
             validateViewKey(key);
 
@@ -62,7 +62,7 @@ class DynamicViewParser extends AbstractParser {
                 if (tokens.includes(KEY_INDEX)) {
                     key = tokens.get(KEY_INDEX);
                 } else {
-                    key = removeNonWordCharacters(element.getName()) + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+                    key = generateViewKey(workspace, VIEW_TYPE);
                 }
                 validateViewKey(key);
 
@@ -72,7 +72,7 @@ class DynamicViewParser extends AbstractParser {
                 if (tokens.includes(KEY_INDEX)) {
                     key = tokens.get(KEY_INDEX);
                 } else {
-                    key = removeNonWordCharacters(container.getSoftwareSystem().getName()) + "-" + removeNonWordCharacters(container.getName()) + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+                    key = generateViewKey(workspace, VIEW_TYPE);
                 }
                 validateViewKey(key);
 

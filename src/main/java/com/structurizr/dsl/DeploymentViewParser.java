@@ -6,7 +6,7 @@ import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DeploymentView;
 
-final class DeploymentViewParser extends AbstractParser {
+final class DeploymentViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "deployment <*|software system identifier> <environment> [key] [description] {";
 
@@ -53,7 +53,7 @@ final class DeploymentViewParser extends AbstractParser {
             if (tokens.includes(KEY_INDEX)) {
                 key = tokens.get(KEY_INDEX);
             } else {
-                key = removeNonWordCharacters(environment) + "-" + VIEW_TYPE;
+                key = generateViewKey(workspace, VIEW_TYPE);
             }
             validateViewKey(key);
 
@@ -68,7 +68,7 @@ final class DeploymentViewParser extends AbstractParser {
                 if (tokens.includes(KEY_INDEX)) {
                     key = tokens.get(KEY_INDEX);
                 } else {
-                    key = removeNonWordCharacters(element.getName()) + "-" + removeNonWordCharacters(environment) + "-" + VIEW_TYPE;
+                    key = generateViewKey(workspace, VIEW_TYPE);
                 }
                 validateViewKey(key);
 

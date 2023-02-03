@@ -3,7 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.Workspace;
 import com.structurizr.view.SystemLandscapeView;
 
-final class SystemLandscapeViewParser extends AbstractParser {
+final class SystemLandscapeViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "systemLandscape [key] [description] {";
 
@@ -26,7 +26,7 @@ final class SystemLandscapeViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = VIEW_TYPE;
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
 

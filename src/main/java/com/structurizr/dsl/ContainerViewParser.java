@@ -5,7 +5,7 @@ import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.ContainerView;
 
-final class ContainerViewParser extends AbstractParser {
+final class ContainerViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "container <software system identifier> [key] [description] {";
 
@@ -45,7 +45,7 @@ final class ContainerViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = key = removeNonWordCharacters(softwareSystem.getName()) + "-" + VIEW_TYPE;
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
 

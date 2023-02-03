@@ -59,7 +59,7 @@ class DslTests extends AbstractTests {
         assertEquals(1, views.getViews().size());
         assertEquals(1, views.getSystemContextViews().size());
         SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SoftwareSystem-SystemContext", view.getKey());
+        assertEquals("SystemContext-1", view.getKey());
         assertEquals(2, view.getElements().size());
         assertEquals(1, view.getRelationships().size());
     }
@@ -1021,6 +1021,16 @@ class DslTests extends AbstractTests {
         parser.parse(new File("src/test/dsl/workspace-properties.dsl"));
 
         assertEquals("false", parser.getWorkspace().getProperties().get("structurizr.dslEditor"));
+    }
+
+    @Test
+    void test_viewsWithoutKeys() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/views-without-keys.dsl"));
+
+        assertTrue(parser.getWorkspace().getViews().getSystemLandscapeViews().stream().anyMatch(view -> view.getKey().equals("SystemLandscape-1")));
+        assertTrue(parser.getWorkspace().getViews().getSystemLandscapeViews().stream().anyMatch(view -> view.getKey().equals("SystemLandscape-2")));
+        assertTrue(parser.getWorkspace().getViews().getSystemLandscapeViews().stream().anyMatch(view -> view.getKey().equals("SystemLandscape-3")));
     }
 
 }

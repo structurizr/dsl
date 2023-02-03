@@ -46,7 +46,7 @@ class StructurizrDslFormatterTests extends AbstractTests {
                 "    }\n" +
                 "\n" +
                 "    views {\n" +
-                "        systemContext SoftwareSystem \"SoftwareSystem-SystemContext\" {\n" +
+                "        systemContext SoftwareSystem \"SystemContext-1\" {\n" +
                 "            include User \n" +
                 "            include SoftwareSystem \n" +
                 "            autolayout tb 300 300 \n" +

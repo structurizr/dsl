@@ -41,7 +41,7 @@ class DynamicViewParserTests extends AbstractTests {
         DslContext context = context();
         DynamicView view = parser.parse(context, tokens("dynamic", "*"));
 
-        assertEquals("Dynamic-001", view.getKey());
+        assertEquals("Dynamic-1", view.getKey());
     }
 
     @Test
@@ -104,7 +104,7 @@ class DynamicViewParserTests extends AbstractTests {
         List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
 
         assertEquals(1, views.size());
-        assertEquals("Name-Dynamic-001", views.get(0).getKey());
+        assertEquals("Dynamic-1", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertSame(softwareSystem, views.get(0).getElement());
     }
@@ -155,7 +155,7 @@ class DynamicViewParserTests extends AbstractTests {
         List<DynamicView> views = new ArrayList<>(this.views.getDynamicViews());
 
         assertEquals(1, views.size());
-        assertEquals("Name-Container-Dynamic-001", views.get(0).getKey());
+        assertEquals("Dynamic-1", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertSame(container, views.get(0).getElement());
     }

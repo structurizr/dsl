@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
-final class FilteredViewParser extends AbstractParser {
+final class FilteredViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "filtered <baseKey> <include|exclude> <tags> [key] [description]";
 
@@ -79,10 +79,9 @@ final class FilteredViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = baseView.getKey() + "-" + VIEW_TYPE + "-" + format.format(workspace.getViews().getDynamicViews().size() + 1);
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
-
 
         return workspace.getViews().createFilteredView(baseView, key, description, filterMode, tags.toArray(new String[0]));
     }

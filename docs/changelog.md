@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.25.0 (3rd February 2023)
+
+- Fixes some clashing issues with automatic key generation for views.
+
 ## 1.24.0 (28th January 2023)
 
 - More variables are exposed to scripts, based upon where the script is defined (`element`, `relationship`, `view`).

@@ -5,7 +5,7 @@ import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.SystemContextView;
 
-final class SystemContextViewParser extends AbstractParser {
+final class SystemContextViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "systemContext <software system identifier> [key] [description] {";
 
@@ -45,7 +45,7 @@ final class SystemContextViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = removeNonWordCharacters(softwareSystem.getName()) + "-" + VIEW_TYPE;
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
 

@@ -5,7 +5,7 @@ import com.structurizr.model.Container;
 import com.structurizr.model.Element;
 import com.structurizr.view.ComponentView;
 
-final class ComponentViewParser extends AbstractParser {
+final class ComponentViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "component <container identifier> [key] [description] {";
 
@@ -45,7 +45,7 @@ final class ComponentViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = removeNonWordCharacters(container.getSoftwareSystem().getName()) + "-" + removeNonWordCharacters(container.getName()) + "-" + VIEW_TYPE;
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
 

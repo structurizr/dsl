@@ -3,7 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.Workspace;
 import com.structurizr.view.CustomView;
 
-final class CustomViewParser extends AbstractParser {
+final class CustomViewParser extends AbstractViewParser {
 
     private static final String GRAMMAR = "custom [key] [title] [description] {";
 
@@ -28,7 +28,7 @@ final class CustomViewParser extends AbstractParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = VIEW_TYPE + (context.getWorkspace().getViews().getCustomViews().size() + 1);
+            key = generateViewKey(workspace, VIEW_TYPE);
         }
         validateViewKey(key);
 

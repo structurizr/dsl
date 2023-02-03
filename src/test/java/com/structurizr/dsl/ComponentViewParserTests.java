@@ -71,7 +71,7 @@ class ComponentViewParserTests extends AbstractTests {
         List<ComponentView> views = new ArrayList<>(context.getWorkspace().getViews().getComponentViews());
 
         assertEquals(1, views.size());
-        assertEquals("Name-Container-Component", views.get(0).getKey());
+        assertEquals("Component-1", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertTrue(views.get(0).getExternalContainerBoundariesVisible());
     }
