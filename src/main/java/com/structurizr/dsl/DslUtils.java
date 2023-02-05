@@ -21,7 +21,7 @@ public class DslUtils {
         return dsl;
     }
 
-    static void setDsl(Workspace workspace, String dsl) {
+    public static void setDsl(Workspace workspace, String dsl) {
         String base64 = "";
         if (!StringUtils.isNullOrEmpty(dsl)) {
             base64 = Base64.getEncoder().encodeToString(dsl.getBytes(StandardCharsets.UTF_8));
