@@ -6,6 +6,9 @@ import com.structurizr.util.StringUtils;
 import java.io.File;
 import java.util.Map;
 
+/**
+ * Used to pass contextual information to DSL plugins when they are executed.
+ */
 public class StructurizrDslPluginContext {
 
     private File dslFile;

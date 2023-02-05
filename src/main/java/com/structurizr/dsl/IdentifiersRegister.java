@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+/**
+ * A register of elements and relationships that were created with an identifier in the DSL.
+ */
 public class IdentifiersRegister {
 
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
@@ -60,7 +63,6 @@ public class IdentifiersRegister {
         identifier = identifier.toLowerCase();
         return elementsByIdentifier.get(identifier);
     }
-
 
     void register(String identifier, Element element) {
         if (StringUtils.isNullOrEmpty(identifier)) {
@@ -137,6 +139,12 @@ public class IdentifiersRegister {
         }
     }
 
+    /**
+     * Finds the identifier used when defining an element.
+     *
+     * @param element       an Element instance
+     * @return  a String identifier (could be null if no identifier was explicitly specified)
+     */
     public String findIdentifier(Element element) {
         if (elementsByIdentifier.values().contains(element)) {
             for (String identifier : elementsByIdentifier.keySet()) {
@@ -151,6 +159,12 @@ public class IdentifiersRegister {
         return null;
     }
 
+    /**
+     * Finds the identifier used when defining a relationship.
+     *
+     * @param relationship      a Relationship instance
+     * @return  a String identifier (could be null if no identifier was explicitly specified, or for implied relationships)
+     */
     public String findIdentifier(Relationship relationship) {
         if (relationshipsByIdentifier.values().contains(relationship)) {
             for (String identifier : relationshipsByIdentifier.keySet()) {
