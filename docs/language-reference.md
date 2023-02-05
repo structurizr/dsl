@@ -78,7 +78,7 @@ Please see the [DSL cookbook](cookbook) for a tutorial guide to the Structurizr 
 
 In addition, workspaces are subject to the following rules:
 
-- Each view must have a unique "key" (this is generated for you if not specified; __warning: you will likely lose manual layout information when using automatically generated view keys__). 
+- Each view must have a unique "key" (this is generated for you if not specified; __warning: automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when using them__). 
 - Software and people names must be unique.
 - Container names must be unique within the context of a software system.
 - Component names must be unique within the context of a container.
@@ -964,7 +964,7 @@ systemLandscape [key] [description] {
 }
 ```
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Permitted children:
 
@@ -986,7 +986,7 @@ systemContext <software system identifier> [key] [description] {
 }
 ```
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Permitted children:
 
@@ -1008,7 +1008,7 @@ container <software system identifier> [key] [description] {
 }
 ```
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Permitted children:
 
@@ -1030,7 +1030,7 @@ component <container identifier> [key] [description] {
 }
 ```
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Permitted children:
 
@@ -1074,7 +1074,7 @@ The first property defines the scope of the view, and therefore what can be adde
 - Software system scope: People, other software systems, and containers. 
 - Container scope: People, other software systems, other containers, and components. 
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Unlike the other diagram types, Dynamic views are created by specifying the relationships that should be added to the view, within the `dynamic` block, as follows:
 
@@ -1109,7 +1109,7 @@ The first property defines the scope of the view, and the second property define
 - `*` scope: All deployment nodes, infrastructure nodes, and container instances within the deployment environment.
 - Software system scope: All deployment nodes and infrastructure nodes within the deployment environment. Container instances within the deployment environment that belong to the software system.
 
-A view key will be generated for you if not specified; __you will likely lose manual layout information when using automatically generated view keys__.
+A view key will be generated for you if not specified; __automatically generated view keys are not guaranteed to be stable over time, and you will likely lose manual layout information when them__.
 
 Permitted children:
 
