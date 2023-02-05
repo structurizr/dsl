@@ -50,11 +50,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         constants = new HashMap<>();
     }
 
-    public IdentifierScope getIdentifierScope() {
+    IdentifierScope getIdentifierScope() {
         return identifierScope;
     }
 
-    public void setIdentifierScope(IdentifierScope identifierScope) {
+    void setIdentifierScope(IdentifierScope identifierScope) {
         if (identifierScope == null) {
             identifierScope = IdentifierScope.Flat;
         }

@@ -1,6 +1,6 @@
 package com.structurizr.dsl;
 
-public enum IdentifierScope {
+enum IdentifierScope {
 
     Flat,
     Hierarchical,

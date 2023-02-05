@@ -1,9 +1,8 @@
 package com.structurizr.dsl;
 
-import com.structurizr.util.StringUtils;
 import com.structurizr.util.Url;
 
-public class IconUtils {
+class IconUtils {
 
     public static boolean isSupported(String url) {
         url = url.trim();

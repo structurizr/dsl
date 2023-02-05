@@ -1,10 +1,21 @@
 package com.structurizr.dsl;
 
+/**
+ * Throw when there are parsing errors.
+ */
 public final class StructurizrDslParserException extends Exception {
 
+    /** line number */
     private int lineNumber;
+
+    /** line */
     private String line;
 
+    /**
+     * Creates a new instance with the specified message.
+     *
+     * @param message       the message
+     */
     StructurizrDslParserException(String message) {
         super(message);
     }
@@ -15,10 +26,20 @@ public final class StructurizrDslParserException extends Exception {
         this.line = line;
     }
 
+    /**
+     * Gets the line number associated with the parsing exception.
+     *
+     * @return  the line number, an integer
+     */
     public int getLineNumber() {
         return lineNumber;
     }
 
+    /**
+     * Gets the line associated with the parsing exception.
+     *
+     * @return  the line, as a String
+     */
     public String getLine() {
         return line;
     }
