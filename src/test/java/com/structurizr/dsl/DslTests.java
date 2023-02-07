@@ -1033,4 +1033,36 @@ class DslTests extends AbstractTests {
         assertTrue(parser.getWorkspace().getViews().getSystemLandscapeViews().stream().anyMatch(view -> view.getKey().equals("SystemLandscape-3")));
     }
 
+    @Test
+    void test_identifiers() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/identifiers.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        Model model = workspace.getModel();
+
+        Person user = model.getPersonWithName("User");
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
+        Container container = softwareSystem.getContainerWithName("Container");
+        Relationship relationship = user.getEfferentRelationshipWith(container);
+        Relationship impliedRelationship = user.getEfferentRelationshipWith(softwareSystem);
+
+        IdentifiersRegister register = parser.getIdentifiersRegister();
+        assertEquals("user", register.findIdentifier(user));
+        assertEquals("softwaresystem", register.findIdentifier(softwareSystem));
+        assertEquals("softwaresystem.container", register.findIdentifier(container));
+        assertEquals("rel", register.findIdentifier(relationship));
+
+        assertSame(user, register.getElement("user"));
+        assertSame(softwareSystem, register.getElement("softwareSystem"));
+        assertSame(container, register.getElement("softwareSystem.container"));
+        assertSame(relationship, register.getRelationship("rel"));
+
+        assertEquals("user", user.getProperties().get("structurizr.dsl.identifier"));
+        assertEquals("softwaresystem", softwareSystem.getProperties().get("structurizr.dsl.identifier"));
+        assertEquals("softwaresystem.container", container.getProperties().get("structurizr.dsl.identifier"));
+        assertEquals("rel", relationship.getProperties().get("structurizr.dsl.identifier"));
+        assertNull(impliedRelationship.getProperties().get("structurizr.dsl.identifier"));
+    }
+
 }
