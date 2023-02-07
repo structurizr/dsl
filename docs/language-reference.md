@@ -1440,8 +1440,8 @@ The path must be a relative path, located within the same directory as the paren
 By default, the [com.structurizr.documentation.importer.DefaultDocumentationImporter](https://github.com/structurizr/documentation/blob/main/src/main/java/com/structurizr/documentation/importer/DefaultDocumentationImporter.java) class will be used to import documentation as follows:
 
 - All Markdown and AsciiDoc files in the given directory will be imported, alphabetically according to the filename.
-- Each file must represent a separate documentation section, and the second level heading (`## Section Title` in Markdown and `== Section Title` in AsciiDoc) will be used as the section name.
 - All images in the given directory (and sub-directories) are also imported into the workspace.
+- See [Structurizr - Documentation - Headings and sections](https://structurizr.com/help/documentation/headings) for details about how section headings and numbering are handled.
 
 The above behaviour can be customised by specifying the fully qualified class name of your own implementation of [DocumentationImporter](https://github.com/structurizr/documentation/blob/main/src/main/java/com/structurizr/documentation/importer/DocumentationImporter.java), which needs to be on the DSL classpath or installed as a JAR file in the `plugins` directory next to your DSL file.
 
