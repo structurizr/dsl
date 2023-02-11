@@ -20,6 +20,7 @@ using one of the PlantUML/Mermaid/D2/DOT/etc export formats provided by the
 - [Workspace extension](workspace-extension)
 - [System Context view](system-context-view)
 - [Container view](container-view)
+- [Container view (spanning multiple software systems)](container-view-for-multiple-software-systems)
 - [Component view](component-view)
 - [Filtered view](filtered-view)
 - [Dynamic view](dynamic-view)
