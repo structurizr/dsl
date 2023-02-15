@@ -954,6 +954,17 @@ The `views` block can contain the following:
 - [terminology](#terminology)
 - [properties](#properties)
 
+If a workspace doesn't have a `views` block, or the `views` block doesn't define any views,
+a [default set of views](#convention-over-configuration-useful-defaults) will be defined for you.
+Defining one or more views in the `views` block will remove this default set of views,
+although they can be added back with a script if needed:
+
+```
+!script groovy {
+    workspace.views.createDefaultViews()
+}
+```
+
 ### systemLandscape view
 
 The `systemLandscape` keyword is used to define a [System Landscape view](https://c4model.com/#SystemLandscapeDiagram).
