@@ -95,8 +95,7 @@ the following DSL fragment will automatically:
 
 - Create the [implied relationship](docs/cookbook/implied-relationships)
 between the ```user``` and ```softwareSystem``` elements.
-- Create three views with auto-layout enabled
-(1 x System Landscape, 1 x System Context, 1 x Container).
+- Create a default set of views (1 x System Landscape, 1 x System Context, 1 x Container - all with auto-layout enabled, see [ViewSet.createDefaultViews()](https://github.com/structurizr/java/blob/master/structurizr-core/src/com/structurizr/view/ViewSet.java)).
 - Add some default element styles from a theme.
 
 ```
