@@ -592,6 +592,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (FILTERED_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         new FilteredViewParser().parse(getContext(), tokens);
 
+                    } else if (IMAGE_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
+                        ImageView view = new ImageViewParser().parse(getContext(), tokens.withoutContextStartToken());
+                        startContext(new ImageViewDslContext(view));
+
                     } else if (DslContext.CONTEXT_START_TOKEN.equalsIgnoreCase(firstToken) && inContext(DynamicViewDslContext.class)) {
                         startContext(new DynamicViewParallelSequenceDslContext(getContext(DynamicViewDslContext.class)));
 
@@ -648,6 +652,18 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (VIEW_DESCRIPTION_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
                         new ViewParser().parseDescription(getContext(ViewDslContext.class), tokens);
+
+                    } else if (PLANTUML_TOKEN.equalsIgnoreCase(firstToken) && inContext(ImageViewDslContext.class)) {
+                        new ImageViewContentParser(restricted).parsePlantUML(getContext(ImageViewDslContext.class), dslFile, tokens);
+
+                    } else if (MERMAID_TOKEN.equalsIgnoreCase(firstToken) && inContext(ImageViewDslContext.class)) {
+                        new ImageViewContentParser(restricted).parseMermaid(getContext(ImageViewDslContext.class), dslFile, tokens);
+
+                    } else if (KROKI_TOKEN.equalsIgnoreCase(firstToken) && inContext(ImageViewDslContext.class)) {
+                        new ImageViewContentParser(restricted).parseKroki(getContext(ImageViewDslContext.class), dslFile, tokens);
+
+                    } else if (IMAGE_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ImageViewDslContext.class)) {
+                        new ImageViewContentParser(restricted).parseImage(getContext(ImageViewDslContext.class), dslFile, tokens);
 
                     } else if (inContext(DynamicViewDslContext.class)) {
                         new DynamicViewContentParser().parseRelationship(getContext(DynamicViewDslContext.class), tokens);

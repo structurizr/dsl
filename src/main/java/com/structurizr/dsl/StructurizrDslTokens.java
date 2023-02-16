@@ -42,6 +42,7 @@ class StructurizrDslTokens {
     static final String DYNAMIC_VIEW_TOKEN = "dynamic";
     static final String DEPLOYMENT_VIEW_TOKEN = "deployment";
     static final String FILTERED_VIEW_TOKEN = "filtered";
+    static final String IMAGE_VIEW_TOKEN = "image";
     static final String INCLUDE_IN_VIEW_TOKEN = "include";
     static final String EXCLUDE_IN_VIEW_TOKEN = "exclude";
     static final String ANIMATION_IN_VIEW_TOKEN = "animation";
@@ -49,6 +50,10 @@ class StructurizrDslTokens {
     static final String AUTOLAYOUT_VIEW_TOKEN = "autolayout";
     static final String VIEW_TITLE_TOKEN = "title";
     static final String VIEW_DESCRIPTION_TOKEN = "description";
+    static final String PLANTUML_TOKEN = "plantuml";
+    static final String MERMAID_TOKEN = "mermaid";
+    static final String KROKI_TOKEN = "kroki";
+    static final String IMAGE_TOKEN = "image";
     static final String STYLES_TOKEN = "styles";
     static final String BRANDING_TOKEN = "branding";
     static final String BRANDING_LOGO_TOKEN = "logo";
