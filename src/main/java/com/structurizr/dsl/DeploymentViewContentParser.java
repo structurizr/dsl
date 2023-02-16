@@ -2,16 +2,13 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
-import com.structurizr.view.DeploymentView;
-import com.structurizr.view.ElementNotPermittedInViewException;
-import com.structurizr.view.RelationshipView;
-import com.structurizr.view.View;
+import com.structurizr.view.*;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final class DeploymentViewContentParser extends ViewContentParser {
+final class DeploymentViewContentParser extends ModelViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
 
@@ -143,7 +140,7 @@ final class DeploymentViewContentParser extends ViewContentParser {
     }
 
     @Override
-    protected void removeRelationshipFromView(Relationship relationship, View view) {
+    protected void removeRelationshipFromView(Relationship relationship, ModelView view) {
         // remove the specified relationship
         view.remove(relationship);
 

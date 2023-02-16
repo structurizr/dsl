@@ -2,7 +2,7 @@ package com.structurizr.dsl;
 
 import com.structurizr.view.CustomView;
 
-final class CustomViewDslContext extends ViewDslContext {
+final class CustomViewDslContext extends ModelViewDslContext {
 
     CustomViewDslContext(CustomView view) {
         super(view);

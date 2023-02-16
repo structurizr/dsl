@@ -2,18 +2,14 @@ package com.structurizr.dsl;
 
 import com.structurizr.view.DynamicView;
 
-class DynamicViewDslContext extends ViewDslContext {
-
-    private DynamicView view;
+class DynamicViewDslContext extends ModelViewDslContext {
 
     DynamicViewDslContext(DynamicView view) {
         super(view);
-
-        this.view = view;
     }
 
     DynamicView getView() {
-        return view;
+        return (DynamicView)super.getView();
     }
 
     @Override

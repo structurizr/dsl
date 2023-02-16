@@ -8,7 +8,7 @@ import com.structurizr.util.StringUtils;
 import com.structurizr.view.CustomView;
 import com.structurizr.view.ElementNotPermittedInViewException;
 
-final class CustomViewContentParser extends ViewContentParser {
+final class CustomViewContentParser extends ModelViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
 

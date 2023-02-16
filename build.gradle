@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    api 'com.structurizr:structurizr-client:1.19.0'
-    api 'com.structurizr:structurizr-documentation:1.1.1'
+    api 'com.structurizr:structurizr-client:1.20.0'
+    api 'com.structurizr:structurizr-import:1.2.0'
 
     testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.13'
     testImplementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.22'

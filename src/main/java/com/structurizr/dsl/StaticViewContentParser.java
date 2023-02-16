@@ -7,7 +7,7 @@ import com.structurizr.view.ContainerView;
 import com.structurizr.view.ElementNotPermittedInViewException;
 import com.structurizr.view.StaticView;
 
-final class StaticViewContentParser extends ViewContentParser {
+final class StaticViewContentParser extends ModelViewContentParser {
 
     private static final int FIRST_IDENTIFIER_INDEX = 1;
 

@@ -1,15 +1,15 @@
 package com.structurizr.dsl;
 
 import com.structurizr.documentation.Documentable;
-import com.structurizr.documentation.importer.DefaultImageImporter;
-import com.structurizr.documentation.importer.DocumentationImporter;
+import com.structurizr.importer.documentation.DefaultImageImporter;
+import com.structurizr.importer.documentation.DocumentationImporter;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 
 final class DocsParser extends AbstractParser {
 
-    private static final String DEFAULT_DOCUMENT_IMPORTER = "com.structurizr.documentation.importer.DefaultDocumentationImporter";
+    private static final String DEFAULT_DOCUMENT_IMPORTER = "com.structurizr.importer.documentation.DefaultDocumentationImporter";
 
     private static final String GRAMMAR = "!docs <path> <fqn>";
 

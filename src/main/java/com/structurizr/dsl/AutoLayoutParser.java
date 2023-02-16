@@ -1,6 +1,7 @@
 package com.structurizr.dsl;
 
 import com.structurizr.view.AutomaticLayout;
+import com.structurizr.view.ModelView;
 import com.structurizr.view.View;
 
 import java.util.HashMap;
@@ -24,9 +25,9 @@ final class AutoLayoutParser extends AbstractParser {
         RANK_DIRECTIONS.put("rl", AutomaticLayout.RankDirection.RightLeft);
     }
 
-    void parse(ViewDslContext context, Tokens tokens) {
+    void parse(ModelViewDslContext context, Tokens tokens) {
         // autoLayout [rankDirection] [rankSeparation] [nodeSeparation]
-        View view = context.getView();
+        ModelView view = context.getView();
         if (view != null) {
             AutomaticLayout.RankDirection rankDirection = AutomaticLayout.RankDirection.TopBottom;
             int rankSeparation = DEFAULT_RANK_SEPARATION;

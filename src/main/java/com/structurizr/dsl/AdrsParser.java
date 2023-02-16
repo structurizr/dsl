@@ -1,15 +1,15 @@
 package com.structurizr.dsl;
 
 import com.structurizr.documentation.Documentable;
-import com.structurizr.documentation.importer.DefaultImageImporter;
-import com.structurizr.documentation.importer.DocumentationImporter;
+import com.structurizr.importer.documentation.DefaultImageImporter;
+import com.structurizr.importer.documentation.DocumentationImporter;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 
 final class AdrsParser extends AbstractParser {
 
-    private static final String DEFAULT_DECISION_IMPORTER = "com.structurizr.documentation.importer.AdrToolsDecisionImporter";
+    private static final String DEFAULT_DECISION_IMPORTER = "com.structurizr.importer.documentation.AdrToolsDecisionImporter";
 
     private static final String GRAMMAR = "!adrs <path> <fqn>";
 
