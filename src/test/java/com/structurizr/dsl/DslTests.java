@@ -1075,15 +1075,15 @@ class DslTests extends AbstractTests {
 
         ImageView plantumlView = (ImageView)workspace.getViews().getViewWithKey("plantuml");
         assertEquals("diagram.puml", plantumlView.getTitle());
-        assertEquals("https://plantuml.com/plantuml/png/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80", plantumlView.getContent());
+        assertEquals("http://localhost:7777/png/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80", plantumlView.getContent());
 
         ImageView mermaidView = (ImageView)workspace.getViews().getViewWithKey("mermaid");
         assertEquals("diagram.mmd", mermaidView.getTitle());
-        assertEquals("https://mermaid.ink/img/eyAiY29kZSI6ImZsb3djaGFydCBURFxuICAgIFN0YXJ0IC0tPiBTdG9wIiwgIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19", mermaidView.getContent());
+        assertEquals("http://localhost:8888/img/eyAiY29kZSI6ImZsb3djaGFydCBURFxuICAgIFN0YXJ0IC0tPiBTdG9wIiwgIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19", mermaidView.getContent());
 
         ImageView krokiView = (ImageView)workspace.getViews().getViewWithKey("kroki");
         assertEquals("diagram.dot", krokiView.getTitle());
-        assertEquals("https://kroki.io/graphviz/png/eNpLyUwvSizIUHBXqPZIzcnJ17ULzy_KSanlAgB1EAjQ", krokiView.getContent());
+        assertEquals("http://localhost:9999/graphviz/png/eNpLyUwvSizIUHBXqPZIzcnJ17ULzy_KSanlAgB1EAjQ", krokiView.getContent());
 
         ImageView imageView = (ImageView)workspace.getViews().getViewWithKey("image");
         assertEquals("logo.png", imageView.getTitle());
