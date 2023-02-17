@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.26.0 (unreleased)
+## 1.26.0 (17th February 2023)
 
 - Adds the element/relationship identifiers into the model (as an element/relationship property named `"structurizr.dsl.identifier"`).
+- Adds support for image views.
 
 ## 1.25.0 (3rd February 2023)
 
