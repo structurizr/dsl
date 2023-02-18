@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.26.1 (18th February 2023)
+
+- Sets titles for image view content specified via URLs.
+
 ## 1.26.0 (17th February 2023)
 
 - Adds the element/relationship identifiers into the model (as an element/relationship property named `"structurizr.dsl.identifier"`).
