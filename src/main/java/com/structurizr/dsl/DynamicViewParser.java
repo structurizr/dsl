@@ -26,7 +26,6 @@ class DynamicViewParser extends AbstractViewParser {
         Workspace workspace = context.getWorkspace();
         String key = "";
         String description = "";
-        DecimalFormat format = new DecimalFormat("000");
 
         if (tokens.hasMoreThan(DESCRIPTION_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
