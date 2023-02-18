@@ -981,6 +981,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1003,6 +1004,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1025,6 +1027,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1047,6 +1050,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1057,12 +1061,21 @@ Permitted children:
 The `filtered` keyword is used to define a [Filtered view](https://structurizr.com/help/filtered-views) on top of the specified view.
 
 ```
-filtered <baseKey> <include|exclude> <tags> [key] [description]
+filtered <baseKey> <include|exclude> <tags> [key] [description] {
+    ...
+}
 ```
 
 The `baseKey` specifies the key of the System Landscape, System Context, Container, or Component view on which this filtered view should be based. The mode (`include` or `exclude`) defines whether the view should include or exclude elements/relationships based upon the `tags` provided.
 
 Please note that once a filtered view is defined for a given "base view", that base view will no longer show up in your diagram list when using the Structurizr renderer. This is by design. If you'd like to see the base view too, just create another filtered view for the same base view, which includes the `Element` and `Relationship` tags.
+
+Permitted children:
+
+- [default](#default)
+- [title](#title)
+- [description](#description)
+- [properties](#properties)
 
 ```
 filtered <baseKey> include "Element,Relationship" [key] [description]
@@ -1100,6 +1113,7 @@ See [parallel.dsl](../src/test/dsl/parallel.dsl) for an example of how to create
 Permitted children:
 
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [title](#title)
 - [description](#description)
 - [properties](#properties)
@@ -1126,6 +1140,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1146,6 +1161,7 @@ Permitted children:
 - [include](#include)
 - [exclude](#exclude)
 - [autoLayout](#autoLayout)
+- [default](#default)
 - [animation](#animation)
 - [title](#title)
 - [description](#description)
@@ -1249,6 +1265,14 @@ The second property is the separation of ranks in pixels (default: `300`), while
 
 Please note that if your DSL workspace does not explicitly define any views, the DSL parser will automatically create a default set of views for you, with auto-layout enabled.
 To change this behaviour, you can either (1) explicitly define your views or (2) use a script to disable automatic layout ([example](https://github.com/structurizr/dsl/tree/master/docs/cookbook/scripts#create-the-default-views-without-automatic-layout)).
+
+### default
+
+Sets the default view to be shown.
+
+```
+default
+```
 
 ### animation
 

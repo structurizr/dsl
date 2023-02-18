@@ -16,6 +16,7 @@ class DynamicViewDslContext extends ModelViewDslContext {
     protected String[] getPermittedTokens() {
         return new String[] {
                 StructurizrDslTokens.AUTOLAYOUT_VIEW_TOKEN,
+                StructurizrDslTokens.DEFAULT_VIEW_TOKEN,
                 StructurizrDslTokens.VIEW_TITLE_TOKEN,
                 StructurizrDslTokens.VIEW_DESCRIPTION_TOKEN,
                 StructurizrDslTokens.PROPERTIES_TOKEN,

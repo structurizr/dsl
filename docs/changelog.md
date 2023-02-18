@@ -3,6 +3,7 @@
 ## 1.26.1 (18th February 2023)
 
 - Sets titles for image view content specified via URLs.
+- Adds a `default` keyword, for setting the default view.
 
 ## 1.26.0 (17th February 2023)
 

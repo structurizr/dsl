@@ -146,6 +146,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         systemLandscape "SystemLandscape" "Description" {
@@ -158,6 +160,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         systemContext softwareSystem "SystemContext" "Description" {
@@ -170,6 +174,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         container softwareSystem "Containers" "Description" {
@@ -182,6 +188,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         component webApplication "Components" "Description" {
@@ -194,6 +202,21 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
+        }
+
+        filtered "SystemLandscape" include "Element,Relationship" "Filtered1"
+
+        filtered "SystemLandscape" include "Element,Relationship" "Filtered2" {
+            title "Filtered view"
+            description "Description"
+
+            properties {
+                "Name" "Value"
+            }
+
+            default
         }
 
         dynamic webApplication "Dynamic" "Description" {
@@ -206,6 +229,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         deployment * developmentEnvironment "Deployment-Development" "Description" {
@@ -218,6 +243,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         deployment * "Live" "Deployment-Live" "Description" {
@@ -230,6 +257,8 @@ workspace "Name" "Description" {
             properties {
                 "Name" "Value"
             }
+
+            default
         }
 
         styles {

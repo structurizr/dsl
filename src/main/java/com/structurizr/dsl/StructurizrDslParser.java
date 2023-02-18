@@ -590,7 +590,11 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         startContext(new DeploymentViewDslContext(view));
 
                     } else if (FILTERED_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
-                        new FilteredViewParser().parse(getContext(), tokens);
+                        FilteredView view = new FilteredViewParser().parse(getContext(), tokens.withoutContextStartToken());
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new FilteredViewDslContext(view));
+                        }
 
                     } else if (IMAGE_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewsDslContext.class)) {
                         ImageView view = new ImageViewParser().parse(getContext(), tokens.withoutContextStartToken());
@@ -646,6 +650,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (AUTOLAYOUT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
                         new AutoLayoutParser().parse(getContext(ModelViewDslContext.class), tokens);
+
+                    } else if (DEFAULT_VIEW_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
+                        new DefaultViewParser().parse(getContext(ViewDslContext.class));
 
                     } else if (VIEW_TITLE_TOKEN.equalsIgnoreCase(firstToken) && inContext(ViewDslContext.class)) {
                         new ViewParser().parseTitle(getContext(ViewDslContext.class), tokens);
