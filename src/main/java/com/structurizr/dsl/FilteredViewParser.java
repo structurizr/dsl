@@ -44,7 +44,6 @@ final class FilteredViewParser extends AbstractViewParser {
         String mode = tokens.get(MODE_INDEX);
         String tagsAsString = tokens.get(TAGS_INDEX);
         Set<String> tags = new HashSet<>();
-        DecimalFormat format = new DecimalFormat("000");
 
         for (String tag : tagsAsString.split(",")) {
             if (!StringUtils.isNullOrEmpty(tag)) {
