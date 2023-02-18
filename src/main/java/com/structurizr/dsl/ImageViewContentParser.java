@@ -47,6 +47,7 @@ final class ImageViewContentParser extends AbstractParser {
                     if (Url.isUrl(source)) {
                         String content = readFromUrl(source);
                         new PlantUMLImporter().importDiagram(context.getView(), content);
+                        context.getView().setTitle(source.substring(source.lastIndexOf("/")+1));
                     } else {
                         if (!restricted) {
                             File file = new File(dslFile.getParentFile(), source);
@@ -78,6 +79,7 @@ final class ImageViewContentParser extends AbstractParser {
                     if (Url.isUrl(source)) {
                         String content = readFromUrl(source);
                         new MermaidImporter().importDiagram(context.getView(), content);
+                        context.getView().setTitle(source.substring(source.lastIndexOf("/")+1));
                     } else {
                         if (!restricted) {
                             File file = new File(dslFile.getParentFile(), source);
@@ -110,6 +112,7 @@ final class ImageViewContentParser extends AbstractParser {
                     if (Url.isUrl(source)) {
                         String content = readFromUrl(source);
                         new KrokiImporter().importDiagram(context.getView(), format, content);
+                        context.getView().setTitle(source.substring(source.lastIndexOf("/")+1));
                     } else {
                         if (!restricted) {
                             File file = new File(dslFile.getParentFile(), source);
@@ -140,6 +143,7 @@ final class ImageViewContentParser extends AbstractParser {
                 try {
                     if (Url.isUrl(source)) {
                         context.getView().setContent(source);
+                        context.getView().setTitle(source.substring(source.lastIndexOf("/")+1));
                     } else {
                         if (!restricted) {
                             File file = new File(dslFile.getParentFile(), source);
