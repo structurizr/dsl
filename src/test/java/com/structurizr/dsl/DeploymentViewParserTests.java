@@ -96,7 +96,7 @@ class DeploymentViewParserTests extends AbstractTests {
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
 
         assertEquals(1, views.size());
-        assertEquals("Deployment-1", views.get(0).getKey());
+        assertEquals("Deployment-001", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertNull(views.get(0).getSoftwareSystem());
     }
@@ -163,7 +163,7 @@ class DeploymentViewParserTests extends AbstractTests {
         List<DeploymentView> views = new ArrayList<>(this.views.getDeploymentViews());
 
         assertEquals(1, views.size());
-        assertEquals("Deployment-1", views.get(0).getKey());
+        assertEquals("Deployment-001", views.get(0).getKey());
         assertEquals("", views.get(0).getDescription());
         assertSame(softwareSystem, views.get(0).getSoftwareSystem());
     }

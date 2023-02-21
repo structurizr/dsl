@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.26.2 (21st February 2023)
+
+- Zero pads automatically generated view keys for better sorting. 
+
 ## 1.26.1 (18th February 2023)
 
 - Sets titles for image view content specified via URLs.

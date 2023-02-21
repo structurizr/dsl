@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 description = 'Structurizr DSL'
 group = 'com.structurizr'
-version = '1.26.1'
+version = '1.26.2'
 
 test {
     useJUnitPlatform()

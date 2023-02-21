@@ -31,7 +31,7 @@ class CustomViewParserTests extends AbstractTests {
         List<CustomView> views = new ArrayList<>(context.getWorkspace().getViews().getCustomViews());
 
         assertEquals(1, views.size());
-        assertEquals("Custom-1", views.get(0).getKey());
+        assertEquals("Custom-001", views.get(0).getKey());
         assertEquals("", views.get(0).getTitle());
         assertEquals("", views.get(0).getDescription());
     }
