@@ -891,6 +891,13 @@ properties {
     ...
 }
 ```
+	    
+The following properties are currently implemented:
+	    
+| Parent | Name | Value | Example |
+| ------ | ---- | ----- | ------- |
+| views | structurizr.locale | BCP 47 language tag | de-DE |
+| views | structurizr.timezone | timezone | Australia/Melbourne |
 
 ### perspectives
 
