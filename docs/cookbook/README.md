@@ -22,6 +22,7 @@ using one of the PlantUML/Mermaid/D2/DOT/etc export formats provided by the
 - [Container view](container-view)
 - [Container view (spanning multiple software systems)](container-view-for-multiple-software-systems)
 - [Component view](component-view)
+- [Shared components](shared-components)
 - [Filtered view](filtered-view)
 - [Dynamic view](dynamic-view)
 - [Deployment view](deployment-view)
