@@ -56,18 +56,7 @@ workspace {
         }
 
         styles {
-            element "Container" {
-                background #777777
-            }
-            element "Group" {
-                colour #777777
-            }
-            element "Component" {
-                background #dddddd
-            }
-            element "Shared Component" {
-                background #f9f9f9
-            }
+            ...
         }
     }
     
