@@ -75,8 +75,10 @@ workspace {
 ```
 
 The use of `!identifiers hierarchical` prevents the shared component identifiers from clashing,
-and you can reference them via `s.app1.loggingComponent` and `s.app2.loggingComponent` respectively if required.
+and you can reference the shared components via `s.app1.loggingComponent` and `s.app2.loggingComponent` respectively if required.
+
 This DSL also uses a group and differing notation to highlight the shared components.
+The `group` statement has been included in the main DSL file in this example, but it could be moved to the `shared-library.dsl` file if desired.
 
 [![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/shared-components/example-1.dsl)
 
