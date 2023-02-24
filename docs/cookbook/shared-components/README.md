@@ -24,7 +24,7 @@ workspace {
         s = softwareSystem "Software System" {
             app1 = container "Application 1" {
                 group "shared-library.jar" {
-                    !include https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/shared-components/shared-library.dsl
+                    !include shared-library.dsl
                 }
 
                 c = component "Component" {
@@ -34,7 +34,7 @@ workspace {
 
             app2 = container "Application 2" {
                 group "shared-library.jar" {
-                    !include https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/shared-components/shared-library.dsl
+                    !include shared-library.dsl
                 }
 
                 c = component "Component" {
