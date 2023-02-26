@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.27.0 (26th February 2023)
+
+- Attempts to set the content type for image views when not specified.
+- Upgrades structurizr/java to [v1.21.0](https://github.com/structurizr/java/releases/tag/v1.21.0).
+- Upgrades structurizr/import to [v1.3.0](https://github.com/structurizr/import/releases/tag/v1.3.0).
+
 ## 1.26.2 (21st February 2023)
 
 - Zero pads automatically generated view keys for better sorting. 

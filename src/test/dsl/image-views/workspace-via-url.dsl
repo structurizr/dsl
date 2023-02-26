@@ -3,8 +3,11 @@ workspace {
     views {
         properties {
             "plantuml.url" "http://localhost:7777"
+            "plantuml.format" "svg"
             "mermaid.url" "http://localhost:8888"
+            "mermaid.format" "svg"
             "kroki.url" "http://localhost:9999"
+            "kroki.format" "svg"
         }
 
         image * "plantuml" {
