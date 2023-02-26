@@ -1,6 +1,10 @@
 package com.structurizr.dsl;
 
+import com.structurizr.util.ImageUtils;
+import com.structurizr.util.StringUtils;
 import com.structurizr.view.ImageView;
+
+import java.io.IOException;
 
 class ImageViewDslContext extends ViewDslContext {
 
@@ -24,4 +28,23 @@ class ImageViewDslContext extends ViewDslContext {
         };
     }
 
+    @Override
+    void end() {
+        super.end();
+
+        // try to set the content type if it hasn't been set ... this helps the diagram render with image sizing/scaling
+        ImageView imageView = getView();
+        if (StringUtils.isNullOrEmpty(imageView.getContentType())) {
+            if (ImageUtils.isSupportedDataUri(imageView.getContent())) {
+                imageView.setContentType(ImageUtils.getContentTypeFromDataUri(imageView.getContent()));
+            } else {
+                try {
+                    imageView.setContentType(ImageUtils.getContentType(imageView.getContent()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // ignore
+                }
+            }
+        }
+    }
 }
