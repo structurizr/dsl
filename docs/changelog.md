@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.27.1 (26th February 2023)
+
+- Upgrades structurizr/import to [v1.3.1](https://github.com/structurizr/import/releases/tag/v1.3.1).
+
 ## 1.27.0 (26th February 2023)
 
 - Attempts to set the content type for image views when not specified.
