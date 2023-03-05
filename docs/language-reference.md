@@ -596,6 +596,8 @@ The following tags are added by default:
 
 Permitted children:
 
+- [!docs](#documentation)
+- [!adrs](#architecture-decision-records-adrs)
 - [description](#description)
 - [technology](#technology)
 - [tags](#tags)

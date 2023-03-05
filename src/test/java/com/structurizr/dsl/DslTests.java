@@ -895,8 +895,14 @@ class DslTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/docs/workspace.dsl"));
 
+        SoftwareSystem softwareSystem = parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System");
+        Container container = softwareSystem.getContainerWithName("Container");
+        Component component = container.getComponentWithName("Component");
+
         assertEquals(1, parser.getWorkspace().getDocumentation().getSections().size());
-        assertEquals(1, parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System").getDocumentation().getSections().size());
+        assertEquals(1, softwareSystem.getDocumentation().getSections().size());
+        assertEquals(1, container.getDocumentation().getSections().size());
+        assertEquals(1, component.getDocumentation().getSections().size());
     }
 
     @Test
@@ -904,8 +910,14 @@ class DslTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/adrs/workspace.dsl"));
 
+        SoftwareSystem softwareSystem = parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System");
+        Container container = softwareSystem.getContainerWithName("Container");
+        Component component = container.getComponentWithName("Component");
+
         assertEquals(10, parser.getWorkspace().getDocumentation().getDecisions().size());
-        assertEquals(10, parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System").getDocumentation().getDecisions().size());
+        assertEquals(10, softwareSystem.getDocumentation().getDecisions().size());
+        assertEquals(10, container.getDocumentation().getDecisions().size());
+        assertEquals(10, component.getDocumentation().getDecisions().size());
     }
 
     @Test

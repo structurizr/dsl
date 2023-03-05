@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.28.0 (5th March 2023)
+
+- Upgrades structurizr/import to [v1.4.0](https://github.com/structurizr/import/releases/tag/v1.4.0).
+- Adds support for component level documentation/decisions.
+
 ## 1.27.1 (26th February 2023)
 
 - Upgrades structurizr/import to [v1.3.1](https://github.com/structurizr/import/releases/tag/v1.3.1).

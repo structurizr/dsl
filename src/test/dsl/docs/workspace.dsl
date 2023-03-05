@@ -6,6 +6,14 @@ workspace {
         user = person "User"
         softwareSystem = softwareSystem "Software System" {
             !docs docs
+
+            container "Container" {
+                !docs docs
+
+                component "Component" {
+                    !docs docs
+                }
+            }
         }
 
         user -> softwareSystem "Uses"
