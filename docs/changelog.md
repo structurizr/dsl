@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.28.1 (10th March 2023)
+
+- Silently ignore `!plugin` and `!script` when running in restricted mode, to match how `!docs` and `!adrs` work.
+
 ## 1.28.0 (5th March 2023)
 
 - Upgrades structurizr/import to [v1.4.0](https://github.com/structurizr/import/releases/tag/v1.4.0).

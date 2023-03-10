@@ -772,8 +772,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 // run the plugin immediately, without looking for parameters
                                 endContext();
                             }
-                        } else {
-                            throw new StructurizrDslParserException("Plugins are not available");
                         }
 
                     } else if (inContext(PluginDslContext.class)) {
@@ -790,8 +788,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                                 startContext(new ExternalScriptDslContext(getContext(), dslFile, filename));
                                 endContext();
                             }
-                        } else {
-                            throw new StructurizrDslParserException("Scripts are not available");
                         }
 
                     } else {
