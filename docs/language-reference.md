@@ -26,7 +26,7 @@ Please see the [DSL cookbook](cookbook) for a tutorial guide to the Structurizr 
 		- [!identifiers](#identifiers)
 		- [!impliedRelationships](#impliedRelationships)
         - [model](#model)
-            - [enterprise](#enterprise)
+            - [enterprise](#enterprise) (deprecated)
             - [group](#group)
             - [person](#person)
             - [softwareSystem](#softwareSystem)
@@ -131,7 +131,7 @@ For example:
 workspace {
 
     model {
-        enterprise "${ORGANISATION_NAME} - ${GROUP_NAME}" {
+        group "${ORGANISATION_NAME} - ${GROUP_NAME}" {
             user = person "User"
         }
     }
@@ -452,7 +452,6 @@ model {
 
 Permitted children:
 
-- [enterprise](#enterprise)
 - [group](#group)
 - [person](#person)
 - [softwareSystem](#softwareSystem)
@@ -461,6 +460,8 @@ Permitted children:
 - [-> (relationship)](#relationship)
 
 ### enterprise
+
+__This concept has been deprecated - please use [group](#group) instead.__
 
 The `enterprise` keyword provides a way to define a named "enterprise" (e.g. an organisation) within the top-level model. Any people or software systems defined inside this block will be deemed to be "internal", while all others will be deemed to be "external". On System Landscape and System Context diagrams, an enterprise is represented as a dashed box. Only a single enterprise can be defined within a model.
 
@@ -1423,7 +1424,6 @@ The `terminology` keyword allows you to override the terminology used when rende
 
 ```
 terminology {
-    enterprise <term>
     person <term>
     softwareSystem <term>
     container <term>
