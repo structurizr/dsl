@@ -3,9 +3,6 @@
 ## 1.28.3 (11th March 2023)
 
 - Upgrades structurizr/java to [v1.22.3](https://github.com/structurizr/java/releases/tag/v1.22.3).
-
-## 1.28.2 (10th March 2023)
-
 - Silently ignore `!plugin` and `!script` when running in restricted mode, to match how `!docs` and `!adrs` work.
 
 ## 1.28.0 (5th March 2023)
