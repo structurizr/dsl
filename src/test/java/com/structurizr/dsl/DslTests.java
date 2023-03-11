@@ -824,6 +824,36 @@ class DslTests extends AbstractTests {
     }
 
     @Test
+    void test_nested_groups() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/groups-nested.dsl"));
+
+        SoftwareSystem a = parser.getWorkspace().getModel().getSoftwareSystemWithName("A");
+        assertEquals("Organisation/Department A", a.getGroup());
+
+        Container aApi = a.getContainerWithName("A API");
+        assertEquals("Capability 1/Service A", aApi.getGroup());
+
+        Container aDatabase = a.getContainerWithName("A Database");
+        assertEquals("Capability 1/Service A", aDatabase.getGroup());
+
+        Container bApi = a.getContainerWithName("B API");
+        assertEquals("Capability 1/Service B", bApi.getGroup());
+
+        Container bDatabase = a.getContainerWithName("B Database");
+        assertEquals("Capability 1/Service B", bDatabase.getGroup());
+
+        SoftwareSystem b = parser.getWorkspace().getModel().getSoftwareSystemWithName("B");
+        assertEquals("Organisation/Department B", b.getGroup());
+
+        SoftwareSystem c = parser.getWorkspace().getModel().getSoftwareSystemWithName("C");
+        assertEquals("Organisation", c.getGroup());
+
+        SoftwareSystem d = parser.getWorkspace().getModel().getSoftwareSystemWithName("D");
+        assertEquals("Department A/Team 1", d.getGroup());
+    }
+
+    @Test
     void test_hierarchicalIdentifiers() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/hierarchical-identifiers.dsl"));

@@ -20,6 +20,9 @@ workspace "Name" "Description" {
     // single line comment
 
     model {
+        properties {
+            "Name" "Value"
+        }
 
         box1 = element "Box 1" "Metadata" "Description" "Tag"
         box2 = element "Box 2" "Metadata" "Description" "Tag"

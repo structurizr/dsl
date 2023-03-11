@@ -6,7 +6,7 @@ class GroupParser {
 
     private final static int NAME_INDEX = 1;
 
-    ElementGroup parse(Tokens tokens) {
+    ElementGroup parse(GroupableDslContext dslContext, Tokens tokens) {
         // group <name>
 
         if (tokens.hasMoreThan(NAME_INDEX)) {
@@ -17,7 +17,14 @@ class GroupParser {
             throw new RuntimeException("Expected: " + GRAMMAR);
         }
 
-        return new ElementGroup(tokens.get(NAME_INDEX));
+        ElementGroup group;
+        if (dslContext.hasGroup()) {
+            group = new ElementGroup(dslContext.getWorkspace().getModel(), tokens.get(NAME_INDEX), dslContext.getGroup());
+        } else {
+            group = new ElementGroup(dslContext.getWorkspace().getModel(), tokens.get(NAME_INDEX));
+        }
+
+        return group;
     }
 
 }

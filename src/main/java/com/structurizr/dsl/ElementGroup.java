@@ -1,19 +1,38 @@
 package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
+import com.structurizr.model.Model;
+import com.structurizr.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
 
 class ElementGroup extends Element {
 
+    private static final String STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME = "structurizr.group.separator";
+
     private Element parent;
-    private String name;
+    private final ElementGroup parentGroup;
+    private final String name;
 
-    private Set<Element> elements = new HashSet<>();
+    private final Set<Element> elements = new HashSet<>();
 
-    ElementGroup(String name) {
+    ElementGroup(Model model, String name) {
+        setModel(model);
         this.name = name;
+        this.parentGroup = null;
+    }
+
+    ElementGroup(Model model, String name, ElementGroup parentGroup) {
+        setModel(model);
+        String groupSeparator = getModel().getProperties().getOrDefault(STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME, "");
+
+        if (StringUtils.isNullOrEmpty(groupSeparator)) {
+            throw new RuntimeException("To use nested groups, please define a model property named " + STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME);
+        }
+
+        this.name = parentGroup.getName() + groupSeparator + name;
+        this.parentGroup = parentGroup;
     }
 
     @Override
@@ -42,6 +61,10 @@ class ElementGroup extends Element {
 
     void addElement(Element element) {
         elements.add(element);
+
+        if (parentGroup != null) {
+            parentGroup.addElement(element);
+        }
     }
 
     Set<Element> getElements() {

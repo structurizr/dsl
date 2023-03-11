@@ -309,25 +309,25 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                         registerIdentifier(identifier, component);
 
-                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class) && !getContext(ModelDslContext.class).hasGroup()) {
-                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
+                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
+                        ElementGroup group = new GroupParser().parse(getContext(ModelDslContext.class), tokens.withoutContextStartToken());
 
                         startContext(new ModelDslContext(group));
                         registerIdentifier(identifier, group);
-                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(EnterpriseDslContext.class) && !getContext(EnterpriseDslContext.class).hasGroup()) {
-                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
+                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(EnterpriseDslContext.class)) {
+                        ElementGroup group = new GroupParser().parse(getContext(EnterpriseDslContext.class), tokens.withoutContextStartToken());
 
                         startContext(new EnterpriseDslContext(group));
                         registerIdentifier(identifier, group);
-                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class) && !getContext(SoftwareSystemDslContext.class).hasGroup()) {
-                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
+                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
+                        ElementGroup group = new GroupParser().parse(getContext(SoftwareSystemDslContext.class), tokens.withoutContextStartToken());
 
                         SoftwareSystem softwareSystem = getContext(SoftwareSystemDslContext.class).getSoftwareSystem();
                         group.setParent(softwareSystem);
                         startContext(new SoftwareSystemDslContext(softwareSystem, group));
                         registerIdentifier(identifier, group);
-                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class) && !getContext(ContainerDslContext.class).hasGroup()) {
-                        ElementGroup group = new GroupParser().parse(tokens.withoutContextStartToken());
+                    } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
+                        ElementGroup group = new GroupParser().parse(getContext(ContainerDslContext.class), tokens.withoutContextStartToken());
 
                         Container container = getContext(ContainerDslContext.class).getContainer();
                         group.setParent(container);
@@ -359,6 +359,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         startContext(new PropertiesDslContext(workspace));
+
+                    } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
+                        startContext(new PropertiesDslContext(workspace.getModel()));
 
                     } else if (PROPERTIES_TOKEN.equalsIgnoreCase(firstToken) && inContext(ConfigurationDslContext.class) && !getContext(ModelItemDslContext.class).hasGroup()) {
                         startContext(new PropertiesDslContext(getContext(ConfigurationDslContext.class).getWorkspace()));
