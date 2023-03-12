@@ -2,7 +2,7 @@ workspace {
 
     model {
         properties {
-            structurizr.group.separator /
+            structurizr.groupSeparator /
         }
 
         group "Organisation" {
