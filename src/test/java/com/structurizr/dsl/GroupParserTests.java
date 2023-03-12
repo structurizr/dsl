@@ -50,7 +50,7 @@ class GroupParserTests extends AbstractTests {
 
     @Test
     void parse_NestedGroup() {
-        workspace.getModel().addProperty("structurizr.group.separator", "/");
+        workspace.getModel().addProperty("structurizr.groupSeparator", "/");
         ModelDslContext context = new ModelDslContext(new ElementGroup(workspace.getModel(), "Group 1"));
         context.setWorkspace(workspace);
 
