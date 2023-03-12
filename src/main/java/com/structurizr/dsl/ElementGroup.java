@@ -9,7 +9,7 @@ import java.util.Set;
 
 class ElementGroup extends Element {
 
-    private static final String STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME = "structurizr.group.separator";
+    private static final String STRUCTURIZR_GROUP_SEPARATOR_PROPERTY_NAME = "structurizr.groupSeparator";
 
     private Element parent;
     private final ElementGroup parentGroup;

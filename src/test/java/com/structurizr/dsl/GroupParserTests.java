@@ -44,7 +44,7 @@ class GroupParserTests extends AbstractTests {
             parser.parse(context, tokens("group", "Group 2"));
             fail();
         } catch (Exception e) {
-            assertEquals("To use nested groups, please define a model property named structurizr.group.separator", e.getMessage());
+            assertEquals("To use nested groups, please define a model property named structurizr.groupSeparator", e.getMessage());
         }
     }
 
