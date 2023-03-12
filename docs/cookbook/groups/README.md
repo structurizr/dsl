@@ -116,6 +116,7 @@ workspace {
 Groups can also be nested. Element groups are defined as a single string property on the element named `group`,
 and defining nested groups requires a separator to be defined that will be used to split this single string into a set of hierarchical/nested groups.
 To do this, add a model property named `structurizr.groupSeparator` that defines a separator to use, and be sure to not use this separator in your group names.
+Styling nested groups requires using the full hierarchical group name when defining the element style.
 
 ```
 workspace {
@@ -124,7 +125,7 @@ workspace {
         properties {
             "structurizr.groupSeparator" "/"
         }
-        
+
         group "Company 1" {
             group "Department 1" {
                 a = softwareSystem "A"
@@ -142,6 +143,15 @@ workspace {
         systemLandscape {
             include *
             autolayout lr
+        }
+        
+        styles {
+            element "Group:Company 1/Department 1" {
+                color #ff0000
+            }
+            element "Group:Company 1/Department 2" {
+                color #0000ff
+            }
         }
     }
     

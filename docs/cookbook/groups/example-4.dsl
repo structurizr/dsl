@@ -23,6 +23,15 @@ workspace {
             include *
             autolayout lr
         }
+
+        styles {
+            element "Group:Company 1/Department 1" {
+                color #ff0000
+            }
+            element "Group:Company 1/Department 2" {
+                color #0000ff
+            }
+        }
     }
     
 }
