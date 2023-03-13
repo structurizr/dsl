@@ -481,7 +481,7 @@ Permitted children:
 ### group
 
 The `group` keyword provides a way to define a named grouping of elements, which will be rendered as a boundary around those elements.
-See [groups.dsl](../src/test/dsl/groups.dsl) for an example.
+Groups can be nested; see [DSL Cookbook - Groups](cookbook/groups) for more information.
 
 ```
 group <name> {
@@ -489,15 +489,15 @@ group <name> {
 }
 ```
 
-Groups can be defined as follows:
+Groups can only be used to group elements of the same type (i.e. the same level of abstraction), as follows:
 
-| Location | Permitted elements |
-| ------------- | ------------- |
-| Model | People and software systems |
-| Software System | Containers |
-| Container | Components |
+| Location        | Permitted elements          |
+|-----------------|-----------------------------|
+| Model           | People and software systems |
+| Software System | Containers                  |
+| Container       | Components                  |
 
-Groups cannot be nested.
+See [Structurizr - Help - Notation](https://structurizr.com/help/notation) for a description of which groups are shown for a given diagram type.
 
 ### person
 
