@@ -1464,7 +1464,7 @@ users {
 The `!docs` keyword can be used to attach Markdown/AsciiDoc documentation to the parent context (either the workspace, a software system, or a container).
 
 ```
-!docs <path> <fully qualified class name>
+!docs <path> [fully qualified class name]
 ```
 
 The path must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
@@ -1486,7 +1486,7 @@ The above behaviour can be customised by specifying the fully qualified class na
 The `!adrs` keyword can be used to attach Markdown/AsciiDoc ADRs to the parent context (either the workspace, a software system, or a container).
 
 ```
-!adrs <path> <fully qualified class name>
+!adrs <path> [fully qualified class name]
 ```
 
 The path must be a relative path, located within the same directory as the parent file, or a subdirectory of it. For example:
