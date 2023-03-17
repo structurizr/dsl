@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.29.1 (17th March 2023)
+
+- Upgrades structurizr/java to [v1.23.1](https://github.com/structurizr/java/releases/tag/v1.23.1).
+- Upgrades structurizr/import to [v1.4.1](https://github.com/structurizr/import/releases/tag/v1.4.1).
+
 ## 1.29.0 (12th March 2023)
 
 - Adds support for nested groups.
