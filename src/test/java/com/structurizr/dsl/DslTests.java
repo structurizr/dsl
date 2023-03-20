@@ -1165,4 +1165,12 @@ class DslTests extends AbstractTests {
         assertEquals("image/png", imageView.getContentType());
     }
 
+    @Test
+    void test_EmptyDeploymentEnvironment() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/deployment-environment-empty.dsl"));
+
+        assertEquals(1, parser.getWorkspace().getModel().getDeploymentNodes().size());
+    }
+
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased)
+
+- Allows `deploymentEnvironment` to be used without starting a new context (i.e. without `{` and `}`) (see https://github.com/structurizr/cli/discussions/112).
+
 ## 1.29.1 (17th March 2023)
 
 - Upgrades structurizr/java to [v1.23.1](https://github.com/structurizr/java/releases/tag/v1.23.1).

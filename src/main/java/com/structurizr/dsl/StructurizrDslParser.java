@@ -518,7 +518,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (DEPLOYMENT_ENVIRONMENT_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
                         String environment = new DeploymentEnvironmentParser().parse(tokens.withoutContextStartToken());
-                        startContext(new DeploymentEnvironmentDslContext(environment));
+
+                        if (shouldStartContext(tokens)) {
+                            startContext(new DeploymentEnvironmentDslContext(environment));
+                        }
 
                         registerIdentifier(identifier, new DeploymentEnvironment(environment));
 
