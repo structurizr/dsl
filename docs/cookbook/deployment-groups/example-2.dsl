@@ -12,7 +12,6 @@ workspace {
             serviceInstance1 = deploymentGroup "Service instance 1"
             serviceInstance2 = deploymentGroup "Service instance 2"
 
-
             deploymentNode "Server 1" {
                 containerInstance api serviceInstance1
                 deploymentNode "Database Server" {
