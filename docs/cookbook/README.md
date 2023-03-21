@@ -25,6 +25,7 @@ using one of the PlantUML/Mermaid/D2/DOT/etc export formats provided by the
 - [Shared components](shared-components)
 - [Filtered view](filtered-view)
 - [Dynamic view](dynamic-view)
+- [Deployment groups](deployment-groups)
 - [Deployment view](deployment-view)
 - [Groups](groups)
 - [Perspectives](perspectives)
