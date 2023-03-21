@@ -1153,7 +1153,7 @@ Permitted children:
 
 ### custom view
 
-The `custom` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation).
+The `custom` keyword is used to define a [custom view](https://structurizr.com/help/custom-diagrams) (this is only available on the Structurizr cloud service/on-premises installation/Lite).
 
 ```
 custom [key] [title] [description] {
@@ -1174,7 +1174,7 @@ Permitted children:
 
 ### image view
 
-The `image` keyword is used to define an [image view](https://structurizr.com/help/image-views) (this is only available on the Structurizr cloud service/on-premises installation).
+The `image` keyword is used to define an [image view](https://structurizr.com/help/image-views) (this is only available on the Structurizr cloud service/on-premises installation/Lite).
 
 ```
 image <*|element identifier> [key] {
