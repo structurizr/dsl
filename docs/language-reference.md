@@ -1212,7 +1212,8 @@ The public PlantUML (`https://plantuml.com/plantuml`), Mermaid (`https://mermaid
 URLs may work, but (1) please be aware that you are sending information to a third-party service and (2) these public services
 may not correctly set the CORS headers required for image views to work (see the notes at [Structurizr - Help - Image views](https://structurizr.com/help/image-views)).
 
-See the [image view tests](https://github.com/structurizr/dsl/tree/master/src/test/dsl/image-views) for some examples.
+See [DSL cookbook - Image view](https://github.com/structurizr/dsl/tree/master/docs/cookbook/deployment-groups) and
+the [image view tests](https://github.com/structurizr/dsl/tree/master/src/test/dsl/image-views) for some examples.
 
 Permitted children:
 
