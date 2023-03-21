@@ -50,6 +50,7 @@ Please see the [DSL cookbook](cookbook) for a tutorial guide to the Structurizr 
             - [dynamic](#dynamic-view)
             - [deployment](#deployment-view)
             - [custom](#custom-view)
+            - [image](#image-view)
             - [styles](#styles)
                 - [element](#element-style)
                 - [relationship](#relationship-style)
