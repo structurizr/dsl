@@ -1,7 +1,7 @@
 # Image view
 
 An [image view](https://structurizr.com/help/image-views) represents an image that has been rendered outside of Structurizr, for inclusion in a Structurizr workspace.
-Image views can be created from an arbitrary PNG/SVG file, or PlantUML/Mermaid/Kroki diagram.
+Image views can be created from an arbitrary PNG/SVG file, or a PlantUML/Mermaid/Kroki diagram.
 An example use case for an image view is to provide a "level 4" zoom-in for a component on a component diagram.
 
 ```
