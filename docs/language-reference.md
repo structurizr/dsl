@@ -949,6 +949,7 @@ The `views` block can contain the following:
 - [dynamic](#dynamic-view)
 - [deployment](#deployment-view)
 - [custom](#custom-view)
+- [image](#image-view)
 - [styles](#styles)
 - [theme](#theme)
 - [themes](#themes)
@@ -1166,6 +1167,54 @@ Permitted children:
 - [autoLayout](#autoLayout)
 - [default](#default)
 - [animation](#animation)
+- [title](#title)
+- [description](#description)
+- [properties](#properties)
+
+### image view
+
+The `image` keyword is used to define an [image view](https://structurizr.com/help/image-views) (this is only available on the Structurizr cloud service/on-premises installation).
+
+```
+image <*|element identifier> [key] {
+    ...
+}
+```
+
+Inside this block you can define the source of the image, using one of the following:
+
+- `plantuml <file|url>`
+- `mermaid <file|url>`
+- `kroki <format> <file|url>` (where `format` is the format identifier included in the URL path; e.g. `https://kroki.io/{format}/...`)
+- `image <file|url>`
+
+You will need to provide a PlantUML/Mermaid/Kroki URL, and optionally a format (`png` or `svg`),
+when using these services. These can be specified as view set properties:
+
+```
+views {
+    properties {
+        "plantuml.url" "http://localhost:7777"
+        "plantuml.format" "svg"
+        "mermaid.url" "http://localhost:8888"
+        "mermaid.format" "svg"
+        "kroki.url" "http://localhost:9999"
+        "kroki.format" "svg"
+    }
+    
+    ...
+}
+```
+
+The public PlantUML (`https://plantuml.com/plantuml`), Mermaid (`https://mermaid.ink`), and Kroki (`https://kroki.io`)
+URLs may work, but (1) please be aware that you are sending information to a third-party service and (2) these public services
+may not correctly set the CORS headers required for image views to work (see the notes at [Structurizr - Help - Image views](https://structurizr.com/help/image-views)).
+
+See the [image view tests](https://github.com/structurizr/dsl/tree/master/src/test/dsl/image-views) for some examples.
+
+Permitted children:
+
+- [default](#default)
 - [title](#title)
 - [description](#description)
 - [properties](#properties)
