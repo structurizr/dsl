@@ -4,7 +4,7 @@
 
 - Allows `deploymentEnvironment` to be used without starting a new context (i.e. without `{` and `}`) (see https://github.com/structurizr/cli/discussions/112).
 - Adds support for splitting lines in the DSL source with a backslash character (https://github.com/structurizr/dsl/issues/137).
-- Fixes https://github.com/structurizr/dsl/issues/137 (Parallel sequence behavior in dynamic views).
+- Fixes https://github.com/structurizr/dsl/issues/114 (Parallel sequence behavior in dynamic views).
 
 ## 1.29.1 (17th March 2023)
 
