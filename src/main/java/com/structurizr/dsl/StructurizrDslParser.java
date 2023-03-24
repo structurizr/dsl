@@ -716,6 +716,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                     } else if (inContext(DynamicViewDslContext.class)) {
                         new DynamicViewContentParser().parseRelationship(getContext(DynamicViewDslContext.class), tokens);
 
+                        if (inContext(DynamicViewParallelSequenceDslContext.class)) {
+                            getContext(DynamicViewParallelSequenceDslContext.class).hasRelationships(true);
+                        }
+
                     } else if (THEME_TOKEN.equalsIgnoreCase(firstToken) && (inContext(ViewsDslContext.class) || inContext(StylesDslContext.class))) {
                         new ThemeParser().parseTheme(getContext(), tokens);
 
