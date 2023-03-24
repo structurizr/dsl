@@ -1173,4 +1173,24 @@ class DslTests extends AbstractTests {
         assertEquals(1, parser.getWorkspace().getModel().getDeploymentNodes().size());
     }
 
+    @Test
+    void test_MultiLineSupport() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/multi-line.dsl"));
+
+        assertNotNull(parser.getWorkspace().getModel().getSoftwareSystemWithName("Software System"));
+    }
+
+    @Test
+    void test_MultiLineWithError() {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/multi-line-with-error.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            // check that the error message includes the original line number
+            assertEquals("Unexpected tokens (expected: !docs, !adrs, group, container, description, tags, url, properties, perspectives, ->) at line 8: component \"Component\" // components not permitted inside software systems", e.getMessage());
+        }
+    }
+
 }

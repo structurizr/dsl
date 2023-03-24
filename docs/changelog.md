@@ -3,6 +3,7 @@
 ## (unreleased)
 
 - Allows `deploymentEnvironment` to be used without starting a new context (i.e. without `{` and `}`) (see https://github.com/structurizr/cli/discussions/112).
+- Adds support for splitting lines in the DSL source with a backslash character (#137).
 
 ## 1.29.1 (17th March 2023)
 
