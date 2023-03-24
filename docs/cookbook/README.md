@@ -27,6 +27,7 @@ using one of the PlantUML/Mermaid/D2/DOT/etc export formats provided by the
 - [Image view](image-view)
 - [Filtered view](filtered-view)
 - [Dynamic view](dynamic-view)
+- [Dynamic view with parallel sequences](dynamic-view-parallel)
 - [Deployment view](deployment-view)
 - [Amazon Web Services](amazon-web-services)
 - [Deployment groups](deployment-groups)

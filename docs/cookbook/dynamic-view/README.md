@@ -48,8 +48,6 @@ This DSL defines three views:
 
 [![](example-1.png)](http://structurizr.com/dsl?src=https://raw.githubusercontent.com/structurizr/dsl/master/docs/cookbook/dynamic-view/example-1.dsl)
 
-Dynamic views can be rendered using the Structurizr cloud service/on-premises installation or exported to a number of other formats via the [Structurizr CLI export command](https://github.com/structurizr/cli/blob/master/docs/export.md).
-
 ## Links
 
 - [DSL language reference - dynamic](https://github.com/structurizr/dsl/blob/master/docs/language-reference.md#dynamic-view)
