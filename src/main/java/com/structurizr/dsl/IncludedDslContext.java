@@ -1,36 +1,28 @@
 package com.structurizr.dsl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 final class IncludedDslContext extends DslContext {
 
-    private List<String> lines;
-    private File parentFile;
-    private File file;
+    private final File parentFile;
+    private final List<IncludedFile> files = new ArrayList<>();
 
     IncludedDslContext(File parentFile) {
         this.parentFile = parentFile;
-    }
-
-    List<String> getLines() {
-        return lines;
-    }
-
-    void setLines(List<String> lines) {
-        this.lines = lines;
     }
 
     File getParentFile() {
         return parentFile;
     }
 
-    File getFile() {
-        return file;
+    void addFile(File file, List<String> lines) {
+        this.files.add(new IncludedFile(file, lines));
     }
 
-    void setFile(File file) {
-        this.file = file;
+    List<IncludedFile> getFiles() {
+        return new ArrayList<>(files);
     }
 
     @Override
