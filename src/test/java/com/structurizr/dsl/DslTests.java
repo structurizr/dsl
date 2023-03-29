@@ -329,68 +329,16 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
 
-        assertEquals("Getting Started", workspace.getName());
-        assertEquals("This is a model of my software system.", workspace.getDescription());
+        assertEquals(1, model.getSoftwareSystems().size());
+        assertNotNull(model.getSoftwareSystemWithName("Software System"));
 
-        assertEquals(1, model.getPeople().size());
-        Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
-
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system, code-named \"X\".", softwareSystem.getDescription());
-
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
-
-        assertEquals("workspace \"Getting Started\" \"This is a model of my software system.\" {\n" +
+        assertEquals("workspace {\n" +
                 "\n" +
                 "    model {\n" +
-                "user = person \"User\" \"A user of my software system.\"\n" +
-                "softwareSystem = softwareSystem \"Software System\" \"My software system, code-named \\\"X\\\".\"\n" +
-                "\n" +
-                "user -> softwareSystem \"Uses\"\n" +
-                "    }\n" +
-                "\n" +
-                "    views {\n" +
-                "        systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {\n" +
-                "            include *\n" +
-                "            autoLayout\n" +
-                "        }\n" +
-                "\n" +
-                "        styles {\n" +
-                "            element \"Software System\" {\n" +
-                "                background #1168bd\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "            element \"Person\" {\n" +
-                "                shape person\n" +
-                "                background #08427b\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "        }\n" +
+                "softwareSystem = softwareSystem \"Software System\" {\n" +
+                "    !docs docs\n" +
+                "}\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
@@ -403,67 +351,37 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
 
-        assertEquals("Getting Started", workspace.getName());
-        assertEquals("This is a model of my software system.", workspace.getDescription());
+        assertEquals(3, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem1 = model.getSoftwareSystemWithName("Software System 1");
+        assertNotNull(softwareSystem1);
+        assertEquals(1, softwareSystem1.getDocumentation().getSections().size());
 
-        assertEquals(1, model.getPeople().size());
-        Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
+        SoftwareSystem softwareSystem2 = model.getSoftwareSystemWithName("Software System 2");
+        assertNotNull(softwareSystem2);
+        assertEquals(1, softwareSystem2.getDocumentation().getSections().size());
 
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system, code-named \"X\".", softwareSystem.getDescription());
+        SoftwareSystem softwareSystem3 = model.getSoftwareSystemWithName("Software System 3");
+        assertNotNull(softwareSystem3);
+        assertEquals(1, softwareSystem3.getDocumentation().getSections().size());
 
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
-
-        assertEquals("workspace \"Getting Started\" \"This is a model of my software system.\" {\n" +
+        assertEquals("workspace {\n" +
                 "\n" +
                 "    model {\n" +
-                "user = person \"User\" \"A user of my software system.\"\n" +
-                "softwareSystem = softwareSystem \"Software System\" \"My software system, code-named \\\"X\\\".\"\n" +
-                "user -> softwareSystem \"Uses\"\n" +
-                "    }\n" +
+                "        !constant SOFTWARE_SYSTEM_NAME \"Software System 1\"\n" +
+                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "    !docs ../../docs\n" +
+                "}\n" +
                 "\n" +
-                "    views {\n" +
-                "        systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {\n" +
-                "            include *\n" +
-                "            autoLayout\n" +
-                "        }\n" +
+                "        !constant SOFTWARE_SYSTEM_NAME \"Software System 2\"\n" +
+                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "    !docs ../../docs\n" +
+                "}\n" +
                 "\n" +
-                "        styles {\n" +
-                "            element \"Software System\" {\n" +
-                "                background #1168bd\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "            element \"Person\" {\n" +
-                "                shape person\n" +
-                "                background #08427b\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "        }\n" +
+                "        !constant SOFTWARE_SYSTEM_NAME \"Software System 3\"\n" +
+                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "    !docs ../../docs\n" +
+                "}\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
@@ -478,66 +396,15 @@ class DslTests extends AbstractTests {
         Model model = workspace.getModel();
         ViewSet views = workspace.getViews();
 
-        assertEquals("Getting Started", workspace.getName());
-        assertEquals("This is a model of my software system.", workspace.getDescription());
-
-        assertEquals(1, model.getPeople().size());
-        Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
-
         assertEquals(1, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system, code-named \"X\".", softwareSystem.getDescription());
 
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
-
-        assertEquals("workspace \"Getting Started\" \"This is a model of my software system.\" {\n" +
+        assertEquals("workspace {\n" +
                 "\n" +
                 "    model {\n" +
-                "user = person \"User\" \"A user of my software system.\"\n" +
-                "softwareSystem = softwareSystem \"Software System\" \"My software system, code-named \\\"X\\\".\"\n" +
-                "\n" +
-                "user -> softwareSystem \"Uses\"\n" +
-                "    }\n" +
-                "\n" +
-                "    views {\n" +
-                "        systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {\n" +
-                "            include *\n" +
-                "            autoLayout\n" +
-                "        }\n" +
-                "\n" +
-                "        styles {\n" +
-                "            element \"Software System\" {\n" +
-                "                background #1168bd\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "            element \"Person\" {\n" +
-                "                shape person\n" +
-                "                background #08427b\n" +
-                "                color #ffffff\n" +
-                "            }\n" +
-                "        }\n" +
+                "softwareSystem = softwareSystem \"Software System\" {\n" +
+                "    !docs docs\n" +
+                "}\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
@@ -548,13 +415,9 @@ class DslTests extends AbstractTests {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.setRestricted(true);
 
-        try {
-            // this will fail, because the model include will be ignored
-            parser.parse(new File("src/test/dsl/include-file.dsl"));
-            fail();
-        } catch (StructurizrDslParserException e) {
-            assertEquals("The software system \"softwareSystem\" does not exist at line 8: systemContext softwareSystem \"SystemContext\" \"An example of a System Context diagram.\" {", e.getMessage());
-        }
+        // the model include will be ignored, so no software systems
+        parser.parse(new File("src/test/dsl/include-file.dsl"));
+        assertEquals(0, model.getSoftwareSystems().size());
     }
 
     @Test

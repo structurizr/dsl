@@ -242,7 +242,10 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         if (!restricted || tokens.get(1).startsWith("https://")) {
                             IncludedDslContext context = new IncludedDslContext(dslFile);
                             new IncludeParser().parse(context, tokens);
-                            parse(context.getLines(), context.getFile());
+                            for (IncludedFile includedFile : context.getFiles()) {
+                                parse(includedFile.getLines(), includedFile.getFile());
+                            }
+
                             includeInDslSourceLines = false;
                         }
 

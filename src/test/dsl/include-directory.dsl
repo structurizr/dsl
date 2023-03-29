@@ -1,26 +1,14 @@
-workspace "Getting Started" "This is a model of my software system." {
+workspace {
 
     model {
+        !constant SOFTWARE_SYSTEM_NAME "Software System 1"
+        !include include/model/software-system/model.dsl
+
+        !constant SOFTWARE_SYSTEM_NAME "Software System 2"
+        !include include/model/software-system
+
+        !constant SOFTWARE_SYSTEM_NAME "Software System 3"
         !include include/model
-    }
-
-    views {
-        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
-            include *
-            autoLayout
-        }
-
-        styles {
-            element "Software System" {
-                background #1168bd
-                color #ffffff
-            }
-            element "Person" {
-                shape person
-                background #08427b
-                color #ffffff
-            }
-        }
     }
 
 }

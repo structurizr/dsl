@@ -29,8 +29,7 @@ final class IncludeParser extends AbstractParser {
         if (source.startsWith("https://")) {
             String dsl = readFromUrl(source);
             List<String> lines = Arrays.asList(dsl.split("\n"));
-            context.setLines(lines);
-            context.setFile(context.getFile());
+            context.addFile(context.getParentFile(), lines);
         } else {
             if (context.getParentFile() != null) {
                 File path = new File(context.getParentFile().getParent(), source);
@@ -40,9 +39,7 @@ final class IncludeParser extends AbstractParser {
                         throw new RuntimeException(path.getCanonicalPath() + " could not be found");
                     }
 
-                    List<String> lines = readLines(path);
-                    context.setLines(lines);
-                    context.setFile(path);
+                    readFiles(context, path);
                 } catch (IOException e) {
                     throw new RuntimeException(e.getMessage());
                 }
@@ -50,22 +47,18 @@ final class IncludeParser extends AbstractParser {
         }
     }
 
-    private List<String> readLines(File path) throws IOException {
+    private void readFiles(IncludedDslContext context, File path) throws IOException {
         if (path.isDirectory()) {
-            List<String> lines = new ArrayList<>();
-
             File[] files = path.listFiles();
             if (files != null) {
                 Arrays.sort(files);
 
                 for (File file : files) {
-                    lines.addAll(readLines(file));
+                    readFiles(context, file);
                 }
             }
-
-            return lines;
         } else {
-            return Files.readAllLines(path.toPath(), StandardCharsets.UTF_8);
+            context.addFile(path, Files.readAllLines(path.toPath(), StandardCharsets.UTF_8));
         }
     }
 
