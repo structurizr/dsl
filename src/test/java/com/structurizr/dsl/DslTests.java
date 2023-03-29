@@ -336,9 +336,9 @@ class DslTests extends AbstractTests {
         assertEquals("workspace {\n" +
                 "\n" +
                 "    model {\n" +
-                "softwareSystem = softwareSystem \"Software System\" {\n" +
-                "    !docs docs\n" +
-                "}\n" +
+                "        softwareSystem = softwareSystem \"Software System\" {\n" +
+                "            !docs docs\n" +
+                "        }\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
@@ -369,19 +369,19 @@ class DslTests extends AbstractTests {
                 "\n" +
                 "    model {\n" +
                 "        !constant SOFTWARE_SYSTEM_NAME \"Software System 1\"\n" +
-                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
-                "    !docs ../../docs\n" +
-                "}\n" +
+                "        softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "            !docs ../../docs\n" +
+                "        }\n" +
                 "\n" +
                 "        !constant SOFTWARE_SYSTEM_NAME \"Software System 2\"\n" +
-                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
-                "    !docs ../../docs\n" +
-                "}\n" +
+                "        softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "            !docs ../../docs\n" +
+                "        }\n" +
                 "\n" +
                 "        !constant SOFTWARE_SYSTEM_NAME \"Software System 3\"\n" +
-                "softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
-                "    !docs ../../docs\n" +
-                "}\n" +
+                "        softwareSystem \"${SOFTWARE_SYSTEM_NAME}\" {\n" +
+                "            !docs ../../docs\n" +
+                "        }\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
@@ -402,9 +402,9 @@ class DslTests extends AbstractTests {
         assertEquals("workspace {\n" +
                 "\n" +
                 "    model {\n" +
-                "softwareSystem = softwareSystem \"Software System\" {\n" +
-                "    !docs docs\n" +
-                "}\n" +
+                "        softwareSystem = softwareSystem \"Software System\" {\n" +
+                "            !docs docs\n" +
+                "        }\n" +
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
