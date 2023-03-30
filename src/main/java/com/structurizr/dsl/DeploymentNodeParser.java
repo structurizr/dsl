@@ -12,7 +12,7 @@ final class DeploymentNodeParser extends AbstractParser {
     private static final int TAGS_INDEX = 4;
     private static final int INSTANCES_INDEX = 5;
 
-    DeploymentNode parse(DslContext context, Tokens tokens) {
+    DeploymentNode parse(DeploymentEnvironmentDslContext context, Tokens tokens) {
         // deploymentNode <name> [description] [technology] [tags] [instances]
 
         if (tokens.hasMoreThan(INSTANCES_INDEX)) {
@@ -36,14 +36,7 @@ final class DeploymentNodeParser extends AbstractParser {
             technology = tokens.get(TECHNOLOGY_INDEX);
         }
 
-        if (context instanceof DeploymentEnvironmentDslContext) {
-            deploymentNode = context.getWorkspace().getModel().addDeploymentNode(((DeploymentEnvironmentDslContext)context).getEnvironment(), name, description, technology);
-        } else if (context instanceof DeploymentNodeDslContext) {
-            DeploymentNode parent = ((DeploymentNodeDslContext)context).getDeploymentNode();
-            deploymentNode = parent.addDeploymentNode(name, description, technology);
-        } else {
-            throw new RuntimeException("Unexpected deployment node");
-        }
+        deploymentNode = context.getWorkspace().getModel().addDeploymentNode(context.getEnvironment(), name, description, technology);
 
         String tags = "";
         if (tokens.includes(TAGS_INDEX)) {
@@ -55,6 +48,58 @@ final class DeploymentNodeParser extends AbstractParser {
         if (tokens.includes(INSTANCES_INDEX)) {
             instances = tokens.get(INSTANCES_INDEX);
             deploymentNode.setInstances(instances);
+        }
+
+        if (context.hasGroup()) {
+            deploymentNode.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(deploymentNode);
+        }
+
+        return deploymentNode;
+    }
+
+    DeploymentNode parse(DeploymentNodeDslContext context, Tokens tokens) {
+        // deploymentNode <name> [description] [technology] [tags] [instances]
+
+        if (tokens.hasMoreThan(INSTANCES_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+        }
+
+        if (!tokens.includes(NAME_INDEX)) {
+            throw new RuntimeException("Expected: " + GRAMMAR);
+        }
+
+        DeploymentNode deploymentNode = null;
+        String name = tokens.get(NAME_INDEX);
+
+        String description = "";
+        if (tokens.includes(DESCRIPTION_INDEX)) {
+            description = tokens.get(DESCRIPTION_INDEX);
+        }
+
+        String technology = "";
+        if (tokens.includes(TECHNOLOGY_INDEX)) {
+            technology = tokens.get(TECHNOLOGY_INDEX);
+        }
+
+        DeploymentNode parent = context.getDeploymentNode();
+        deploymentNode = parent.addDeploymentNode(name, description, technology);
+
+        String tags = "";
+        if (tokens.includes(TAGS_INDEX)) {
+            tags = tokens.get(TAGS_INDEX);
+            deploymentNode.addTags(tags.split(","));
+        }
+
+        String instances = "1";
+        if (tokens.includes(INSTANCES_INDEX)) {
+            instances = tokens.get(INSTANCES_INDEX);
+            deploymentNode.setInstances(instances);
+        }
+
+        if (context.hasGroup()) {
+            deploymentNode.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(deploymentNode);
         }
 
         return deploymentNode;

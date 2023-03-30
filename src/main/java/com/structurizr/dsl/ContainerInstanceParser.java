@@ -53,6 +53,11 @@ final class ContainerInstanceParser extends AbstractParser {
             containerInstance.addTags(tags.split(","));
         }
 
+        if (context.hasGroup()) {
+            containerInstance.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(containerInstance);
+        }
+
         return containerInstance;
     }
 

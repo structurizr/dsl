@@ -44,6 +44,11 @@ final class InfrastructureNodeParser extends AbstractParser {
             infrastructureNode.addTags(tags.split(","));
         }
 
+        if (context.hasGroup()) {
+            infrastructureNode.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(infrastructureNode);
+        }
+
         return infrastructureNode;
     }
 

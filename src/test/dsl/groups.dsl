@@ -17,13 +17,19 @@ workspace {
         }
 
         live = deploymentEnvironment "Live" {
-            deploymentNode "Server 1" {
-                containerInstance service1Api
-                containerInstance service1Database
-            }
-            deploymentNode "Server 2" {
-                containerInstance service2Api
-                containerInstance service2Database
+            group "Servers" {
+                deploymentNode "Server 1" {
+                    group "Service 1" {
+                        containerInstance service1Api
+                        containerInstance service1Database
+                    }
+                }
+                deploymentNode "Server 2" {
+                    group "Service 2" {
+                        containerInstance service2Api
+                        containerInstance service2Database
+                    }
+                }
             }
         }
 

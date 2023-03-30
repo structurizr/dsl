@@ -13,7 +13,7 @@ class DeploymentNodeParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(context(), tokens("deploymentNode", "name", "description", "technology", "tags", "instances", "extra"));
+            parser.parse(new DeploymentEnvironmentDslContext("env"), tokens("deploymentNode", "name", "description", "technology", "tags", "instances", "extra"));
             fail();
         } catch (Exception e) {
             assertEquals("Too many tokens, expected: deploymentNode <name> [description] [technology] [tags] [instances] {", e.getMessage());
@@ -23,7 +23,7 @@ class DeploymentNodeParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheNameIsNotSpecified() {
         try {
-            parser.parse(context(), tokens("deploymentNode"));
+            parser.parse(new DeploymentEnvironmentDslContext("env"), tokens("deploymentNode"));
             fail();
         } catch (Exception e) {
             assertEquals("Expected: deploymentNode <name> [description] [technology] [tags] [instances] {", e.getMessage());

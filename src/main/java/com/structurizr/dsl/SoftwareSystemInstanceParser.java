@@ -54,6 +54,11 @@ final class SoftwareSystemInstanceParser extends AbstractParser {
             softwareSystemInstance.addTags(tags.split(","));
         }
 
+        if (context.hasGroup()) {
+            softwareSystemInstance.setGroup(context.getGroup().getName());
+            context.getGroup().addElement(softwareSystemInstance);
+        }
+
         return softwareSystemInstance;
     }
 
