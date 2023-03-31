@@ -65,7 +65,7 @@ Please see the [DSL cookbook](cookbook) for a tutorial guide to the Structurizr 
 
 ## General rules
 
-- Line breaks are important.
+- Line breaks are important; long lines can be split with `\` as the last character on the line.
 - Lines are processed in order.
 - Tokens must be separated by whitespace, but the quantity of whitespace/indentation isn't important.
 - Keywords are case-insensitive (e.g. you can use `softwareSystem` or `softwaresystem`).
@@ -620,6 +620,8 @@ deploymentEnvironment <name> {
 
 Permitted children:
 
+
+- [group](#group)
 - [deploymentGroup](#deploymentGroup)
 - [deploymentNode](#deploymentNode)
 - [-> (relationship)](#relationship)
@@ -652,6 +654,7 @@ The following tags are added by default:
 
 Permitted children:
 
+- [group](#group)
 - [deploymentNode](#deploymentNode) (deployment nodes can be nested)
 - [infrastructureNode](#infrastructureNode)
 - [softwareSystemInstance](#softwareSystemInstance)

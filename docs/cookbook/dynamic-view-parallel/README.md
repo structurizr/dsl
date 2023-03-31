@@ -3,8 +3,6 @@
 Dynamic views can also be used to show parallel sequences of interactions, to indicate some degree of concurrency.
 To do this, you can use the DSL block syntax `{` and `}` to define parallel sequences.
 
-__Note: this syntax is currently unreleased, and only available if building the DSL parser from source.__
-
 ```
 workspace {
 
