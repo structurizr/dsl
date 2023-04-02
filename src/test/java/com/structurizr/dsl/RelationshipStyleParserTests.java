@@ -60,6 +60,12 @@ class RelationshipStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseRelationshipStyle_FindsAnExistingRelationshipStyle() {
+        RelationshipStyle style = workspace.getViews().getConfiguration().getStyles().addRelationshipStyle("Tag");
+        assertSame(style, parser.parseRelationshipStyle(context(), tokens("relationship", "Tag")));
+    }
+
+    @Test
     void test_parseThickness_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             parser.parseThickness(relationshipStyleDslContext(), tokens("thickness", "number", "extra"));

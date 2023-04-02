@@ -26,7 +26,12 @@ final class RelationshipStyleParser extends AbstractParser {
             }
 
             Workspace workspace = context.getWorkspace();
-            return workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(tag);
+            RelationshipStyle relationshipStyle = workspace.getViews().getConfiguration().getStyles().getRelationshipStyle(tag);
+            if (relationshipStyle == null) {
+                relationshipStyle = workspace.getViews().getConfiguration().getStyles().addRelationshipStyle(tag);
+            }
+
+            return relationshipStyle;
         } else {
             throw new RuntimeException("Expected: relationship <tag> {");
         }

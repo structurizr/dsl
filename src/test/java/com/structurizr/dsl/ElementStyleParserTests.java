@@ -61,6 +61,12 @@ class ElementStyleParserTests extends AbstractTests {
     }
 
     @Test
+    void test_parseElementStyle_FindsAnExistingElementStyle() {
+        ElementStyle style = workspace.getViews().getConfiguration().getStyles().addElementStyle("Tag");
+        assertSame(style, parser.parseElementStyle(context(), tokens("element", "Tag")));
+    }
+
+    @Test
     void test_parseShape_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             parser.parseShape(elementStyleDslContext(), tokens("shape", "shape", "extra"));

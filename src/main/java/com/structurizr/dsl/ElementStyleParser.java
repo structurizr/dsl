@@ -27,7 +27,12 @@ final class ElementStyleParser extends AbstractParser {
             }
 
             Workspace workspace = context.getWorkspace();
-            return workspace.getViews().getConfiguration().getStyles().addElementStyle(tag);
+            ElementStyle elementStyle = workspace.getViews().getConfiguration().getStyles().getElementStyle(tag);
+            if (elementStyle == null) {
+                elementStyle = workspace.getViews().getConfiguration().getStyles().addElementStyle(tag);
+            }
+
+            return elementStyle;
         } else {
             throw new RuntimeException("Expected: element <tag> {");
         }

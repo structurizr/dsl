@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased)
+
+- Fixes https://github.com/structurizr/dsl/issues/241 (Allow styles defined in an extending workspace to override those in the base workspace).
+
 ## 1.30.0 (31st March 2023)
 
 - Allows `deploymentEnvironment` to be used without starting a new context (i.e. without `{` and `}`) (see https://github.com/structurizr/cli/discussions/112).
