@@ -1,8 +1,9 @@
 # Changelog
 
-## (unreleased)
+## 1.30.1 (5th April 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/241 (Allow styles defined in an extending workspace to override those in the base workspace).
+- Upgrades structurizr/java to [v1.24.1](https://github.com/structurizr/java/releases/tag/v1.24.1).
 
 ## 1.30.0 (31st March 2023)
 
@@ -11,6 +12,7 @@
 - Fixes https://github.com/structurizr/dsl/issues/114 (Parallel sequence behavior in dynamic views).
 - Fixes https://github.com/structurizr/dsl/issues/239 (File context for included files varies based upon how they are included).
 - Adds support for grouping deployment nodes, infrastructure nodes, software system instances, and container instances.
+- Upgrades structurizr/java to [v1.24.0](https://github.com/structurizr/java/releases/tag/v1.24.0).
 
 ## 1.29.1 (17th March 2023)
 
