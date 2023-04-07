@@ -741,6 +741,20 @@ class DslTests extends AbstractTests {
     }
 
     @Test
+    void test_hierarchicalIdentifiersWhenUnassigned() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/hierarchical-identifiers-when-unassigned.dsl"));
+
+        Workspace workspace = parser.getWorkspace();
+        IdentifiersRegister identifiersRegister = parser.getIdentifiersRegister();
+
+        assertEquals(6, identifiersRegister.getElementIdentifiers().size());
+        for (String identifier : identifiersRegister.getElementIdentifiers()) {
+            assertFalse(identifier.startsWith("null"));
+        }
+    }
+
+    @Test
     void test_hierarchicalIdentifiersAndDeploymentNodes() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/hierarchical-identifiers-and-deployment-nodes-1.dsl"));

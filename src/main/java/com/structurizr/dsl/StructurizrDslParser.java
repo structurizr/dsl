@@ -977,17 +977,13 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
     }
 
     private void registerIdentifier(String identifier, Element element) {
-        if (!StringUtils.isNullOrEmpty(identifier)) {
-            identifiersRegister.register(identifier, element);
-            element.addProperty(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME, identifiersRegister.findIdentifier(element));
-        }
+        identifiersRegister.register(identifier, element);
+        element.addProperty(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME, identifiersRegister.findIdentifier(element));
     }
 
     private void registerIdentifier(String identifier, Relationship relationship) {
-        if (!StringUtils.isNullOrEmpty(identifier)) {
-            identifiersRegister.register(identifier, relationship);
-            relationship.addProperty(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME, identifiersRegister.findIdentifier(relationship));
-        }
+        identifiersRegister.register(identifier, relationship);
+        relationship.addProperty(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME, identifiersRegister.findIdentifier(relationship));
     }
 
     private boolean inContext(Class clazz) {

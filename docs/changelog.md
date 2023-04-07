@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased)
+
+- Fixes https://github.com/structurizr/dsl/issues/242 (deploymentViews hierarchical identifiers issue).
+ 
 ## 1.30.1 (5th April 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/241 (Allow styles defined in an extending workspace to override those in the base workspace).
