@@ -17,7 +17,7 @@ public class StructurizrDslPluginContext {
 
     private Map<String,String> parameters;
 
-    StructurizrDslPluginContext(File dslFile, Workspace workspace, Map<String,String> parameters) {
+    public StructurizrDslPluginContext(File dslFile, Workspace workspace, Map<String,String> parameters) {
         this.dslFile = dslFile;
         this.workspace = workspace;
         this.parameters = parameters;
