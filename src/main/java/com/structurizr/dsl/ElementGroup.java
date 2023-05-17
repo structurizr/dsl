@@ -4,6 +4,8 @@ import com.structurizr.model.Element;
 import com.structurizr.model.Model;
 import com.structurizr.util.StringUtils;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,9 +56,10 @@ class ElementGroup extends Element {
         return parent;
     }
 
+    @Nonnull
     @Override
     public Set<String> getDefaultTags() {
-        return null;
+        return Collections.emptySet();
     }
 
     void addElement(Element element) {

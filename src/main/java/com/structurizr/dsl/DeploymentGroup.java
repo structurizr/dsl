@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.Set;
 
 class DeploymentGroup extends Element {
@@ -27,9 +29,10 @@ class DeploymentGroup extends Element {
         return null;
     }
 
+    @Nonnull
     @Override
     public Set<String> getDefaultTags() {
-        return null;
+        return Collections.emptySet();
     }
 
 }
