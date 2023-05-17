@@ -3,6 +3,7 @@ package com.structurizr.dsl;
 import com.structurizr.util.ImageUtils;
 import com.structurizr.view.Font;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 final class BrandingParser extends AbstractParser {
@@ -49,7 +50,7 @@ final class BrandingParser extends AbstractParser {
         }
     }
 
-    void parseFont(BrandingDslContext context, Tokens tokens) {
+    void parseFont(@Nonnull BrandingDslContext context, @Nonnull Tokens tokens) {
         // font <name> [url]
 
         if (tokens.hasMoreThan(FONT_URL_INDEX)) {

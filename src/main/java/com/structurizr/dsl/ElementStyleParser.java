@@ -7,6 +7,7 @@ import com.structurizr.view.Border;
 import com.structurizr.view.ElementStyle;
 import com.structurizr.view.Shape;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -286,7 +287,7 @@ final class ElementStyleParser extends AbstractParser {
         }
     }
 
-    void parseIcon(ElementStyleDslContext context, Tokens tokens, boolean restricted) {
+    void parseIcon(@Nonnull ElementStyleDslContext context, @Nonnull Tokens tokens, boolean restricted) {
         ElementStyle style = context.getStyle();
 
         if (tokens.hasMoreThan(FIRST_PROPERTY_INDEX)) {

@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.StaticStructureElementInstance;
 
+import javax.annotation.Nonnull;
+
 class HealthCheckParser extends AbstractParser {
 
     private static final String GRAMMAR = "healthCheck <name> <url> [interval] [timeout]";
@@ -14,7 +16,7 @@ class HealthCheckParser extends AbstractParser {
     private final static int DEFAULT_INTERVAL = 60;
     private final static long DEFAULT_TIMEOUT = 0;
 
-    void parse(StaticStructureElementInstanceDslContext context, Tokens tokens) {
+    void parse(@Nonnull StaticStructureElementInstanceDslContext context, @Nonnull Tokens tokens) {
         // healthCheck <name> <url> [interval] [timeout]
 
         if (tokens.hasMoreThan(TIMEOUT_INDEX)) {

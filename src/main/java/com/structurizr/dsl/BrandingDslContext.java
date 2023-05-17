@@ -1,15 +1,18 @@
 package com.structurizr.dsl;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 final class BrandingDslContext extends DslContext {
 
-    private File file;
+    @Nonnull
+    private final File file;
 
-    BrandingDslContext(File file) {
+    BrandingDslContext(@Nonnull File file) {
         this.file = file;
     }
 
+    @Nonnull
     File getFile() {
         return file;
     }

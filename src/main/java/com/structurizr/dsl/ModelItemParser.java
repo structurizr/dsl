@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 import com.structurizr.model.Element;
 
+import javax.annotation.Nonnull;
+
 final class ModelItemParser extends AbstractParser {
 
     private final static int DESCRIPTION_INDEX = 1;
@@ -39,7 +41,7 @@ final class ModelItemParser extends AbstractParser {
         ((Element)context.getModelItem()).setDescription(description);
     }
 
-    void parseUrl(ModelItemDslContext context, Tokens tokens) {
+    void parseUrl(@Nonnull ModelItemDslContext context, @Nonnull Tokens tokens) {
         // url <url>
         if (tokens.hasMoreThan(URL_INDEX)) {
             throw new RuntimeException("Too many tokens, expected: url <url>");

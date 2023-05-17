@@ -4,23 +4,29 @@ import com.structurizr.model.ContainerInstance;
 import com.structurizr.model.ModelItem;
 import com.structurizr.model.StaticStructureElementInstance;
 
+import javax.annotation.Nonnull;
+
 final class ContainerInstanceDslContext extends StaticStructureElementInstanceDslContext {
 
+    @Nonnull
     private ContainerInstance containerInstance;
 
-    ContainerInstanceDslContext(ContainerInstance containerInstance) {
+    ContainerInstanceDslContext(@Nonnull ContainerInstance containerInstance) {
         this.containerInstance = containerInstance;
     }
 
+    @Nonnull
     ContainerInstance getContainerInstance() {
         return containerInstance;
     }
 
+    @Nonnull
     @Override
     ModelItem getModelItem() {
         return getContainerInstance();
     }
 
+    @Nonnull
     @Override
     StaticStructureElementInstance getElementInstance() {
         return getContainerInstance();

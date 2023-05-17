@@ -2,22 +2,27 @@ package com.structurizr.dsl;
 
 import com.structurizr.view.ElementStyle;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
 final class ElementStyleDslContext extends DslContext {
 
-    private File file;
-    private ElementStyle style;
+    @Nonnull
+    private final File file;
+    @Nonnull
+    private final ElementStyle style;
 
-    ElementStyleDslContext(ElementStyle style, File file) {
+    ElementStyleDslContext(@Nonnull ElementStyle style, @Nonnull File file) {
         this.style = style;
         this.file = file;
     }
 
+    @Nonnull
     File getFile() {
         return file;
     }
 
+    @Nonnull
     ElementStyle getStyle() {
         return style;
     }
