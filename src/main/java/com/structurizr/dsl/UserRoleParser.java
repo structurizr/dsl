@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 import com.structurizr.configuration.Role;
 
+import javax.annotation.Nonnull;
+
 final class UserRoleParser extends AbstractParser {
 
     private static final String GRAMMAR = "<username> <read|write>";
@@ -9,7 +11,7 @@ final class UserRoleParser extends AbstractParser {
     private final static int USERNAME_INDEX = 0;
     private final static int ROLE_INDEX = 1;
 
-    void parse(DslContext context, Tokens tokens) {
+    void parse(@Nonnull DslContext context, @Nonnull Tokens tokens) {
         // <username> <read|write>
 
         if (tokens.hasMoreThan(ROLE_INDEX)) {
