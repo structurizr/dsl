@@ -5,6 +5,8 @@ import com.structurizr.model.*;
 import com.structurizr.util.StringUtils;
 import com.structurizr.view.*;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -99,7 +101,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         return buf.toString();
     }
 
-    void parse(DslParserContext context, File path) throws StructurizrDslParserException {
+    void parse(@Nonnull DslParserContext context, @Nonnull File path) throws StructurizrDslParserException {
         parse(path);
 
         context.copyFrom(identifiersRegister);
@@ -113,7 +115,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
      * @param path      a File object representing a file or directory
      * @throws StructurizrDslParserException when something goes wrong
      */
-    public void parse(File path) throws StructurizrDslParserException {
+    public void parse(@Nonnull File path) throws StructurizrDslParserException {
         if (path == null) {
             throw new StructurizrDslParserException("A file must be specified");
         }
@@ -153,7 +155,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         parse(lines, new File("."));
     }
 
-    private List<DslLine> preProcessLines(List<String> lines) {
+    private List<DslLine> preProcessLines(@Nonnull List<String> lines) {
         List<DslLine> dslLines = new ArrayList<>();
 
         int lineNumber = 1;
@@ -184,7 +186,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         return dslLines;
     }
 
-    void parse(List<String> lines, File dslFile) throws StructurizrDslParserException {
+    void parse(@Nonnull List<String> lines, @Nonnull File dslFile) throws StructurizrDslParserException {
         List<DslLine> dslLines = preProcessLines(lines);
 
         for (DslLine dslLine : dslLines) {

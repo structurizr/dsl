@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +10,8 @@ final class FileUtils {
 
     private static final String STRUCTURIZR_DSL_FILE_EXTENSION = ".dsl";
 
-    static List<File> findFiles(File path) {
+    @Nonnull
+    static List<File> findFiles(@Nonnull File path) {
         List<File> files = new ArrayList<>();
         if (path.isDirectory()) {
             files = findFilesInDirectory(path);
@@ -20,7 +22,8 @@ final class FileUtils {
         return files;
     }
 
-    private static List<File> findFilesInDirectory(File directory) {
+    @Nonnull
+    private static List<File> findFilesInDirectory(@Nonnull File directory) {
         List<File> files = new ArrayList<>();
 
         File[] filesInDirectory = directory.listFiles();
