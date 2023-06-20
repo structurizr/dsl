@@ -1,8 +1,9 @@
 # Changelog
 
-## (unreleased)
+## 1.30.2 (20th June 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/242 (deploymentViews hierarchical identifiers issue).
+- Makes `StructurizrDslPluginContext` constructor public to allow for unit testing.
  
 ## 1.30.1 (5th April 2023)
 
