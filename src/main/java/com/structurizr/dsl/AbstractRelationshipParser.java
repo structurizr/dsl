@@ -25,6 +25,12 @@ abstract class AbstractRelationshipParser extends AbstractParser {
             throw new RuntimeException("A relationship between \"" + sourceElement.getCanonicalName() + "\" and \"" + destinationElement.getCanonicalName() + "\" is not permitted");
         }
 
+        if (relationship == null) {
+            if (sourceElement.hasEfferentRelationshipWith(destinationElement, description) || sourceElement.hasEfferentRelationshipWith(destinationElement)) {
+                throw new RuntimeException("A relationship between \"" + sourceElement.getCanonicalName() + "\" and \"" + destinationElement.getCanonicalName() + "\" already exists");
+            }
+        }
+
         return relationship;
     }
 

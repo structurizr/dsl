@@ -1085,4 +1085,15 @@ class DslTests extends AbstractTests {
         }
     }
 
+    @Test
+    void test_RelationshipAlreadyExists() throws Exception {
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(new File("src/test/dsl/relationship-already-exists.dsl"));
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("A relationship between \"SoftwareSystem://B\" and \"SoftwareSystem://A\" already exists at line 10: b -> a", e.getMessage());
+        }
+    }
+
 }

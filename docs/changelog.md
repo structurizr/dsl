@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased to Maven Central)
+
+- Fixes https://github.com/structurizr/dsl/issues/289 (Cannot invoke "Object.equals(Object)" because "r" is null).
+
 ## 1.30.2 (20th June 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/242 (deploymentViews hierarchical identifiers issue).
