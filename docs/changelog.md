@@ -1,6 +1,6 @@
 # Changelog
 
-## (unreleased to Maven Central)
+## 1.30.3 (4th July 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/289 (Cannot invoke "Object.equals(Object)" because "r" is null).
 
