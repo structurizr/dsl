@@ -313,6 +313,9 @@ abstract class AbstractExpressionParser {
         Relationship relationship = context.getRelationship(identifier);
         if (relationship != null) {
             modelItems.add(relationship);
+
+            // and also find all relationships linked to it (i.e. implied and replicated relationships)
+            relationship.getModel().getRelationships().stream().filter(r -> relationship.getId().equals(r.getLinkedRelationshipId())).forEach(modelItems::add);
         }
 
         if (modelItems.isEmpty()) {

@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased to Maven Central)
+
+- Adds support for more easily including/excluding implied relationships in view definitions (https://github.com/structurizr/dsl/issues/303).
+
 ## 1.30.3 (4th July 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/289 (Cannot invoke "Object.equals(Object)" because "r" is null).

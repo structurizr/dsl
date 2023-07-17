@@ -1096,4 +1096,22 @@ class DslTests extends AbstractTests {
         }
     }
 
+    @Test
+    void test_ExcludeImpliedRelationship() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/exclude-implied-relationship.dsl"));
+
+        // check the system landscape view doesn't include any relationships
+        assertEquals(0, parser.getWorkspace().getViews().getSystemLandscapeViews().iterator().next().getRelationships().size());
+    }
+
+    @Test
+    void test_IncludeImpliedRelationship() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/include-implied-relationship.dsl"));
+
+        // check the system landscape view includes a relationship
+        assertEquals(1, parser.getWorkspace().getViews().getSystemLandscapeViews().iterator().next().getRelationships().size());
+    }
+
 }
