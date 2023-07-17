@@ -1,6 +1,6 @@
 # Changelog
 
-## (unreleased to Maven Central)
+## 1.30.4 (17th July 2023)
 
 - Adds support for more easily including/excluding implied relationships in view definitions (https://github.com/structurizr/dsl/issues/303).
 
