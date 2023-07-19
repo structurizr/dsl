@@ -391,9 +391,9 @@ workspace.views.views.forEach { it.disableAutomaticLayout() }
  
 You can then use your script from the DSL using the `!script` keyword.
  
- ```
-  !script script.kts
-  ```
+```
+!script script.kts
+```
 
 The following file extensions are recognised:
 
@@ -401,6 +401,14 @@ The following file extensions are recognised:
 - `.kts` (Kotlin)
 - `.rb` (Ruby)
 - `.js` (JavaScript)
+
+Parameters for external scripts can be specified as follows:
+
+```
+!script script.kts {
+    name value
+}  
+```
 
 ## Grammar
 

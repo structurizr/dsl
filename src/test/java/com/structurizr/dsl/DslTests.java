@@ -799,6 +799,14 @@ class DslTests extends AbstractTests {
     }
 
     @Test
+    void test_scriptWithParameters() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/script-external-with-parameters.dsl"));
+
+        assertNotNull(parser.getWorkspace().getModel().getPersonWithName("Groovy"));
+    }
+
+    @Test
     void test_inlineScript() throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/script-inline.dsl"));

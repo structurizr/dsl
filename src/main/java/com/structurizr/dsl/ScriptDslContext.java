@@ -6,7 +6,9 @@ import com.structurizr.model.Relationship;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 abstract class ScriptDslContext extends DslContext {
 
@@ -17,8 +19,14 @@ abstract class ScriptDslContext extends DslContext {
 
     private final DslContext parentContext;
 
+    private final Map<String,String> parameters = new HashMap<>();
+
     ScriptDslContext(DslContext parentContext) {
         this.parentContext = parentContext;
+    }
+
+    void addParameter(String name, String value) {
+        parameters.put(name, value);
     }
 
     void run(DslContext context, String extension, List<String> lines) throws Exception {
@@ -44,6 +52,11 @@ abstract class ScriptDslContext extends DslContext {
                 } else if (modelItemDslContext.getModelItem() instanceof Relationship) {
                     bindings.put(RELATIONSHIP_VARIABLE_NAME, modelItemDslContext.getModelItem());
                 }
+            }
+
+            // and any custom parameters
+            for (String name : parameters.keySet()) {
+                bindings.put(name, parameters.get(name));
             }
 
             engine.eval(script.toString(), bindings);

@@ -1,17 +1,28 @@
 package com.structurizr.dsl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class InlineScriptDslContext extends ScriptDslContext {
+
+    static final Map<String,String> SUPPORTED_LANGUAGES = new HashMap<>();
 
     private final String language;
     private final List<String> lines = new ArrayList<>();
 
+    static {
+        SUPPORTED_LANGUAGES.put("javascript", "js");
+        SUPPORTED_LANGUAGES.put("groovy", "groovy");
+        SUPPORTED_LANGUAGES.put("kotlin", "kts");
+        SUPPORTED_LANGUAGES.put("ruby", "rb");
+    }
+
     InlineScriptDslContext(DslContext parentContext, String language) {
         super(parentContext);
 
-        this.language = language;
+        this.language = language.toLowerCase();
     }
 
     void addLine(String line) {
@@ -23,21 +34,10 @@ class InlineScriptDslContext extends ScriptDslContext {
         try {
             String fileExtension;
 
-            switch (language.toLowerCase()) {
-                case "javascript":
-                    fileExtension = "js";
-                    break;
-                case "groovy":
-                    fileExtension = "groovy";
-                    break;
-                case "kotlin":
-                    fileExtension = "kts";
-                    break;
-                case "ruby":
-                    fileExtension = "rb";
-                    break;
-                default:
-                    throw new RuntimeException("Unsupported scripting language \"" + language + "\"");
+            if (SUPPORTED_LANGUAGES.containsKey(language)) {
+                fileExtension = SUPPORTED_LANGUAGES.get(language);
+            } else {
+                throw new RuntimeException("Unsupported scripting language \"" + language + "\"");
             }
 
             run(this, fileExtension, lines);
