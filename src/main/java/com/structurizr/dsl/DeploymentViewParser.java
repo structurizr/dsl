@@ -1,7 +1,6 @@
 package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
-import com.structurizr.model.DeploymentNode;
 import com.structurizr.model.Element;
 import com.structurizr.model.SoftwareSystem;
 import com.structurizr.view.DeploymentView;
@@ -53,7 +52,7 @@ final class DeploymentViewParser extends AbstractViewParser {
             if (tokens.includes(KEY_INDEX)) {
                 key = tokens.get(KEY_INDEX);
             } else {
-                key = generateViewKey(workspace, VIEW_TYPE);
+                key = workspace.getViews().generateViewKey(VIEW_TYPE);
             }
             validateViewKey(key);
 
@@ -68,7 +67,7 @@ final class DeploymentViewParser extends AbstractViewParser {
                 if (tokens.includes(KEY_INDEX)) {
                     key = tokens.get(KEY_INDEX);
                 } else {
-                    key = generateViewKey(workspace, VIEW_TYPE);
+                    key = workspace.getViews().generateViewKey(VIEW_TYPE);
                 }
                 validateViewKey(key);
 

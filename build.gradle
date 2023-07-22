@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    api 'com.structurizr:structurizr-client:1.24.1'
     api 'com.structurizr:structurizr-import:1.4.1'
+    api 'com.structurizr:structurizr-client:1.25.0'
 
     testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.16'
     testImplementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.22'
@@ -27,7 +27,7 @@ targetCompatibility = 11
 
 description = 'Structurizr DSL'
 group = 'com.structurizr'
-version = '1.30.4'
+version = '1.31.0'
 
 test {
     useJUnitPlatform()

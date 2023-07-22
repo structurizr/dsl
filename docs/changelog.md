@@ -1,8 +1,9 @@
 # Changelog
 
-## (unreleased to Maven Central)
+## 1.31.0 (25th July 2023)
 
 - Adds support for passing parameters to external scripts.
+- Updates dependencies.
 
 ## 1.30.4 (17th July 2023)
 

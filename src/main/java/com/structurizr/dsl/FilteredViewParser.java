@@ -78,7 +78,7 @@ final class FilteredViewParser extends AbstractViewParser {
         if (tokens.includes(KEY_INDEX)) {
             key = tokens.get(KEY_INDEX);
         } else {
-            key = generateViewKey(workspace, VIEW_TYPE);
+            key = workspace.getViews().generateViewKey(VIEW_TYPE);
         }
         validateViewKey(key);
 
