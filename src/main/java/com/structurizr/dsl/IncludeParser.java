@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +47,11 @@ final class IncludeParser extends AbstractParser {
     }
 
     private void readFiles(IncludedDslContext context, File path) throws IOException {
+        if (path.isHidden()) {
+            // ignore
+            return;
+        }
+
         if (path.isDirectory()) {
             File[] files = path.listFiles();
             if (files != null) {

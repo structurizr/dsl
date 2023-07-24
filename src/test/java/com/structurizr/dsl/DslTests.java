@@ -6,6 +6,7 @@ import com.structurizr.view.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -346,6 +347,11 @@ class DslTests extends AbstractTests {
 
     @Test
     void test_includeLocalDirectory() throws Exception {
+        File hiddenFile = new File("src/test/dsl/include/model/software-system/.DS_Store");
+        if (hiddenFile.exists()) {
+            hiddenFile.delete();
+        }
+
         StructurizrDslParser parser = new StructurizrDslParser();
         parser.parse(new File("src/test/dsl/include-directory.dsl"));
 
@@ -385,6 +391,18 @@ class DslTests extends AbstractTests {
                 "    }\n" +
                 "\n" +
                 "}\n", new String(Base64.getDecoder().decode(workspace.getProperties().get("structurizr.dsl"))));
+    }
+
+    @Test
+    void test_includeLocalDirectory_WhenThereAreHiddenFiles() throws Exception {
+        File hiddenFile = new File("src/test/dsl/include/model/software-system/.DS_Store");
+        if (hiddenFile.exists()) {
+            hiddenFile.delete();
+        }
+        Files.writeString(hiddenFile.toPath(), "hello world");
+
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(new File("src/test/dsl/include-directory.dsl"));
     }
 
     @Test
