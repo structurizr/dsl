@@ -906,9 +906,9 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                 }
             } catch (Exception e) {
                 if (e.getMessage() != null) {
-                    throw new StructurizrDslParserException(e.getMessage(), dslLine.getLineNumber(), line);
+                    throw new StructurizrDslParserException(e.getMessage(), dslFile, dslLine.getLineNumber(), line);
                 } else {
-                    throw new StructurizrDslParserException(e.getClass().getSimpleName(), dslLine.getLineNumber(), line);
+                    throw new StructurizrDslParserException(e.getClass().getSimpleName(), dslFile, dslLine.getLineNumber(), line);
                 }
             }
         }

@@ -1,5 +1,7 @@
 package com.structurizr.dsl;
 
+import java.io.File;
+
 /**
  * Throw when there are parsing errors.
  */
@@ -20,8 +22,8 @@ public final class StructurizrDslParserException extends Exception {
         super(message);
     }
 
-    StructurizrDslParserException(String message, int lineNumber, String line) {
-        super((message.endsWith(".") ? message.substring(0, message.length()-1) : message) + " at line " + lineNumber + ": " + line.trim());
+    StructurizrDslParserException(String message, File dslFile, int lineNumber, String line) {
+        super((message.endsWith(".") ? message.substring(0, message.length()-1) : message) + " at line " + lineNumber + (dslFile != null ? " of " + dslFile.getAbsolutePath() : "") + ": " + line.trim());
         this.lineNumber = lineNumber;
         this.line = line;
     }
