@@ -11,12 +11,17 @@ import java.util.Map;
  */
 public class StructurizrDslPluginContext {
 
-    private File dslFile;
+    private final File dslFile;
+    private final Workspace workspace;
+    private final Map<String,String> parameters;
 
-    private Workspace workspace;
-
-    private Map<String,String> parameters;
-
+    /**
+     * Creates a new instance.
+     *
+     * @param dslFile       a reference to the DSL file that loaded the plugin
+     * @param workspace     the workspace
+     * @param parameters    a map of name/value pairs representing parameters
+     */
     public StructurizrDslPluginContext(File dslFile, Workspace workspace, Map<String,String> parameters) {
         this.dslFile = dslFile;
         this.workspace = workspace;
