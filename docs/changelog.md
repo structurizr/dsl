@@ -5,7 +5,7 @@
 - Fixes https://github.com/structurizr/dsl/issues/308 (Hidden (e.g. .DS_Store) file causes exception during !include <directory>).
 - Updates structurizr/java to [v1.25.1](https://github.com/structurizr/java/releases/tag/v1.25.1).
 
-## 1.31.0 (25th July 2023)
+## 1.31.0 (22nd July 2023)
 
 - Adds support for passing parameters to external scripts.
 - Updates structurizr/java to [v1.25.0](https://github.com/structurizr/java/releases/tag/v1.25.0).
