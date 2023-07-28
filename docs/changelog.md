@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.32.0 (28th July 2023)
+
+- Adds the ability to specify the workspace `visibility` (private/public) via the workspace configuration.
+- Updates structurizr/java to [v1.26.1](https://github.com/structurizr/java/releases/tag/v1.26.1).
+
 ## 1.31.1 (26th July 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/308 (Hidden (e.g. .DS_Store) file causes exception during !include <directory>).

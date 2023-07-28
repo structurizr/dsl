@@ -1514,8 +1514,17 @@ configuration {
 
 Permitted children:
 
+- [visibility](#visibility)
 - [users](#users)
 - [properties](#properties)
+
+### visibility
+
+The `visibility` keyword can be used to set the [visibility of the workspace](https://structurizr.com/help/workspace-sharing).
+
+```
+visibility <private|public>
+```
 
 ### users
 
