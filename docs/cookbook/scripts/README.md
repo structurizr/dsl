@@ -11,7 +11,7 @@ Here are some useful scripts.
 ```
 !script groovy {
     workspace.views.createDefaultViews()
-    workspace.views.views.each { it.disableAutomaticLayout() }
+    workspace.views.views.findAll { it instanceof com.structurizr.view.ModelView }.each { it.disableAutomaticLayout() }
 }
 ```
 

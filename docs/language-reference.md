@@ -369,12 +369,12 @@ The following variables are available from scripts:
 
 #### Inline scripts
 
-To use an inline script, use the `!script` keyword followed by the language you'd like to use (`groovy`, `kotlin`, or `javascript`). For example, the following Kotlin script will create the default set of views, without automatic layout enabled.
+To use an inline script, use the `!script` keyword followed by the language you'd like to use (`groovy`, `kotlin`, `ruby`, or `javascript`). For example, the following Groovy script will create the default set of views, without automatic layout enabled.
 
 ```
-!script kotlin {
-  workspace.views.createDefaultViews()
-  workspace.views.views.forEach { it.disableAutomaticLayout() }
+!script groovy {
+    workspace.views.createDefaultViews()
+    workspace.views.views.findAll { it instanceof com.structurizr.view.ModelView }.each { it.disableAutomaticLayout() }
 }
 ```
 
