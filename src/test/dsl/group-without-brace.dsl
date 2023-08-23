@@ -1,0 +1,7 @@
+workspace {
+
+    model {
+        group "Name"
+    }
+
+}

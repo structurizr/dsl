@@ -1161,4 +1161,17 @@ class DslTests extends AbstractTests {
         assertEquals(1, parser.getWorkspace().getViews().getSystemLandscapeViews().iterator().next().getRelationships().size());
     }
 
+    @Test
+    void test_GroupWithoutBrace() throws Exception {
+        File dslFile = new File("src/test/dsl/group-without-brace.dsl");
+
+        try {
+            StructurizrDslParser parser = new StructurizrDslParser();
+            parser.parse(dslFile);
+            fail();
+        } catch (StructurizrDslParserException e) {
+            assertEquals("Expected: group <name> { at line 4 of " + dslFile.getAbsolutePath() + ": group \"Name\"", e.getMessage());
+        }
+    }
+
 }

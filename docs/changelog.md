@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.32.1 (unreleased)
+
+- Fixes https://github.com/structurizr/dsl/issues/324 (Groups with no curly braces breaks diagrams).
+
 ## 1.32.0 (28th July 2023)
 
 - Adds the ability to specify the workspace `visibility` (private/public) via the workspace configuration.

@@ -355,37 +355,37 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                         registerIdentifier(identifier, component);
 
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ModelDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(ModelDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(ModelDslContext.class), tokens);
 
                         startContext(new ModelDslContext(group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(EnterpriseDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(EnterpriseDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(EnterpriseDslContext.class), tokens);
 
                         startContext(new EnterpriseDslContext(group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(SoftwareSystemDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(SoftwareSystemDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(SoftwareSystemDslContext.class), tokens);
 
                         SoftwareSystem softwareSystem = getContext(SoftwareSystemDslContext.class).getSoftwareSystem();
                         group.setParent(softwareSystem);
                         startContext(new SoftwareSystemDslContext(softwareSystem, group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(ContainerDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(ContainerDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(ContainerDslContext.class), tokens);
 
                         Container container = getContext(ContainerDslContext.class).getContainer();
                         group.setParent(container);
                         startContext(new ContainerDslContext(container, group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentEnvironmentDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(DeploymentEnvironmentDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(DeploymentEnvironmentDslContext.class), tokens);
 
                         String environment = getContext(DeploymentEnvironmentDslContext.class).getEnvironment();
                         startContext(new DeploymentEnvironmentDslContext(environment, group));
                         registerIdentifier(identifier, group);
                     } else if (GROUP_TOKEN.equalsIgnoreCase(firstToken) && inContext(DeploymentNodeDslContext.class)) {
-                        ElementGroup group = new GroupParser().parse(getContext(DeploymentNodeDslContext.class), tokens.withoutContextStartToken());
+                        ElementGroup group = new GroupParser().parse(getContext(DeploymentNodeDslContext.class), tokens);
 
                         DeploymentNode deploymentNode = getContext(DeploymentNodeDslContext.class).getDeploymentNode();
                         startContext(new DeploymentNodeDslContext(deploymentNode, group));
