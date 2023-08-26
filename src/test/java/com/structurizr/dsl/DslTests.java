@@ -473,7 +473,7 @@ class DslTests extends AbstractTests {
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
 
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
         assertEquals(2, softwareSystem.getContainers().size());
@@ -536,7 +536,7 @@ class DslTests extends AbstractTests {
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
 
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
         assertEquals(1, softwareSystem.getContainers().size());
