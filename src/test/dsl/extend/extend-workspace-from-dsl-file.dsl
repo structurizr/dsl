@@ -1,30 +1,11 @@
 workspace extends workspace.dsl {
-    name "A new name"
-    description "A new description"
 
     model {
-        softwareSystem = softwareSystem "Software System" {
+        !ref softwareSystem1 {
             webapp = container "Web Application"
         }
+
+        user -> softwareSystem1 "Uses"
     }
 
-    views {
-        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
-            include *
-            autoLayout
-        }
-
-        styles {
-            element "Software System" {
-                background #1168bd
-                color #ffffff
-            }
-            element "Person" {
-                shape person
-                background #08427b
-                color #ffffff
-            }
-        }
-    }
-    
 }

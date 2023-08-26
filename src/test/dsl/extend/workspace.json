@@ -1,29 +1,39 @@
 {
   "id" : 0,
-  "name" : "Getting Started",
-  "description" : "This is a model of my software system.",
+  "name" : "Name",
+  "description" : "Description",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgdXNlciA9IHBlcnNvbiAiVXNlciIKICAgICAgICBzb2Z0d2FyZVN5c3RlbTEgPSBzb2Z0d2FyZVN5c3RlbSAiU29mdHdhcmUgU3lzdGVtIDEiCiAgICAgICAgc29mdHdhcmVTeXN0ZW0gIlNvZnR3YXJlIFN5c3RlbSAyIgogICAgfQoKfQo="
+  },
   "configuration" : { },
   "model" : {
     "people" : [ {
       "id" : "1",
       "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
       "name" : "User",
-      "description" : "A user of my software system.",
-      "relationships" : [ {
-        "id" : "3",
-        "tags" : "Relationship",
-        "sourceId" : "1",
-        "destinationId" : "2",
-        "description" : "Uses"
-      } ],
       "location" : "Unspecified"
     } ],
     "softwareSystems" : [ {
       "id" : "2",
       "tags" : "Element,Software System",
-      "name" : "Software System",
-      "description" : "My software system.",
-      "location" : "Unspecified"
+      "properties" : {
+        "structurizr.dsl.identifier" : "softwaresystem1"
+      },
+      "name" : "Software System 1",
+      "location" : "Unspecified",
+      "documentation" : { }
+    }, {
+      "id" : "3",
+      "tags" : "Element,Software System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "9c50bae2-474c-4fb6-9cc0-ef1da359673b"
+      },
+      "name" : "Software System 2",
+      "location" : "Unspecified",
+      "documentation" : { }
     } ]
   },
   "documentation" : { },

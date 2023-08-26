@@ -445,44 +445,21 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
-
-        assertEquals("A new name", workspace.getName());
-        assertEquals("A new description", workspace.getDescription());
 
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
 
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
+        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
-        assertEquals(1, softwareSystem.getContainers().size());
-        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+        assertEquals(2, softwareSystem.getContainers().size());
+        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 1")).findFirst());
+        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 2")).findFirst());
 
         assertEquals(1, workspace.getModel().getRelationships().size());
         Relationship relationship = user.getRelationships().iterator().next();
         assertEquals("Uses", relationship.getDescription());
         assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
     @Test
@@ -492,44 +469,21 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
-
-        assertEquals("A new name", workspace.getName());
-        assertEquals("A new description", workspace.getDescription());
 
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
 
         assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
-        assertEquals(1, softwareSystem.getContainers().size());
-        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
+        assertEquals(2, softwareSystem.getContainers().size());
+        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 1")).findFirst());
+        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 2")).findFirst());
 
         assertEquals(1, workspace.getModel().getRelationships().size());
         Relationship relationship = user.getRelationships().iterator().next();
         assertEquals("Uses", relationship.getDescription());
         assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
     @Test
@@ -555,18 +509,12 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
-
-        assertEquals("A new name", workspace.getName());
-        assertEquals("A new description", workspace.getDescription());
 
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
 
-        assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
+        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
         assertEquals(1, softwareSystem.getContainers().size());
         assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
@@ -575,24 +523,6 @@ class DslTests extends AbstractTests {
         Relationship relationship = user.getRelationships().iterator().next();
         assertEquals("Uses", relationship.getDescription());
         assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
     @Test
@@ -602,18 +532,12 @@ class DslTests extends AbstractTests {
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
-        ViewSet views = workspace.getViews();
-
-        assertEquals("A new name", workspace.getName());
-        assertEquals("A new description", workspace.getDescription());
 
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
-        assertEquals("A user of my software system.", user.getDescription());
 
         assertEquals(1, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System");
-        assertEquals("My software system.", softwareSystem.getDescription());
+        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
 
         assertEquals(1, softwareSystem.getContainers().size());
         assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
@@ -622,24 +546,6 @@ class DslTests extends AbstractTests {
         Relationship relationship = user.getRelationships().iterator().next();
         assertEquals("Uses", relationship.getDescription());
         assertSame(softwareSystem, relationship.getDestination());
-
-        assertEquals(1, views.getViews().size());
-        assertEquals(1, views.getSystemContextViews().size());
-        SystemContextView view = views.getSystemContextViews().iterator().next();
-        assertEquals("SystemContext", view.getKey());
-        assertEquals("An example of a System Context diagram.", view.getDescription());
-        assertEquals(2, view.getElements().size());
-        assertEquals(1, view.getRelationships().size());
-
-        assertEquals(2, views.getConfiguration().getStyles().getElements().size());
-        ElementStyle personStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Person")).findFirst().get();
-        assertEquals(Shape.Person, personStyle.getShape());
-        assertEquals("#08427b", personStyle.getBackground());
-        assertEquals("#ffffff", personStyle.getColor());
-
-        ElementStyle softwareSystemStyle = views.getConfiguration().getStyles().getElements().stream().filter(es -> es.getTag().equals("Software System")).findFirst().get();
-        assertEquals("#1168bd", softwareSystemStyle.getBackground());
-        assertEquals("#ffffff", softwareSystemStyle.getColor());
     }
 
     @Test

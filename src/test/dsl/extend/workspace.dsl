@@ -1,10 +1,9 @@
-workspace "Getting Started" "This is a model of my software system." {
+workspace {
 
     model {
-        user = person "User" "A user of my software system."
-        softwareSystem = softwareSystem "Software System" "My software system."
-
-        user -> softwareSystem "Uses"
+        user = person "User"
+        softwareSystem1 = softwareSystem "Software System 1"
+        softwareSystem "Software System 2"
     }
 
 }

@@ -2,6 +2,8 @@ package com.structurizr.dsl;
 
 import com.structurizr.Workspace;
 import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy;
+import com.structurizr.model.Element;
+import com.structurizr.model.Relationship;
 import com.structurizr.util.WorkspaceUtils;
 
 import java.io.File;
@@ -10,6 +12,8 @@ final class WorkspaceParser extends AbstractParser {
 
     private static final String GRAMMAR_STANDALONE = "workspace [name] [description]";
     private static final String GRAMMAR_EXTENDS = "workspace extends <file|url>";
+
+    private static final String STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME = "structurizr.dsl.identifier";
 
     private static final int FIRST_INDEX = 1;
     private static final int SECOND_INDEX = 2;
@@ -37,6 +41,7 @@ final class WorkspaceParser extends AbstractParser {
                             if (source.endsWith(".json")) {
                                 String json = readFromUrl(source);
                                 workspace = WorkspaceUtils.fromJson(json);
+                                registerIdentifiers(workspace, context);
                             } else {
                                 String dsl = readFromUrl(source);
                                 StructurizrDslParser structurizrDslParser = new StructurizrDslParser();
@@ -60,6 +65,7 @@ final class WorkspaceParser extends AbstractParser {
 
                                 if (source.endsWith(".json")) {
                                     workspace = WorkspaceUtils.loadWorkspaceFromJson(file);
+                                    registerIdentifiers(workspace, context);
                                 } else {
                                     StructurizrDslParser structurizrDslParser = new StructurizrDslParser();
                                     structurizrDslParser.parse(context, file);
@@ -83,6 +89,32 @@ final class WorkspaceParser extends AbstractParser {
         }
 
         return workspace;
+    }
+
+    private void registerIdentifiers(Workspace workspace, DslParserContext context) {
+        for (Element element : workspace.getModel().getElements()) {
+            if (element.getProperties().containsKey(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME)) {
+                String identifier = element.getProperties().get(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME);
+                try {
+                    context.identifiersRegister.validateIdentifierName(identifier);
+                    context.identifiersRegister.register(identifier, element);
+                } catch (Exception e) {
+                    // ignore, don't register the identifier
+                }
+            }
+        }
+
+        for (Relationship relationship : workspace.getModel().getRelationships()) {
+            if (relationship.getProperties().containsKey(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME)) {
+                String identifier = relationship.getProperties().get(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME);
+                try {
+                    context.identifiersRegister.validateIdentifierName(identifier);
+                    context.identifiersRegister.register(identifier, relationship);
+                } catch (Exception e) {
+                    // ignore, don't register the identifier
+                }
+            }
+        }
     }
 
     void parseName(DslContext context, Tokens tokens) {
