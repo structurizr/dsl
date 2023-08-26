@@ -4,6 +4,8 @@ import com.structurizr.Workspace;
 import com.structurizr.model.*;
 import com.structurizr.view.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -438,10 +440,11 @@ class DslTests extends AbstractTests {
         assertEquals(0, model.getSoftwareSystems().size());
     }
 
-    @Test
-    void test_extendWorkspaceFromJsonFile() throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = { "src/test/dsl/extend/extend-workspace-from-json-file.dsl", "src/test/dsl/extend/extend-workspace-from-json-url.dsl" })
+    void test_extendWorkspaceFromJson(String dslFile) throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/extend/extend-workspace-from-json-file.dsl"));
+        parser.parse(new File(dslFile));
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
@@ -449,41 +452,13 @@ class DslTests extends AbstractTests {
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
 
-        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(3, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
+        assertTrue(user.hasEfferentRelationshipWith(softwareSystem, "Uses"));
 
         assertEquals(2, softwareSystem.getContainers().size());
         assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 1")).findFirst());
         assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 2")).findFirst());
-
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
-    }
-
-    @Test
-    void test_extendWorkspaceFromJsonUrl() throws Exception {
-        StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/extend/extend-workspace-from-json-url.dsl"));
-
-        Workspace workspace = parser.getWorkspace();
-        Model model = workspace.getModel();
-
-        assertEquals(1, model.getPeople().size());
-        Person user = model.getPersonWithName("User");
-
-        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
-
-        assertEquals(2, softwareSystem.getContainers().size());
-        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 1")).findFirst());
-        assertNotNull(softwareSystem.getContainers().stream().filter(c -> c.getName().equals("Web Application 2")).findFirst());
-
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
     }
 
     @Test
@@ -502,10 +477,11 @@ class DslTests extends AbstractTests {
         }
     }
 
-    @Test
-    void test_extendWorkspaceFromDslFile() throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = { "src/test/dsl/extend/extend-workspace-from-dsl-file.dsl", "src/test/dsl/extend/extend-workspace-from-dsl-url.dsl" })
+    void test_extendWorkspaceFromDsl(String dslFile) throws Exception {
         StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/extend/extend-workspace-from-dsl-file.dsl"));
+        parser.parse(new File(dslFile));
 
         Workspace workspace = parser.getWorkspace();
         Model model = workspace.getModel();
@@ -513,39 +489,12 @@ class DslTests extends AbstractTests {
         assertEquals(1, model.getPeople().size());
         Person user = model.getPersonWithName("User");
 
-        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
+        assertEquals(3, workspace.getModel().getSoftwareSystems().size());
         SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
+        assertTrue(user.hasEfferentRelationshipWith(softwareSystem, "Uses"));
 
         assertEquals(1, softwareSystem.getContainers().size());
         assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
-
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
-    }
-
-    @Test
-    void test_extendWorkspaceFromDslUrl() throws Exception {
-        StructurizrDslParser parser = new StructurizrDslParser();
-        parser.parse(new File("src/test/dsl/extend/extend-workspace-from-dsl-url.dsl"));
-
-        Workspace workspace = parser.getWorkspace();
-        Model model = workspace.getModel();
-
-        assertEquals(1, model.getPeople().size());
-        Person user = model.getPersonWithName("User");
-
-        assertEquals(2, workspace.getModel().getSoftwareSystems().size());
-        SoftwareSystem softwareSystem = model.getSoftwareSystemWithName("Software System 1");
-
-        assertEquals(1, softwareSystem.getContainers().size());
-        assertEquals("Web Application", softwareSystem.getContainers().iterator().next().getName());
-
-        assertEquals(1, workspace.getModel().getRelationships().size());
-        Relationship relationship = user.getRelationships().iterator().next();
-        assertEquals("Uses", relationship.getDescription());
-        assertSame(softwareSystem, relationship.getDestination());
     }
 
     @Test

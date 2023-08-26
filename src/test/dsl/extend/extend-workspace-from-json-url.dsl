@@ -12,6 +12,7 @@ workspace extends https://raw.githubusercontent.com/structurizr/dsl/master/src/t
         }
 
         user -> softwareSystem1 "Uses"
+        softwareSystem3.webapp -> softwareSystem3.db
     }
 
 }

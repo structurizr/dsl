@@ -95,24 +95,14 @@ final class WorkspaceParser extends AbstractParser {
         for (Element element : workspace.getModel().getElements()) {
             if (element.getProperties().containsKey(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME)) {
                 String identifier = element.getProperties().get(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME);
-                try {
-                    context.identifiersRegister.validateIdentifierName(identifier);
-                    context.identifiersRegister.register(identifier, element);
-                } catch (Exception e) {
-                    // ignore, don't register the identifier
-                }
+                context.identifiersRegister.register(identifier, element);
             }
         }
 
         for (Relationship relationship : workspace.getModel().getRelationships()) {
             if (relationship.getProperties().containsKey(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME)) {
                 String identifier = relationship.getProperties().get(STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME);
-                try {
-                    context.identifiersRegister.validateIdentifierName(identifier);
-                    context.identifiersRegister.register(identifier, relationship);
-                } catch (Exception e) {
-                    // ignore, don't register the identifier
-                }
+                context.identifiersRegister.register(identifier, relationship);
             }
         }
     }

@@ -12,6 +12,7 @@ workspace extends workspace.json {
         }
 
         user -> softwareSystem1 "Uses"
+        softwareSystem3.webapp -> softwareSystem3.db
     }
 
 }

@@ -6,6 +6,7 @@ workspace extends workspace.dsl {
         }
 
         user -> softwareSystem1 "Uses"
+        softwareSystem3.webapp -> softwareSystem3.db
     }
 
 }
