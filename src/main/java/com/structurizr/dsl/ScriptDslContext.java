@@ -6,12 +6,14 @@ import com.structurizr.model.Relationship;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 abstract class ScriptDslContext extends DslContext {
 
+    private static final String CONTEXT_VARIABLE_NAME = "context";
     private static final String WORKSPACE_VARIABLE_NAME = "workspace";
     private static final String VIEW_VARIABLE_NAME = "view";
     private static final String ELEMENT_VARIABLE_NAME = "element";
@@ -19,10 +21,13 @@ abstract class ScriptDslContext extends DslContext {
 
     private final DslContext parentContext;
 
+    protected final File dslFile;
+
     private final Map<String,String> parameters = new HashMap<>();
 
-    ScriptDslContext(DslContext parentContext) {
+    ScriptDslContext(DslContext parentContext, File dslFile) {
         this.parentContext = parentContext;
+        this.dslFile = dslFile;
     }
 
     void addParameter(String name, String value) {
@@ -53,6 +58,10 @@ abstract class ScriptDslContext extends DslContext {
                     bindings.put(RELATIONSHIP_VARIABLE_NAME, modelItemDslContext.getModelItem());
                 }
             }
+
+            // bind a context object
+            StructurizrDslScriptContext scriptContext = new StructurizrDslScriptContext(dslFile, getWorkspace(), parameters);
+            bindings.put(CONTEXT_VARIABLE_NAME, scriptContext);
 
             // and any custom parameters
             for (String name : parameters.keySet()) {

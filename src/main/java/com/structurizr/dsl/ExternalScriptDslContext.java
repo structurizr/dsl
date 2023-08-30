@@ -7,13 +7,11 @@ import java.util.List;
 
 class ExternalScriptDslContext extends ScriptDslContext {
 
-    private final File dslFile;
     private final String filename;
 
     ExternalScriptDslContext(DslContext parentContext, File dslFile, String filename) {
-        super(parentContext);
+        super(parentContext, dslFile);
 
-        this.dslFile = dslFile;
         this.filename = filename;
     }
 

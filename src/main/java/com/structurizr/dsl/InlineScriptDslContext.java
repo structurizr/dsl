@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,8 @@ class InlineScriptDslContext extends ScriptDslContext {
         SUPPORTED_LANGUAGES.put("ruby", "rb");
     }
 
-    InlineScriptDslContext(DslContext parentContext, String language) {
-        super(parentContext);
+    InlineScriptDslContext(DslContext parentContext, File dslFile, String language) {
+        super(parentContext, dslFile);
 
         this.language = language.toLowerCase();
     }
