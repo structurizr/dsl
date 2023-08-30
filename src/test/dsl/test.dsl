@@ -327,4 +327,13 @@ workspace "Name" "Description" {
         }
     }
 
+    configuration {
+        users {
+            user1@example.com read
+            user2@example.com write
+        }
+
+        visibility public
+    }
+
 }
