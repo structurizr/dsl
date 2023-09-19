@@ -271,6 +271,40 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
                             includeInDslSourceLines = false;
                         }
 
+                    } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
+                        if (!restricted) {
+                            String fullyQualifiedClassName = new PluginParser().parse(getContext(), tokens.withoutContextStartToken());
+                            startContext(new PluginDslContext(fullyQualifiedClassName, dslFile));
+                            if (!shouldStartContext(tokens)) {
+                                // run the plugin immediately, without looking for parameters
+                                endContext();
+                            }
+                        }
+
+                    } else if (inContext(PluginDslContext.class)) {
+                        new PluginParser().parseParameter(getContext(PluginDslContext.class), tokens);
+
+                    } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
+                        if (!restricted) {
+                            ScriptParser scriptParser = new ScriptParser();
+                            if (scriptParser.isInlineScript(tokens)) {
+                                String language = scriptParser.parseInline(tokens.withoutContextStartToken());
+                                startContext(new InlineScriptDslContext(getContext(), dslFile, language));
+                            } else {
+                                String filename = scriptParser.parseExternal(tokens.withoutContextStartToken());
+                                startContext(new ExternalScriptDslContext(getContext(), dslFile, filename));
+
+                                if (shouldStartContext(tokens)) {
+                                    // we'll wait for parameters before executing the script
+                                } else {
+                                    endContext();
+                                }
+                            }
+                        }
+
+                    } else if (inContext(ExternalScriptDslContext.class)) {
+                        new ScriptParser().parseParameter(getContext(ExternalScriptDslContext.class), tokens);
+
                     } else if (tokens.size() > 2 && RELATIONSHIP_TOKEN.equals(tokens.get(1)) && (inContext(ModelDslContext.class) || inContext(EnterpriseDslContext.class) || inContext(CustomElementDslContext.class) || inContext(PersonDslContext.class) || inContext(SoftwareSystemDslContext.class) || inContext(ContainerDslContext.class) || inContext(ComponentDslContext.class) || inContext(DeploymentEnvironmentDslContext.class) || inContext(DeploymentNodeDslContext.class) || inContext(InfrastructureNodeDslContext.class) || inContext(SoftwareSystemInstanceDslContext.class) || inContext(ContainerInstanceDslContext.class))) {
                         Relationship relationship = new ExplicitRelationshipParser().parse(getContext(), tokens.withoutContextStartToken());
 
@@ -856,40 +890,6 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
                     } else if (IDENTIFIERS_TOKEN.equalsIgnoreCase(firstToken) && inContext(WorkspaceDslContext.class)) {
                         setIdentifierScope(new IdentifierScopeParser().parse(getContext(), tokens));
-
-                    } else if (PLUGIN_TOKEN.equalsIgnoreCase(firstToken)) {
-                        if (!restricted) {
-                            String fullyQualifiedClassName = new PluginParser().parse(getContext(), tokens.withoutContextStartToken());
-                            startContext(new PluginDslContext(fullyQualifiedClassName, dslFile));
-                            if (!shouldStartContext(tokens)) {
-                                // run the plugin immediately, without looking for parameters
-                                endContext();
-                            }
-                        }
-
-                    } else if (inContext(PluginDslContext.class)) {
-                        new PluginParser().parseParameter(getContext(PluginDslContext.class), tokens);
-
-                    } else if (SCRIPT_TOKEN.equalsIgnoreCase(firstToken)) {
-                        if (!restricted) {
-                            ScriptParser scriptParser = new ScriptParser();
-                            if (scriptParser.isInlineScript(tokens)) {
-                                String language = scriptParser.parseInline(tokens.withoutContextStartToken());
-                                startContext(new InlineScriptDslContext(getContext(), dslFile, language));
-                            } else {
-                                String filename = scriptParser.parseExternal(tokens.withoutContextStartToken());
-                                startContext(new ExternalScriptDslContext(getContext(), dslFile, filename));
-
-                                if (shouldStartContext(tokens)) {
-                                    // we'll wait for parameters before executing the script
-                                } else {
-                                    endContext();
-                                }
-                            }
-                        }
-
-                    } else if (inContext(ExternalScriptDslContext.class)) {
-                        new ScriptParser().parseParameter(getContext(ExternalScriptDslContext.class), tokens);
 
                     } else {
                         String[] expectedTokens;

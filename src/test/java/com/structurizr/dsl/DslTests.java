@@ -1038,4 +1038,12 @@ class DslTests extends AbstractTests {
         assertNotNull(parser.getWorkspace().getModel().getSoftwareSystemWithName("Namé"));
     }
 
+    @Test
+    void test_ScriptInDynamicView() throws Exception {
+        File dslFile = new File("src/test/dsl/script-in-dynamic-view.dsl");
+
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.parse(dslFile);
+    }
+
 }
