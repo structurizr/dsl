@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -1027,6 +1028,14 @@ class DslTests extends AbstractTests {
         } catch (StructurizrDslParserException e) {
             assertEquals("Expected: group <name> { at line 4 of " + dslFile.getAbsolutePath() + ": group \"Name\"", e.getMessage());
         }
+    }
+
+    @Test
+    void test_ISO8859Encoding() throws Exception {
+        StructurizrDslParser parser = new StructurizrDslParser();
+        parser.setCharacterEncoding(StandardCharsets.ISO_8859_1);
+        parser.parse(new File("src/test/dsl/iso-8859.dsl"));
+        assertNotNull(parser.getWorkspace().getModel().getSoftwareSystemWithName("Namé"));
     }
 
 }

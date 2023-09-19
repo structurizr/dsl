@@ -7,6 +7,7 @@ import com.structurizr.view.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
@@ -32,6 +33,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
 
     private static final String STRUCTURIZR_DSL_IDENTIFIER_PROPERTY_NAME = "structurizr.dsl.identifier";
 
+    private Charset characterEncoding = StandardCharsets.UTF_8;
     private IdentifierScope identifierScope = IdentifierScope.Flat;
     private Stack<DslContext> contextStack;
     private Set<String> parsedTokens = new HashSet<>();
@@ -51,6 +53,19 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         contextStack = new Stack<>();
         identifiersRegister = new IdentifiersRegister();
         constants = new HashMap<>();
+    }
+
+    /**
+     * Provides a way to change the character encoding used by the DSL parser.
+     *
+     * @param characterEncoding     a Charset instance
+     */
+    public void setCharacterEncoding(Charset characterEncoding) {
+        if (characterEncoding == null) {
+            throw new IllegalArgumentException("A character encoding must be specified");
+        }
+
+        this.characterEncoding = characterEncoding;
     }
 
     IdentifierScope getIdentifierScope() {
@@ -125,7 +140,7 @@ public final class StructurizrDslParser extends StructurizrDslTokens {
         List<File> files = FileUtils.findFiles(path);
         try {
             for (File file : files) {
-                parse(Files.readAllLines(file.toPath(), StandardCharsets.UTF_8), file);
+                parse(Files.readAllLines(file.toPath(), characterEncoding), file);
             }
         } catch (IOException e) {
             throw new StructurizrDslParserException(e.getMessage());

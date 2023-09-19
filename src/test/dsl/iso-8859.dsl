@@ -1,0 +1,5 @@
+workspace {
+    model {
+        softwareSystem "Namé"
+    }
+}
