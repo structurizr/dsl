@@ -8,7 +8,33 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class IdentifierRegisterTests extends AbstractTests {
 
-    private IdentifiersRegister register = new IdentifiersRegister();
+    private final IdentifiersRegister register = new IdentifiersRegister();
+
+    @Test
+    void test_validateIdentifierName() {
+        new IdentifiersRegister().validateIdentifierName("a");
+        new IdentifiersRegister().validateIdentifierName("abc");
+        new IdentifiersRegister().validateIdentifierName("ABC");
+        new IdentifiersRegister().validateIdentifierName("softwaresystem");
+        new IdentifiersRegister().validateIdentifierName("SoftwareSystem");
+        new IdentifiersRegister().validateIdentifierName("123456");
+        new IdentifiersRegister().validateIdentifierName("_softwareSystem");
+        new IdentifiersRegister().validateIdentifierName("SoftwareSystem-1");
+
+        try {
+            new IdentifiersRegister().validateIdentifierName("-softwareSystem");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Identifiers cannot start with a - character", e.getMessage());
+        }
+
+        try {
+            new IdentifiersRegister().validateIdentifierName("SoftwareSystém");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Identifiers can only contain the following characters: a-zA-Z0-9_-", e.getMessage());
+        }
+    }
 
     @Test
     void test_register_ThrowsAnException_WhenTheElementHasAlreadyBeenRegisteredWithADifferentIdentifier() {

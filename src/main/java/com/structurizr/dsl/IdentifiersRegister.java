@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class IdentifiersRegister {
 
-    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w+");
+    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("\\w[a-zA-Z0-9_-]*");
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
 
@@ -180,8 +180,12 @@ public class IdentifiersRegister {
     }
 
     void validateIdentifierName(String identifier) {
+        if (identifier.startsWith("-")) {
+            throw new RuntimeException("Identifiers cannot start with a - character");
+        }
+
         if (!IDENTIFIER_PATTERN.matcher(identifier).matches()) {
-            throw new RuntimeException("Identifiers can only contain the following characters: a-zA-Z_0-9");
+            throw new RuntimeException("Identifiers can only contain the following characters: a-zA-Z0-9_-");
         }
     }
 
