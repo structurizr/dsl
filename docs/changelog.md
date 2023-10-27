@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.33.0 (unreleased)
+## 1.33.0 (27th October 2023)
 
 - DSL identifiers (if present) will now be loaded when extending a JSON workspace (see https://github.com/structurizr/dsl/discussions/328).
 - Adds a `context` variable to inline/external scripts (see https://github.com/structurizr/dsl/issues/332).
