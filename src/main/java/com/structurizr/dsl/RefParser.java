@@ -1,12 +1,11 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.model.ModelItem;
 import com.structurizr.model.StaticStructureElement;
 
 final class RefParser extends AbstractParser {
 
-    private static final String GRAMMAR = "!ref <identifier|canonical name>";
+    private static final String GRAMMAR = "%s <identifier|canonical name>";
 
     private final static int IDENTIFIER_INDEX = 1;
 
@@ -14,11 +13,11 @@ final class RefParser extends AbstractParser {
         // !ref <identifier|canonical name>
 
         if (tokens.hasMoreThan(IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: " + GRAMMAR);
+            throw new RuntimeException("Too many tokens, expected: " + String.format(GRAMMAR, tokens.get(0)));
         }
 
         if (!tokens.includes(IDENTIFIER_INDEX)) {
-            throw new RuntimeException("Expected: " + GRAMMAR);
+            throw new RuntimeException("Expected: " + String.format(GRAMMAR, tokens.get(0)));
         }
 
         String s = tokens.get(IDENTIFIER_INDEX);
@@ -36,7 +35,7 @@ final class RefParser extends AbstractParser {
         }
 
         if (modelItem == null) {
-            throw new RuntimeException("An element/relationship referenced by \"" + s + "\" could not be found");
+            throw new RuntimeException("An element/relationship identified by \"" + s + "\" could not be found");
         }
 
         if (context instanceof GroupableDslContext && modelItem instanceof StaticStructureElement) {

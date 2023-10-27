@@ -101,6 +101,7 @@ class StructurizrDslTokens {
     static final String IDENTIFIERS_TOKEN = "!identifiers";
     static final String IMPLIED_RELATIONSHIPS_TOKEN = "!impliedRelationships";
     static final String REF_TOKEN = "!ref";
+    static final String EXTEND_TOKEN = "!extend";
     static final String PLUGIN_TOKEN = "!plugin";
     static final String SCRIPT_TOKEN = "!script";
 

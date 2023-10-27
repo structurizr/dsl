@@ -1,6 +1,5 @@
 package com.structurizr.dsl;
 
-import com.structurizr.model.Element;
 import com.structurizr.model.ModelItem;
 import com.structurizr.model.Person;
 import com.structurizr.model.Relationship;
@@ -15,7 +14,7 @@ class RefParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
-            parser.parse(context(), tokens("ref", "name", "tokens"));
+            parser.parse(context(), tokens("!ref", "name", "tokens"));
             fail();
         } catch (Exception e) {
             assertEquals("Too many tokens, expected: !ref <identifier|canonical name>", e.getMessage());
@@ -25,27 +24,27 @@ class RefParserTests extends AbstractTests {
     @Test
     void test_parse_ThrowsAnException_WhenTheIdentifierOrCanonicalNameIsNotSpecified() {
         try {
-            parser.parse(context(), tokens("ref"));
+            parser.parse(context(), tokens("!extend"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: !ref <identifier|canonical name>", e.getMessage());
+            assertEquals("Expected: !extend <identifier|canonical name>", e.getMessage());
         }
     }
 
     @Test
     void test_parse_ThrowsAnException_WhenTheReferencedElementCannotBeFound() {
         try {
-            parser.parse(context(), tokens("ref", "Person://User"));
+            parser.parse(context(), tokens("!ref", "Person://User"));
             fail();
         } catch (Exception e) {
-            assertEquals("An element/relationship referenced by \"Person://User\" could not be found", e.getMessage());
+            assertEquals("An element/relationship identified by \"Person://User\" could not be found", e.getMessage());
         }
     }
 
     @Test
     void test_parse_FindsAnElementByCanonicalName() {
         Person user = workspace.getModel().addPerson("User");
-        ModelItem element = parser.parse(context(), tokens("ref", "Person://User"));
+        ModelItem element = parser.parse(context(), tokens("!ref", "Person://User"));
 
         assertSame(user, element);
     }
@@ -59,7 +58,7 @@ class RefParserTests extends AbstractTests {
         register.register("user", user);
         context.setIdentifierRegister(register);
 
-        ModelItem modelItem = parser.parse(context, tokens("ref", "user"));
+        ModelItem modelItem = parser.parse(context, tokens("!ref", "user"));
         assertSame(modelItem, user);
     }
 
@@ -73,7 +72,7 @@ class RefParserTests extends AbstractTests {
         register.register("rel", relationship);
         context.setIdentifierRegister(register);
 
-        ModelItem modelItem = parser.parse(context, tokens("ref", "rel"));
+        ModelItem modelItem = parser.parse(context, tokens("!ref", "rel"));
         assertSame(modelItem, relationship);
     }
 

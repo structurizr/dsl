@@ -7,6 +7,7 @@
 - Fixes https://github.com/structurizr/dsl/issues/324 (Groups with no curly braces breaks diagrams).
 - Adds a way to set the character encoding used by the DSL parser (see https://github.com/structurizr/dsl/issues/338).
 - Fixes https://github.com/structurizr/dsl/issues/336 (Dynamic View does not allow !script tag).
+- `!extend` can now be used instead of `!ref`.
 
 ## 1.32.0 (28th July 2023)
 
