@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.33.1 (unreleased)
+
+- Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows)
+
 ## 1.33.0 (27th October 2023)
 
 - DSL identifiers (if present) will now be loaded when extending a JSON workspace (see https://github.com/structurizr/dsl/discussions/328).

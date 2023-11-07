@@ -40,14 +40,14 @@ final class IncludeParser extends AbstractParser {
 
                     readFiles(context, path);
                 } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage());
+                    throw new RuntimeException("Error including " + path.getAbsolutePath() + ": " + e.getMessage());
                 }
             }
         }
     }
 
     private void readFiles(IncludedDslContext context, File path) throws IOException {
-        if (path.isHidden()) {
+        if (path.isHidden() || path.getName().startsWith(".")) {
             // ignore
             return;
         }
@@ -62,7 +62,11 @@ final class IncludeParser extends AbstractParser {
                 }
             }
         } else {
-            context.addFile(path, Files.readAllLines(path.toPath(), StandardCharsets.UTF_8));
+            try {
+                context.addFile(path, Files.readAllLines(path.toPath(), StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading file at " + path.getAbsolutePath() + ": " + e.getMessage());
+            }
         }
     }
 
