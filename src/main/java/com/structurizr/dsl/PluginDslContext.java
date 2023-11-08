@@ -25,6 +25,7 @@ class PluginDslContext extends DslContext {
             Class pluginClass = loadClass(fullyQualifiedClassName, dslFile);
             StructurizrDslPlugin plugin = (StructurizrDslPlugin)pluginClass.getDeclaredConstructor().newInstance();
             StructurizrDslPluginContext pluginContext = new StructurizrDslPluginContext(dslFile, getWorkspace(), parameters);
+            pluginContext.setIdentifierRegister(identifiersRegister);
             plugin.run(pluginContext);
         } catch (Exception e) {
             e.printStackTrace();
