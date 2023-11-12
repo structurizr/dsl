@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class StructurizrDslPluginContext {
 
+    private final StructurizrDslParser dslParser;
     private final File dslFile;
     private final Workspace workspace;
     private final Map<String,String> parameters;
@@ -18,14 +19,25 @@ public class StructurizrDslPluginContext {
     /**
      * Creates a new instance.
      *
+     * @param dslParser     a reference to the DSL parser that loaded the plugin
      * @param dslFile       a reference to the DSL file that loaded the plugin
      * @param workspace     the workspace
      * @param parameters    a map of name/value pairs representing parameters
      */
-    public StructurizrDslPluginContext(File dslFile, Workspace workspace, Map<String,String> parameters) {
+    public StructurizrDslPluginContext(StructurizrDslParser dslParser, File dslFile, Workspace workspace, Map<String,String> parameters) {
+        this.dslParser = dslParser;
         this.dslFile = dslFile;
         this.workspace = workspace;
         this.parameters = parameters;
+    }
+
+    /**
+     * Gets a reference to the DSL parser that initiated this plugin context.
+     *
+     * @return  a StructurizrDslParser instance
+     */
+    public StructurizrDslParser getDslParser() {
+        return dslParser;
     }
 
     /**

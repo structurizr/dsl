@@ -20,18 +20,28 @@ public class IdentifiersRegister {
 
     private IdentifierScope identifierScope = IdentifierScope.Flat;
 
-    private Map<String, Element> elementsByIdentifier = new HashMap<>();
+    private final Map<String, Element> elementsByIdentifier = new HashMap<>();
 
-    private Map<String, Relationship> relationshipsByIdentifier = new HashMap<>();
+    private final Map<String, Relationship> relationshipsByIdentifier = new HashMap<>();
 
     IdentifiersRegister() {
     }
 
-    IdentifierScope getIdentifierScope() {
+    /**
+     * Gets the identifier scope in use (i.e. Flat or Hierarchical ... applies to elements only).
+     *
+     * @return      an IdentifierScope enum
+     */
+    public IdentifierScope getIdentifierScope() {
         return identifierScope;
     }
 
-    void setIdentifierScope(IdentifierScope identifierScope) {
+    /**
+     * Sets the identifier scope  (i.e. Flat or Hierarchical ... applies to elements only).
+     *
+     * @param identifierScope       an IdentifierScope enum
+     */
+    public void setIdentifierScope(IdentifierScope identifierScope) {
         this.identifierScope = identifierScope;
     }
 
@@ -64,7 +74,17 @@ public class IdentifiersRegister {
         return elementsByIdentifier.get(identifier);
     }
 
-    void register(String identifier, Element element) {
+    /**
+     * Registers an element with the given identifier.
+     *
+     * @param identifier        an identifier
+     * @param element           an Element instance
+     */
+    public void register(String identifier, Element element) {
+        if (element == null) {
+            throw new IllegalArgumentException("An element must be specified");
+        }
+
         if (StringUtils.isNullOrEmpty(identifier)) {
             identifier = UUID.randomUUID().toString();
         }
@@ -109,7 +129,17 @@ public class IdentifiersRegister {
         return relationshipsByIdentifier.get(identifier);
     }
 
-    void register(String identifier, Relationship relationship) {
+    /**
+     * Registers a relationship with the given identifier.
+     *
+     * @param identifier        an identifier
+     * @param relationship      a Relationship instance
+     */
+    public void register(String identifier, Relationship relationship) {
+        if (relationship == null) {
+            throw new IllegalArgumentException("A relationship must be specified");
+        }
+
         if (StringUtils.isNullOrEmpty(identifier)) {
             identifier = UUID.randomUUID().toString();
         }
@@ -146,7 +176,7 @@ public class IdentifiersRegister {
      * @return  a String identifier (could be null if no identifier was explicitly specified)
      */
     public String findIdentifier(Element element) {
-        if (elementsByIdentifier.values().contains(element)) {
+        if (elementsByIdentifier.containsValue(element)) {
             for (String identifier : elementsByIdentifier.keySet()) {
                 Element e = elementsByIdentifier.get(identifier);
 
@@ -166,7 +196,7 @@ public class IdentifiersRegister {
      * @return  a String identifier (could be null if no identifier was explicitly specified, or for implied relationships)
      */
     public String findIdentifier(Relationship relationship) {
-        if (relationshipsByIdentifier.values().contains(relationship)) {
+        if (relationshipsByIdentifier.containsValue(relationship)) {
             for (String identifier : relationshipsByIdentifier.keySet()) {
                 Relationship r = relationshipsByIdentifier.get(identifier);
 

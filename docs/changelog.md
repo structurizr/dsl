@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.33.1 (unreleased)
+## 1.34.0 (unreleased)
 
-- Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows)
+- Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
+- Adds a `getDslParser()` method to the `StructurizrDslPluginContext` class (https://github.com/structurizr/dsl/issues/361).
 
 ## 1.33.0 (27th October 2023)
 

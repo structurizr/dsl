@@ -8,11 +8,13 @@ class PluginDslContext extends DslContext {
 
     private final String fullyQualifiedClassName;
     private final File dslFile;
+    private final StructurizrDslParser dslParser;
     private final Map<String,String> parameters = new HashMap<>();
 
-    PluginDslContext(String fullyQualifiedClassName, File dslFile) {
+    PluginDslContext(String fullyQualifiedClassName, File dslFile, StructurizrDslParser dslParser) {
         this.fullyQualifiedClassName = fullyQualifiedClassName;
         this.dslFile = dslFile;
+        this.dslParser = dslParser;
     }
 
     void addParameter(String name, String value) {
@@ -24,7 +26,7 @@ class PluginDslContext extends DslContext {
         try {
             Class pluginClass = loadClass(fullyQualifiedClassName, dslFile);
             StructurizrDslPlugin plugin = (StructurizrDslPlugin)pluginClass.getDeclaredConstructor().newInstance();
-            StructurizrDslPluginContext pluginContext = new StructurizrDslPluginContext(dslFile, getWorkspace(), parameters);
+            StructurizrDslPluginContext pluginContext = new StructurizrDslPluginContext(dslParser, dslFile, getWorkspace(), parameters);
             plugin.run(pluginContext);
         } catch (Exception e) {
             e.printStackTrace();
