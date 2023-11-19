@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.34.0 (unreleased)
+## 1.34.0 (19th November 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
 - Fixes https://github.com/structurizr/dsl/issues/359 (Add url for relationship in dynamic view).
