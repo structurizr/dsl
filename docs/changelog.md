@@ -3,6 +3,7 @@
 ## 1.34.0 (unreleased)
 
 - Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
+- Fixes https://github.com/structurizr/dsl/issues/359 (Add url for relationship in dynamic view).
 - Adds a `getDslParser()` method to the `StructurizrDslPluginContext` class (https://github.com/structurizr/dsl/issues/361).
 - Adds the ability to specify the workspace scope via a `scope` keyword inside the workspace `configuration`.
 - Adds support for specifying perspective values.

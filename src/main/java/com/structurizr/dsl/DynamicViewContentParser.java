@@ -5,6 +5,7 @@ import com.structurizr.model.Element;
 import com.structurizr.model.Relationship;
 import com.structurizr.model.StaticStructureElement;
 import com.structurizr.view.DynamicView;
+import com.structurizr.view.RelationshipView;
 
 final class DynamicViewContentParser extends AbstractParser {
 
@@ -19,7 +20,7 @@ final class DynamicViewContentParser extends AbstractParser {
 
     private static final int RELATIONSHIP_IDENTIFIER_INDEX = 0;
 
-    void parseRelationship(DynamicViewDslContext context, Tokens tokens) {
+    RelationshipView parseRelationship(DynamicViewDslContext context, Tokens tokens) {
         DynamicView view = context.getView();
 
         if (tokens.size() > 1 && StructurizrDslTokens.RELATIONSHIP_TOKEN.equals(tokens.get(RELATIONSHIP_TOKEN_INDEX))) {
@@ -64,13 +65,13 @@ final class DynamicViewContentParser extends AbstractParser {
             }
 
             if (sourceElement instanceof StaticStructureElement && destinationElement instanceof StaticStructureElement) {
-                view.add((StaticStructureElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
+                return view.add((StaticStructureElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
             } else if (sourceElement instanceof StaticStructureElement && destinationElement instanceof CustomElement) {
-                view.add((StaticStructureElement) sourceElement, description, technology, (CustomElement) destinationElement);
+                return view.add((StaticStructureElement) sourceElement, description, technology, (CustomElement) destinationElement);
             } else if (sourceElement instanceof CustomElement && destinationElement instanceof StaticStructureElement) {
-                view.add((CustomElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
+                return view.add((CustomElement) sourceElement, description, technology, (StaticStructureElement) destinationElement);
             } else if (sourceElement instanceof CustomElement && destinationElement instanceof CustomElement) {
-                view.add((CustomElement) sourceElement, description, technology, (CustomElement) destinationElement);
+                return view.add((CustomElement) sourceElement, description, technology, (CustomElement) destinationElement);
             }
         } else {
             // <relationship identifier> [description] [technology]
@@ -90,8 +91,10 @@ final class DynamicViewContentParser extends AbstractParser {
                 description = tokens.get(RELATIONSHIP_IDENTIFIER_INDEX+1);
             }
 
-            view.add(relationship, description);
+            return view.add(relationship, description);
         }
+
+        throw new RuntimeException("The specified relationship could not be added");
     }
 
 }
