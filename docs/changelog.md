@@ -5,6 +5,7 @@
 - Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
 - Adds a `getDslParser()` method to the `StructurizrDslPluginContext` class (https://github.com/structurizr/dsl/issues/361).
 - Adds the ability to specify the workspace scope via a `scope` keyword inside the workspace `configuration`.
+- Adds support for specifying perspective values.
 - Updates structurizr/java to [v1.28.0](https://github.com/structurizr/java/releases/tag/v1.28.0).
 
 ## 1.33.0 (27th October 2023)

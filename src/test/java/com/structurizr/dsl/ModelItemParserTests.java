@@ -1,5 +1,6 @@
 package com.structurizr.dsl;
 
+import com.structurizr.model.Perspective;
 import com.structurizr.model.SoftwareSystem;
 import org.junit.jupiter.api.Test;
 
@@ -108,10 +109,22 @@ class ModelItemParserTests extends AbstractTests {
     void test_parsePerspective_ThrowsAnException_WhenThereAreTooManyTokens() {
         try {
             ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(null);
-            parser.parsePerspective(context, tokens("name", "description", "extra"));
+            parser.parsePerspective(context, tokens("name", "description", "value", "extra"));
             fail();
         } catch (Exception e) {
-            assertEquals("Too many tokens, expected: <name> <description>", e.getMessage());
+            assertEquals("Too many tokens, expected: <name> <description> [value]", e.getMessage());
+        }
+    }
+
+    @Test
+    void test_parsePerspective_ThrowsAnException_WhenNoNameIsSpecified() {
+        try {
+            SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+            ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(softwareSystem);
+            parser.parsePerspective(context, tokens());
+            fail();
+        } catch (Exception e) {
+            assertEquals("Expected: <name> <description> [value]", e.getMessage());
         }
     }
 
@@ -123,17 +136,30 @@ class ModelItemParserTests extends AbstractTests {
             parser.parsePerspective(context, tokens("name"));
             fail();
         } catch (Exception e) {
-            assertEquals("Expected: <name> <description>", e.getMessage());
+            assertEquals("Expected: <name> <description> [value]", e.getMessage());
         }
     }
 
     @Test
-    void test_parsePerspective_AddsThePerspective_WhenAValueIsSpecified() {
+    void test_parsePerspective_AddsThePerspective_WhenADescriptionIsSpecified() {
         SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
         ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(softwareSystem);
         parser.parsePerspective(context, tokens("Security", "Description"));
 
-        assertEquals("Description", softwareSystem.getPerspectives().stream().filter(p -> p.getName().equals("Security")).findFirst().get().getDescription());
+        Perspective perspective = softwareSystem.getPerspectives().stream().filter(p -> p.getName().equals("Security")).findFirst().get();
+        assertEquals("Description", perspective.getDescription());
+        assertEquals("", perspective.getValue());
+    }
+
+    @Test
+    void test_parsePerspective_AddsThePerspective_WhenADescriptionAndValueIsSpecified() {
+        SoftwareSystem softwareSystem = model.addSoftwareSystem("Name", "Description");
+        ModelItemPerspectivesDslContext context = new ModelItemPerspectivesDslContext(softwareSystem);
+        parser.parsePerspective(context, tokens("Security", "Description", "Value"));
+
+        Perspective perspective = softwareSystem.getPerspectives().stream().filter(p -> p.getName().equals("Security")).findFirst().get();
+        assertEquals("Description", perspective.getDescription());
+        assertEquals("Value", perspective.getValue());
     }
 
 }

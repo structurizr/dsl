@@ -12,6 +12,7 @@ final class ModelItemParser extends AbstractParser {
 
     private final static int PERSPECTIVE_NAME_INDEX = 0;
     private final static int PERSPECTIVE_DESCRIPTION_INDEX = 1;
+    private final static int PERSPECTIVE_VALUE_INDEX = 2;
 
     void parseTags(ModelItemDslContext context, Tokens tokens) {
         // tags <tags> [tags]
@@ -54,20 +55,25 @@ final class ModelItemParser extends AbstractParser {
     }
 
     void parsePerspective(ModelItemPerspectivesDslContext context, Tokens tokens) {
-        // <name> <description>
+        // <name> <description> [value]
 
-        if (tokens.hasMoreThan(PERSPECTIVE_DESCRIPTION_INDEX)) {
-            throw new RuntimeException("Too many tokens, expected: <name> <description>");
+        if (tokens.hasMoreThan(PERSPECTIVE_VALUE_INDEX)) {
+            throw new RuntimeException("Too many tokens, expected: <name> <description> [value]");
         }
 
-        if (tokens.size() != 2) {
-            throw new RuntimeException("Expected: <name> <description>");
+        if (!tokens.includes(PERSPECTIVE_DESCRIPTION_INDEX)) {
+            throw new RuntimeException("Expected: <name> <description> [value]");
         }
 
         String name = tokens.get(PERSPECTIVE_NAME_INDEX);
-        String value = tokens.get(PERSPECTIVE_DESCRIPTION_INDEX);
+        String description = tokens.get(PERSPECTIVE_DESCRIPTION_INDEX);
+        String value = "";
 
-        context.getModelItem().addPerspective(name, value);
+        if (tokens.includes(PERSPECTIVE_VALUE_INDEX)) {
+            value = tokens.get(PERSPECTIVE_VALUE_INDEX);
+        }
+
+        context.getModelItem().addPerspective(name, description, value);
     }
 
 }

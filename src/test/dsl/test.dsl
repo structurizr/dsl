@@ -35,6 +35,7 @@ workspace "Name" "Description" {
             }
             perspectives {
                 "Security" "A description..."
+                "Technical Debt" "Tech debt is high due to delivering feature X rapidly." "High"
             }
         }
 
