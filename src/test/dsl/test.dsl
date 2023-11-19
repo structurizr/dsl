@@ -334,6 +334,7 @@ workspace "Name" "Description" {
         }
 
         visibility public
+        scope softwaresystem
     }
 
 }
