@@ -4,6 +4,7 @@
 
 - Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
 - Adds a `getDslParser()` method to the `StructurizrDslPluginContext` class (https://github.com/structurizr/dsl/issues/361).
+- Updates structurizr/java to [v1.28.0](https://github.com/structurizr/java/releases/tag/v1.28.0).
 
 ## 1.33.0 (27th October 2023)
 
@@ -13,6 +14,7 @@
 - Adds a way to set the character encoding used by the DSL parser (see https://github.com/structurizr/dsl/issues/338).
 - Fixes https://github.com/structurizr/dsl/issues/336 (Dynamic View does not allow !script tag).
 - `!extend` can now be used instead of `!ref`.
+- Updates structurizr/java to [v1.27.0](https://github.com/structurizr/java/releases/tag/v1.27.0).
 
 ## 1.32.0 (28th July 2023)
 
