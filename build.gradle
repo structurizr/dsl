@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     api 'com.structurizr:structurizr-client:1.28.0'
-    api 'com.structurizr:structurizr-import:1.6.0'
+    api 'com.structurizr:structurizr-import:1.7.0'
 
     testImplementation 'org.codehaus.groovy:groovy-jsr223:3.0.19'
     testImplementation 'org.jetbrains.kotlin:kotlin-scripting-jsr223:1.8.10'

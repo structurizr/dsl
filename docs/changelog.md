@@ -7,6 +7,7 @@
 - Adds the ability to specify the workspace scope via a `scope` keyword inside the workspace `configuration`.
 - Adds support for specifying perspective values.
 - Updates structurizr/java to [v1.28.0](https://github.com/structurizr/java/releases/tag/v1.28.0).
+- Updates structurizr/import to [v1.7.0](https://github.com/structurizr/import/releases/tag/v1.7.0).
 
 ## 1.33.0 (27th October 2023)
 
@@ -17,6 +18,7 @@
 - Fixes https://github.com/structurizr/dsl/issues/336 (Dynamic View does not allow !script tag).
 - `!extend` can now be used instead of `!ref`.
 - Updates structurizr/java to [v1.27.0](https://github.com/structurizr/java/releases/tag/v1.27.0).
+- Updates structurizr/import to [v1.6.0](https://github.com/structurizr/import/releases/tag/v1.6.0).
 
 ## 1.32.0 (28th July 2023)
 
