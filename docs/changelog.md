@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.35.0 (29th December 2023)
+
+- Updates structurizr/java to [v1.29.0](https://github.com/structurizr/java/releases/tag/v1.29.0).
+
 ## 1.34.0 (19th November 2023)
 
 - Fixes https://github.com/structurizr/dsl/issues/364 (.DS_Store file causes exception during !include <directory> on Windows).
